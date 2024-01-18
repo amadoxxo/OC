@@ -6,7 +6,7 @@
 	ini_set("memory_limit", "1024M");
 	date_default_timezone_set('America/Bogota');
 
-  /**
+	/**
 	 * Cantidad de Registros para reiniciar conexion.
 	 */
 	define("_NUMREG_",100);
@@ -137,13 +137,13 @@
 	} // fin if ($_SERVER["SERVER_PORT"] != "")
 
 	if ($_SERVER["SERVER_PORT"] == "") {
-    $dDesde    = $_POST['dDesde'];
+		$dDesde    = $_POST['dDesde'];
 		$dHasta    = $_POST['dHasta'];
-    $gInterfaz = $_POST['gInterfaz'];
+		$gInterfaz = $_POST['gInterfaz'];
 		$gComId    = $_POST['gComId'];
-    $gComCod   = $_POST['gComCod'];
-    $gUsrId    = $_POST['gUsrId'];
-    $cEjProBg  = $_POST['cEjProBg'];
+		$gComCod   = $_POST['gComCod'];
+		$gUsrId    = $_POST['gUsrId'];
+		$cEjProBg  = $_POST['cEjProBg'];
 	}  // fin del if ($_SERVER["SERVER_PORT"] == "")
 
 	echo "\nprueba";
@@ -163,8 +163,8 @@
 		$cEjePro = 1;	
 		$strPost  = "dDesde~".   $dDesde."|";
 		$strPost .= "dHasta~".   $dHasta."|";
-    $strPost .= "gInterfaz~".$gInterfaz."|";
-    $strPost .= "gComId~".   $gComId."|";
+		$strPost .= "gInterfaz~".$gInterfaz."|";
+		$strPost .= "gComId~".   $gComId."|";
 		$strPost .= "gComCod~".  $gComCod."|";
 		$strPost .= "gUsrId~".   $gUsrId."|";
 		$strPost .= "cEjProBg~". $cEjProBg;
@@ -432,7 +432,7 @@
 
 
 						$mDataHoja3[$nInd_mDataHoja3]['ccoidxxx'] = substr($xRDM['ccoidxxx'], 1);
-						$mDataHoja3[$nInd_mDataHoja3]['idunxxxx'] = '001';
+						$mDataHoja3[$nInd_mDataHoja3]['idunxxxx'] = '01';
 
 
 						$mDataHoja3[$nInd_mDataHoja3]['sccidxxx'] = '';
@@ -442,23 +442,16 @@
 
 
 						$mDataHoja3[$nInd_mDataHoja3]['codfexxx'] = '';
-						$mDataHoja3[$nInd_mDataHoja3]['comtcbxx'] = '';
-						$mDataHoja3[$nInd_mDataHoja3]['comncbxx'] = '';
 						if (substr($xRDM['pucidxxx'], 0, 4) == "1110" || substr($xRDM['pucidxxx'], 0, 4) == "1245") {
 							if ($xRDM['commovxx'] == "C") {
 								$mDataHoja3[$nInd_mDataHoja3]['codfexxx'] = "1201";
 							} else {
 								$mDataHoja3[$nInd_mDataHoja3]['codfexxx'] = "1101";
 							}
-
-
-							if ($xRDM['comidxxx'] == 'R' || $xRDM['comidxxx'] == 'L' ||  $xRDM['comidxxx'] == 'G') {
-								$mDataHoja3[$nInd_mDataHoja3]['comtcbxx'] = $xRDM['comtcbxx'];
-								$mDataHoja3[$nInd_mDataHoja3]['comncbxx'] = $xRDM['comncbxx'];
-							}
+							
+							
 						}
-
-
+						
 						if ($xRDM['commovxx'] == "C") {
 							$mDataHoja3[$nInd_mDataHoja3]['vlrcrxxx'] = $xRDM['comvlrxx'];
 							$mDataHoja3[$nInd_mDataHoja3]['vlrdbxxx'] = '+000000000000000.0000';
@@ -466,14 +459,19 @@
 							$mDataHoja3[$nInd_mDataHoja3]['vlrdbxxx'] = $xRDM['comvlrxx'];
 							$mDataHoja3[$nInd_mDataHoja3]['vlrcrxxx'] = '+000000000000000.0000';
 						}
-
-
+						
 						if ($mCuenta[$xRDM['pucidxxx']]['pucterxx'] == "R") {
 							$mDataHoja3[$nInd_mDataHoja3]['basegrav'] = ($xRCD['comvlr01'] > 0) ? $xRCD['comvlr01'] : '+000000000000000.0000';
 						} else {
 							$mDataHoja3[$nInd_mDataHoja3]['basegrav'] = '+000000000000000.0000';
 						}
-
+						
+						$mDataHoja3[$nInd_mDataHoja3]['comtcbxx'] = '';
+						$mDataHoja3[$nInd_mDataHoja3]['comncbxx'] = '';
+						if ($xRDM['comidxxx'] == 'R' || $xRDM['comidxxx'] == 'L' ||  $xRDM['comidxxx'] == 'G') {
+							$mDataHoja3[$nInd_mDataHoja3]['comtcbxx'] = $xRDM['comtcbxx'];
+							$mDataHoja3[$nInd_mDataHoja3]['comncbxx'] = $xRDM['comncbxx'];
+						}
 
 						$mDataHoja3[$nInd_mDataHoja3]['notasxxx'] = $cObservacion;
 					}
@@ -496,8 +494,12 @@
 							}
 
 							// Nit del tercero
+							$mDataHoja4[$nInd_mDataHoja4]['teridxxx'] = "";
+
 							$mDataHoja4[$nInd_mDataHoja4]['ccoidxxx'] = substr($xRDM['ccoidxxx'], 1);
-							$mDataHoja4[$nInd_mDataHoja4]['idunxxxx'] = '001';
+							$mDataHoja4[$nInd_mDataHoja4]['idunxxxx'] = '01';
+
+							$mDataHoja4[$nInd_mDataHoja4]['sccidxxx'] = "";
 
 							if ($xRDM['commovxx'] == "C") {
 								$mDataHoja4[$nInd_mDataHoja4]['vlrcrxxx'] = $xRDM['comvlrxx'];
@@ -511,10 +513,52 @@
 							$mDataHoja4[$nInd_mDataHoja4]['tipdoccr'] = $xRDM['comidxxx'] . substr($xRDM['comcodxx'], 1);
 							$mDataHoja4[$nInd_mDataHoja4]['comcscc2'] = ($xRDM['comidxxx'] == "F") ? $xRDM['comcsc1c'] : substr($xRDM['comcscc2'], 2);
 							$mDataHoja4[$nInd_mDataHoja4]['comfecve'] = ($xRDM['comidxxx'] == "R" || $xRDM['comidxxx'] == "N") ? str_replace("-", "", $xRDM['comfecxx']) : str_replace("-", "", $xRDM['comfecve']);
-
-							// Pendiente vendedor
+							$mDataHoja4[$nInd_mDataHoja4]['comfecve2'] = ($xRDM['comidxxx'] == "R" || $xRDM['comidxxx'] == "N") ? str_replace("-", "", $xRDM['comfecxx']) : str_replace("-", "", $xRDM['comfecve']);
+							
+							$mDataHoja4[$nInd_mDataHoja4]['vendedor'] = "";
+							
 							$mDataHoja4[$nInd_mDataHoja4]['notasxxx'] = $cObservacion;
 						}
+
+					// Array de la hoja 5 - Cuentas por pagar
+					if ($mCuenta[$xRDM['pucidxxx']]['pucdetxx'] == "C" || $xRDM['comctocx'] == "SC") {
+						$nInd_mDataHoja5 = count($mDataHoja5);
+						$mDataHoja5[$nInd_mDataHoja5]['fciaxxxx'] = '001';
+						$mDataHoja5[$nInd_mDataHoja5]['ccoidcab'] = substr($xRDM['ccoidcab'], 1);
+						$mDataHoja5[$nInd_mDataHoja5]['tipodocu'] = $xRDM['comidxxx'] . substr($xRDM['comcodxx'], 1);
+						$mDataHoja5[$nInd_mDataHoja5]['comcscxx'] = $xRDM['comidxxx'] == "F" ? $xRDM['comcsc1c'] : substr($xRDM['comcsc2c'], 2);
+
+						if (substr($xRDM['pucidxxx'], 4) == "0000") {
+							$mDataHoja5[$nInd_mDataHoja5]['cuentaxx'] = rtrim($xRDM['pucidxxx'], '0000');
+						} elseif (substr($xRDM['pucidxxx'], 4) == "00") {
+							$mDataHoja5[$nInd_mDataHoja5]['cuentaxx'] = rtrim($xRDM['pucidxxx'], '00');
+						} else {
+							$mDataHoja5[$nInd_mDataHoja5]['cuentaxx'] = $xRDM['pucidxxx'];
+						}
+
+						// Nit del tercero
+						$mDataHoja5[$nInd_mDataHoja5]['teridxxx'] = "";
+
+						$mDataHoja5[$nInd_mDataHoja5]['ccoidxxx'] = substr($xRDM['ccoidxxx'], 1);
+						$mDataHoja5[$nInd_mDataHoja5]['idunxxxx'] = '01';
+
+						if ($xRDM['commovxx'] == "C") {
+							$mDataHoja5[$nInd_mDataHoja5]['vlrcrxxx'] = $xRDM['comvlrxx'];
+							$mDataHoja5[$nInd_mDataHoja5]['vlrdbxxx'] = '+000000000000000.0000';
+						} else {
+							$mDataHoja5[$nInd_mDataHoja5]['vlrdbxxx'] = $xRDM['comvlrxx'];
+							$mDataHoja5[$nInd_mDataHoja5]['vlrcrxxx'] = '+000000000000000.0000';
+						}
+
+						$mDataHoja5[$nInd_mDataHoja5]['sucidxxx'] = '001';
+						$mDataHoja5[$nInd_mDataHoja5]['tipdoccr'] = $xRDM['comidxxx'] . substr($xRDM['comcodxx'], 1);
+						$mDataHoja5[$nInd_mDataHoja5]['comcscc2'] = ($xRDM['comidxxx'] == "F") ? $xRDM['comcsc1c'] : substr($xRDM['comcscc2'], 2);
+						$mDataHoja5[$nInd_mDataHoja5]['comfecve'] = ($xRDM['comidxxx'] == "R" || $xRDM['comidxxx'] == "N") ? str_replace("-", "", $xRDM['comfecxx']) : str_replace("-", "", $xRDM['comfecve']);
+						$mDataHoja5[$nInd_mDataHoja5]['comfecve2'] = ($xRDM['comidxxx'] == "R" || $xRDM['comidxxx'] == "N") ? str_replace("-", "", $xRDM['comfecxx']) : str_replace("-", "", $xRDM['comfecve']);
+						$mDataHoja5[$nInd_mDataHoja5]['comfecve3'] = ($xRDM['comidxxx'] == "R" || $xRDM['comidxxx'] == "N") ? str_replace("-", "", $xRDM['comfecxx']) : str_replace("-", "", $xRDM['comfecve']);
+						
+						$mDataHoja5[$nInd_mDataHoja5]['notasxxx'] = $cObservacion;
+					}
 					}
 				}
 
@@ -538,7 +582,10 @@
 							->setFontColor(Color::BLACK)
 							->setShouldWrapText(false)
 							->setBorder($border)
+							// ->setBackgroundColor(Color::rgb(11,113,193))
 							->build();
+
+			$valor_fijo = ['001'];
 
 			// Hoja 1
 			$writer->getCurrentSheet()->setName('Inicial');
@@ -548,6 +595,7 @@
 			];
 
 			$writer->addRowWithStyle($mColumnasInicial, $style);
+			$writer->addRowWithStyle($valor_fijo, $style);
 
 			// Crear una nueva hoja
 			$writer->addNewSheetAndMakeItCurrent();
@@ -657,6 +705,9 @@
 			];
 
 			$writer->addRowWithStyle($mColumnasMovimientoCxP, $style);
+			for ($i=0; $i<count($mDataHoja5) ; $i++) { 
+				$writer->addRowWithStyle($mDataHoja5[$i], $style);
+			}
 
 			// Crear una nueva hoja
 			$writer->addNewSheetAndMakeItCurrent();
@@ -668,7 +719,8 @@
 			];
 
 			$writer->addRowWithStyle($mColumnasFinal, $style);
-
+			$writer->addRowWithStyle($valor_fijo, $style);
+			
 			$writer->close();
 
 			$cNomArc = $cRuta;

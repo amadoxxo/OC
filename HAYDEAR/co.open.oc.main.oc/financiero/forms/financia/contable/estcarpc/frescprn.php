@@ -1561,6 +1561,11 @@
           case "TEEXPORCOM":
             $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoexporcomex.jpg',8,12,23);
           break;
+          case "HAYDEARX":
+          case "DEHAYDEARX":
+          case "TEHAYDEARX":
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logohaydear.jpeg',8,12,30,11);
+          break;
         }
 
         $nPosx = 5;

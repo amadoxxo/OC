@@ -98,7 +98,7 @@
 	}
 
 	/**
-	 * Subiendo el archivo al sistema
+	 * Se incluyen los archivos a utilizar y las librerias
 	 */
 	if ($_SERVER["SERVER_PORT"] != "") {
 		include("../../../../../config/config.php");
@@ -125,8 +125,6 @@
 	$kUser      = $kDf[4];
 	$kLicencia  = $kDf[5];
 	$swidth     = $kDf[6];
-
-	$cSystemPath = OC_DOCUMENTROOT;
 
 	if ($_SERVER["SERVER_PORT"] != "") {
 		/*** Ejecutar proceso en Background ***/
@@ -197,7 +195,7 @@
 	 * Ejecucion del proceso
 	 */
 	if ($cEjePro == 0) {
-		if ($nSwitch == 0) { // cuando lo hace el navegador y por consola
+		if ($nSwitch == 0) { 
 			/**
 			 * Buscando la informacion de la tabla fpar0115 (Cuentas Contables).
 			 *
@@ -349,9 +347,9 @@
 						$mDataHoja3[$nInd_mDataHoja3]['tipodocu'] = $xRDM['comidxxx'] . substr($xRDM['comcodxx'], 1);
 						$mDataHoja3[$nInd_mDataHoja3]['comcscxx'] = $xRDM['comidxxx'] == "F" ? $xRDM['comcsc1c'] : substr($xRDM['comcsc2c'], 2);
 
-						if (substr($xRDM['pucidxxx'], 4) == "0000") {
+						if (substr($xRDM['pucidxxx'], 8) == "0000") {
 							$mDataHoja3[$nInd_mDataHoja3]['cuentaxx'] = rtrim($xRDM['pucidxxx'], '0000');
-						} elseif (substr($xRDM['pucidxxx'], 4) == "00") {
+						} elseif (substr($xRDM['pucidxxx'], 8) == "00") {
 							$mDataHoja3[$nInd_mDataHoja3]['cuentaxx'] = rtrim($xRDM['pucidxxx'], '00');
 						} else {
 							$mDataHoja3[$nInd_mDataHoja3]['cuentaxx'] = $xRDM['pucidxxx'];
@@ -453,9 +451,9 @@
 						$mDataHoja4[$nInd_mDataHoja4]['tipodocu'] = $xRDM['comidxxx'] . substr($xRDM['comcodxx'], 1);
 						$mDataHoja4[$nInd_mDataHoja4]['comcscxx'] = $xRDM['comidxxx'] == "F" ? $xRDM['comcsc1c'] : substr($xRDM['comcsc2c'], 2);
 
-						if (substr($xRDM['pucidxxx'], 4) == "0000") {
+						if (substr($xRDM['pucidxxx'], 8) == "0000") {
 							$mDataHoja4[$nInd_mDataHoja4]['cuentaxx'] = rtrim($xRDM['pucidxxx'], '0000');
-						} elseif (substr($xRDM['pucidxxx'], 4) == "00") {
+						} elseif (substr($xRDM['pucidxxx'], 8) == "00") {
 							$mDataHoja4[$nInd_mDataHoja4]['cuentaxx'] = rtrim($xRDM['pucidxxx'], '00');
 						} else {
 							$mDataHoja4[$nInd_mDataHoja4]['cuentaxx'] = $xRDM['pucidxxx'];

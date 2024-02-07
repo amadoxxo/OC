@@ -112,10 +112,38 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
+          $qInsert  = "INSERT INTO sys00013 (";
+          $qInsert .= "modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regfecxx, regmodxx, reghorxx, regestxx";
+          $qInsert .= ") VALUES (";
+          $qInsert .= "\"4\", \"327\", \"0\", \"\", \"CONSULTAR\", \"00000\", \"Consultar Columna\", \"\", \"\", \"\", \"\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_affected_rows(_CONEXION_);
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al Crear submenu interno en la opcion de menu Conceptos Reporte Facturacion DHL".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
           $qInsert  = "INSERT INTO sys00014 (";
           $qInsert .= "usridxxx, modidxxx, proidxxx, menidxxx, regfecxx, regmodxx, reghorxx, regestxx";
           $qInsert .= ") VALUES (";
           $qInsert .= "\"ADMIN\", \"4\", \"327\", \"1\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe da acceso a la opcion de menu Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al dar acceso a la parametrica de Conceptos Reporte Facturacion DHL";
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
+          $qInsert  = "INSERT INTO sys00014 (";
+          $qInsert .= "usridxxx, modidxxx, proidxxx, menidxxx, regfecxx, regmodxx, reghorxx, regestxx";
+          $qInsert .= ") VALUES (";
+          $qInsert .= "\"ADMIN\", \"4\", \"327\", \"0\", NOW(), NOW(), NOW(), \"ACTIVO\")";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe da acceso a la opcion de menu Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales".$pdb;

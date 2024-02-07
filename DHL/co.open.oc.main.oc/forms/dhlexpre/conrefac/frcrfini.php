@@ -308,12 +308,8 @@
 				$qDescuento .= "$cAlfa.fpar0166.reghcrex, ";
 				$qDescuento .= "$cAlfa.fpar0166.regfmodx, ";
 				$qDescuento .= "$cAlfa.fpar0166.reghmodx, ";
-				$qDescuento .= "$cAlfa.fpar0166.regestxx, ";
-				$qDescuento .= "IF($cAlfa.fpar0129.serdespx != \"\",$cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
-				$qDescuento .= "$cAlfa.fpar0130.fcodesxx ";
+				$qDescuento .= "$cAlfa.fpar0166.regestxx ";
 				$qDescuento .= "FROM $cAlfa.fpar0166 ";
-				$qDescuento .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0166.colorden = $cAlfa.fpar0129.colorden ";
-				$qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0166.colctoid = $cAlfa.fpar0130.colctoid ";
 				if ($_POST['vSearch'] != "") {
 					$qDescuento .= "WHERE ";
 					$qDescuento .= "($cAlfa.fpar0166.colidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
@@ -326,6 +322,8 @@
 					$qDescuento .= "$cAlfa.fpar0166.colctode LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.regestxx LIKE \"%{$_POST['vSearch']}%\") ";
 				}
+
+				// echo $qDescuento;
 
 				/*** CODIGO NUEVO PARA ORDER BY ***/
 				$cOrderBy = "";

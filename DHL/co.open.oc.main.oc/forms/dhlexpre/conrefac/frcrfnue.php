@@ -19,6 +19,7 @@
 	$kUser      = $kDf[4];
 	$kLicencia  = $kDf[5];
 	$swidth     = $kDf[6];
+	
 ?>
 <html>
 	<head>
@@ -48,7 +49,7 @@
 							var zWinPro = "width=750,scrollbars=1,height=250,left="+zNx+",top="+zNy;
 							var cRuta   = "frdes129.php?gWhat=WINDOW&gFunction=cSerId&gSerId="+document.forms['frnav']['cSerId'].value.toUpperCase();
 							var zWindow = window.open(cRuta,"zWindow",zWinPro);
-				  		zWindow.focus();
+							zWindow.focus();
 						}
 					break;
 					case "cFcoId":
@@ -65,14 +66,14 @@
 																				"&gFcoId="+document.forms['frnav']['cFcoId'].value.toUpperCase()+
 																				"&gFcoIds="+document.forms['frnav']['cFcoIds'].value.toUpperCase();
 							var zWindow = window.open(cRuta,"zWindow",zWinPro);
-				  		zWindow.focus();
+							zWindow.focus();
 						}
 					break;
 					default:
 						// no hace nada
 					break;
 				}
-		  }
+			}
 
 		</script>
 	</head>
@@ -90,28 +91,34 @@
 										<?php echo f_Columnas(20,20); ?>
 
 										<tr>
-											<td Class = "name" colspan = "2">
-												<a href = "javascript:document.forms['frnav']['cSerId'].value  = '';
-																							document.forms['frnav']['cSerDes'].value = '';
-																							document.forms['frnav']['cFcoId'].value  = '';
-																							document.forms['frnav']['cFcoIds'].value = '';
-																							document.forms['frnav']['cFcoDes'].value = '';
-																							fnLinks('cSerId','WINDOW')" id="lSerId">Id</a><br>
-												<input type = "text" Class = "letra" style = "width:40;text-align:center" name = "cSerId" id="cSerId"
-													onFocus="javascript:document.forms['frnav']['cSerId'].value  = '';
-																							document.forms['frnav']['cSerDes'].value = '';
-																							document.forms['frnav']['cFcoId'].value  = '';
-																							document.forms['frnav']['cFcoDes'].value = '';
-																							this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>';"
-													onblur = "javascript:fnLinks('cSerId','VALID');
-																							this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'">
-												<input type = "hidden" name = "cFcoIds" readonly>
+											<td Class = "name" colspan = "2">Id<br>
+												<input type = "text" Class = "letra" style = "width:40;text-align:center" name = "cDesId" id="cDesId">
 											</td>
 											<td Class = "name" colspan = "16">Descripci&oacute;n Columna<br>
-												<input type = "text" Class = "letra" style = "width:320" name = "cSerDes" readonly>
+												<input type = "text" Class = "letra" style = "width:320" name = "cDesCod">
 											</td>
 											<td Class = "name" colspan = "2">Orden<br>
-												<input type = "text" Class = "letra" style = "width:40" name = "cSerDes" readonly>
+												<input type = "text" Class = "letra" style = "width:40" name = "cSerId">
+											</td>
+										</tr>
+										<tr>
+											<td colspan = "20">
+											<fieldset>
+												<input type = 'hidden' name = 'cCliResFi'>
+												<legend>Responsabilidad Fiscal</legend>
+												<!-- <div id = 'overDivResFi'></div> -->
+												<!-- <table border="1" cellpadding="0" cellspacing="0" width="700"> -->
+													<tr bgcolor = "<?php $vSysStr['system_row_title_color_ini'] ?>">
+														<td Class = "clase08" width = "20">
+															<center>
+																<!-- (($_COOKIE['kModo'] != "VER") ? <img src = "$cPlesk_Skin_Directory."btn_create-dir_bg.gif" onClick ="javascript:f_Links('cTercero','VALID')" style = "cursor:hand" alt="Adicionar Vendedor"> : "")  -->
+															</center></td>
+														<td Class = "clase08" width = "120">Nit</td>
+														<td Class = "clase08" width = "20">DV</td>
+														<td Class = "clase08" width = "540">Nombre</td>
+													</tr>
+												<!-- </table> -->
+											</fieldset>
 											</td>
 										</tr>
 										<tr>
@@ -204,37 +211,37 @@
 		function fnCargaData($xDesId) {
 			global $xConexion01; global $cAlfa;
 			$qDescuento  = "SELECT ";
-			$qDescuento .= "$cAlfa.fpar0164.desidxxx, ";
-			$qDescuento .= "$cAlfa.fpar0164.descodxx, ";
-			$qDescuento .= "$cAlfa.fpar0164.seridxxx, ";
-			$qDescuento .= "$cAlfa.fpar0164.fcoidxxx, ";
-			$qDescuento .= "$cAlfa.fpar0164.desporce, ";
-			$qDescuento .= "$cAlfa.fpar0164.regfcrex, ";
-			$qDescuento .= "$cAlfa.fpar0164.reghcrex, ";
-			$qDescuento .= "$cAlfa.fpar0164.regfmodx, ";
-			$qDescuento .= "$cAlfa.fpar0164.reghmodx, ";
-			$qDescuento .= "$cAlfa.fpar0164.regestxx, ";
+			$qDescuento .= "$cAlfa.fpar0166.colidxxx, ";
+			$qDescuento .= "$cAlfa.fpar0166.coldesxx, ";
+			$qDescuento .= "$cAlfa.fpar0166.colorden, ";
+			$qDescuento .= "$cAlfa.fpar0166.colctoid, ";
+			$qDescuento .= "$cAlfa.fpar0166.colctode, ";
+			$qDescuento .= "$cAlfa.fpar0166.regfcrex, ";
+			$qDescuento .= "$cAlfa.fpar0166.reghcrex, ";
+			$qDescuento .= "$cAlfa.fpar0166.regfmodx, ";
+			$qDescuento .= "$cAlfa.fpar0166.reghmodx, ";
+			$qDescuento .= "$cAlfa.fpar0166.regestxx, ";
 			$qDescuento .= "IF($cAlfa.fpar0129.serdespx != \"\",$cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
 			$qDescuento .= "$cAlfa.fpar0129.fcoidxxx AS serfcoid, ";
 			$qDescuento .= "$cAlfa.fpar0130.fcodesxx ";
-			$qDescuento .= "FROM $cAlfa.fpar0164 ";
-			$qDescuento .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0164.seridxxx = $cAlfa.fpar0129.seridxxx ";
-			$qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0164.fcoidxxx = $cAlfa.fpar0130.fcoidxxx ";
+			$qDescuento .= "FROM $cAlfa.fpar0166 ";
+			$qDescuento .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0166.colorden = $cAlfa.fpar0129.colorden ";
+			$qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0166.colctoid = $cAlfa.fpar0130.fcoidxxx ";
 			$qDescuento .= "WHERE ";
-			$qDescuento .= "desidxxx = \"$xDesId\" LIMIT 0,1";
+			$qDescuento .= "colidxxx = \"$xDesId\" LIMIT 0,1";
 			$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 			// f_Mensaje(__FILE__,__LINE__,$qDescuento."~".mysql_num_rows($xDescuento));
 			while ($xRDE = mysql_fetch_array($xDescuento)) {
 				?>
 				<script language = "javascript">
-					document.forms['frnav']['cDesId'].value   = "<?php echo $xRDE['desidxxx'] ?>";
-					document.forms['frnav']['cDesCod'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['descodxx']) ?>";
-					document.forms['frnav']['cSerId'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['seridxxx']) ?>";
+					document.forms['frnav']['cDesId'].value   = "<?php echo $xRDE['colidxxx'] ?>";
+					document.forms['frnav']['cDesCod'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
+					document.forms['frnav']['cSerId'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
 					document.forms['frnav']['cSerDes'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serdesxx']) ?>";
-					document.forms['frnav']['cFcoId'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['fcoidxxx']) ?>";
+					document.forms['frnav']['cFcoId'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
 					document.forms['frnav']['cFcoDes'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['fcodesxx']) ?>";
 					document.forms['frnav']['cFcoIds'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serfcoid']) ?>";
-					document.forms['frnav']['cDesPorc'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['desporce']) ?>";
+					document.forms['frnav']['cDesPorc'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctode']) ?>";
 					document.forms['frnav']['dRegFCre'].value = "<?php echo $xRDE['regfcrex'] ?>";
 					document.forms['frnav']['dRegFMod'].value = "<?php echo $xRDE['regfmodx'] ?>";
 					document.forms['frnav']['tRegHCre'].value = "<?php echo $xRDE['reghcrex'] ?>";

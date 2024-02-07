@@ -1,8 +1,8 @@
 <?php
 	/**
-	 * Graba Descuentos 
-	 * Este programa permite Grabar Descuentos en el Sistema.
-	 * @author Juan Jose Trujillo <juan.trujillo@openits.co>
+	 * Graba Concepto Reporte de Facturación DHL.
+	 * Este programa permite Grabar  en el Sistema.
+	 * @author Elian Amado <elian.amado@openits.co>
 	 * @package openComex
 	 */
 
@@ -55,32 +55,32 @@
 		case "EDITAR":
 
 			// Validando el ID del Servicio
-			if(empty($_POST['cSerId'])) {
+			if(empty($_POST['cDesId'])) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "El Servicio No Puede Ser Vacio.\n";
 			}
 
 			// Validando el ID de la Forma de Cobro
-			if (empty($_POST['cFcoId'])) {
+			if (empty($_POST['cDesCod'])) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "La Forma de Cobro No Puede Ser Vacia.\n";
 			}
 
 			// Validando el Codigo del Descuento
-			if (empty($_POST['cDesCod'])) {
+			if (empty($_POST['cSerId'])) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "El Codigo del Descuento No Puede Ser Vacio.\n";
 			}
 
 			// Validando el Porcentaje del Descuento
-			if (empty($_POST['cDesPorc'])) {
-				$nSwitch = 1;
-				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-				$cMsj .= "La Porcentaje del Descuento No Puede Ser Vacio.\n";
-			}
+			// if (empty($_POST['cDesPorc'])) {
+			// 	$nSwitch = 1;
+			// 	$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+			// 	$cMsj .= "La Porcentaje del Descuento No Puede Ser Vacio.\n";
+			// }
 
 			// Validando la Fecha de Creacion.
 			if (empty($_POST['dRegFCre'])) {
@@ -129,13 +129,14 @@
 
 			if($nSwitch == 0) {
 				// Validando que los codigos no existan.
-				$qDescuento  = "SELECT desidxxx ";
-				$qDescuento .= "FROM $cAlfa.fpar0164 ";
+				$qDescuento  = "SELECT colidxxx ";
+				$qDescuento .= "FROM $cAlfa.fpar0166 ";
 				$qDescuento .= "WHERE ";
-				$qDescuento .= "seridxxx = \"{$_POST['cSerId']}\" AND ";
-				$qDescuento .= "fcoidxxx = \"{$_POST['cFcoId']}\" AND ";
-				$qDescuento .= "descodxx = \"{$_POST['cDesCod']}\" AND ";
-				$qDescuento .= "desidxxx != \"{$_POST['cDesId']}\" LIMIT 0,1";
+				$qDescuento .= "coldesxx = \"{$_POST['cDesCod']}\" AND ";
+				$qDescuento .= "colorden = \"{$_POST['cSerId']}\" AND ";
+				// $qDescuento .= "colctoid = \"{$_POST['cDesCod']}\" AND ";
+				// $qDescuento .= "colctode = \"{$_POST['cDesCod']}\" AND ";
+				$qDescuento .= "colidxxx != \"{$_POST['cDesId']}\" LIMIT 0,1";
 				$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 				if (mysql_num_rows($xDescuento) > 0) {
 					$nSwitch = 1;
@@ -162,10 +163,11 @@
 	if ($nSwitch == 0) {
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
-				$qInsert = array(array('NAME'=>'seridxxx','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'fcoidxxx','VALUE'=>trim(strtoupper($_POST['cFcoId']))  ,'CHECK'=>'SI'),
-												array('NAME'=>'descodxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'desporce','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
+				$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])) ,'CHECK'=>'SI'),
+												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod']))  ,'CHECK'=>'SI'),
+												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
+												// array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
+												// array('NAME'=>'colctode','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
 												array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))            ,'CHECK'=>'SI'),
 												array('NAME'=>'regfcrex','VALUE'=>date('Y-m-d')		    							  ,'CHECK'=>'SI'),
 												array('NAME'=>'reghcrex','VALUE'=>date('H:i:s')	                      ,'CHECK'=>'SI'),
@@ -173,7 +175,7 @@
 												array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')                       ,'CHECK'=>'SI'),
 												array('NAME'=>'regestxx','VALUE'=>trim(strtoupper($_POST['cRegEst'])) ,'CHECK'=>'SI'));
 
-				if (f_MySql("INSERT","fpar0164",$qInsert,$xConexion01,$cAlfa)) {
+				if (f_MySql("INSERT","fpar0166",$qInsert,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
 					$cMsjExi = "Se Inserto el Registro con Exito.\n";
 				}else{
@@ -183,16 +185,17 @@
 				}
 			break;
 			case "EDITAR":
-				$qUpdate = array(array('NAME'=>'seridxxx','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'fcoidxxx','VALUE'=>trim(strtoupper($_POST['cFcoId']))  ,'CHECK'=>'SI'),
-												array('NAME'=>'descodxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'desporce','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
+				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])) ,'CHECK'=>'SI'),
+												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod']))  ,'CHECK'=>'SI'),
+												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
+												// array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
+												// array('NAME'=>'colctode','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
 												array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))            ,'CHECK'=>'SI'),
 												array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')    		                ,'CHECK'=>'SI'),
 												array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			  ,'CHECK'=>'SI'),
-												array('NAME'=>'desidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))  ,'CHECK'=>'WH'));
+												array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))  ,'CHECK'=>'WH'));
 
-				if (f_MySql("UPDATE","fpar0164",$qUpdate,$xConexion01,$cAlfa)) {
+				if (f_MySql("UPDATE","fpar0166",$qUpdate,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
 					$cMsjExi = "Se Edito el Registro con Exito.\n";
 				}else{
@@ -202,8 +205,8 @@
 				}
 			break;
 			case "BORRAR":
-				$qDelete = array(array('NAME'=>'desidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))   ,'CHECK'=>'WH'));
-				if (f_MySql("DELETE","fpar0164",$qDelete,$xConexion01,$cAlfa)) {
+				$qDelete = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))   ,'CHECK'=>'WH'));
+				if (f_MySql("DELETE","fpar0166",$qDelete,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
 					$cMsjExi = "Se Elimino el Registro con Exito.\n";
 				}else{

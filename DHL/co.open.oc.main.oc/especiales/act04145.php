@@ -3,7 +3,7 @@
   date_default_timezone_set('America/Bogota'); set_time_limit(0);
   define("_DATABASE_",trim($argv[3]));
   define("_LOTES_",10000);
-  define("_FILELOG_","act04074.log"); // Archivo de LOG
+  define("_FILELOG_","act04145.log"); // Archivo de LOG
   //define("_OCS_MYSQL_HOST_","localhost"); define("_OCS_MYSQL_USER_","admin"); define("_OCS_MYSQL_PASS_",'$AES-128-CBC$GMF4AdklEq61RNN6QP7BDw==$Glv++aeREZGkT9SDmFFjwQ=='); // Datos de Conexion a MYSQl
   //define("_OCS_MYSQL_HOST_","10.11.8.51"); define("_OCS_MYSQL_USER_",$argv[1]); define("_OCS_MYSQL_PASS_",$argv[2]); // Datos de Conexion a MYSQl - LAN Interna Repremundo
 
@@ -61,7 +61,7 @@
 
   for ($i=0;$i<count($aconn);$i++){
     $vdb  = $aconn[$i]['DB'];
-    $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\Agrega una tabla en la base de datos DEDHLEXPRE: ".$vdb;
+    $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\Agrega una nueva parametrica en el modulo de proyectos especiales: ".$vdb;
     system("/bin/echo -e '$cMsj' >> "._DIRLOG_._FILELOG_); echo "\n\n\n".$cMsj."\n\n\n";
     $oMigra->fnEjecutarQueries(0,100,$vdb);
   }
@@ -84,32 +84,71 @@
           $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t"."Se Selecciona BD: ".$pdb;
           system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo $cMsj."\n";
 
+          $qInsert  = "INSERT INTO sys00012 (";
+          $qInsert .= "modidxxx, proidxxx, prodirxx, modtipxx, modformx, moddesxx, modordxx, proparxx, proverxx, modimgon, modimgof, proalcxx, proclixx, regestxx";
+          $qInsert .= ") VALUES (";
+          $qInsert .= "\"4\", \"327\", \"\", \"2\", \"dhlexpre/conrefac/frcrfini.php\", \"Conceptos Reporte Facturacion DHL\", \"0327\", \"\", \"\", \"btn_action-log_bg5.gif\", \"btn_action-log-disabled_bg5.gif\", \"\", \"DHLEXPRE\", \"ACTIVO\")";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe crea opcion de menu Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError Al Crear la parametrica Conceptos Reporte Facturacion DHL";
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
 
-          $qCreate  = "CREATE TABLE fpar0166 ( ";
-					$qCreate .= "crfidxxx int(11) NOT NULL AUTO_INCREMENT COMMENT \"Id Texto Factura de Venta DHL\",";
-					$qCreate .= "crftitxx varchar(150) NOT NULL COMMENT \"Titulo\",";
-					$qCreate .= "crfcontx text NOT NULL COMMENT \"Contenido\",";
-					$qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
-					$qCreate .= "regfcrex date NOT NULL COMMENT \"Fecha de Creacion del Registro\",";
-					$qCreate .= "reghcrex time NOT NULL COMMENT \"Hora de Creacion del Registro\",";
-					$qCreate .= "regfmodx date NOT NULL COMMENT \"Fecha de Modificacion del Registro\",";
-					$qCreate .= "reghmodx time NOT NULL COMMENT \"Hora de Modificacion del Registro\",";
-					$qCreate .= "regestxx varchar(10) NOT NULL COMMENT \"Estado del Registro\",";
-					$qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
-					$qCreate .= "PRIMARY KEY (tfvidxxx)";
-					$qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Texto Factura de Venta DHL\" ";
+          $qInsert  = "INSERT INTO sys00013 (";
+          $qInsert .= "modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regfecxx, regmodxx, reghorxx, regestxx";
+          $qInsert .= ") VALUES (";
+          $qInsert .= "\"4\", \"327\", \"1\", \"frcrfnue.php\", \"NUEVO\", \"00001\", \"Nueva Columna\", \"btn_add-new-ticket_bg.gif\", \"btn_add-new-ticket-disabled_bg.gif\", \"\", \"\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Crea submenu interno en la opcion de menu Conceptos Reporte Facturacion DHL: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al Crear submenu interno en la opcion de menu Conceptos Reporte Facturacion DHL".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
 
-					$xCreate  = mysql_query($qCreate,_CONEXION_);
+          $qInsert  = "INSERT INTO sys00014 (";
+          $qInsert .= "usridxxx, modidxxx, proidxxx, menidxxx, regfecxx, regmodxx, reghorxx, regestxx";
+          $qInsert .= ") VALUES (";
+          $qInsert .= "\"ADMIN\", \"4\", \"327\", \"1\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe da acceso a la opcion de menu Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al dar acceso a la parametrica de Conceptos Reporte Facturacion DHL";
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
 
-					if ($xCreate) {
-						$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla fpar0166 en: ".$pdb;
-						system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
-					} else {
-						$nSwitch = 1;
-						$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qCreate." ~ ".mysql_error(_CONEXION_)."\tError Al Crear la Tabla fpar0166 en: ".$pdb;
-						system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
-					}
-
+          //Insertando el permiso para el usuario interno
+          $qUsuarios  = "SELECT USRIDXXX ";
+          $qUsuarios .= "FROM $pdb.SIAI0003 ";
+          $qUsuarios .= "WHERE ";
+          $qUsuarios .= "USRINTXX = \"SI\" ";
+          $xUsuarios  = mysql_query($qUsuarios,_CONEXION_);
+          $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qUsuarios." ~ ".mysql_num_rows($xUsuarios);
+          system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); //echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          while ($xRU = mysql_fetch_array($xUsuarios)) {
+            $qInsert  = "INSERT INTO $pdb.sys00014 (";
+            $qInsert .= "usridxxx, modidxxx, proidxxx, menidxxx, regfecxx, regmodxx, reghorxx, regestxx";
+            $qInsert .= ") VALUES (";
+            $qInsert .= "\"{$xRU['USRIDXXX']}\", \"4\", \"327\", \"1\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso para el Usuario Interno [{$xRU['USRIDXXX']}] Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso para el Usuario Interno [{$xRU['USRIDXXX']}] Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+          }
 
         } else {
           $nSwitch = 1;

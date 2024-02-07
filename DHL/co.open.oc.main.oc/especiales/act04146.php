@@ -3,7 +3,7 @@
   date_default_timezone_set('America/Bogota'); set_time_limit(0);
   define("_DATABASE_",trim($argv[3]));
   define("_LOTES_",10000);
-  define("_FILELOG_","act04074.log"); // Archivo de LOG
+  define("_FILELOG_","act04146.log"); // Archivo de LOG
   //define("_OCS_MYSQL_HOST_","localhost"); define("_OCS_MYSQL_USER_","admin"); define("_OCS_MYSQL_PASS_",'$AES-128-CBC$GMF4AdklEq61RNN6QP7BDw==$Glv++aeREZGkT9SDmFFjwQ=='); // Datos de Conexion a MYSQl
   //define("_OCS_MYSQL_HOST_","10.11.8.51"); define("_OCS_MYSQL_USER_",$argv[1]); define("_OCS_MYSQL_PASS_",$argv[2]); // Datos de Conexion a MYSQl - LAN Interna Repremundo
 
@@ -86,18 +86,20 @@
 
 
           $qCreate  = "CREATE TABLE fpar0166 ( ";
-					$qCreate .= "crfidxxx int(11) NOT NULL AUTO_INCREMENT COMMENT \"Id Texto Factura de Venta DHL\",";
-					$qCreate .= "crftitxx varchar(150) NOT NULL COMMENT \"Titulo\",";
-					$qCreate .= "crfcontx text NOT NULL COMMENT \"Contenido\",";
+					$qCreate .= "colidxxx int(3) NOT NULL COMMENT \"Id de la Columna\",";
+					$qCreate .= "coldesxx varchar(100) NOT NULL COMMENT \"Descripcion de la Columna\",";
+					$qCreate .= "colorden int(11) NOT NULL COMMENT \"Orden de la Columna\",";
+					$qCreate .= "colctoid text NOT NULL COMMENT \"Ids de los Conceptos de Cobro\",";
+					$qCreate .= "colctode varchar(255) NOT NULL COMMENT \"Descripcion del Concepto de Cobro\",";
 					$qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
 					$qCreate .= "regfcrex date NOT NULL COMMENT \"Fecha de Creacion del Registro\",";
 					$qCreate .= "reghcrex time NOT NULL COMMENT \"Hora de Creacion del Registro\",";
 					$qCreate .= "regfmodx date NOT NULL COMMENT \"Fecha de Modificacion del Registro\",";
 					$qCreate .= "reghmodx time NOT NULL COMMENT \"Hora de Modificacion del Registro\",";
-					$qCreate .= "regestxx varchar(10) NOT NULL COMMENT \"Estado del Registro\",";
-					$qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
-					$qCreate .= "PRIMARY KEY (tfvidxxx)";
-					$qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Texto Factura de Venta DHL\" ";
+					$qCreate .= "regestxx varchar(10) NOT NULL COMMENT \"Estado\",";
+					$qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Fecha y Hora que se Modifico el Registro\",";
+					$qCreate .= "PRIMARY KEY (colidxxx)";
+					$qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Conceptos Reporte Facturacion DHL\" ";
 
 					$xCreate  = mysql_query($qCreate,_CONEXION_);
 

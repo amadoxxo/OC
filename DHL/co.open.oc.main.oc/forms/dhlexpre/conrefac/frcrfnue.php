@@ -19,14 +19,16 @@
 	$kUser      = $kDf[4];
 	$kLicencia  = $kDf[5];
 	$swidth     = $kDf[6];
-	
+
 ?>
 <html>
 	<head>
-		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory_New ?>/estilo.css'>
-		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory_New ?>/general.css'>
-		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory_New ?>/layout.css'>
-		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory_New ?>/custom.css'>
+		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/estilo.css'>
+		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/general.css'>
+		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/layout.css'>
+		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/custom.css'>
+		<LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/overlib.css'>
+
 		<script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory_New ?>/utility.js'></script>
 		<script language="javascript">
 			function fnRetorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
@@ -75,6 +77,54 @@
 				}
 			}
 
+	<?php
+			$cTexto  = "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"680\">";
+			$cTexto .= "<tr bgcolor = \"".$vSysStr['system_row_title_color_ini']."\">";
+				$cTexto .= "<td Class = \"clase08\" width = \"20\" ><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:f_Links(\'cTributo\',\'VALID\')\" style = \"cursor:hand\" alt=\"Adicionar Tributo\" >" : "")."</center></td>";
+				$cTexto .= "<td Class = \"clase08\" width = \"160\" style=\"padding-left:5px\">C&oacute;digo</td>";
+				$cTexto .= "<td Class = \"clase08\" width = \"420\" style=\"padding-left:5px\">Descripci&oacute;n</td>";
+				$cTexto .= "<td Class = \"clase08\" width = \"80\" style=\"padding-left:5px\">Aplica para</td>";
+			$cTexto .= "</tr>";
+			//Primero Cargo una Matriz con los Clientes
+			if ($gCliTri != "") {
+				$mMatrizInt = explode("~",$gCliTri);
+														
+				$cadena = '';
+				$y = 0;
+				for ($i=0;$i<count($mMatrizInt);$i++) {
+					if ($mMatrizInt[$i] != "") {
+						$qTributo  = "SELECT triidxxx, tridesxx, triaplxx ";
+						$qTributo .= "FROM $cAlfa.fpar0153 ";
+						$qTributo .= "WHERE ";
+						$qTributo .= "triidxxx = \"{$mMatrizInt[$i]}\" AND ";
+						$qTributo .= "regestxx = \"ACTIVO\" LIMIT 0,1";
+						$xTributo = f_MySql("SELECT","",$qTributo,$xConexion01,"");
+
+						if (mysql_num_rows($xTributo) > 0) {							
+							while ($RTR = mysql_fetch_array($xTributo)) {
+								$y ++;
+
+								$cId 	= $RTR['triidxxx'];
+								$zColor = "{$vSysStr['system_row_impar_color_ini']}";
+								if($y % 2 == 0) {
+									$zColor = "{$vSysStr['system_row_par_color_ini']}";
+								}
+								$cTexto .= "<tr bgcolor = \"$zColor\" onmouseover=\"javascript:uRowColor(this,\'".$vSysStr['system_row_select_color_ini']."\')\" onmouseout=\"javascript:uRowColor(this,\'$zColor\')\">";
+									$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelTri(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Tributo: ".$mMatrizInt[$i]." - ".substr($RTR['tridesxx'],0,60)."\">" : "")."</center></td>";
+									$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($RTR['triidxxx'],0,10)."</td>";
+									$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($RTR['tridesxx'],0,60)."</td>";
+									$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".$RTR['triaplxx']."</td>";
+								$cTexto .= "</tr>";
+							}
+						}
+					}
+				}
+			}
+		$cTexto .= "</table>";  
+	?>
+
+		parent.fmwork.document.getElementById('overDivTri').innerHTML = '<?php echo $cTexto ?>';
+
 		</script>
 	</head>
 	<body topmargin = "0" leftmargin = "0" margnwidth = "0" marginheight = "0" style = "margin-right:0">
@@ -85,14 +135,13 @@
 						<fieldset>
 							<legend><?php echo ucfirst(strtolower($_COOKIE['kModo']))." ".$_COOKIE['kProDes'] ?></legend>
 							<form name = "frnav" action = "frcrfgra.php" method = "post" target = "fmpro">
-								<input type = "hidden" name = "cDesId" readonly>
+								<!-- <input type = "text" name = "cDesId" readonly> -->
 								<center>
 									<table border = "0" cellpadding = "0" cellspacing = "0" width="400">
 										<?php echo f_Columnas(20,20); ?>
-
 										<tr>
 											<td Class = "name" colspan = "2">Id<br>
-												<input type = "text" Class = "letra" style = "width:40;text-align:center" name = "cDesId" id="cDesId">
+												<input type = "text" Class = "letra" style = "width:40;text-align:center" name = "cDesId" id="cDesId" readonly>
 											</td>
 											<td Class = "name" colspan = "16">Descripci&oacute;n Columna<br>
 												<input type = "text" Class = "letra" style = "width:320" name = "cDesCod">
@@ -105,19 +154,8 @@
 											<td colspan = "20">
 											<fieldset>
 												<input type = 'hidden' name = 'cCliResFi'>
-												<legend>Responsabilidad Fiscal</legend>
-												<!-- <div id = 'overDivResFi'></div> -->
-												<!-- <table border="1" cellpadding="0" cellspacing="0" width="700"> -->
-													<tr bgcolor = "<?php $vSysStr['system_row_title_color_ini'] ?>">
-														<td Class = "clase08" width = "20">
-															<center>
-																<!-- (($_COOKIE['kModo'] != "VER") ? <img src = "$cPlesk_Skin_Directory."btn_create-dir_bg.gif" onClick ="javascript:f_Links('cTercero','VALID')" style = "cursor:hand" alt="Adicionar Vendedor"> : "")  -->
-															</center></td>
-														<td Class = "clase08" width = "120">Nit</td>
-														<td Class = "clase08" width = "20">DV</td>
-														<td Class = "clase08" width = "540">Nombre</td>
-													</tr>
-												<!-- </table> -->
+												<legend>Conceptos de Cobro</legend>
+												<div id = 'overDivTri'></div>
 											</fieldset>
 											</td>
 										</tr>
@@ -181,6 +219,23 @@
 		<?php
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
+
+				$nMaxId = 0;
+				$qMaximo  = "SELECT MAX(colidxxx) AS colidxxx ";
+				$qMaximo .= "FROM $cAlfa.fpar0166 ";
+				$xMaximo = f_MySql("SELECT","",$qMaximo,$xConexion01,"");
+				if (mysql_num_rows($xMaximo) > 0){
+					$vMaximo = mysql_fetch_array($xMaximo);
+					$nMaxId = $vMaximo['colidxxx'] + 1;
+				} else {
+					$nMaxId = 1;
+				}
+
+			?>
+				<script languaje = "javascript">
+					document.forms['frnav']['cDesId'].value = "<?php echo str_pad($nMaxId, 3, "00", STR_PAD_LEFT); ?>";
+				</script>
+				<?php
 			break;
 			case "EDITAR":
 				fnCargaData($gDesId); ?>
@@ -199,8 +254,9 @@
 				fnCargaData($gDesId);
 				?>
 				<script languaje = "javascript">
-					document.forms['frnav']['cDesCod'].readOnly  = true;
-					document.forms['frnav']['cDesPorc'].readOnly = true;
+					document.forms['frnav']['cDesId'].disabled  = true;
+					document.forms['frnav']['cDesCod'].disabled = true;
+					document.forms['frnav']['cSerId'].disabled  = true;
 					document.getElementById('lSerId').href = "javascript:alert('Opcion No Permitida')";
 					document.getElementById('lFcoId').href = "javascript:alert('Opcion No Permitida')";
 				</script>
@@ -220,15 +276,16 @@
 			$qDescuento .= "$cAlfa.fpar0166.reghcrex, ";
 			$qDescuento .= "$cAlfa.fpar0166.regfmodx, ";
 			$qDescuento .= "$cAlfa.fpar0166.reghmodx, ";
-			$qDescuento .= "$cAlfa.fpar0166.regestxx, ";
-			$qDescuento .= "IF($cAlfa.fpar0129.serdespx != \"\",$cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
-			$qDescuento .= "$cAlfa.fpar0129.fcoidxxx AS serfcoid, ";
-			$qDescuento .= "$cAlfa.fpar0130.fcodesxx ";
+			$qDescuento .= "$cAlfa.fpar0166.regestxx ";
+			// $qDescuento .= "IF($cAlfa.fpar0129.serdespx != \"\",$cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
+			// $qDescuento .= "$cAlfa.fpar0129.fcoidxxx AS serfcoid, ";
+			// $qDescuento .= "$cAlfa.fpar0130.fcodesxx ";
 			$qDescuento .= "FROM $cAlfa.fpar0166 ";
-			$qDescuento .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0166.colorden = $cAlfa.fpar0129.colorden ";
-			$qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0166.colctoid = $cAlfa.fpar0130.fcoidxxx ";
+			// $qDescuento .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0166.colorden = $cAlfa.fpar0129.colorden ";
+			// $qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0166.colctoid = $cAlfa.fpar0130.fcoidxxx ";
 			$qDescuento .= "WHERE ";
 			$qDescuento .= "colidxxx = \"$xDesId\" LIMIT 0,1";
+			// echo $qDescuento;
 			$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 			// f_Mensaje(__FILE__,__LINE__,$qDescuento."~".mysql_num_rows($xDescuento));
 			while ($xRDE = mysql_fetch_array($xDescuento)) {

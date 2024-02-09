@@ -86,7 +86,7 @@
 
 
           $qCreate  = "CREATE TABLE fpar0166 ( ";
-					$qCreate .= "colidxxx int(3) NOT NULL COMMENT \"Id de la Columna\",";
+					$qCreate .= "colidxxx varchar(3) NOT NULL COMMENT \"Id de la Columna\",";
 					$qCreate .= "coldesxx varchar(100) NOT NULL COMMENT \"Descripcion de la Columna\",";
 					$qCreate .= "colorden int(11) NOT NULL COMMENT \"Orden de la Columna\",";
 					$qCreate .= "colctoid text NOT NULL COMMENT \"Ids de los Conceptos de Cobro\",";

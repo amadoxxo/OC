@@ -75,6 +75,13 @@
 				$cMsj .= "El Codigo del Descuento No Puede Ser Vacio.\n";
 			}
 
+			// Validando el Codigo del Descuento
+			if ($_POST['cSerId'] < 0) {
+				$nSwitch = 1;
+				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+				$cMsj .= "El Codigo del Descuento No Puede ser menor a cero.\n";
+			}
+
 			// Validando el Porcentaje del Descuento
 			// if (empty($_POST['cDesPorc'])) {
 			// 	$nSwitch = 1;
@@ -132,16 +139,16 @@
 				$qDescuento  = "SELECT colidxxx ";
 				$qDescuento .= "FROM $cAlfa.fpar0166 ";
 				$qDescuento .= "WHERE ";
-				$qDescuento .= "coldesxx = \"{$_POST['cDesCod']}\" AND ";
-				$qDescuento .= "colorden = \"{$_POST['cSerId']}\" AND ";
+				// $qDescuento .= "colorden != \"{$_POST['cSerId']}\" AND";
+				$qDescuento .= "colorden =  \"{$_POST['cSerId']}\"";
 				// $qDescuento .= "colctoid = \"{$_POST['cDesCod']}\" AND ";
 				// $qDescuento .= "colctode = \"{$_POST['cDesCod']}\" AND ";
-				$qDescuento .= "colidxxx != \"{$_POST['cDesId']}\" LIMIT 0,1";
+				// $qDescuento .= "colidxxx != \"{$_POST['cDesId']}\" LIMIT 0,1";
 				$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 				if (mysql_num_rows($xDescuento) > 0) {
 					$nSwitch = 1;
 					$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-					$cMsj .= "Ya Existe un Descuento con Servicio [". $_POST['cSerId'] ."], Forma de Cobro [". $_POST['cFcoId'] ."] y Codigo [". $_POST['cDesCod'] ."].\n";
+					$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cSerId'] ."].\n";
 				}
 			}
 		break;
@@ -163,8 +170,8 @@
 	if ($nSwitch == 0) {
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
-				$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod']))  ,'CHECK'=>'SI'),
+				$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])),'CHECK'=>'SI'),
+												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])),'CHECK'=>'SI'),
 												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
 												// array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
 												// array('NAME'=>'colctode','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
@@ -177,16 +184,16 @@
 
 				if (f_MySql("INSERT","fpar0166",$qInsert,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
-					$cMsjExi = "Se Inserto el Registro con Exito.\n";
+					$cMsjExi = "Se Inserto la Columna con Exito.\n";
 				}else{
 					$nSwitch = 1;
 					$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-					$cMsj .= "Error Al Guardar el Descuento.\n";
+					$cMsj .= "Error Al Guardar la Columna.\n";
 				}
 			break;
 			case "EDITAR":
 				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod']))  ,'CHECK'=>'SI'),
+												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])) ,'CHECK'=>'SI'),
 												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
 												// array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
 												// array('NAME'=>'colctode','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),

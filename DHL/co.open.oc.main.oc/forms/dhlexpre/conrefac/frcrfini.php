@@ -44,7 +44,7 @@
 			function fnVer(xDesId) {
 				var ruta = "frcrfnue.php?gDesId="+xDesId;
 				document.cookie="kIniAnt=dhlexpre/conrefac/<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-				document.cookie="kMenDes=Ver Descuento;path="+"/";
+				document.cookie="kMenDes=Ver Columna;path="+"/";
 				document.cookie="kModo=VER;path="+"/";
 				parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_New ?>/nivel4.php";
 				document.location = ruta; // Invoco el menu.
@@ -57,7 +57,7 @@
 							var zMatriz = document.forms['frnav']['oCheck'].id.split('~');
 							var ruta = "frcrfnue.php?gDesId="+zMatriz[0];
 							document.cookie="kIniAnt=dhlexpre/conrefac/<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-							document.cookie="kMenDes=Editar Descuento;path="+"/";
+							document.cookie="kMenDes=Editar Columna;path="+"/";
 							document.cookie="kModo="+xModo+";path="+"/";
 							parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_New ?>/nivel4.php";
 							document.location = ruta; // Invoco el menu.
@@ -72,7 +72,7 @@
 								var zMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
 								var ruta = "frcrfnue.php?gDesId="+zMatriz[0];
 								document.cookie="kIniAnt=dhlexpre/conrefac/<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-								document.cookie="kMenDes=Editar Descuento;path="+"/";
+								document.cookie="kMenDes=Editar Columna;path="+"/";
 								document.cookie="kModo="+xModo+";path="+"/";
 								parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_New ?>/nivel4.php";
 								document.location = ruta; // Invoco el menu.
@@ -87,7 +87,7 @@
 					case "1":
 						if (document.forms['frnav']['oCheck'].checked == true) {
 							var zMatriz  = document.forms['frnav']['oCheck'].id.split("~");
-							var xMensaje = "Esta Seguro de BORRAR el Descuento con Id ["+zMatriz[0]+"].";
+							var xMensaje = "Esta Seguro de BORRAR la columna con Id ["+zMatriz[0]+"].";
 							if (confirm(xMensaje)) {
 								document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
 								document.cookie="kModo="+xModo+";path="+"/";
@@ -315,10 +315,9 @@
 					$qDescuento .= "($cAlfa.fpar0166.colidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.coldesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.colorden LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0129.serdespx LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0129.serdesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+					// $qDescuento .= "$cAlfa.fpar0129.serdespx LIKE \"%{$_POST['vSearch']}%\" OR ";
+					// $qDescuento .= "$cAlfa.fpar0129.serdesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.colctoid LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0130.fcodesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.colctode LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.regestxx LIKE \"%{$_POST['vSearch']}%\") ";
 				}
@@ -592,9 +591,9 @@
 												<td class="letra7"><?php echo $mDescuentos[$i]['colctoid'] ?></td>
 												<td class="letra7"><?php echo $mDescuentos[$i]['colctode'] ?></td>
 												<td class="letra7"><?php echo $mDescuentos[$i]['regfcrex'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['regfhrex'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['regfmodx']." ".$mDescuentos[$i]['reghcrex'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['reghmodx']." ".$mDescuentos[$i]['reghmodx'] ?></td>
+												<td class="letra7"><?php echo $mDescuentos[$i]['reghcrex'] ?></td>
+												<td class="letra7"><?php echo $mDescuentos[$i]['regfmodx'] ?></td>
+												<td class="letra7"><?php echo $mDescuentos[$i]['reghmodx'] ?></td>
 												<td class="letra7"><?php echo $mDescuentos[$i]['regestxx'] ?></td>
 												<td Class="letra7" align="right"><input type="checkbox" name="oCheck"  value = "<?php echo count($mDescuentos) ?>"
 													id="<?php echo $mDescuentos[$i]['colidxxx'].'~'.$mDescuentos[$i]['regestxx']?>"

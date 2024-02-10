@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Nuevo Descuento Conceptos Reporte Facturacion DHL
+	 * Nuevo Conceptos Reporte Facturacion DHL
 	 * --- Descripcion: Permite Crear Nuevo Concepto Reporte Facturacion DHL
 	 * @author Elian Amado Ramirez <elian.amado@openits.co>
 	 * @package openComex
@@ -71,59 +71,25 @@
 							zWindow.focus();
 						}
 					break;
+					case "cConceptoCobro":
+						var zTerId  =  document.forms['frnav']['cDesId'].value.toUpperCase();
+						var zNx     = (zX-580)/2;
+						var zNy     = (zY-500)/2;
+						var zWinPro = 'width=580,scrollbars=1,height=500,left='+zNx+',top='+zNy;
+						var zRuta   = 'frcrftrn.php?cDesId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value;
+						zWindow2    = window.open(zRuta,'zWindow2',zWinPro);
+						zWindow2.focus();
+					break;
 					default:
 						// no hace nada
 					break;
 				}
 			}
 
-	<?php
-			$cTexto  = "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"680\">";
-			$cTexto .= "<tr bgcolor = \"".$vSysStr['system_row_title_color_ini']."\">";
-				$cTexto .= "<td Class = \"clase08\" width = \"20\" ><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:f_Links(\'cTributo\',\'VALID\')\" style = \"cursor:hand\" alt=\"Adicionar Tributo\" >" : "")."</center></td>";
-				$cTexto .= "<td Class = \"clase08\" width = \"160\" style=\"padding-left:5px\">C&oacute;digo</td>";
-				$cTexto .= "<td Class = \"clase08\" width = \"420\" style=\"padding-left:5px\">Descripci&oacute;n</td>";
-				$cTexto .= "<td Class = \"clase08\" width = \"80\" style=\"padding-left:5px\">Aplica para</td>";
-			$cTexto .= "</tr>";
-			//Primero Cargo una Matriz con los Clientes
-			if ($gCliTri != "") {
-				$mMatrizInt = explode("~",$gCliTri);
-														
-				$cadena = '';
-				$y = 0;
-				for ($i=0;$i<count($mMatrizInt);$i++) {
-					if ($mMatrizInt[$i] != "") {
-						$qTributo  = "SELECT triidxxx, tridesxx, triaplxx ";
-						$qTributo .= "FROM $cAlfa.fpar0153 ";
-						$qTributo .= "WHERE ";
-						$qTributo .= "triidxxx = \"{$mMatrizInt[$i]}\" AND ";
-						$qTributo .= "regestxx = \"ACTIVO\" LIMIT 0,1";
-						$xTributo = f_MySql("SELECT","",$qTributo,$xConexion01,"");
-
-						if (mysql_num_rows($xTributo) > 0) {							
-							while ($RTR = mysql_fetch_array($xTributo)) {
-								$y ++;
-
-								$cId 	= $RTR['triidxxx'];
-								$zColor = "{$vSysStr['system_row_impar_color_ini']}";
-								if($y % 2 == 0) {
-									$zColor = "{$vSysStr['system_row_par_color_ini']}";
-								}
-								$cTexto .= "<tr bgcolor = \"$zColor\" onmouseover=\"javascript:uRowColor(this,\'".$vSysStr['system_row_select_color_ini']."\')\" onmouseout=\"javascript:uRowColor(this,\'$zColor\')\">";
-									$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelTri(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Tributo: ".$mMatrizInt[$i]." - ".substr($RTR['tridesxx'],0,60)."\">" : "")."</center></td>";
-									$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($RTR['triidxxx'],0,10)."</td>";
-									$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($RTR['tridesxx'],0,60)."</td>";
-									$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".$RTR['triaplxx']."</td>";
-								$cTexto .= "</tr>";
-							}
-						}
-					}
-				}
+			function fnCargarGrillas() {
+					var cRuta = "frcrfgri.php?gTipo=1&gDesId=<?php echo $cDesId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value;
+					parent.fmpro.location = cRuta;
 			}
-		$cTexto .= "</table>";  
-	?>
-
-		parent.fmwork.document.getElementById('overDivTri').innerHTML = '<?php echo $cTexto ?>';
 
 		</script>
 	</head>
@@ -153,9 +119,9 @@
 										<tr>
 											<td colspan = "20">
 											<fieldset>
-												<input type = 'hidden' name = 'cCliResFi'>
+												<input type = "hidden" name = "cColCtoId">
 												<legend>Conceptos de Cobro</legend>
-												<div id = 'overDivTri'></div>
+												<div id = "overDivVen"></div>
 											</fieldset>
 											</td>
 										</tr>
@@ -219,7 +185,6 @@
 		<?php
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
-
 				$nMaxId = 0;
 				$qMaximo  = "SELECT MAX(colidxxx) AS colidxxx ";
 				$qMaximo .= "FROM $cAlfa.fpar0166 ";
@@ -230,16 +195,17 @@
 				} else {
 					$nMaxId = 1;
 				}
-
 			?>
 				<script languaje = "javascript">
 					document.forms['frnav']['cDesId'].value = "<?php echo str_pad($nMaxId, 3, "00", STR_PAD_LEFT); ?>";
+					fnCargarGrillas();
 				</script>
 				<?php
 			break;
 			case "EDITAR":
 				fnCargaData($gDesId); ?>
 				<script languaje = "javascript">
+					fnCargarGrillas();
 					document.forms['frnav']['dRegFCre'].readOnly = true;
 					document.forms['frnav']['tRegHCre'].readOnly = true;
 					document.forms['frnav']['cRegEst'].readOnly  = true;
@@ -254,11 +220,12 @@
 				fnCargaData($gDesId);
 				?>
 				<script languaje = "javascript">
+					fnCargarGrillas();
 					document.forms['frnav']['cDesId'].disabled  = true;
 					document.forms['frnav']['cDesCod'].disabled = true;
 					document.forms['frnav']['cSerId'].disabled  = true;
-					document.getElementById('lSerId').href = "javascript:alert('Opcion No Permitida')";
-					document.getElementById('lFcoId').href = "javascript:alert('Opcion No Permitida')";
+					// document.getElementById('lSerId').href = "javascript:alert('Opcion No Permitida')";
+					// document.getElementById('lFcoId').href = "javascript:alert('Opcion No Permitida')";
 				</script>
 				<?php
 			break;
@@ -291,11 +258,11 @@
 			while ($xRDE = mysql_fetch_array($xDescuento)) {
 				?>
 				<script language = "javascript">
-					document.forms['frnav']['cDesId'].value   = "<?php echo $xRDE['colidxxx'] ?>";
-					document.forms['frnav']['cDesCod'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
-					document.forms['frnav']['cSerId'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
-					document.forms['frnav']['cSerDes'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serdesxx']) ?>";
-					document.forms['frnav']['cFcoId'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
+					document.forms['frnav']['cDesId'].value    = "<?php echo $xRDE['colidxxx'] ?>";
+					document.forms['frnav']['cDesCod'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
+					document.forms['frnav']['cSerId'].value    = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
+					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
+					document.forms['frnav']['cSerDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serdesxx']) ?>";
 					document.forms['frnav']['cFcoDes'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['fcodesxx']) ?>";
 					document.forms['frnav']['cFcoIds'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serfcoid']) ?>";
 					document.forms['frnav']['cDesPorc'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctode']) ?>";

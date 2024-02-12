@@ -76,7 +76,7 @@
 						var zNx     = (zX-580)/2;
 						var zNy     = (zY-500)/2;
 						var zWinPro = 'width=580,scrollbars=1,height=500,left='+zNx+',top='+zNy;
-						var zRuta   = 'frcrftrn.php?cDesId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value;
+						var zRuta   = 'frcrftrn.php?cDesId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value+"&gDesPorc="+document.forms['frnav']['cDesPorc'].value;
 						zWindow2    = window.open(zRuta,'zWindow2',zWinPro);
 						zWindow2.focus();
 					break;
@@ -86,8 +86,15 @@
 				}
 			}
 
+			function uDelRes(valor,fecha)	{
+				if (confirm('ELIMINAR LA RESPONSABILIDAD FISCAL '+valor+'?'))	{
+					var ruta = "frcrftrg.php?cDesId=<?php echo $cDesId ?>&tipsave=4&cIntId="+valor+"&cColCtoId="+document.forms['frnav']['cColCtoId'].value;
+					parent.fmpro.location = ruta;
+				}
+			}
+
 			function fnCargarGrillas() {
-					var cRuta = "frcrfgri.php?gTipo=1&gDesId=<?php echo $cDesId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value;
+					var cRuta = "frcrfgri.php?gTipo=1&gDesId=<?php echo $cDesId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value+"&gDesPorc="+document.forms['frnav']['cDesPorc'].value;
 					parent.fmpro.location = cRuta;
 			}
 
@@ -120,7 +127,7 @@
 											<td colspan = "20">
 											<fieldset>
 												<input type = "hidden" name = "cColCtoId">
-												<!-- <input type = "hidden" name = "cDesPorc"> -->
+												<input type = "hidden" name = "cDesPorc">
 												<legend>Conceptos de Cobro</legend>
 												<div id = "overDivVen"></div>
 											</fieldset>
@@ -253,7 +260,6 @@
 			// $qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0166.colctoid = $cAlfa.fpar0130.fcoidxxx ";
 			$qDescuento .= "WHERE ";
 			$qDescuento .= "colidxxx = \"$xDesId\" LIMIT 0,1";
-			// echo $qDescuento;
 			$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 			// f_Mensaje(__FILE__,__LINE__,$qDescuento."~".mysql_num_rows($xDescuento));
 			while ($xRDE = mysql_fetch_array($xDescuento)) {

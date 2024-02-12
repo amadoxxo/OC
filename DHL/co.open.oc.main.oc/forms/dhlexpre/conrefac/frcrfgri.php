@@ -15,8 +15,9 @@ if (isset($gParametro)) {
 		if ($mAux[$i][0] != "") {
 			switch ($mAux[$i][0]) {
 				case "1";
-					$vTipos[] = $mAux[$i][0];
+					$vTipos[]  = $mAux[$i][0];
 					$gColCtoId = $mAux[$i][1];
+					$gDesPorc  = $mAux[$i][2];
 				break;
 				default:
 					//No hace nada
@@ -37,7 +38,7 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 				$cTexto .= "</tr>";
 				//Primero Cargo una Matriz con los Clientes
 				if ($gColCtoId != "") {
-					$mMatrizInt = explode("~",$gColCtoId);
+					$mMatrizInt = explode(",",$gColCtoId);
 															
 					$cadena = '';
 					$y = 0;
@@ -63,6 +64,7 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 										$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelRes(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Responsabilidad Fiscal: ".$mMatrizInt[$i]." - ".substr($xRRF['seridxxx'],0,60)."\">" : "")."</center></td>";
 										$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($xRRF['seridxxx'],0,10)."</td>";
 										$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($xRRF['serdespx'],0,60)."</td>";
+										$cTexto .= "<td></td>";
 									$cTexto .= "</tr>";
 								}
 							}

@@ -168,28 +168,34 @@
 	 */
 
 	if ($nSwitch == 0) {
+
+		$vCodigos = explode(",", $_POST['cColCtoId']);
+		$qSelect = "SELECT * FROM $cAlfa.fpar0129 WHERE seridxxx = \"{$vCodigos[0]}\"";
+		$xSelect  = f_MySql("SELECT","",$qSelect,$xConexion01,"");
+		$vSelect = mysql_fetch_array($xSelect);
+	
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
-				$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])),'CHECK'=>'SI'),
-												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])),'CHECK'=>'SI'),
-												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
-												array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId'])),'CHECK'=>'SI'),
-												// array('NAME'=>'colctode','VALUE'=>trim(strtoupper($_POST['cDesPorc'])),'CHECK'=>'SI'),
-												array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))            ,'CHECK'=>'SI'),
-												array('NAME'=>'regfcrex','VALUE'=>date('Y-m-d')		    							  ,'CHECK'=>'SI'),
-												array('NAME'=>'reghcrex','VALUE'=>date('H:i:s')	                      ,'CHECK'=>'SI'),
-												array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			  ,'CHECK'=>'SI'),
-												array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')                       ,'CHECK'=>'SI'),
-												array('NAME'=>'regestxx','VALUE'=>trim(strtoupper($_POST['cRegEst'])) ,'CHECK'=>'SI'));
+					$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])),'CHECK'=>'SI'),
+													array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])),'CHECK'=>'SI'),
+													array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,'CHECK'=>'SI'),
+													array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId'])),'CHECK'=>'SI'),
+													array('NAME'=>'colctode','VALUE'=>trim(strtoupper($vSelect['serdespx'])),'CHECK'=>'SI'),
+													array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))            ,'CHECK'=>'SI'),
+													array('NAME'=>'regfcrex','VALUE'=>date('Y-m-d')		    							  ,'CHECK'=>'SI'),
+													array('NAME'=>'reghcrex','VALUE'=>date('H:i:s')	                      ,'CHECK'=>'SI'),
+													array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			  ,'CHECK'=>'SI'),
+													array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')                       ,'CHECK'=>'SI'),
+													array('NAME'=>'regestxx','VALUE'=>trim(strtoupper($_POST['cRegEst'])) ,'CHECK'=>'SI'));
 
-				if (f_MySql("INSERT","fpar0166",$qInsert,$xConexion01,$cAlfa)) {
-					/***** Grabo Bien *****/
-					$cMsjExi = "Se Inserto la Columna con Exito.\n";
-				}else{
-					$nSwitch = 1;
-					$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-					$cMsj .= "Error Al Guardar la Columna.\n";
-				}
+					if (f_MySql("INSERT","fpar0166",$qInsert,$xConexion01,$cAlfa)) {
+						/***** Grabo Bien *****/
+						$cMsjExi = "Se Inserto la Columna con Exito.\n";
+					}else{
+						$nSwitch = 1;
+						$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+						$cMsj .= "Error Al Guardar la Columna.\n";
+					}
 			break;
 			case "EDITAR":
 				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])) ,'CHECK'=>'SI'),

@@ -15,11 +15,11 @@
       if ($fl == 1) {
         $cCadena = "";
         if ($cColCtoId != "") {
-          $mMatrizInt = explode("~",$cColCtoId);
+          $mMatrizInt = explode(",",$cColCtoId);
           for ($i=0;$i<count($mMatrizInt);$i++) {
             if ($mMatrizInt[$i] != "") {
               if ($mMatrizInt[$i] != $cIntId) {
-                $cCadena .= $mMatrizInt[$i]."~";
+                $cCadena .= $mMatrizInt[$i].",";
               }
             }
           }
@@ -28,11 +28,12 @@
           }
         }
 
-        if ($cCadena == "~")  {
+        if ($cCadena == ",")  {
           $cCadena = "";
         } ?>
           <script languaje = 'javascript'>
             parent.fmwork.document.forms['frnav']['cColCtoId'].value = "<?php echo $cCadena ?>";
+            parent.fmwork.document.forms['frnav']['cDesPorc'].value = "<?php echo $cCadena ?>";
             parent.fmwork.fnCargarGrillas();
           </script>
       <?php }
@@ -43,14 +44,14 @@
       }
 
       if (strlen($cCadena) > 0) {
-        $mMatrizVen = explode("~",$cCadena);
-        $zMatrizAnt = explode("~",$vCadenaAnt);
+        $mMatrizVen = explode(",",$cCadena);
+        $zMatrizAnt = explode(",",$vCadenaAnt);
         
-        $vCadenaAnt = ($vCadenaAnt != "") ? $vCadenaAnt."~" : "";
+        $vCadenaAnt = ($vCadenaAnt != "") ? $vCadenaAnt."," : "";
         for ($i=0;$i<count($mMatrizVen);$i++) {
           if (in_array($mMatrizVen[$i],$zMatrizAnt) == false) {
             if(trim($mMatrizVen[$i]) != ""){
-              $vCadenaAnt .= $mMatrizVen[$i]."~";
+              $vCadenaAnt .= $mMatrizVen[$i].",";
             }
           }
         }

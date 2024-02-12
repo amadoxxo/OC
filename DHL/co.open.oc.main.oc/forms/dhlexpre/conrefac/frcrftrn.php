@@ -19,7 +19,7 @@
 		function fnGuardar(){
 			var cadeni  = document.forms['frcotoplo']['cCadena'].value;
 			if (cadeni.length > 1)	{
-				var cRuta = "frcrftrg.php?cDesId=<?php echo $cDesId ?>&cCadena="+cadeni+"&cColCtoId="+window.opener.document.forms['frnav']['cColCtoId'].value+"&tipsave=5";
+				var cRuta = "frcrftrg.php?cDesId=<?php echo $cDesId ?>&cCadena="+cadeni+"&cColCtoId="+window.opener.document.forms['frnav']['cColCtoId'].value+"&cDesPorc="+window.opener.document.forms['frnav']['cDesPorc'].value+"&tipsave=5";
 				var Msj  = f_makeRequest(cRuta);
 			}	else	{
 				alert('Debe Seleccionar un Tributo.\nVerifique.');
@@ -63,6 +63,7 @@
 						var mRetorno = cRetorno.split("|");
 						if (mRetorno[0] == "true") {
 							window.opener.document.forms['frnav']['cColCtoId'].value = mRetorno[1];
+							window.opener.document.forms['frnav']['cDesPorc'].value = mRetorno[2];
 							window.opener.fnCargarGrillas();                
 							window.close();
 						} else {
@@ -83,7 +84,7 @@
 			if (fld.checked == true)	{
 				name = 'ON';
 			}
-			var otra = fld.name+'~';
+			var otra = fld.name+',';
 			if (name == 'ON')	{
 				if (cade.indexOf(otra) < 0) {
 					cade = cade + otra;
@@ -99,7 +100,7 @@
 	</head>
 	<body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
 		<?php
-		$mCadena = explode("~",$gColCtoId);
+		$mCadena = explode(",",$gColCtoId);
 		$mTributo = array();
 		for($i=0;$i<count($mCadena);$i++){
 			if ($mCadena[$i] != "") {

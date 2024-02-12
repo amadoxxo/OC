@@ -120,6 +120,7 @@
 											<td colspan = "20">
 											<fieldset>
 												<input type = "hidden" name = "cColCtoId">
+												<!-- <input type = "hidden" name = "cDesPorc"> -->
 												<legend>Conceptos de Cobro</legend>
 												<div id = "overDivVen"></div>
 											</fieldset>
@@ -205,7 +206,6 @@
 			case "EDITAR":
 				fnCargaData($gDesId); ?>
 				<script languaje = "javascript">
-					fnCargarGrillas();
 					document.forms['frnav']['dRegFCre'].readOnly = true;
 					document.forms['frnav']['tRegHCre'].readOnly = true;
 					document.forms['frnav']['cRegEst'].readOnly  = true;
@@ -213,6 +213,7 @@
 					document.forms['frnav']['tRegHMod'].value    = "<?php echo date('H:i:s') ; ?>";
 					document.forms['frnav']['cDesCod'].onfocus   = "";
 					document.forms['frnav']['cDesCod'].onblur    = "";
+					fnCargarGrillas();
 				</script>
 				<?php
 			break;
@@ -220,10 +221,10 @@
 				fnCargaData($gDesId);
 				?>
 				<script languaje = "javascript">
-					fnCargarGrillas();
 					document.forms['frnav']['cDesId'].disabled  = true;
 					document.forms['frnav']['cDesCod'].disabled = true;
 					document.forms['frnav']['cSerId'].disabled  = true;
+					fnCargarGrillas();
 					// document.getElementById('lSerId').href = "javascript:alert('Opcion No Permitida')";
 					// document.getElementById('lFcoId').href = "javascript:alert('Opcion No Permitida')";
 				</script>
@@ -262,10 +263,10 @@
 					document.forms['frnav']['cDesCod'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
 					document.forms['frnav']['cSerId'].value    = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
 					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
+					document.forms['frnav']['cDesPorc'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctode']) ?>";
 					document.forms['frnav']['cSerDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serdesxx']) ?>";
 					document.forms['frnav']['cFcoDes'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['fcodesxx']) ?>";
 					document.forms['frnav']['cFcoIds'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serfcoid']) ?>";
-					document.forms['frnav']['cDesPorc'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctode']) ?>";
 					document.forms['frnav']['dRegFCre'].value = "<?php echo $xRDE['regfcrex'] ?>";
 					document.forms['frnav']['dRegFMod'].value = "<?php echo $xRDE['regfmodx'] ?>";
 					document.forms['frnav']['tRegHCre'].value = "<?php echo $xRDE['reghcrex'] ?>";

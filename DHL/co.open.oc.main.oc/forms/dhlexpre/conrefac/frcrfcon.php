@@ -19,15 +19,15 @@
 		function fnGuardar(){
 			var cadeni  = document.forms['frcotoplo']['cCadena'].value;
 			if (cadeni.length > 1)	{
-				var cRuta = "frcrftrg.php?cDesId=<?php echo $cDesId ?>&cCadena="+cadeni+"&cColCtoId="+window.opener.document.forms['frnav']['cColCtoId'].value+"&cDesPorc="+window.opener.document.forms['frnav']['cDesPorc'].value+"&tipsave=5";
-				var Msj  = f_makeRequest(cRuta);
+				var cRuta = "frcrfcog.php?cDesId=<?php echo $cDesId ?>&cCadena="+cadeni+"&cColCtoId="+window.opener.document.forms['frnav']['cColCtoId'].value+"&tipsave=5";
+				var Msj  = fnMakeRequest(cRuta);
 			}	else	{
-				alert('Debe Seleccionar un Tributo.\nVerifique.');
+				alert('Debe Seleccionar un Concepto de Cobro.\nVerifique.');
 			}
 		}
 
 		//Funcion para cargar y validar los documentos de requisitos legales de un cliente
-		function f_makeRequest(xRuta){
+		function fnMakeRequest(xRuta){
 			http_request = false;
 			if (window.XMLHttpRequest) { // Mozilla, Safari,...
 				http_request = new XMLHttpRequest();
@@ -49,12 +49,12 @@
 				return false;
 			}
 			
-			http_request.onreadystatechange = f_alertContents;
+			http_request.onreadystatechange = fnAlertContents;
 			http_request.open('GET', xRuta, true);
 			http_request.send(null);
 		}
 			
-		function f_alertContents() {
+		function fnAlertContents() {
 			if(http_request.readyState==1){          
 			}else if(http_request.readyState == 4) {
 				if (http_request.status == 200) {
@@ -63,7 +63,6 @@
 						var mRetorno = cRetorno.split("|");
 						if (mRetorno[0] == "true") {
 							window.opener.document.forms['frnav']['cColCtoId'].value = mRetorno[1];
-							window.opener.document.forms['frnav']['cDesPorc'].value = mRetorno[2];
 							window.opener.fnCargarGrillas();                
 							window.close();
 						} else {
@@ -78,7 +77,7 @@
 			}
 		}
 
-		function f_Co(fld){
+		function fnCo(fld){
 			var cade = document.forms['frcotoplo']['cCadena'].value;
 			var name = 'OFF';
 			if (fld.checked == true)	{
@@ -112,93 +111,92 @@
 			<input type = 'hidden' name = 'cCadena' value = '<?php echo $cCadena ?>' style='width:500px' readonly>
 		</form>
 
-	  <center>
+		<center>
 			<table border ="0" cellpadding="0" cellspacing="0" width="450">
 				<tr>
 					<td>
 						<fieldset>
-			   			<legend>Conceptos de Cobro</legend>
-	  					<form name = "frnav" action = "" method = "post" target = "fmpro">
-	  						<?php
+							<legend>Conceptos de Cobro</legend>
+							<form name = "frnav" action = "" method = "post" target = "fmpro">
+							<?php
 								$qTributo  = "SELECT ";
-	  						$qTributo .= "seridxxx,";
+								$qTributo .= "seridxxx,";
 								$qTributo .= "serdespx,";
 								$qTributo .= "sertopxx,";
-	  						$qTributo .= "regestxx ";																								
+								$qTributo .= "regestxx ";																								
 								$qTributo .= "FROM $cAlfa.fpar0129 ";
 								$qTributo .= "WHERE ";
 								$qTributo .= "regestxx = \"ACTIVO\" ORDER BY seridxxx";
 								$xTributo  = f_MySql("SELECT","",$qTributo,$xConexion01,"");
 
 								if (mysql_num_rows($xTributo) > 0) {
-									?>
-									<center>
-					    			<table cellspacing = "0" cellpadding = "1" border = "1" width = "450">
-											<tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
-												<td widht = "020" Class = "name"><center>ID</center></td>
-												<td widht = "240" Class = "name"><center>Descripci&oacute;n Personalizada</center></td>
-												<td widht = "030" Class = "name"><center>Operaci&oacute;n</center></td>
-												<td widht = "020" Class = "name"><center>Estado</center></td>
-											</tr>
-											<?php
-											$y = 0;
-											$cont = 0;
-											while ($xRTR = mysql_fetch_array($xTributo)) {
-											  $cvb  = 0;
-                        if (in_array($xRTR['seridxxx'],$mTributo) == true) {
-                         	$cvb = 1;
-                        }							          
-												
-							          if ($cvb == 0)	{
-							          	$y ++;
-							          	$cont++;
-										    	$zColor = "{$vSysStr['system_row_impar_color_ini']}";
-								          if($y % 2 == 0) {
-								          	$zColor = "{$vSysStr['system_row_par_color_ini']}";
-													}
-													?>
-											   	<tr bgcolor = "<?php echo $zColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $zColor ?>')">
+							?>
+								<center>
+									<table cellspacing = "0" cellpadding = "1" border = "1" width = "450">
+										<tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
+											<td widht = "020" Class = "name"><center>ID</center></td>
+											<td widht = "240" Class = "name"><center>Descripci&oacute;n Personalizada</center></td>
+											<td widht = "030" Class = "name"><center>Operaci&oacute;n</center></td>
+											<td widht = "020" Class = "name"><center>Estado</center></td>
+										</tr>
+									<?php
+										$y = 0;
+										$cont = 0;
+										while ($xRTR = mysql_fetch_array($xTributo)) {
+											$cvb  = 0;
+											if (in_array($xRTR['seridxxx'],$mTributo) == true) {
+												$cvb = 1;
+											}
+											if ($cvb == 0)	{
+												$y ++;
+												$cont++;
+												$zColor = "{$vSysStr['system_row_impar_color_ini']}";
+												if($y % 2 == 0) {
+													$zColor = "{$vSysStr['system_row_par_color_ini']}";
+												}
+												?>
+													<tr bgcolor = "<?php echo $zColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $zColor ?>')">
 														<td style='width: 060px' Class = 'letra7'><?php echo $xRTR['seridxxx'] ?></td>
 														<td style='width: 240px' Class = 'letra7'><?php echo substr($xRTR['serdespx'],0,45) ?></td>
 														<td style='width: 080px' Class = 'letra7'><?php echo $xRTR['sertopxx'] ?></td>
 														<td style='width: 050px' Class = 'letra7'><?php echo $xRTR['regestxx'] ?></td>
-														<td style='width: 020px' Class = 'letra7'><center><input type = 'checkbox' style = 'width:20' name = '<?php echo $xRTR['seridxxx'] ?>' onClick ='javascript:f_Co(this)'></center></td>
+														<td style='width: 020px' Class = 'letra7'><center><input type = 'checkbox' style = 'width:20' name = '<?php echo $xRTR['seridxxx'] ?>' onClick ='javascript:fnCo(this)'></center></td>
 													</tr>
-													<?php
-							          }
-							        }
-							        ?>
-										</table>
-									</center>
-									<?php
+												<?php
+											}
+										}
+									?>
+									</table>
+								</center>
+								<?php
 									if ($cont == 0)	{
 										?>
 										<script languaje='javascript'>
-											alert('Ya tiene asignados todos los Tributos Existentes.');
+											alert('Ya tiene asignados todos los Conceptos de Cobro Existentes.');
 											window.close();
 										</script>
 										<?php
 									}
-									?>
-									<center>
-		      		    	<table border="0" cellpadding="0" cellspacing="0" width="450">
-                      <tr height="21">
-                        <td width="268" height="21"></td>
-                        <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif" style="cursor:hand" onClick = 'javascript:fnGuardar()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guardar</td>
-                        <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:window.close()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
-                      </tr>
-                    </table>
-									</center>
-									<?php
-								}	else {
-				 					f_Mensaje(__FILE__,__LINE__,"No Se Encontraron Registros");
-				 				}
-	  						?>
-	  					</form>
-	  				</fieldset>
-	  			</td>
-	  		</tr>
-	  	</table>
-	  </center>
+								?>
+								<center>
+									<table border="0" cellpadding="0" cellspacing="0" width="450">
+										<tr height="21">
+											<td width="268" height="21"></td>
+											<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif" style="cursor:hand" onClick = 'javascript:fnGuardar()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guardar</td>
+											<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:window.close()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
+										</tr>
+									</table>
+								</center>
+								<?php
+									}	else {
+										f_Mensaje(__FILE__,__LINE__,"No Se Encontraron Registros");
+									}
+								?>
+							</form>
+						</fieldset>
+					</td>
+				</tr>
+			</table>
+		</center>
 	</body>
 </html>

@@ -32,7 +32,7 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 		case "1": //Responsabilidad Fiscal
 			$cTexto  = "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"370\">";
 				$cTexto .= "<tr bgcolor = \"".$vSysStr['system_row_title_color_ini']."\">";
-					$cTexto .= "<td Class = \"clase08\" width = \"10\" ><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:fnLinks(\'cConceptoCobro\',\'VALID\')\" style = \"cursor:hand\" alt=\"Adicionar Responsabilidad Fiscal\" >" : "")."</center></td>";
+					$cTexto .= "<td Class = \"clase08\" width = \"10\" ><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:fnLinks(\'cConceptoCobro\',\'VALID\')\" style = \"cursor:hand\" alt=\"Adicionar \" >" : "")."</center></td>";
 					$cTexto .= "<td Class = \"clase08\" width = \"60\" style=\"padding-left:5px\">ID</td>";
 					$cTexto .= "<td Class = \"clase08\" width = \"300\" style=\"padding-left:5px\">Descripci&oacute;n Personalizada</td>";
 				$cTexto .= "</tr>";
@@ -61,10 +61,9 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 										$zColor = "{$vSysStr['system_row_par_color_ini']}";
 									}
 									$cTexto .= "<tr bgcolor = \"$zColor\" onmouseover=\"javascript:uRowColor(this,\'".$vSysStr['system_row_select_color_ini']."\')\" onmouseout=\"javascript:uRowColor(this,\'$zColor\')\">";
-										$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelRes(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Responsabilidad Fiscal: ".$mMatrizInt[$i]." - ".substr($xRRF['seridxxx'],0,60)."\">" : "")."</center></td>";
+										$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelRes(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Conceptos de Cobro: ".$mMatrizInt[$i]." - ".substr($xRRF['seridxxx'],0,60)."\">" : "")."</center></td>";
 										$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($xRRF['seridxxx'],0,10)."</td>";
 										$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($xRRF['serdespx'],0,60)."</td>";
-										$cTexto .= "<td></td>";
 									$cTexto .= "</tr>";
 								}
 							}
@@ -82,4 +81,3 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 	}
 }
 ?>
-	

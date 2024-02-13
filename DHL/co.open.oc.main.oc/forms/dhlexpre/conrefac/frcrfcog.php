@@ -6,7 +6,7 @@
 	include("../../../libs/php/utility.php");
 
   switch ($tipsave) {
-    case "4": //Eliminar Responsabilidad Fiscal
+    case "4": // Eliminar Concepto de Cobro.
       $fl = 1;
       if(strlen($cIntId)== 0){
         $fl = 0;
@@ -33,7 +33,6 @@
         } ?>
           <script languaje = 'javascript'>
             parent.fmwork.document.forms['frnav']['cColCtoId'].value = "<?php echo $cCadena ?>";
-            parent.fmwork.document.forms['frnav']['cDesPorc'].value = "<?php echo $cCadena ?>";
             parent.fmwork.fnCargarGrillas();
           </script>
       <?php }
@@ -62,7 +61,7 @@
       if (strlen($cCadena) > 0){
         $cMsj = "true|".trim($vCadenaAnt);
       } else {
-        $cMsj = "false|No selecciono ninguna Responsabilidad Fiscal para adicionar.";
+        $cMsj = "false|No selecciono ningun Concepto de Cobro.";
       }
       echo $cMsj;
     break;

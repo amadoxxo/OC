@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Tracking Conceptos Reporte Facturacion DHL
-	 * --- Descripcion: Parametrica para Creacion/Edicion Conceptos Reporte Facturacion DHL
+	 * --- Descripcion: Parametrica para Creación/Edición Conceptos Reporte Facturacion DHL
 	 * @author Elian Amado Ramirez <elian.amado@openits.co>
 	 * @version 001
 	 */
@@ -315,8 +315,6 @@
 					$qDescuento .= "($cAlfa.fpar0166.colidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.coldesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.colorden LIKE \"%{$_POST['vSearch']}%\" OR ";
-					// $qDescuento .= "$cAlfa.fpar0129.serdespx LIKE \"%{$_POST['vSearch']}%\" OR ";
-					// $qDescuento .= "$cAlfa.fpar0129.serdesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.colctoid LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.colctode LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qDescuento .= "$cAlfa.fpar0166.regestxx LIKE \"%{$_POST['vSearch']}%\") ";
@@ -519,19 +517,19 @@
 												<input type = "hidden" name = "coldesxx" value = "<?php echo $_POST['coldesxx'] ?>" id = "coldesxx">
 												<script language="javascript">fnOrderBy('','coldesxx')</script>
 											</td>
-											<td class="name" width="6%">
+											<td class="name" width="4%">
 												<a href = "javascript:fnOrderBy('onclick','colorden');" title="Ordenar">Orden</a>&nbsp;
 												<img src="<?php echo $cPlesk_Skin_Directory_New ?>/spacer.png" border="0" width="11" height="9" title = "" id = "colorden">
 												<input type = "hidden" name = "colorden" value = "<?php echo $_POST['colorden'] ?>" id = "colorden">
 												<script language="javascript">fnOrderBy('','colorden')</script>
 											</td>
-											<td class="name" width="8%">
+											<td class="name" width="10%">
 												<a href = "javascript:fnOrderBy('onclick','colctoid');" title="Ordenar">Conceptos</a>&nbsp;
 												<img src="<?php echo $cPlesk_Skin_Directory_New ?>/spacer.png" border="0" width="11" height="9" title = "" id = "colctoid">
 												<input type = "hidden" name = "colctoid" value = "<?php echo $_POST['colctoid'] ?>" id = "colctoid">
 												<script language="javascript">fnOrderBy('','colctoid')</script>
 											</td>
-											<td class="name" width="26%">
+											<td class="name" width="20%">
 												<a href = "javascript:fnOrderBy('onclick','colctode');" title="Ordenar">Descripci&oacute;n Personalizada</a>&nbsp;
 												<img src="<?php echo $cPlesk_Skin_Directory_New ?>/spacer.png" border="0" width="11" height="9" title = "" id = "colctode">
 												<input type = "hidden" name = "colctode" value = "<?php echo $_POST['colctode'] ?>" id = "colctode">
@@ -561,7 +559,7 @@
 												<input type = "hidden" name = "reghmodx" value = "<?php echo $_POST['reghmodx']?>" id = "reghmodx">
 												<script language="javascript">fnOrderBy('', 'reghmodx')</script>
 											</td>																																					
-											<td class="name" width="5%">
+											<td class="name" width="8%">
 												<a href = "javascript:fnOrderBy('onclick','regestxx');" title="Ordenar">Estado</a>&nbsp;
 												<img src="<?php echo $cPlesk_Skin_Directory_New ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regestxx">
 												<input type = "hidden" name = "regestxx" value = "<?php echo $_POST['regestxx'] ?>" id = "regestxx">

@@ -41,42 +41,12 @@
 				var zX    = screen.width;
 				var zY    = screen.height;
 				switch (xLink) {
-					case "cSerId":
-						if (xSwitch == "VALID") {
-							var cRuta  = "frdes129.php?gWhat=VALID&gFunction=cSerId&gSerId="+document.forms['frnav']['cSerId'].value.toUpperCase();
-							parent.fmpro.location = cRuta;
-						} else {
-							var zNx     = (zX-750)/2;
-							var zNy     = (zY-250)/2;
-							var zWinPro = "width=750,scrollbars=1,height=250,left="+zNx+",top="+zNy;
-							var cRuta   = "frdes129.php?gWhat=WINDOW&gFunction=cSerId&gSerId="+document.forms['frnav']['cSerId'].value.toUpperCase();
-							var zWindow = window.open(cRuta,"zWindow",zWinPro);
-							zWindow.focus();
-						}
-					break;
-					case "cFcoId":
-						if (xSwitch == "VALID") {
-							var cRuta  = "frdes130.php?gWhat=VALID&gFunction=cFcoId"+
-																				"&gFcoId="+document.forms['frnav']['cFcoId'].value.toUpperCase()+
-																				"&gFcoIds="+document.forms['frnav']['cFcoIds'].value.toUpperCase();
-							parent.fmpro.location = cRuta;
-						} else {
-							var zNx     = (zX-500)/2;
-							var zNy     = (zY-250)/2;
-							var zWinPro = "width=500,scrollbars=1,height=250,left="+zNx+",top="+zNy;
-							var cRuta   = "frdes130.php?gWhat=WINDOW&gFunction=cFcoId"+
-																				"&gFcoId="+document.forms['frnav']['cFcoId'].value.toUpperCase()+
-																				"&gFcoIds="+document.forms['frnav']['cFcoIds'].value.toUpperCase();
-							var zWindow = window.open(cRuta,"zWindow",zWinPro);
-							zWindow.focus();
-						}
-					break;
 					case "cConceptoCobro":
 						var zTerId  =  document.forms['frnav']['cDesId'].value.toUpperCase();
 						var zNx     = (zX-580)/2;
 						var zNy     = (zY-500)/2;
 						var zWinPro = 'width=580,scrollbars=1,height=500,left='+zNx+',top='+zNy;
-						var zRuta   = 'frcrftrn.php?cDesId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value+"&gDesPorc="+document.forms['frnav']['cDesPorc'].value;
+						var zRuta   = 'frcrfcon.php?cDesId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value;
 						zWindow2    = window.open(zRuta,'zWindow2',zWinPro);
 						zWindow2.focus();
 					break;
@@ -87,14 +57,14 @@
 			}
 
 			function uDelRes(valor,fecha)	{
-				if (confirm('ELIMINAR LA RESPONSABILIDAD FISCAL '+valor+'?'))	{
-					var ruta = "frcrftrg.php?cDesId=<?php echo $cDesId ?>&tipsave=4&cIntId="+valor+"&cColCtoId="+document.forms['frnav']['cColCtoId'].value;
+				if (confirm('ELIMINAR CONCEPTO REPORTE FACTURACION '+valor+'?'))	{
+					var ruta = "frcrfcog.php?cDesId=<?php echo $cDesId ?>&tipsave=4&cIntId="+valor+"&cColCtoId="+document.forms['frnav']['cColCtoId'].value;
 					parent.fmpro.location = ruta;
 				}
 			}
 
 			function fnCargarGrillas() {
-					var cRuta = "frcrfgri.php?gTipo=1&gDesId=<?php echo $cDesId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value+"&gDesPorc="+document.forms['frnav']['cDesPorc'].value;
+					var cRuta = "frcrfgri.php?gTipo=1&gDesId=<?php echo $cDesId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value;
 					parent.fmpro.location = cRuta;
 			}
 
@@ -108,7 +78,6 @@
 						<fieldset>
 							<legend><?php echo ucfirst(strtolower($_COOKIE['kModo']))." ".$_COOKIE['kProDes'] ?></legend>
 							<form name = "frnav" action = "frcrfgra.php" method = "post" target = "fmpro">
-								<!-- <input type = "text" name = "cDesId" readonly> -->
 								<center>
 									<table border = "0" cellpadding = "0" cellspacing = "0" width="400">
 										<?php echo f_Columnas(20,20); ?>
@@ -127,7 +96,6 @@
 											<td colspan = "20">
 											<fieldset>
 												<input type = "hidden" name = "cColCtoId">
-												<input type = "hidden" name = "cDesPorc">
 												<legend>Conceptos de Cobro</legend>
 												<div id = "overDivVen"></div>
 											</fieldset>
@@ -232,8 +200,6 @@
 					document.forms['frnav']['cDesCod'].disabled = true;
 					document.forms['frnav']['cSerId'].disabled  = true;
 					fnCargarGrillas();
-					// document.getElementById('lSerId').href = "javascript:alert('Opcion No Permitida')";
-					// document.getElementById('lFcoId').href = "javascript:alert('Opcion No Permitida')";
 				</script>
 				<?php
 			break;
@@ -252,12 +218,7 @@
 			$qDescuento .= "$cAlfa.fpar0166.regfmodx, ";
 			$qDescuento .= "$cAlfa.fpar0166.reghmodx, ";
 			$qDescuento .= "$cAlfa.fpar0166.regestxx ";
-			// $qDescuento .= "IF($cAlfa.fpar0129.serdespx != \"\",$cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
-			// $qDescuento .= "$cAlfa.fpar0129.fcoidxxx AS serfcoid, ";
-			// $qDescuento .= "$cAlfa.fpar0130.fcodesxx ";
 			$qDescuento .= "FROM $cAlfa.fpar0166 ";
-			// $qDescuento .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0166.colorden = $cAlfa.fpar0129.colorden ";
-			// $qDescuento .= "LEFT JOIN $cAlfa.fpar0130 ON $cAlfa.fpar0166.colctoid = $cAlfa.fpar0130.fcoidxxx ";
 			$qDescuento .= "WHERE ";
 			$qDescuento .= "colidxxx = \"$xDesId\" LIMIT 0,1";
 			$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
@@ -269,10 +230,6 @@
 					document.forms['frnav']['cDesCod'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
 					document.forms['frnav']['cSerId'].value    = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
 					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
-					document.forms['frnav']['cDesPorc'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctode']) ?>";
-					document.forms['frnav']['cSerDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serdesxx']) ?>";
-					document.forms['frnav']['cFcoDes'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['fcodesxx']) ?>";
-					document.forms['frnav']['cFcoIds'].value  = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['serfcoid']) ?>";
 					document.forms['frnav']['dRegFCre'].value = "<?php echo $xRDE['regfcrex'] ?>";
 					document.forms['frnav']['dRegFMod'].value = "<?php echo $xRDE['regfmodx'] ?>";
 					document.forms['frnav']['tRegHCre'].value = "<?php echo $xRDE['reghcrex'] ?>";

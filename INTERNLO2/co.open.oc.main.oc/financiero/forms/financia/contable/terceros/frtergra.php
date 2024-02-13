@@ -947,21 +947,6 @@
         $_POST['cCliVen'] = substr($_POST['cCliVen'], 0, -1);
       }
 
-      /**
-       * Valida que se seleccione al menos un vendedor.
-       */ 
-      switch ($cAlfa) {
-        case 'INTERLO2':
-        case 'DEINTERLO2':
-        case 'TEINTERLO2':
-          if ($_POST['cCliVen'] == "") {
-            $nSwitch = 1;
-            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-            $cMsj .= " Debe Seleccionar al Menos un Vendedor.\n";
-          }
-          break;
-      }
-
       if($_POST['cTerId'] == $vSysStr['siacosia_importador_hp_colombia']){ 
         if(trim($_POST['cCliHPCnx']) == ""){
           $nSwitch = 1;
@@ -1085,6 +1070,18 @@
             }
           }
         break;
+        case 'INTERLO2':
+        case 'DEINTERLO2':
+        case 'TEINTERLO2':
+        /**
+          * Valida que se seleccione al menos un vendedor.
+          */ 
+          if ($_POST['cCliVen'] == "") {
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= " Debe Seleccionar al Menos un Vendedor.\n";
+          }
+          break;
         default:
           // No hace nada
         break;

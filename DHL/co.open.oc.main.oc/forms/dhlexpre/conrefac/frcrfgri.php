@@ -61,7 +61,7 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 										$zColor = "{$vSysStr['system_row_par_color_ini']}";
 									}
 									$cTexto .= "<tr bgcolor = \"$zColor\" onmouseover=\"javascript:uRowColor(this,\'".$vSysStr['system_row_select_color_ini']."\')\" onmouseout=\"javascript:uRowColor(this,\'$zColor\')\">";
-										$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelRes(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Conceptos de Cobro: ".$mMatrizInt[$i]." - ".substr($xRRF['seridxxx'],0,60)."\">" : "")."</center></td>";
+										$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelCol(\'$cId\')\" style = \"cursor:hand\" alt=\"Borrar Conceptos de Cobro: ".$mMatrizInt[$i]." - ".substr($xRRF['seridxxx'],0,60)."\">" : "")."</center></td>";
 										$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($xRRF['seridxxx'],0,10)."</td>";
 										$cTexto .= "<td Class = \"clase08\" style=\"padding-left:5px\">".substr($xRRF['serdespx'],0,60)."</td>";
 									$cTexto .= "</tr>";
@@ -72,7 +72,7 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 				}
 			$cTexto .= "</table>"; ?>  
 			<script languaje = "javascript">
-				parent.fmwork.document.getElementById('overDivVen').innerHTML = '<?php echo $cTexto ?>';
+				parent.fmwork.document.getElementById('overDivCto').innerHTML = '<?php echo $cTexto ?>';
 			</script>
 		<?php break;	
 		default:

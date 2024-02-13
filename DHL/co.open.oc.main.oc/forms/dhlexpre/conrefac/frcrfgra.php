@@ -55,28 +55,28 @@
 		case "EDITAR":
 
 			// Validando el ID del Concepto de Reporte de Facturación.
-			if(empty($_POST['cDesId'])) {
+			if(empty($_POST['cColId'])) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "El ID del Concepto Reporte Facturacion No Puede Ser Vacio.\n";
 			}
 
 			// Validando la Descripción Columna.
-			if (empty($_POST['cDesCod'])) {
+			if (empty($_POST['cColDes'])) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "La Descripcion Columna No Puede Ser Vacia.\n";
 			}
 
 			// Validando el Orden.
-			if (empty($_POST['cSerId'])) {
+			if (empty($_POST['cColOrden'])) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "El Orden No Puede Ser Vacio.\n";
 			}
 
 			// Validando el Orden.
-			if ($_POST['cSerId'] < 0) {
+			if ($_POST['cColOrden'] < 0) {
 				$nSwitch = 1;
 				$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 				$cMsj .= "El Orden No Puede ser menor a cero.\n";
@@ -139,16 +139,16 @@
 				$qDescuento  = "SELECT colidxxx ";
 				$qDescuento .= "FROM $cAlfa.fpar0166 ";
 				$qDescuento .= "WHERE ";
-				// $qDescuento .= "colorden != \"{$_POST['cSerId']}\" AND";
-				$qDescuento .= "colorden =  \"{$_POST['cSerId']}\"";
-				// $qDescuento .= "colctoid = \"{$_POST['cDesCod']}\" AND ";
-				// $qDescuento .= "colctode = \"{$_POST['cDesCod']}\" AND ";
-				// $qDescuento .= "colidxxx != \"{$_POST['cDesId']}\" LIMIT 0,1";
+				// $qDescuento .= "colorden != \"{$_POST['cColOrden']}\" AND";
+				$qDescuento .= "colorden =  \"{$_POST['cColOrden']}\"";
+				// $qDescuento .= "colctoid = \"{$_POST['cColDes']}\" AND ";
+				// $qDescuento .= "colctode = \"{$_POST['cColDes']}\" AND ";
+				// $qDescuento .= "colidxxx != \"{$_POST['cColId']}\" LIMIT 0,1";
 				$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 				if (mysql_num_rows($xDescuento) > 0) {
 					$nSwitch = 1;
 					$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-					$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cSerId'] ."].\n";
+					$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cColOrden'] ."].\n";
 				}
 			}
 		break;
@@ -179,9 +179,9 @@
 	
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
-					$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId'])),    'CHECK'=>'SI'),
-													array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod'])),    'CHECK'=>'SI'),
-													array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId'])) ,    'CHECK'=>'SI'),
+					$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId'])),    'CHECK'=>'SI'),
+													array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes'])),    'CHECK'=>'SI'),
+													array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden'])) ,    'CHECK'=>'SI'),
 													array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId'])),  'CHECK'=>'SI'),
 													array('NAME'=>'colctode','VALUE'=>trim(strtoupper($vDesPers['serdespx'])),'CHECK'=>'SI'),
 													array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))               ,'CHECK'=>'SI'),
@@ -201,15 +201,15 @@
 					}
 			break;
 			case "EDITAR":
-				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))    ,'CHECK'=>'SI'),
-												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cDesCod']))    ,'CHECK'=>'SI'),
-												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cSerId']))     ,'CHECK'=>'SI'),
+				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))    ,'CHECK'=>'SI'),
+												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes']))    ,'CHECK'=>'SI'),
+												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden']))     ,'CHECK'=>'SI'),
 												array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId']))  ,'CHECK'=>'SI'),
 												array('NAME'=>'colctode','VALUE'=>trim(strtoupper($vDesPers['serdespx'])),'CHECK'=>'SI'),
 												array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))               ,'CHECK'=>'SI'),
 												array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')    		                   ,'CHECK'=>'SI'),
 												array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			     ,'CHECK'=>'SI'),
-												array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))     ,'CHECK'=>'WH'));
+												array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))     ,'CHECK'=>'WH'));
 
 				if (f_MySql("UPDATE","fpar0166",$qUpdate,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
@@ -221,7 +221,7 @@
 				}
 			break;
 			case "BORRAR":
-				$qDelete = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cDesId']))   ,'CHECK'=>'WH'));
+				$qDelete = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))   ,'CHECK'=>'WH'));
 				if (f_MySql("DELETE","fpar0166",$qDelete,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
 					$cMsjExi = "Se Elimino el Registro con Exito.\n";

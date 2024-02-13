@@ -41,8 +41,8 @@
 		<script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory_New ?>/utility.js'></script>
 		<script language="javascript">
 
-			function fnVer(xDesId) {
-				var ruta = "frcrfnue.php?gDesId="+xDesId;
+			function fnVer(xColId) {
+				var ruta = "frcrfnue.php?gColId="+xColId;
 				document.cookie="kIniAnt=dhlexpre/conrefac/<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
 				document.cookie="kMenDes=Ver Columna;path="+"/";
 				document.cookie="kModo=VER;path="+"/";
@@ -55,7 +55,7 @@
 					case "1":
 						if (document.forms['frnav']['oCheck'].checked == true) {
 							var zMatriz = document.forms['frnav']['oCheck'].id.split('~');
-							var ruta = "frcrfnue.php?gDesId="+zMatriz[0];
+							var ruta = "frcrfnue.php?gColId="+zMatriz[0];
 							document.cookie="kIniAnt=dhlexpre/conrefac/<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
 							document.cookie="kMenDes=Editar Columna;path="+"/";
 							document.cookie="kModo="+xModo+";path="+"/";
@@ -70,7 +70,7 @@
 								// Solo Deja Legalizar el Primero Seleccionado
 								zSw_Prv = 1;
 								var zMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-								var ruta = "frcrfnue.php?gDesId="+zMatriz[0];
+								var ruta = "frcrfnue.php?gColId="+zMatriz[0];
 								document.cookie="kIniAnt=dhlexpre/conrefac/<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
 								document.cookie="kMenDes=Editar Columna;path="+"/";
 								document.cookie="kModo="+xModo+";path="+"/";
@@ -91,7 +91,7 @@
 							if (confirm(xMensaje)) {
 								document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
 								document.cookie="kModo="+xModo+";path="+"/";
-								document.forms['frestado']['cDesId'].value  = zMatriz[0];
+								document.forms['frestado']['cColId'].value  = zMatriz[0];
 								document.forms['frestado'].submit();
 							}
 						}
@@ -107,7 +107,7 @@
 								if (confirm(xMensaje)) {
 									document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
 									document.cookie="kModo="+xModo+";path="+"/";
-									document.forms['frestado']['cDesId'].value  = zMatriz[0];
+									document.forms['frestado']['cColId'].value  = zMatriz[0];
 									document.forms['frestado'].submit();
 								}
 							}
@@ -210,7 +210,7 @@
 	</head>
 	<body topmargin = "0" leftmargin = "0" rightmargin = "0" bottommargin = "0" marginheight = "0" marginwidth = "0">
 		<form name = "frestado" action = "frcrfgra.php" method = "post" target="fmpro">
-			<input type = "hidden" name = "cDesId"  value = "">
+			<input type = "hidden" name = "cColId"  value = "">
 			<input type = "hidden" name = "cRegEst" value = "">
 		</form>
 

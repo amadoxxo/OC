@@ -19,7 +19,7 @@
 		function fnGuardar(){
 			var cadeni  = document.forms['frcotoplo']['cCadena'].value;
 			if (cadeni.length > 1)	{
-				var cRuta = "frcrfcog.php?cDesId=<?php echo $cDesId ?>&cCadena="+cadeni+"&cColCtoId="+window.opener.document.forms['frnav']['cColCtoId'].value+"&tipsave=5";
+				var cRuta = "frcrfcog.php?cColId=<?php echo $cColId ?>&cCadena="+cadeni+"&cColCtoId="+window.opener.document.forms['frnav']['cColCtoId'].value+"&tipsave=5";
 				var Msj  = fnMakeRequest(cRuta);
 			}	else	{
 				alert('Debe Seleccionar un Concepto de Cobro.\nVerifique.');

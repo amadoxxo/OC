@@ -42,11 +42,11 @@
 				var zY    = screen.height;
 				switch (xLink) {
 					case "cConceptoCobro":
-						var zTerId  =  document.forms['frnav']['cDesId'].value.toUpperCase();
+						var zTerId  =  document.forms['frnav']['cColId'].value.toUpperCase();
 						var zNx     = (zX-580)/2;
 						var zNy     = (zY-500)/2;
 						var zWinPro = 'width=580,scrollbars=1,height=500,left='+zNx+',top='+zNy;
-						var zRuta   = 'frcrfcon.php?cDesId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value;
+						var zRuta   = 'frcrfcon.php?cColId='+zTerId+'&gColCtoId='+document.forms['frnav']['cColCtoId'].value;
 						zWindow2    = window.open(zRuta,'zWindow2',zWinPro);
 						zWindow2.focus();
 					break;
@@ -56,15 +56,15 @@
 				}
 			}
 
-			function uDelRes(valor,fecha)	{
+			function uDelCol(valor,fecha)	{
 				if (confirm('ELIMINAR CONCEPTO REPORTE FACTURACION '+valor+'?'))	{
-					var ruta = "frcrfcog.php?cDesId=<?php echo $cDesId ?>&tipsave=4&cIntId="+valor+"&cColCtoId="+document.forms['frnav']['cColCtoId'].value;
+					var ruta = "frcrfcog.php?cColId=<?php echo $cColId ?>&tipsave=4&cIntId="+valor+"&cColCtoId="+document.forms['frnav']['cColCtoId'].value;
 					parent.fmpro.location = ruta;
 				}
 			}
 
 			function fnCargarGrillas() {
-					var cRuta = "frcrfgri.php?gTipo=1&gDesId=<?php echo $cDesId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value;
+					var cRuta = "frcrfgri.php?gTipo=1&gColId=<?php echo $cColId ?>&gColCtoId="+document.forms['frnav']['cColCtoId'].value;
 					parent.fmpro.location = cRuta;
 			}
 
@@ -83,13 +83,13 @@
 										<?php echo f_Columnas(20,20); ?>
 										<tr>
 											<td Class = "name" colspan = "2">Id<br>
-												<input type = "text" Class = "letra" style = "width:40;text-align:center" name = "cDesId" id="cDesId" readonly>
+												<input type = "text" Class = "letra" style = "width:40;text-align:center" name = "cColId" id="cColId" readonly>
 											</td>
 											<td Class = "name" colspan = "16">Descripci&oacute;n Columna<br>
-												<input type = "text" Class = "letra" style = "width:320" name = "cDesCod">
+												<input type = "text" Class = "letra" style = "width:320" name = "cColDes">
 											</td>
 											<td Class = "name" colspan = "2">Orden<br>
-												<input type = "text" Class = "letra" style = "width:40" name = "cSerId">
+												<input type = "text" Class = "letra" style = "width:40" name = "cColOrden">
 											</td>
 										</tr>
 										<tr>
@@ -97,7 +97,7 @@
 											<fieldset>
 												<input type = "hidden" name = "cColCtoId">
 												<legend>Conceptos de Cobro</legend>
-												<div id = "overDivVen"></div>
+												<div id = "overDivCto"></div>
 											</fieldset>
 											</td>
 										</tr>
@@ -173,39 +173,39 @@
 				}
 			?>
 				<script languaje = "javascript">
-					document.forms['frnav']['cDesId'].value = "<?php echo str_pad($nMaxId, 3, "00", STR_PAD_LEFT); ?>";
+					document.forms['frnav']['cColId'].value = "<?php echo str_pad($nMaxId, 3, "00", STR_PAD_LEFT); ?>";
 					fnCargarGrillas();
 				</script>
 				<?php
 			break;
 			case "EDITAR":
-				fnCargaData($gDesId); ?>
+				fnCargaData($gColId); ?>
 				<script languaje = "javascript">
 					document.forms['frnav']['dRegFCre'].readOnly = true;
 					document.forms['frnav']['tRegHCre'].readOnly = true;
 					document.forms['frnav']['cRegEst'].readOnly  = true;
 					document.forms['frnav']['dRegFMod'].value    = "<?php echo date('Y-m-d'); ?>";
 					document.forms['frnav']['tRegHMod'].value    = "<?php echo date('H:i:s') ; ?>";
-					document.forms['frnav']['cDesCod'].onfocus   = "";
-					document.forms['frnav']['cDesCod'].onblur    = "";
+					document.forms['frnav']['cColDes'].onfocus   = "";
+					document.forms['frnav']['cColDes'].onblur    = "";
 					fnCargarGrillas();
 				</script>
 				<?php
 			break;
 			case "VER":
-				fnCargaData($gDesId);
+				fnCargaData($gColId);
 				?>
 				<script languaje = "javascript">
-					document.forms['frnav']['cDesId'].disabled  = true;
-					document.forms['frnav']['cDesCod'].disabled = true;
-					document.forms['frnav']['cSerId'].disabled  = true;
+					document.forms['frnav']['cColId'].disabled  = true;
+					document.forms['frnav']['cColDes'].disabled = true;
+					document.forms['frnav']['cColOrden'].disabled  = true;
 					fnCargarGrillas();
 				</script>
 				<?php
 			break;
 		} ?>
 		<?php
-		function fnCargaData($xDesId) {
+		function fnCargaData($xColId) {
 			global $xConexion01; global $cAlfa;
 			$qDescuento  = "SELECT ";
 			$qDescuento .= "$cAlfa.fpar0166.colidxxx, ";
@@ -220,15 +220,15 @@
 			$qDescuento .= "$cAlfa.fpar0166.regestxx ";
 			$qDescuento .= "FROM $cAlfa.fpar0166 ";
 			$qDescuento .= "WHERE ";
-			$qDescuento .= "colidxxx = \"$xDesId\" LIMIT 0,1";
+			$qDescuento .= "colidxxx = \"$xColId\" LIMIT 0,1";
 			$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
 			// f_Mensaje(__FILE__,__LINE__,$qDescuento."~".mysql_num_rows($xDescuento));
 			while ($xRDE = mysql_fetch_array($xDescuento)) {
 				?>
 				<script language = "javascript">
-					document.forms['frnav']['cDesId'].value    = "<?php echo $xRDE['colidxxx'] ?>";
-					document.forms['frnav']['cDesCod'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
-					document.forms['frnav']['cSerId'].value    = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
+					document.forms['frnav']['cColId'].value    = "<?php echo $xRDE['colidxxx'] ?>";
+					document.forms['frnav']['cColDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
+					document.forms['frnav']['cColOrden'].value    = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
 					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
 					document.forms['frnav']['dRegFCre'].value = "<?php echo $xRDE['regfcrex'] ?>";
 					document.forms['frnav']['dRegFMod'].value = "<?php echo $xRDE['regfmodx'] ?>";

@@ -136,19 +136,26 @@
 
 			if($nSwitch == 0) {
 				// Validando que los codigos no existan.
-				$qDescuento  = "SELECT colidxxx ";
-				$qDescuento .= "FROM $cAlfa.fpar0166 ";
-				$qDescuento .= "WHERE ";
-				// $qDescuento .= "colorden != \"{$_POST['cColOrden']}\" AND";
-				$qDescuento .= "colorden =  \"{$_POST['cColOrden']}\"";
-				// $qDescuento .= "colctoid = \"{$_POST['cColDes']}\" AND ";
-				// $qDescuento .= "colctode = \"{$_POST['cColDes']}\" AND ";
-				// $qDescuento .= "colidxxx != \"{$_POST['cColId']}\" LIMIT 0,1";
-				$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
-				if (mysql_num_rows($xDescuento) > 0) {
+				$vCodigos = explode(",", $_POST['cColCtoId']);
+				foreach($vCodigos as $vCodigo) {
+					$qColumna  = "SELECT colidxxx, colorden, colctoid ";
+					$qColumna .= "FROM $cAlfa.fpar0166 ";
+					$qColumna .= "WHERE ";
+					$qColumna .= "colorden = \"{$_POST['cColOrden']}\" OR ";
+					$qColumna .= "colctoid LIKE \"%{$vCodigo}%\" ";
+					$qColumna .= "ORDER BY abs(colctoid) ASC LIMIT 0,1";
+					$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
+					$vColumna  = mysql_fetch_array($xColumna);
+				}
+				if (mysql_num_rows($xColumna) > 0) {
 					$nSwitch = 1;
-					$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-					$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cColOrden'] ."].\n";
+					if ($vColumna['colorden'] == $_POST['cColOrden']) {
+						$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+						$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cColOrden'] ."].\n";
+					} else {
+						$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+						$cMsj .= "Ya Existe una Columna con el ID ". utf8_decode('Descripción'). " Personalizada [". $vCodigo ."].\n";
+					}
 				}
 			}
 		break;
@@ -166,7 +173,6 @@
 	/**
 	 * Actualizacion en la Tabla.
 	 */
-
 	if ($nSwitch == 0) {
 
 		$vCodigos = explode(",", $_POST['cColCtoId']);
@@ -181,7 +187,7 @@
 			case "NUEVO":
 					$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId'])),    'CHECK'=>'SI'),
 													array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes'])),    'CHECK'=>'SI'),
-													array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden'])) ,    'CHECK'=>'SI'),
+													array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden'])) , 'CHECK'=>'SI'),
 													array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId'])),  'CHECK'=>'SI'),
 													array('NAME'=>'colctode','VALUE'=>trim(strtoupper($vDesPers['serdespx'])),'CHECK'=>'SI'),
 													array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))               ,'CHECK'=>'SI'),

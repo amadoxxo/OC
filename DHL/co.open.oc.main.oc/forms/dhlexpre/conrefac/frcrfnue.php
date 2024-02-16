@@ -207,34 +207,34 @@
 		<?php
 		function fnCargaData($xColId) {
 			global $xConexion01; global $cAlfa;
-			$qDescuento  = "SELECT ";
-			$qDescuento .= "$cAlfa.fpar0166.colidxxx, ";
-			$qDescuento .= "$cAlfa.fpar0166.coldesxx, ";
-			$qDescuento .= "$cAlfa.fpar0166.colorden, ";
-			$qDescuento .= "$cAlfa.fpar0166.colctoid, ";
-			$qDescuento .= "$cAlfa.fpar0166.colctode, ";
-			$qDescuento .= "$cAlfa.fpar0166.regfcrex, ";
-			$qDescuento .= "$cAlfa.fpar0166.reghcrex, ";
-			$qDescuento .= "$cAlfa.fpar0166.regfmodx, ";
-			$qDescuento .= "$cAlfa.fpar0166.reghmodx, ";
-			$qDescuento .= "$cAlfa.fpar0166.regestxx ";
-			$qDescuento .= "FROM $cAlfa.fpar0166 ";
-			$qDescuento .= "WHERE ";
-			$qDescuento .= "colidxxx = \"$xColId\" LIMIT 0,1";
-			$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
-			// f_Mensaje(__FILE__,__LINE__,$qDescuento."~".mysql_num_rows($xDescuento));
-			while ($xRDE = mysql_fetch_array($xDescuento)) {
+			$qColumna  = "SELECT ";
+			$qColumna .= "$cAlfa.fpar0166.colidxxx, ";
+			$qColumna .= "$cAlfa.fpar0166.coldesxx, ";
+			$qColumna .= "$cAlfa.fpar0166.colorden, ";
+			$qColumna .= "$cAlfa.fpar0166.colctoid, ";
+			$qColumna .= "$cAlfa.fpar0166.colctode, ";
+			$qColumna .= "$cAlfa.fpar0166.regfcrex, ";
+			$qColumna .= "$cAlfa.fpar0166.reghcrex, ";
+			$qColumna .= "$cAlfa.fpar0166.regfmodx, ";
+			$qColumna .= "$cAlfa.fpar0166.reghmodx, ";
+			$qColumna .= "$cAlfa.fpar0166.regestxx ";
+			$qColumna .= "FROM $cAlfa.fpar0166 ";
+			$qColumna .= "WHERE ";
+			$qColumna .= "colidxxx = \"$xColId\" LIMIT 0,1";
+			$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
+			// f_Mensaje(__FILE__,__LINE__,$qColumna."~".mysql_num_rows($xColumna));
+			while ($xRDE = mysql_fetch_array($xColumna)) {
 				?>
 				<script language = "javascript">
 					document.forms['frnav']['cColId'].value    = "<?php echo $xRDE['colidxxx'] ?>";
 					document.forms['frnav']['cColDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
-					document.forms['frnav']['cColOrden'].value    = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
+					document.forms['frnav']['cColOrden'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
 					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
-					document.forms['frnav']['dRegFCre'].value = "<?php echo $xRDE['regfcrex'] ?>";
-					document.forms['frnav']['dRegFMod'].value = "<?php echo $xRDE['regfmodx'] ?>";
-					document.forms['frnav']['tRegHCre'].value = "<?php echo $xRDE['reghcrex'] ?>";
-					document.forms['frnav']['tRegHMod'].value = "<?php echo $xRDE['reghmodx'] ?>";
-					document.forms['frnav']['cRegEst'].value  = "<?php echo $xRDE['regestxx'] ?>";
+					document.forms['frnav']['dRegFCre'].value  = "<?php echo $xRDE['regfcrex'] ?>";
+					document.forms['frnav']['dRegFMod'].value  = "<?php echo $xRDE['regfmodx'] ?>";
+					document.forms['frnav']['tRegHCre'].value  = "<?php echo $xRDE['reghcrex'] ?>";
+					document.forms['frnav']['tRegHMod'].value  = "<?php echo $xRDE['reghmodx'] ?>";
+					document.forms['frnav']['cRegEst'].value   = "<?php echo $xRDE['regestxx'] ?>";
 				</script>
 				<?php
 			}

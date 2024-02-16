@@ -297,30 +297,30 @@
 				}
 
 				$y=0;
-				$mDescuentos = array();
-				$qDescuento  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
-				$qDescuento .= "$cAlfa.fpar0166.colidxxx, ";
-				$qDescuento .= "$cAlfa.fpar0166.coldesxx, ";
-				$qDescuento .= "$cAlfa.fpar0166.colorden, ";
-				$qDescuento .= "$cAlfa.fpar0166.colctoid, ";
-				$qDescuento .= "$cAlfa.fpar0166.colctode, ";
-				$qDescuento .= "$cAlfa.fpar0166.regfcrex, ";
-				$qDescuento .= "$cAlfa.fpar0166.reghcrex, ";
-				$qDescuento .= "$cAlfa.fpar0166.regfmodx, ";
-				$qDescuento .= "$cAlfa.fpar0166.reghmodx, ";
-				$qDescuento .= "$cAlfa.fpar0166.regestxx ";
-				$qDescuento .= "FROM $cAlfa.fpar0166 ";
+				$mColumnas = array();
+				$qColumna  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
+				$qColumna .= "$cAlfa.fpar0166.colidxxx, ";
+				$qColumna .= "$cAlfa.fpar0166.coldesxx, ";
+				$qColumna .= "$cAlfa.fpar0166.colorden, ";
+				$qColumna .= "$cAlfa.fpar0166.colctoid, ";
+				$qColumna .= "$cAlfa.fpar0166.colctode, ";
+				$qColumna .= "$cAlfa.fpar0166.regfcrex, ";
+				$qColumna .= "$cAlfa.fpar0166.reghcrex, ";
+				$qColumna .= "$cAlfa.fpar0166.regfmodx, ";
+				$qColumna .= "$cAlfa.fpar0166.reghmodx, ";
+				$qColumna .= "$cAlfa.fpar0166.regestxx ";
+				$qColumna .= "FROM $cAlfa.fpar0166 ";
 				if ($_POST['vSearch'] != "") {
-					$qDescuento .= "WHERE ";
-					$qDescuento .= "($cAlfa.fpar0166.colidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0166.coldesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0166.colorden LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0166.colctoid LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0166.colctode LIKE \"%{$_POST['vSearch']}%\" OR ";
-					$qDescuento .= "$cAlfa.fpar0166.regestxx LIKE \"%{$_POST['vSearch']}%\") ";
+					$qColumna .= "WHERE ";
+					$qColumna .= "($cAlfa.fpar0166.colidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+					$qColumna .= "$cAlfa.fpar0166.coldesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+					$qColumna .= "$cAlfa.fpar0166.colorden LIKE \"%{$_POST['vSearch']}%\" OR ";
+					$qColumna .= "$cAlfa.fpar0166.colctoid LIKE \"%{$_POST['vSearch']}%\" OR ";
+					$qColumna .= "$cAlfa.fpar0166.colctode LIKE \"%{$_POST['vSearch']}%\" OR ";
+					$qColumna .= "$cAlfa.fpar0166.regestxx LIKE \"%{$_POST['vSearch']}%\") ";
 				}
 
-				// echo $qDescuento;
+				// echo $qColumna;
 
 				/*** CODIGO NUEVO PARA ORDER BY ***/
 				$cOrderBy = "";
@@ -354,9 +354,9 @@
 					$cOrderBy = "ORDER BY fpar0166.regfmodx DESC, fpar0166.reghmodx DESC";
 				}
 				/*** FIN CODIGO NUEVO PARA ORDER BY ***/
-				$qDescuento .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
-				$xDescuento  = f_MySql("SELECT","",$qDescuento,$xConexion01,"");
-				// echo "<br>".$qDescuento."~".mysql_num_rows($xDescuento);
+				$qColumna .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
+				$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
+				// echo "<br>".$qColumna."~".mysql_num_rows($xColumna);
 				/***** FIN SQL *****/
 
 				$xNumRows = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
@@ -364,8 +364,8 @@
 				$nRNR += $xRNR['FOUND_ROWS()'];
 				// echo "<br>Registros: ".$nRNR;
 
-				while ($xRD = mysql_fetch_array($xDescuento)) {
-					$mDescuentos[count($mDescuentos)] = $xRD;
+				while ($xRD = mysql_fetch_array($xColumna)) {
+					$mColumnas[count($mColumnas)] = $xRD;
 				}
 			?>
 			<center>
@@ -570,12 +570,12 @@
 											</td>
 										</tr>
 										<script languaje="javascript">
-											document.forms['frnav']['vRecords'].value = "<?php echo count($mDescuentos) ?>";
+											document.forms['frnav']['vRecords'].value = "<?php echo count($mColumnas) ?>";
 										</script>
 											<?php
 										$y = 0;
-										for ($i=0;$i<count($mDescuentos);$i++) {
-											if ($i < count($mDescuentos)) { // Para Controlar el Error
+										for ($i=0;$i<count($mColumnas);$i++) {
+											if ($i < count($mColumnas)) { // Para Controlar el Error
 												$cColor = "{$vSysStr['system_row_impar_color_ini']}";
 											if($y % 2 == 0) {
 												$cColor = "{$vSysStr['system_row_par_color_ini']}";
@@ -583,19 +583,19 @@
 											?>
 											<!--<tr bgcolor = "<?php echo $cColor ?>">-->
 											<tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
-												<td class="letra7"><a href = javascript:fnVer('<?php echo $mDescuentos[$i]['colidxxx']?>')><?php echo $mDescuentos[$i]['colidxxx'] ?></a></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['coldesxx'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['colorden'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['colctoid'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['colctode'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['regfcrex'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['reghcrex'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['regfmodx'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['reghmodx'] ?></td>
-												<td class="letra7"><?php echo $mDescuentos[$i]['regestxx'] ?></td>
-												<td Class="letra7" align="right"><input type="checkbox" name="oCheck"  value = "<?php echo count($mDescuentos) ?>"
-													id="<?php echo $mDescuentos[$i]['colidxxx'].'~'.$mDescuentos[$i]['regestxx']?>"
-													onclick="javascript:document.forms['frnav']['vRecords'].value='<?php echo count($mDescuentos) ?>'">
+												<td class="letra7"><a href = javascript:fnVer('<?php echo $mColumnas[$i]['colidxxx']?>')><?php echo $mColumnas[$i]['colidxxx'] ?></a></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['coldesxx'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['colorden'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['colctoid'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['colctode'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['regfcrex'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['reghcrex'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['regfmodx'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['reghmodx'] ?></td>
+												<td class="letra7"><?php echo $mColumnas[$i]['regestxx'] ?></td>
+												<td Class="letra7" align="right"><input type="checkbox" name="oCheck"  value = "<?php echo count($mColumnas) ?>"
+													id="<?php echo $mColumnas[$i]['colidxxx'].'~'.$mColumnas[$i]['regestxx']?>"
+													onclick="javascript:document.forms['frnav']['vRecords'].value='<?php echo count($mColumnas) ?>'">
 												</td>
 											</tr>
 											<?php $y++;

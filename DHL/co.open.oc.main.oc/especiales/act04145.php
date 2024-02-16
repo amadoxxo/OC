@@ -129,7 +129,7 @@
           $qInsert  = "INSERT INTO sys00013 (";
           $qInsert .= "modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regfecxx, regmodxx, reghorxx, regestxx";
           $qInsert .= ") VALUES (";
-          $qInsert .= "\"4\", \"327\", \"4\", \"\", \"BORRAR\", \"00004\", \"Borrar Columna\", \"\", \"\", \"\", \"\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+          $qInsert .= "\"4\", \"327\", \"3\", \"\", \"BORRAR\", \"00003\", \"Borrar Columna\", \"\", \"\", \"\", \"\", NOW(), NOW(), NOW(), \"ACTIVO\")";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_affected_rows(_CONEXION_);
@@ -171,7 +171,7 @@
           $qInsert  = "INSERT INTO sys00014 (";
           $qInsert .= "usridxxx, modidxxx, proidxxx, menidxxx, regfecxx, regmodxx, reghorxx, regestxx";
           $qInsert .= ") VALUES (";
-          $qInsert .= "\"ADMIN\", \"4\", \"327\", \"4\", NOW(), NOW(), NOW(), \"ACTIVO\")";
+          $qInsert .= "\"ADMIN\", \"4\", \"327\", \"3\", NOW(), NOW(), NOW(), \"ACTIVO\")";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe da acceso a la opcion de menu Conceptos Reporte Facturacion DHL en el modulo de Proyectos Especiales".$pdb;

@@ -17,7 +17,6 @@ if (isset($gParametro)) {
 				case "1";
 					$vTipos[]  = $mAux[$i][0];
 					$gColCtoId = $mAux[$i][1];
-					$gDesPorc  = $mAux[$i][2];
 				break;
 				default:
 					//No hace nada
@@ -44,15 +43,15 @@ for ($nT=0; $nT<count($vTipos);$nT++) {
 					$y = 0;
 					for ($i=0;$i<count($mMatrizInt);$i++) {
 						if ($mMatrizInt[$i] != "") {
-							$qResFis  = "SELECT seridxxx, serdespx ";
-							$qResFis .= "FROM $cAlfa.fpar0129 ";
-							$qResFis .= "WHERE ";
-							$qResFis .= "seridxxx = \"{$mMatrizInt[$i]}\" AND ";
-							$qResFis .= "regestxx = \"ACTIVO\" LIMIT 0,1";
-							$xResFis = f_MySql("SELECT","",$qResFis,$xConexion01,"");
+							$qDesPer  = "SELECT seridxxx, serdespx ";
+							$qDesPer .= "FROM $cAlfa.fpar0129 ";
+							$qDesPer .= "WHERE ";
+							$qDesPer .= "seridxxx = \"{$mMatrizInt[$i]}\" AND ";
+							$qDesPer .= "regestxx = \"ACTIVO\" LIMIT 0,1";
+							$xDesPer = f_MySql("SELECT","",$qDesPer,$xConexion01,"");
 	
-							if (mysql_num_rows($xResFis) > 0) {							
-								while ($xRRF = mysql_fetch_array($xResFis)) {
+							if (mysql_num_rows($xDesPer) > 0) {							
+								while ($xRRF = mysql_fetch_array($xDesPer)) {
 									$y ++;
 	
 									$cId 	= $xRRF['seridxxx'];

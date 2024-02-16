@@ -100,10 +100,10 @@
 	<body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
 		<?php
 		$mCadena = explode(",",$gColCtoId);
-		$mTributo = array();
+		$mDescripcion = array();
 		for($i=0;$i<count($mCadena);$i++){
 			if ($mCadena[$i] != "") {
-				$mTributo[count($mTributo)] = $mCadena[$i];
+				$mDescripcion[count($mDescripcion)] = $mCadena[$i];
 			}
 		}     
 		?>
@@ -119,17 +119,17 @@
 							<legend>Conceptos de Cobro</legend>
 							<form name = "frnav" action = "" method = "post" target = "fmpro">
 							<?php
-								$qTributo  = "SELECT ";
-								$qTributo .= "seridxxx,";
-								$qTributo .= "serdespx,";
-								$qTributo .= "sertopxx,";
-								$qTributo .= "regestxx ";																								
-								$qTributo .= "FROM $cAlfa.fpar0129 ";
-								$qTributo .= "WHERE ";
-								$qTributo .= "regestxx = \"ACTIVO\" ORDER BY seridxxx";
-								$xTributo  = f_MySql("SELECT","",$qTributo,$xConexion01,"");
+								$qDescripcion  = "SELECT ";
+								$qDescripcion .= "seridxxx,";
+								$qDescripcion .= "serdespx,";
+								$qDescripcion .= "sertopxx,";
+								$qDescripcion .= "regestxx ";																								
+								$qDescripcion .= "FROM $cAlfa.fpar0129 ";
+								$qDescripcion .= "WHERE ";
+								$qDescripcion .= "regestxx = \"ACTIVO\" ORDER BY seridxxx";
+								$xDescripcion  = f_MySql("SELECT","",$qDescripcion,$xConexion01,"");
 
-								if (mysql_num_rows($xTributo) > 0) {
+								if (mysql_num_rows($xDescripcion) > 0) {
 							?>
 								<center>
 									<table cellspacing = "0" cellpadding = "1" border = "1" width = "450">
@@ -138,13 +138,14 @@
 											<td widht = "240" Class = "name"><center>Descripci&oacute;n Personalizada</center></td>
 											<td widht = "030" Class = "name"><center>Operaci&oacute;n</center></td>
 											<td widht = "020" Class = "name"><center>Estado</center></td>
+											<td></td>
 										</tr>
 									<?php
 										$y = 0;
 										$cont = 0;
-										while ($xRTR = mysql_fetch_array($xTributo)) {
+										while ($xRTR = mysql_fetch_array($xDescripcion)) {
 											$cvb  = 0;
-											if (in_array($xRTR['seridxxx'],$mTributo) == true) {
+											if (in_array($xRTR['seridxxx'],$mDescripcion) == true) {
 												$cvb = 1;
 											}
 											if ($cvb == 0)	{

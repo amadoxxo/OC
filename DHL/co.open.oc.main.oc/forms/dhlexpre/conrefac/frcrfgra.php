@@ -142,8 +142,7 @@
 					$qColumna .= "FROM $cAlfa.fpar0166 ";
 					$qColumna .= "WHERE ";
 					$qColumna .= "colorden = \"{$_POST['cColOrden']}\" OR ";
-					$qColumna .= "colctoid LIKE \"%{$vCodigo}%\" ";
-					$qColumna .= "ORDER BY abs(colctoid) ASC LIMIT 0,1";
+					$qColumna .= "colctoid LIKE \"%{$vCodigo}%\"";
 					$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
 					$vColumna  = mysql_fetch_array($xColumna);
 				}

@@ -134,27 +134,61 @@
 				$cMsj .= "El Estado Debe Estar ACTIVO.\n";
 			}
 
+			$cDesPers = "";
 			if($nSwitch == 0) {
-				// Validando que los codigos no existan.
-				$vCodigos = explode(",", $_POST['cColCtoId']);
-				foreach($vCodigos as $vCodigo) {
+				// Valida que los conceptos de cobro seleccionados existan en estado ACTIVO
+				$vCtoIds = explode(",", $_POST['cColCtoId']);
+				foreach($vCtoIds as $cCtoId) {
+					$qDesPers  = "SELECT seridxxx, serdespx ";
+					$qDesPers .= "FROM $cAlfa.fpar0129 ";
+					$qDesPers .= "WHERE ";
+					$qDesPers .= "seridxxx = \"$cCtoId\" AND ";
+					$qDesPers .= "regestxx = \"ACTIVO\"";
+					$xDesPers  = f_MySql("SELECT","",$qDesPers,$xConexion01,"");
+					if (mysql_num_rows($xDesPers) > 0) {
+						$vDesPers = mysql_fetch_array($xDesPers);
+						// Obtiene la descripcion personalizada del primer concepto de cobro
+						$cDesPers = ($cDesPers == "") ? $vDesPers['serdespx'] : $cDesPers;
+					} else {
+						$nSwitch = 1;
+						$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+						$cMsj .= "El Concepto de Cobro [". $cCtoId ."] No Existe o se Encuentra INACTIVO.\n";
+					}
+
+					// Validando que los codigos de conceptos de cobro no existan en otros registros.
 					$qColumna  = "SELECT colidxxx, colorden, colctoid ";
 					$qColumna .= "FROM $cAlfa.fpar0166 ";
 					$qColumna .= "WHERE ";
-					$qColumna .= "colorden = \"{$_POST['cColOrden']}\" OR ";
-					$qColumna .= "colctoid LIKE \"%{$vCodigo}%\"";
+					$qColumna .= "colctoid LIKE \"%{$cCtoId}%\" AND ";
+					$qColumna .= "colidxxx != \"{$_POST['cColId']}\"";
 					$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
-					$vColumna  = mysql_fetch_array($xColumna);
+					if (mysql_num_rows($xColumna) > 0) {
+						$vColumna   = mysql_fetch_array($xColumna);
+						$vColCtoIds = explode(",", $vColumna['colctoid']);
+
+						// Validando que el Id del Concepto de Cobro seleccionado sea el mismo que se encontro en otro registro
+						foreach ($vColCtoIds as $cColCtoId) {
+							if ($cColCtoId == $cCtoId) {
+								$nSwitch = 1;
+								$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+								$cMsj .= "Ya Existe una Columna con el Concepto de Cobro [". $cCtoId ."].\n";
+							}
+						}
+					}
 				}
+
+				// Validando que el campo orden seleccionado no exista en otro registro
+				$qColumna  = "SELECT colidxxx, colorden, colctoid ";
+				$qColumna .= "FROM $cAlfa.fpar0166 ";
+				$qColumna .= "WHERE ";
+				$qColumna .= "colorden = \"{$_POST['cColOrden']}\" AND ";
+				$qColumna .= "colidxxx != \"{$_POST['cColId']}\"";
+				$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
+				$vColumna  = mysql_fetch_array($xColumna);
 				if (mysql_num_rows($xColumna) > 0) {
 					$nSwitch = 1;
-					if ($vColumna['colorden'] == $_POST['cColOrden']) {
-						$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-						$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cColOrden'] ."].\n";
-					} else {
-						$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-						$cMsj .= "Ya Existe una Columna con el ID ". utf8_decode('Descripción'). " Personalizada [". $vCodigo ."].\n";
-					}
+					$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+					$cMsj .= "Ya Existe una Columna con el ". utf8_decode('número'). " de orden [". $_POST['cColOrden'] ."].\n";
 				}
 			}
 		break;
@@ -173,28 +207,19 @@
 	 * Actualizacion en la Tabla.
 	 */
 	if ($nSwitch == 0) {
-
-		$vCodigos = explode(",", $_POST['cColCtoId']);
-		$qDesPers  = "SELECT seridxxx, serdespx ";
-		$qDesPers .= "FROM $cAlfa.fpar0129 ";
-		$qDesPers .= "WHERE ";
-		$qDesPers .= "seridxxx = \"{$vCodigos[0]}\"";
-		$xDesPers  = f_MySql("SELECT","",$qDesPers,$xConexion01,"");
-		$vDesPers = mysql_fetch_array($xDesPers);
-	
 		switch ($_COOKIE['kModo']) {
 			case "NUEVO":
-					$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId'])),    'CHECK'=>'SI'),
-													array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes'])),    'CHECK'=>'SI'),
-													array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden'])) , 'CHECK'=>'SI'),
-													array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId'])),  'CHECK'=>'SI'),
-													array('NAME'=>'colctode','VALUE'=>trim(strtoupper($vDesPers['serdespx'])),'CHECK'=>'SI'),
-													array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))               ,'CHECK'=>'SI'),
-													array('NAME'=>'regfcrex','VALUE'=>date('Y-m-d')		    							     ,'CHECK'=>'SI'),
-													array('NAME'=>'reghcrex','VALUE'=>date('H:i:s')	                         ,'CHECK'=>'SI'),
-													array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			     ,'CHECK'=>'SI'),
-													array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')                          ,'CHECK'=>'SI'),
-													array('NAME'=>'regestxx','VALUE'=>trim(strtoupper($_POST['cRegEst']))    ,'CHECK'=>'SI'));
+					$qInsert = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))			,'CHECK'=>'SI'),
+													 array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes']))		,'CHECK'=>'SI'),
+													 array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden']))	,'CHECK'=>'SI'),
+													 array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId']))	,'CHECK'=>'SI'),
+													 array('NAME'=>'colctode','VALUE'=>trim(strtoupper($cDesPers))					  ,'CHECK'=>'SI'),
+													 array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))								,'CHECK'=>'SI'),
+													 array('NAME'=>'regfcrex','VALUE'=>date('Y-m-d')													,'CHECK'=>'SI'),
+													 array('NAME'=>'reghcrex','VALUE'=>date('H:i:s')													,'CHECK'=>'SI'),
+													 array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')													,'CHECK'=>'SI'),
+													 array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')													,'CHECK'=>'SI'),
+													 array('NAME'=>'regestxx','VALUE'=>trim(strtoupper($_POST['cRegEst']))		,'CHECK'=>'SI'));
 
 					if (f_MySql("INSERT","fpar0166",$qInsert,$xConexion01,$cAlfa)) {
 						/***** Grabo Bien *****/
@@ -206,15 +231,15 @@
 					}
 			break;
 			case "EDITAR":
-				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))    ,'CHECK'=>'SI'),
-												array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes']))    ,'CHECK'=>'SI'),
-												array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden']))     ,'CHECK'=>'SI'),
-												array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId']))  ,'CHECK'=>'SI'),
-												array('NAME'=>'colctode','VALUE'=>trim(strtoupper($vDesPers['serdespx'])),'CHECK'=>'SI'),
-												array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))               ,'CHECK'=>'SI'),
-												array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')    		                   ,'CHECK'=>'SI'),
-												array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			     ,'CHECK'=>'SI'),
-												array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))     ,'CHECK'=>'WH'));
+				$qUpdate = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))	    ,'CHECK'=>'SI'),
+												 array('NAME'=>'coldesxx','VALUE'=>trim(strtoupper($_POST['cColDes']))		,'CHECK'=>'SI'),
+												 array('NAME'=>'colorden','VALUE'=>trim(strtoupper($_POST['cColOrden']))  ,'CHECK'=>'SI'),
+												 array('NAME'=>'colctoid','VALUE'=>trim(strtoupper($_POST['cColCtoId']))  ,'CHECK'=>'SI'),
+												 array('NAME'=>'colctode','VALUE'=>trim(strtoupper($cDesPers))						,'CHECK'=>'SI'),
+												 array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($kUser))               ,'CHECK'=>'SI'),
+												 array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')    		                  ,'CHECK'=>'SI'),
+												 array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						    			    ,'CHECK'=>'SI'),
+												 array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))     ,'CHECK'=>'WH'));
 
 				if (f_MySql("UPDATE","fpar0166",$qUpdate,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
@@ -226,7 +251,7 @@
 				}
 			break;
 			case "BORRAR":
-				$qDelete = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId']))   ,'CHECK'=>'WH'));
+				$qDelete = array(array('NAME'=>'colidxxx','VALUE'=>trim(strtoupper($_POST['cColId'])),'CHECK'=>'WH'));
 				if (f_MySql("DELETE","fpar0166",$qDelete,$xConexion01,$cAlfa)) {
 					/***** Grabo Bien *****/
 					$cMsjExi = "Se Elimino el Registro con Exito.\n";
@@ -244,7 +269,7 @@
 		?>
 		<form name = "frnav" action = "frcrfini.php" method = "post" target = "fmwork"></form>
 		<script languaje = "javascript">
-			parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_New ?>/nivel3.php";
+			parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_New ?>/nivel3.php";
 			document.forms['frnav'].submit();
 		</script>
 		<?php

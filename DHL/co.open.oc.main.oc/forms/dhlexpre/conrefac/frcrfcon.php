@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Carga los Conceptos de Cobro en los Conceptos Reporte DHL.
+	 * Carga los Conceptos de Cobro en la Parametrica de Conceptos Reporte Facturacion DHL.
 	 * @author Elian Amado Ramirez <elian.amado@openits.co>
 	 */
   include("../../../libs/php/utility.php");
@@ -100,10 +100,10 @@
 	<body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
 		<?php
 		$mCadena = explode(",",$gColCtoId);
-		$mDescripcion = array();
+		$mCtoCobro = array();
 		for($i=0;$i<count($mCadena);$i++){
 			if ($mCadena[$i] != "") {
-				$mDescripcion[count($mDescripcion)] = $mCadena[$i];
+				$mCtoCobro[count($mCtoCobro)] = $mCadena[$i];
 			}
 		}     
 		?>
@@ -119,17 +119,16 @@
 							<legend>Conceptos de Cobro</legend>
 							<form name = "frnav" action = "" method = "post" target = "fmpro">
 							<?php
-								$qDescripcion  = "SELECT ";
-								$qDescripcion .= "seridxxx,";
-								$qDescripcion .= "serdespx,";
-								$qDescripcion .= "sertopxx,";
-								$qDescripcion .= "regestxx ";																								
-								$qDescripcion .= "FROM $cAlfa.fpar0129 ";
-								$qDescripcion .= "WHERE ";
-								$qDescripcion .= "regestxx = \"ACTIVO\" ORDER BY seridxxx";
-								$xDescripcion  = f_MySql("SELECT","",$qDescripcion,$xConexion01,"");
-
-								if (mysql_num_rows($xDescripcion) > 0) {
+								$qCtoCobro  = "SELECT ";
+								$qCtoCobro .= "seridxxx,";
+								$qCtoCobro .= "serdespx,";
+								$qCtoCobro .= "sertopxx,";
+								$qCtoCobro .= "regestxx ";																								
+								$qCtoCobro .= "FROM $cAlfa.fpar0129 ";
+								$qCtoCobro .= "WHERE ";
+								$qCtoCobro .= "regestxx = \"ACTIVO\" ORDER BY seridxxx";
+								$xCtoCobro  = f_MySql("SELECT","",$qCtoCobro,$xConexion01,"");
+								if (mysql_num_rows($xCtoCobro) > 0) {
 							?>
 								<center>
 									<table cellspacing = "0" cellpadding = "1" border = "1" width = "450">
@@ -143,9 +142,9 @@
 									<?php
 										$y = 0;
 										$cont = 0;
-										while ($xRTR = mysql_fetch_array($xDescripcion)) {
+										while ($xRCC = mysql_fetch_array($xCtoCobro)) {
 											$cvb  = 0;
-											if (in_array($xRTR['seridxxx'],$mDescripcion) == true) {
+											if (in_array($xRCC['seridxxx'],$mCtoCobro) == true) {
 												$cvb = 1;
 											}
 											if ($cvb == 0)	{
@@ -157,11 +156,11 @@
 												}
 												?>
 													<tr bgcolor = "<?php echo $zColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $zColor ?>')">
-														<td style='width: 060px' Class = 'letra7'><?php echo $xRTR['seridxxx'] ?></td>
-														<td style='width: 240px' Class = 'letra7'><?php echo substr($xRTR['serdespx'],0,45) ?></td>
-														<td style='width: 080px' Class = 'letra7'><?php echo $xRTR['sertopxx'] ?></td>
-														<td style='width: 050px' Class = 'letra7'><?php echo $xRTR['regestxx'] ?></td>
-														<td style='width: 020px' Class = 'letra7'><center><input type = 'checkbox' style = 'width:20' name = '<?php echo $xRTR['seridxxx'] ?>' onClick ='javascript:fnCo(this)'></center></td>
+														<td style='width: 060px' Class = 'letra7'><?php echo $xRCC['seridxxx'] ?></td>
+														<td style='width: 240px' Class = 'letra7'><?php echo substr($xRCC['serdespx'],0,45) ?></td>
+														<td style='width: 080px' Class = 'letra7'><?php echo $xRCC['sertopxx'] ?></td>
+														<td style='width: 050px' Class = 'letra7'><?php echo $xRCC['regestxx'] ?></td>
+														<td style='width: 020px' Class = 'letra7'><center><input type = 'checkbox' style = 'width:20' name = '<?php echo $xRCC['seridxxx'] ?>' onClick ='javascript:fnCo(this)'></center></td>
 													</tr>
 												<?php
 											}

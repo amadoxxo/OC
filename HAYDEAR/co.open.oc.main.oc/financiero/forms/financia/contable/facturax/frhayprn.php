@@ -441,6 +441,61 @@
 
   if($nSwitch == 0){
     class PDF extends FPDF {
+
+      // Función para dibujar un rectángulo redondeado
+      function RoundedRect($x, $y, $w, $h, $r, $style = '')
+      {
+          $k = $this->k;
+          $hp = $this->h;
+          if ($style == 'F') {
+              $op = 'f';
+          } elseif ($style == 'FD' || $style == 'DF') {
+              $op = 'B';
+          } else {
+              $op = 'S';
+          }
+          $MyArc = 4 / 3 * (sqrt(2) - 1);
+          $this->_out(sprintf('%.2F %.2F m', ($x + $r) * $k, ($hp - $y) * $k));
+          $xc = $x + $w - $r;
+          $yc = $y + $r;
+          $this->_out(sprintf('%.2F %.2F l', $xc * $k, ($hp - $y) * $k));
+          if ($r > 0) {
+              $this->_Arc($xc + $r * $MyArc, $yc - $r, $xc + $r, $yc - $r * $MyArc, $xc + $r, $yc);
+          }
+          $xc = $x + $w - $r;
+          $yc = $y + $h - $r;
+          $this->_out(sprintf('%.2F %.2F l', ($x + $w) * $k, ($hp - $yc) * $k));
+          if ($r > 0) {
+              $this->_Arc($xc + $r, $yc + $r * $MyArc, $xc + $r * $MyArc, $yc + $r, $xc, $yc + $r);
+          }
+          $xc = $x + $r;
+          $yc = $y + $h - $r;
+          $this->_out(sprintf('%.2F %.2F l', $xc * $k, ($hp - ($y + $h)) * $k));
+          if ($r > 0) {
+              $this->_Arc($xc - $r * $MyArc, $yc + $r, $xc - $r, $yc + $r * $MyArc, $xc - $r, $yc);
+          }
+          $xc = $x + $r;
+          $yc = $y + $r;
+          $this->_out(sprintf('%.2F %.2F l', ($x) * $k, ($hp - $yc) * $k));
+          if ($r > 0) {
+              $this->_Arc($xc - $r, $yc - $r * $MyArc, $xc - $r * $MyArc, $yc - $r, $xc, $yc - $r);
+          }
+          $this->_out($op);
+      }
+
+      function _Arc($x1, $y1, $x2, $y2, $x3, $y3)
+      {
+          $h = $this->h;
+          $this->_out(sprintf(
+              '%.2F %.2F %.2F %.2F %.2F %.2F c ',
+              $x1 * $this->k,
+              ($h - $y1) * $this->k,
+              $x2 * $this->k,
+              ($h - $y2) * $this->k,
+              $x3 * $this->k,
+              ($h - $y3) * $this->k
+          ));
+      }
       function Header() {
         global $cAlfa;    global $cRoot;   global $vSysStr; global $_COOKIE;   global $cPlesk_Skin_Directory;
         global $vAgenDat; global $vResDat; global $vCocDat; global $cFormaPag; global $cMedioPago;
@@ -491,7 +546,7 @@
 
         // Informacion factura
         $this->SetFont('Arial', 'B', 9);
-        $this->setXY($posx + 130, $this->GetY()+1);
+        $this->setXY($posx + 130, $posy);
         $this->MultiCell(70, 4, utf8_decode("FACTURA ELECTRÓNICA DE VENTA No."), 0, 'R');
         $this->setX($posx + 100);
         $this->SetTextColor(238, 47, 47);
@@ -500,22 +555,22 @@
 
         // Fechas del documento e informacion de pago
         $posy = $this->GetY();
-        $this->setXY($posx, $posy);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->setXY($posx, $posy+18);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(40, 3.5, utf8_decode("Fecha y Hora de Generación:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->Cell(60, 3.5, $vCocDat['comfecxx'] ." ". $vCocDat['reghcrex'], 0, 0, 'L');
-        $this->SetFont('Arial', 'B', 7.5);
-        $this->Cell(22, 3.5, "Forma de Pago:", 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(25, 3.5, "FORMA DE PAGO:", 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->Cell(78, 3.5, utf8_decode($cFormaPag), 0, 0, 'L');
         $this->Ln(4);
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
-        $this->Cell(30, 3.5, "Fecha Vencimiento:", 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(30, 3.5, "FECHA VENCIMIENTO:", 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->Cell(70, 3.5, $vCocDat['comfecve'], 0, 0, 'L');
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(22, 3.5, "Medio de Pago:", 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->Cell(78, 3.5, $cMedioPago, 0, 0, 'L');
@@ -524,92 +579,91 @@
 
         // Informacion facturar a
         $this->setXY($posx, $posy);
-        $this->SetFont('Arial', 'B', 7.5);
-        $this->Cell(15, 4, utf8_decode("Cliente:"), 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(23, 4, utf8_decode("FACTURADO A:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vCocDat['CLINOMXX']), 0, 'J');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
-        $this->Cell(15, 4, utf8_decode("Nit:"), 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(15, 4, utf8_decode("NIT:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, number_format($vCocDat['CLIIDXXX'], 0, '', '.'). "-" .f_Digito_Verificacion($vCocDat['CLIIDXXX']), 0, 'L');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
-        $this->Cell(15, 4, utf8_decode("Dirección:"), 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(20, 4, utf8_decode("DIRECCION:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vCocDat['CLIDIRXX']), 0, 'L');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(15, 4, utf8_decode("Factura:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vComObs2[18]), 0, 'L');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(15, 4, utf8_decode("Pedidos:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($cPedido), 0, 'L');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(15, 4, utf8_decode("Protocolo:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vComObs2[19]), 0, 'L');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(23, 4, utf8_decode("Código de Cobro:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(75, 4, utf8_decode($vComObs2[20]), 0, 'L');
         $this->setX($posx);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(15, 4, utf8_decode("Jobs:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vComObs2[21]), 0, 'L');
         $posyy = $this->GetY();
 
         $this->setXY($posx + 101, $posy);
-        $this->SetFont('Arial', 'B', 7.5);
-        $this->Cell(7, 4, utf8_decode("D.O.:"), 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(20, 4, utf8_decode("NUMERO DO:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->Cell(43, 4, utf8_decode($cDocId), 0, 0, 'L');
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(8, 4, utf8_decode("Guia:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(42, 4, utf8_decode($cDocTra), 0, 'L');
         $this->setX($posx + 101);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(12, 4, utf8_decode("Registro:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(85, 4, utf8_decode($vComObs2[22]), 0, 'L');
         $this->setX($posx + 101);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(17, 4, utf8_decode("Declaración:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(80, 4, utf8_decode($vComObs2[23]), 0, 'L');
         $this->setX($posx + 101);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(10, 4, utf8_decode("Bultos:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->Cell(40, 4, number_format($cBultos,2,',','.'), 0, 0, 'L');
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(8, 4, utf8_decode("Kilos:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(39, 4, number_format($cPesBru,2,',','.'), 0, 'L');
         $this->setX($posx + 101);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(15, 4, utf8_decode("Contenido:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(80, 4, utf8_decode($vComObs2[24]), 0, 'L');
         $this->setX($posx + 101);
-        $this->SetFont('Arial', 'B', 7.5);
+        $this->SetFont('Arial', '', 7.5);
         $this->Cell(23, 4, utf8_decode("Tasa de Cambio:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(75, 4, "$ ".$vComObs2[25], 0, 'L');
 
         $posyy = $this->GetY() > $posyy ? $this->GetY() : $posyy;
-        // $this->Rect($posx, $posy, 99, $posyy - $posy);
-        // $this->Rect($posx+101, $posy, 99, $posyy - $posy);
+        $this->RoundedRect($posx, $posy-10, 200, 45, 5, 'D');
         $posy = $posyy;
 
-        $this->setXY($posx, $posy + 1);
+        $this->setXY($posx, $posy+5);
         $this->SetFont('Arial', '', 7);
         $this->Cell(10, 5, utf8_decode("ITEM"), 'TBL', 0, 'C');
         $this->Cell(20, 5, utf8_decode("CÓDIGO"), 'TB', 0, 'C');
@@ -626,7 +680,7 @@
 
         $posx	= 8;
         $posy = 258;
-  
+
         $this->Line($posx, $posy, $posx + 200, $posy);
         $this->setXY($posx, $posy);
         $this->SetFont('Arial', '', 8);
@@ -668,7 +722,7 @@
           $x=$this->GetX();
           $y=$this->GetY();
           //Draw the border
-          //$this->Rect($x,$y,$w,$h);
+          // $this->Rect($x,$y,$w,$h);
           //Print the text
           $this->MultiCell($w,4,$data[$i],0,$a);
           //Put the position to the right of the cell
@@ -797,7 +851,7 @@
     if (count($mIngTer) > 0 || $nBandPcc == 1) {//Si la matriz de Pcc o Bandera de PCC de Detalle viene en 1
       $pdf->SetFont('arial','B',8);
       $pdf->setXY($posx+10,$posy);
-      $pdf->Cell(140,5,"INGRESOS RECIBIDOS PARA TERCEROS",0,0,'L');
+      $pdf->Cell(140,5,"DETALLE PAGOS A TERCEROS",0,0,'L');
       $pyy = $posy+6;
 
       //Se imprimen los Ingresos por Terceros
@@ -858,7 +912,7 @@
     if($nBandIP == 1){//Valido si la Bandera de IP viene en 1 para imprimir bloque de INGRESOS PROPIOS
       $pdf->setXY($posx+10,$pyy);
       $pdf->SetFont('arial','B',8);
-      $pdf->Cell(67,6,utf8_decode("INGRESOS PROPIOS"),0,0,'L');
+      $pdf->Cell(67,6,utf8_decode("DETALLE INGRESOS PROPIOS"),0,0,'L');
       $pyy += 6;
 
       $pdf->SetWidths(array(10, 20, 85, 20, 15, 25, 25));
@@ -1135,7 +1189,7 @@
     $cVlrLetra = f_Cifra_Php(str_replace("-","",abs($nTotPag)),"PESO");
     $pdf->setXY($posx, $posy+1);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(7,5,"SON:",0,0,'L');
+    $pdf->Cell(20,5,"Valor en Pesos:",0,0,'L');
     $pdf->SetFont('Arial', '', 7);
     $pdf->MultiCell(133, 5, utf8_decode($cVlrLetra), 0, 'L');
     $pdf->Rect($posx, $posy+1, 200, 5);

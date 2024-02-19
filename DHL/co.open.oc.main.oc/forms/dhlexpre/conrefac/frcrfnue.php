@@ -207,6 +207,7 @@
 		<?php
 		function fnCargaData($xColId) {
 			global $xConexion01; global $cAlfa;
+
 			$qColumna  = "SELECT ";
 			$qColumna .= "$cAlfa.fpar0166.colidxxx, ";
 			$qColumna .= "$cAlfa.fpar0166.coldesxx, ";
@@ -223,18 +224,18 @@
 			$qColumna .= "colidxxx = \"$xColId\" LIMIT 0,1";
 			$xColumna  = f_MySql("SELECT","",$qColumna,$xConexion01,"");
 			// f_Mensaje(__FILE__,__LINE__,$qColumna."~".mysql_num_rows($xColumna));
-			while ($xRDE = mysql_fetch_array($xColumna)) {
+			while ($xRCO = mysql_fetch_array($xColumna)) {
 				?>
 				<script language = "javascript">
-					document.forms['frnav']['cColId'].value    = "<?php echo $xRDE['colidxxx'] ?>";
-					document.forms['frnav']['cColDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['coldesxx']) ?>";
-					document.forms['frnav']['cColOrden'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colorden']) ?>";
-					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDE['colctoid']) ?>";
-					document.forms['frnav']['dRegFCre'].value  = "<?php echo $xRDE['regfcrex'] ?>";
-					document.forms['frnav']['dRegFMod'].value  = "<?php echo $xRDE['regfmodx'] ?>";
-					document.forms['frnav']['tRegHCre'].value  = "<?php echo $xRDE['reghcrex'] ?>";
-					document.forms['frnav']['tRegHMod'].value  = "<?php echo $xRDE['reghmodx'] ?>";
-					document.forms['frnav']['cRegEst'].value   = "<?php echo $xRDE['regestxx'] ?>";
+					document.forms['frnav']['cColId'].value    = "<?php echo $xRCO['colidxxx'] ?>";
+					document.forms['frnav']['cColDes'].value   = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRCO['coldesxx']) ?>";
+					document.forms['frnav']['cColOrden'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRCO['colorden']) ?>";
+					document.forms['frnav']['cColCtoId'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRCO['colctoid']) ?>";
+					document.forms['frnav']['dRegFCre'].value  = "<?php echo $xRCO['regfcrex'] ?>";
+					document.forms['frnav']['dRegFMod'].value  = "<?php echo $xRCO['regfmodx'] ?>";
+					document.forms['frnav']['tRegHCre'].value  = "<?php echo $xRCO['reghcrex'] ?>";
+					document.forms['frnav']['tRegHMod'].value  = "<?php echo $xRCO['reghmodx'] ?>";
+					document.forms['frnav']['cRegEst'].value   = "<?php echo $xRCO['regestxx'] ?>";
 				</script>
 				<?php
 			}

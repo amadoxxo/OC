@@ -26,7 +26,7 @@
 	$qUsrMen .= "WHERE ";
 	$qUsrMen .= "sys00013.modidxxx = \"{$_COOKIE['kModId']}\" AND ";
 	$qUsrMen .= "sys00013.proidxxx = \"{$_COOKIE['kProId']}\" AND ";
-	$qUsrMen .= "sys00013.menimgon <> '' ";
+	$qUsrMen .= "sys00013.menimgon != '' ";
 	$qUsrMen .= "ORDER BY sys00013.menordxx";
 	$xUsrMen  = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
 	// echo $qUsrMen."~".mysql_num_rows($xUsrMen);
@@ -298,6 +298,7 @@
 
 				$y=0;
 				$mColumnas = array();
+				// Consulta Principal
 				$qColumna  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
 				$qColumna .= "$cAlfa.fpar0166.colidxxx, ";
 				$qColumna .= "$cAlfa.fpar0166.coldesxx, ";
@@ -319,7 +320,6 @@
 					$qColumna .= "$cAlfa.fpar0166.colctode LIKE \"%{$_POST['vSearch']}%\" OR ";
 					$qColumna .= "$cAlfa.fpar0166.regestxx LIKE \"%{$_POST['vSearch']}%\") ";
 				}
-
 				// echo $qColumna;
 
 				/*** CODIGO NUEVO PARA ORDER BY ***/

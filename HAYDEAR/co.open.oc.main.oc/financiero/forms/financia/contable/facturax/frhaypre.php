@@ -23,12 +23,12 @@
   for ($nn=0;$nn<count($mPrn);$nn++) {
     if (strlen($mPrn[$nn]) > 0) {
       $vComp = explode("~",$mPrn[$nn]);
-  		$cComId   = $vComp[0];
-  		$cComCod  = $vComp[1];
-  		$cComCsc  = $vComp[3];
-  		$cComCsc2 = $vComp[3];
-  		$cRegFCre = $vComp[4];
-  		$cNewYear = substr($cRegFCre,0,4);
+      $cComId   = $vComp[0];
+      $cComCod  = $vComp[1];
+      $cComCsc  = $vComp[3];
+      $cComCsc2 = $vComp[3];
+      $cRegFCre = $vComp[4];
+      $cNewYear = substr($cRegFCre,0,4);
     }
   }
 
@@ -235,7 +235,7 @@
   $xResDat  = f_MySql("SELECT","",$qResDat,$xConexion01,"");
 	$nFilRes  = mysql_num_rows($xResDat);
 	if ($nFilRes > 0) {
-	  $vResDat = mysql_fetch_array($xResDat);
+    $vResDat = mysql_fetch_array($xResDat);
 	}
   // Fin Traigo los datos de la resolucion
 

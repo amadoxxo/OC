@@ -373,9 +373,9 @@
 						<?php } else { ?>
 							document.getElementById("Datos_adicionales_openetl").style.display="none";
 						<?php } ?>
-			if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
-							document.getElementById("Datos_adicionales").style.display="block";
-			}
+						if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
+										document.getElementById("Datos_adicionales").style.display="block";
+						}
 						document.getElementById("Grid_de_Tramites").style.display="none";
 						document.getElementById("Pagos_del_Cliente_Automaticos").style.display="none";
 						document.getElementById("Pagos_del_Cliente_Totales").style.display="none";
@@ -385,9 +385,9 @@
 					case "2":
 						document.getElementById("Datos_del_Comprobante").style.display="none";
 						document.getElementById("Datos_del_Importador").style.display="none";
-			if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
-							document.getElementById("Datos_adicionales").style.display="none";
-			}
+						if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
+										document.getElementById("Datos_adicionales").style.display="none";
+						}
 						document.getElementById("Datos_adicionales_openetl").style.display="none"; 
 						document.getElementById("Grid_de_Tramites").style.display="block";
 						document.getElementById("Pagos_del_Cliente_Automaticos").style.display="none";
@@ -398,9 +398,9 @@
 					case "3":
 						document.getElementById("Datos_del_Comprobante").style.display="none";
 						document.getElementById("Datos_del_Importador").style.display="none";
-			if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
-							document.getElementById("Datos_adicionales").style.display="none";
-			}
+						if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
+										document.getElementById("Datos_adicionales").style.display="none";
+						}
 						document.getElementById("Datos_adicionales_openetl").style.display="none";	
 						document.getElementById("Grid_de_Tramites").style.display="none";
 						document.getElementById("Pagos_del_Cliente_Automaticos").style.display="block";
@@ -411,9 +411,9 @@
 					case "4":
 						document.getElementById("Datos_del_Comprobante").style.display="none";
 						document.getElementById("Datos_del_Importador").style.display="none";
-			if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
-							document.getElementById("Datos_adicionales").style.display="none";
-			}
+						if ('<?php echo $cAlfa ?>' == "EXPORCOM" || '<?php echo $cAlfa ?>' == "TEEXPORCOM" || '<?php echo $cAlfa ?>' == "DEEXPORCOM") {
+										document.getElementById("Datos_adicionales").style.display="none";
+						}
 						document.getElementById("Datos_adicionales_openetl").style.display="none";
 						document.getElementById("Grid_de_Tramites").style.display="none";
 						document.getElementById("Pagos_del_Cliente_Automaticos").style.display="none";
@@ -914,7 +914,7 @@
 
 				TD_xAll = cTableRow.insertCell(11);
 				TD_xAll.innerHTML = "<input type = 'button' Class = 'letra' style = 'width:20;text-align:center' id = "+oBtnDos_DOS+" value = 'X' "+
-															"onClick = 'javascript:f_Delete_Row(this.value,\""+nSecuencia+"\",\"Grid_Tramites\");'>";
+														"onClick = 'javascript:f_Delete_Row(this.value,\""+nSecuencia+"\",\"Grid_Tramites\");'>";
 
 				document.forms['frgrm']['nSecuencia_Dos'].value = nSecuencia;
 			}
@@ -1133,10 +1133,10 @@
 				TD_xAll.style.width  = "20px";
 				TD_xAll.style.border = "1px solid #E6E6E6";
 				TD_xAll.innerHTML    = "<input type = 'text'   Class = 'letra' style = 'width:020;border:0;text-align:center' name = "+cComMov_IPA+" id = "+cComMov_IPA+ " "+
-															"onKeyUp = 'javascript:"+
-																				"if (document.forms[\"frgrm\"][\"cComTFa\"].value == \"MANUAL\") {"+
-																					"f_Enter(event,this.name,\"Grid_IPA\");"+
-																				"}' readonly>";
+																"onKeyUp = 'javascript:"+
+																"if (document.forms[\"frgrm\"][\"cComTFa\"].value == \"MANUAL\") {"+
+																	"f_Enter(event,this.name,\"Grid_IPA\");"+
+																"}' readonly>";
 				TD_xAll.innerHTML   += "<input type = 'hidden' name = "+cPucDet_IPA+"  id = "+cPucDet_IPA+" readonly>";
 				$nCol++;
 
@@ -1176,17 +1176,17 @@
 
 						//funciones para el cComTra_IPA
 					document.forms['frgrm']['cComTra_IPA'  +nSecuencia].onfocus  = function() {	document.forms['frgrm']['nTxtFocus'].value = nSecuencia;
-																																											if (document.forms['frgrm']['cComId_IPA'  +nSecuencia].value == "") {
-																																												this.value="";
-																																												alert("Debe Seleccionar un Concepto.");
-																																												document.forms['frgrm']['cComId_IPA'+nSecuencia].focus();
-																																											}
-																																										}
+						if (document.forms['frgrm']['cComId_IPA'  +nSecuencia].value == "") {
+							this.value="";
+							alert("Debe Seleccionar un Concepto.");
+							document.forms['frgrm']['cComId_IPA'+nSecuencia].focus();
+						}
+					}
 					document.forms['frgrm']['cComTra_IPA'  +nSecuencia].onblur   = function() { this.value=this.value.toUpperCase();
-																																											if (document.forms['frgrm']['cComId_IPA'  +nSecuencia].value != "") {
-																																												f_Links('cComTra_IPA','WINDOW',nSecuencia);
-																																											}
-																																										}
+						if (document.forms['frgrm']['cComId_IPA'  +nSecuencia].value != "") {
+							f_Links('cComTra_IPA','WINDOW',nSecuencia);
+						}
+					}
 
 						//Verificar la calidad del tercero para permitir decimales
 			switch (document.forms['frgrm']['cTerCalInt'].value) {
@@ -1398,11 +1398,11 @@
 				var nNy      = (nY-nAlto)/2;
 				var cWinOpt  = "width="+nAncho+",scrollbars=1,height="+nAlto+",left="+nNx+",top="+nNy;
 				var cPathUrl = "frfacfrm.php?gFunction=PegarDo"+
-																"&gArchivo=frfaccpd.php"+
-																"&gTabla_GEN="+document.forms['frgrm']['cTabla_GEN'].value+
-																"&gTabla_DOS="+document.forms['frgrm']['cTabla_DOS'].value+
-																"&gFacId="+document.forms['frgrm']['cFacId'].value+
-																"&gSecuencia="+document.forms['frgrm']['nSecuencia_Dos'].value;
+													"&gArchivo=frfaccpd.php"+
+													"&gTabla_GEN="+document.forms['frgrm']['cTabla_GEN'].value+
+													"&gTabla_DOS="+document.forms['frgrm']['cTabla_DOS'].value+
+													"&gFacId="+document.forms['frgrm']['cFacId'].value+
+													"&gSecuencia="+document.forms['frgrm']['nSecuencia_Dos'].value;
 				//alert(xSwitch + " -> " + cPathUrl);
 				cWindow = window.open(cPathUrl,"PegarDo",cWinOpt);
 				cWindow.focus();
@@ -1446,19 +1446,19 @@
 					var nSecuencia = document.forms['frgrm']['nTxtFocus'].value;
 
 					var cRuta = "frfacipg.php?"+
-											"cModo=GUARDAR"  +
-											"&cParent=VALID" +
-											"&cForm=frfacgra.php" +
-											"&cFacId="       +document.forms['frgrm']['cFacId'].value+
-											"&cTabla_GEN="   +document.forms['frgrm']['cTabla_GEN'].value+
-											"&cTabla_DOS="   +document.forms['frgrm']['cTabla_DOS'].value+
-											"&cTabla_IPA="   +document.forms['frgrm']['cTabla_IPA'].value+
-											"&cTabla_PCCA="  +document.forms['frgrm']['cTabla_PCCA'].value+
-											"&nPCCVNe="      +document.forms['frgrm']['nPCCVNe'].value+
-											"&nIPAAnt="      +document.forms['frgrm']['nIPAAnt'].value+
-											"&nSecuencia="   +nSecuencia+
-											"&nComVlr_IPA="  +document.forms['frgrm']['nComVlr_IPA'+nSecuencia].value+
-											"&nComVlrNF_IPA="+document.forms['frgrm']['nComVlrNF_IPA'+nSecuencia].value;
+							"cModo=GUARDAR"  +
+							"&cParent=VALID" +
+							"&cForm=frfacgra.php" +
+							"&cFacId="       +document.forms['frgrm']['cFacId'].value+
+							"&cTabla_GEN="   +document.forms['frgrm']['cTabla_GEN'].value+
+							"&cTabla_DOS="   +document.forms['frgrm']['cTabla_DOS'].value+
+							"&cTabla_IPA="   +document.forms['frgrm']['cTabla_IPA'].value+
+							"&cTabla_PCCA="  +document.forms['frgrm']['cTabla_PCCA'].value+
+							"&nPCCVNe="      +document.forms['frgrm']['nPCCVNe'].value+
+							"&nIPAAnt="      +document.forms['frgrm']['nIPAAnt'].value+
+							"&nSecuencia="   +nSecuencia+
+							"&nComVlr_IPA="  +document.forms['frgrm']['nComVlr_IPA'+nSecuencia].value+
+							"&nComVlrNF_IPA="+document.forms['frgrm']['nComVlrNF_IPA'+nSecuencia].value;
 
 					//alert(cRuta);
 					parent.fmpro2.location = cRuta;
@@ -1537,18 +1537,18 @@
 					var nSecuencia = document.forms['frgrm']['nTxtFocus'].value;
 
 					var cRuta = "frfacipg.php?"+
-											"cModo=VISTAPREVIA"  +
-											"&cParent=VALID" +
-											"&cFacId="       +document.forms['frgrm']['cFacId'].value+
-											"&cTabla_GEN="   +document.forms['frgrm']['cTabla_GEN'].value+
-											"&cTabla_DOS="   +document.forms['frgrm']['cTabla_DOS'].value+
-											"&cTabla_IPA="   +document.forms['frgrm']['cTabla_IPA'].value+
-											"&cTabla_PCCA="  +document.forms['frgrm']['cTabla_PCCA'].value+
-											"&nPCCVNe="      +document.forms['frgrm']['nPCCVNe'].value+
-											"&nIPAAnt="      +document.forms['frgrm']['nIPAAnt'].value+
-											"&nSecuencia="   +nSecuencia+
-											"&nComVlr_IPA="  +document.forms['frgrm']['nComVlr_IPA'+nSecuencia].value+
-											"&nComVlrNF_IPA="+document.forms['frgrm']['nComVlrNF_IPA'+nSecuencia].value;
+							"cModo=VISTAPREVIA"  +
+							"&cParent=VALID" +
+							"&cFacId="       +document.forms['frgrm']['cFacId'].value+
+							"&cTabla_GEN="   +document.forms['frgrm']['cTabla_GEN'].value+
+							"&cTabla_DOS="   +document.forms['frgrm']['cTabla_DOS'].value+
+							"&cTabla_IPA="   +document.forms['frgrm']['cTabla_IPA'].value+
+							"&cTabla_PCCA="  +document.forms['frgrm']['cTabla_PCCA'].value+
+							"&nPCCVNe="      +document.forms['frgrm']['nPCCVNe'].value+
+							"&nIPAAnt="      +document.forms['frgrm']['nIPAAnt'].value+
+							"&nSecuencia="   +nSecuencia+
+							"&nComVlr_IPA="  +document.forms['frgrm']['nComVlr_IPA'+nSecuencia].value+
+							"&nComVlrNF_IPA="+document.forms['frgrm']['nComVlrNF_IPA'+nSecuencia].value;
 
 					//alert(cRuta);
 					parent.fmpro2.location = cRuta;
@@ -1562,20 +1562,20 @@
 
 		function fnCargarTipoFacturaFE(xComId, xComCod, xComTdoc) {
 		var cRuta = "frfacfex.php?"+
-					"cModo=TIPOFACTURA"+
-					"&gComId=" +xComId+
-					"&gComCod="+xComCod+
-					"&gComTdoc="+xComTdoc;
+				"cModo=TIPOFACTURA"+
+				"&gComId=" +xComId+
+				"&gComCod="+xComCod+
+				"&gComTdoc="+xComTdoc;
 		//alert(cRuta); 
 		parent.fmpro3.location = cRuta;
 		}
 
 			function fnCargarObservaciones() {
 				var cRuta = "frfac20g.php?"+
-										"cModo=OBSERVACIONESDO"+
-										"&cFacId="       +document.forms['frgrm']['cFacId'].value+
-										"&cTabla_GEN="   +document.forms['frgrm']['cTabla_GEN'].value+
-										"&cTabla_DOS="   +document.forms['frgrm']['cTabla_DOS'].value;
+						"cModo=OBSERVACIONESDO"+
+						"&cFacId="       +document.forms['frgrm']['cFacId'].value+
+						"&cTabla_GEN="   +document.forms['frgrm']['cTabla_GEN'].value+
+						"&cTabla_DOS="   +document.forms['frgrm']['cTabla_DOS'].value;
 
 				parent.fmpro3.location = cRuta;
 			}
@@ -2218,42 +2218,42 @@
 																								f_Links('cTerId','VALID') " id="id_href_cTerId">Nit</a><br>
 														<input type = "text" Class = "letra" style = "width:120" name = "cTerId" value="<?php echo $_POST['cTerId'] ?>"
 														onFocus="javascript:document.forms['frgrm']['cTarEst'].value = '';
-																								document.forms['frgrm']['cTerId'].value  = '';
-																								document.forms['frgrm']['cTerNom'].value = '';
-																								document.forms['frgrm']['cTerDV'].value  = '';
-																								document.forms['frgrm']['cTerCal'].value = '';
-																								document.forms['frgrm']['cTerRSt'].value = '';
-																								document.forms['frgrm']['cTerRFte'].value = '';
-																								document.forms['frgrm']['cTerRCre'].value = '';
-																								document.forms['frgrm']['cTerCInt'].value = '';
-																								document.forms['frgrm']['cTerRIca'].value = '';
-																								document.forms['frgrm']['cTerAIva'].value = '';
-																								document.forms['frgrm']['cTerAIf'].value = '';
-																								document.forms['frgrm']['cTerSIca'].value = '';
-																								document.forms['frgrm']['cTerIdInt'].value = '';
-																								document.forms['frgrm']['cTerDVInt'].value = '';
-																								document.forms['frgrm']['cTerNomInt'].value = '';
-																								document.forms['frgrm']['cTerCalInt'].value  = '';
-																								document.forms['frgrm']['cTerRStInt'].value  = '';
-																								document.forms['frgrm']['cTerRFteInt'].value = '';
-																								document.forms['frgrm']['cTerRCreInt'].value = '';
-																								document.forms['frgrm']['cTerCIntInt'].value = '';
-																								document.forms['frgrm']['cTerRIcaInt'].value = '';
-																								document.forms['frgrm']['cTerAIvaInt'].value = '';
-																								document.forms['frgrm']['cTerAIfInt'].value = '';
-																								document.forms['frgrm']['cTerSIcaInt'].value = '';
-																								document.forms['frgrm']['cTerDir'].value = '';
-																								document.forms['frgrm']['cTerTel'].value = '';
-																								document.forms['frgrm']['cTerFax'].value = '';
-																								document.forms['frgrm']['cTerPla'].value = '';
-																								document.forms['frgrm']['cTerEma'].value = '';
-																								document.forms['frgrm']['cTerAnt'].value = '';
-																								document.forms['frgrm']['cTerGru'].value = '';
-																								document.forms['frgrm']['cCccAIF'].value = '';
-																								document.forms['frgrm']['cCccIFA'].value = '';
-																								document.forms['frgrm']['nTasaCambio'].value = '';
-																								document.forms['frgrm']['dFechaProm'].value  = '';
-																								this.style.background='#00FFFF'"
+																		document.forms['frgrm']['cTerId'].value  = '';
+																		document.forms['frgrm']['cTerNom'].value = '';
+																		document.forms['frgrm']['cTerDV'].value  = '';
+																		document.forms['frgrm']['cTerCal'].value = '';
+																		document.forms['frgrm']['cTerRSt'].value = '';
+																		document.forms['frgrm']['cTerRFte'].value = '';
+																		document.forms['frgrm']['cTerRCre'].value = '';
+																		document.forms['frgrm']['cTerCInt'].value = '';
+																		document.forms['frgrm']['cTerRIca'].value = '';
+																		document.forms['frgrm']['cTerAIva'].value = '';
+																		document.forms['frgrm']['cTerAIf'].value = '';
+																		document.forms['frgrm']['cTerSIca'].value = '';
+																		document.forms['frgrm']['cTerIdInt'].value = '';
+																		document.forms['frgrm']['cTerDVInt'].value = '';
+																		document.forms['frgrm']['cTerNomInt'].value = '';
+																		document.forms['frgrm']['cTerCalInt'].value  = '';
+																		document.forms['frgrm']['cTerRStInt'].value  = '';
+																		document.forms['frgrm']['cTerRFteInt'].value = '';
+																		document.forms['frgrm']['cTerRCreInt'].value = '';
+																		document.forms['frgrm']['cTerCIntInt'].value = '';
+																		document.forms['frgrm']['cTerRIcaInt'].value = '';
+																		document.forms['frgrm']['cTerAIvaInt'].value = '';
+																		document.forms['frgrm']['cTerAIfInt'].value = '';
+																		document.forms['frgrm']['cTerSIcaInt'].value = '';
+																		document.forms['frgrm']['cTerDir'].value = '';
+																		document.forms['frgrm']['cTerTel'].value = '';
+																		document.forms['frgrm']['cTerFax'].value = '';
+																		document.forms['frgrm']['cTerPla'].value = '';
+																		document.forms['frgrm']['cTerEma'].value = '';
+																		document.forms['frgrm']['cTerAnt'].value = '';
+																		document.forms['frgrm']['cTerGru'].value = '';
+																		document.forms['frgrm']['cCccAIF'].value = '';
+																		document.forms['frgrm']['cCccIFA'].value = '';
+																		document.forms['frgrm']['nTasaCambio'].value = '';
+																		document.forms['frgrm']['dFechaProm'].value  = '';
+																		this.style.background='#00FFFF'"
 																								onBlur = "javascript:this.value=this.value.toUpperCase();
 																																f_Links('cTerId','VALID');
 																																this.style.background='#FFFFFF'">
@@ -2286,42 +2286,42 @@
 																			f_Links('cTerNom','VALID');
 																			this.style.background='#FFFFFF';"
 														onFocus="javascript:document.forms['frgrm']['cTarEst'].value     = '';
-																								document.forms['frgrm']['cTerId'].value      = '';
-																								document.forms['frgrm']['cTerNom'].value     = '';
-																								document.forms['frgrm']['cTerDV'].value      = '';
-																								document.forms['frgrm']['cTerCal'].value     = '';
-																								document.forms['frgrm']['cTerRSt'].value     = '';
-																								document.forms['frgrm']['cTerRFte'].value    = '';
-																								document.forms['frgrm']['cTerRCre'].value    = '';
-																								document.forms['frgrm']['cTerCInt'].value    = '';
-																								document.forms['frgrm']['cTerRIca'].value    = '';
-																								document.forms['frgrm']['cTerAIva'].value    = '';
-																								document.forms['frgrm']['cTerAIf'].value     = '';
-																								document.forms['frgrm']['cTerSIca'].value    = '';
-																								document.forms['frgrm']['cTerIdInt'].value   = '';
-																								document.forms['frgrm']['cTerDVInt'].value   = '';
-																								document.forms['frgrm']['cTerNomInt'].value  = '';
-																								document.forms['frgrm']['cTerCalInt'].value  = '';
-																								document.forms['frgrm']['cTerRStInt'].value  = '';
-																								document.forms['frgrm']['cTerRFteInt'].value = '';
-																								document.forms['frgrm']['cTerRCreInt'].value = '';
-																								document.forms['frgrm']['cTerCIntInt'].value = '';
-																								document.forms['frgrm']['cTerRIcaInt'].value = '';
-																								document.forms['frgrm']['cTerAIvaInt'].value = '';
-																								document.forms['frgrm']['cTerAIfInt'].value = '';
-																								document.forms['frgrm']['cTerSIcaInt'].value = '';
-																								document.forms['frgrm']['cTerDir'].value     = '';
-																								document.forms['frgrm']['cTerTel'].value     = '';
-																								document.forms['frgrm']['cTerFax'].value     = '';
-																								document.forms['frgrm']['cTerPla'].value     = '';
-																								document.forms['frgrm']['cTerEma'].value     = '';
-																								document.forms['frgrm']['cTerAnt'].value     = '';
-																								document.forms['frgrm']['cTerGru'].value     = '';
-																								document.forms['frgrm']['cCccAIF'].value     = '';
-																								document.forms['frgrm']['cCccIFA'].value     = '';
-																								document.forms['frgrm']['nTasaCambio'].value = '';
-																								document.forms['frgrm']['dFechaProm'].value  = '';
-																								this.style.background='#00FFFF'">
+																			document.forms['frgrm']['cTerId'].value      = '';
+																			document.forms['frgrm']['cTerNom'].value     = '';
+																			document.forms['frgrm']['cTerDV'].value      = '';
+																			document.forms['frgrm']['cTerCal'].value     = '';
+																			document.forms['frgrm']['cTerRSt'].value     = '';
+																			document.forms['frgrm']['cTerRFte'].value    = '';
+																			document.forms['frgrm']['cTerRCre'].value    = '';
+																			document.forms['frgrm']['cTerCInt'].value    = '';
+																			document.forms['frgrm']['cTerRIca'].value    = '';
+																			document.forms['frgrm']['cTerAIva'].value    = '';
+																			document.forms['frgrm']['cTerAIf'].value     = '';
+																			document.forms['frgrm']['cTerSIca'].value    = '';
+																			document.forms['frgrm']['cTerIdInt'].value   = '';
+																			document.forms['frgrm']['cTerDVInt'].value   = '';
+																			document.forms['frgrm']['cTerNomInt'].value  = '';
+																			document.forms['frgrm']['cTerCalInt'].value  = '';
+																			document.forms['frgrm']['cTerRStInt'].value  = '';
+																			document.forms['frgrm']['cTerRFteInt'].value = '';
+																			document.forms['frgrm']['cTerRCreInt'].value = '';
+																			document.forms['frgrm']['cTerCIntInt'].value = '';
+																			document.forms['frgrm']['cTerRIcaInt'].value = '';
+																			document.forms['frgrm']['cTerAIvaInt'].value = '';
+																			document.forms['frgrm']['cTerAIfInt'].value = '';
+																			document.forms['frgrm']['cTerSIcaInt'].value = '';
+																			document.forms['frgrm']['cTerDir'].value     = '';
+																			document.forms['frgrm']['cTerTel'].value     = '';
+																			document.forms['frgrm']['cTerFax'].value     = '';
+																			document.forms['frgrm']['cTerPla'].value     = '';
+																			document.forms['frgrm']['cTerEma'].value     = '';
+																			document.forms['frgrm']['cTerAnt'].value     = '';
+																			document.forms['frgrm']['cTerGru'].value     = '';
+																			document.forms['frgrm']['cCccAIF'].value     = '';
+																			document.forms['frgrm']['cCccIFA'].value     = '';
+																			document.forms['frgrm']['nTasaCambio'].value = '';
+																			document.forms['frgrm']['dFechaProm'].value  = '';
+																			this.style.background='#00FFFF'">
 												</td>
 												<td Class = "name" colspan = "1"><br>
 													<input type = "text" Class = "letra" style = "width:20" name = "cBlur"  readonly>
@@ -2364,23 +2364,23 @@
 												<td Class = "name" colspan = "6">Facturar a<br>
 													<input type = "text" Class = "letra" style = "width:120" name = "cTerIdInt" value="<?php echo $_POST['cTerIdInt'] ?>"
 													onFocus="javascript:document.forms['frgrm']['cTerIdInt'].value   = '';
-																							document.forms['frgrm']['cTerDVInt'].value   = '';
-																							document.forms['frgrm']['cTerNomInt'].value  = '';
-																							document.forms['frgrm']['cTerDir'].value     = '';
-																							document.forms['frgrm']['cTerTel'].value     = '';
-																							document.forms['frgrm']['cTerFax'].value     = '';
-																							document.forms['frgrm']['cTerCalInt'].value  = '';
-																							document.forms['frgrm']['cTerRStInt'].value  = '';
-																							document.forms['frgrm']['cTerRFteInt'].value = '';
-																							document.forms['frgrm']['cTerRCreInt'].value = '';
-																							document.forms['frgrm']['cTerCIntInt'].value = '';
-																							document.forms['frgrm']['cTerRIcaInt'].value = '';
-																							document.forms['frgrm']['cTerAIvaInt'].value = '';
-																							document.forms['frgrm']['cTerAIfInt'].value = '';
-																							document.forms['frgrm']['cTerSIcaInt'].value = '';
-																							document.forms['frgrm']['nTasaCambio'].value = '';
-																							document.forms['frgrm']['dFechaProm'].value  = '';
-																							this.style.background='#00FFFF';"
+																		document.forms['frgrm']['cTerDVInt'].value   = '';
+																		document.forms['frgrm']['cTerNomInt'].value  = '';
+																		document.forms['frgrm']['cTerDir'].value     = '';
+																		document.forms['frgrm']['cTerTel'].value     = '';
+																		document.forms['frgrm']['cTerFax'].value     = '';
+																		document.forms['frgrm']['cTerCalInt'].value  = '';
+																		document.forms['frgrm']['cTerRStInt'].value  = '';
+																		document.forms['frgrm']['cTerRFteInt'].value = '';
+																		document.forms['frgrm']['cTerRCreInt'].value = '';
+																		document.forms['frgrm']['cTerCIntInt'].value = '';
+																		document.forms['frgrm']['cTerRIcaInt'].value = '';
+																		document.forms['frgrm']['cTerAIvaInt'].value = '';
+																		document.forms['frgrm']['cTerAIfInt'].value = '';
+																		document.forms['frgrm']['cTerSIcaInt'].value = '';
+																		document.forms['frgrm']['nTasaCambio'].value = '';
+																		document.forms['frgrm']['dFechaProm'].value  = '';
+																		this.style.background='#00FFFF';"
 														onBlur = "javascript:f_Links('cTerIdInt','VALID');this.style.background='#FFFFFF';">
 													<input type = "hidden" name = "cTerCalInt" style = "width:050" value = "<?php echo $_POST['cTerCalInt']  ?>"> <!-- Calidad del Tercero Intermediario -->
 													<input type = "hidden" name = "cTerRStInt"  value = "<?php echo $_POST['cTerRStInt']  ?>"> <!-- Regimen Simple de Tributacion -->
@@ -2398,23 +2398,23 @@
 												<td Class = "name" colspan = "34">Nombre<br>
 													<input type = "text" Class = "letra" style = "width:680" name = "cTerNomInt" value="<?php echo $_POST['cTerNomInt'] ?>"
 												onFocus="javascript:document.forms['frgrm']['cTerIdInt'].value   = '';
-																				document.forms['frgrm']['cTerDVInt'].value   = '';
-																				document.forms['frgrm']['cTerNomInt'].value  = '';
-																				document.forms['frgrm']['cTerDir'].value     = '';
-																				document.forms['frgrm']['cTerTel'].value     = '';
-																				document.forms['frgrm']['cTerFax'].value     = '';
-																				document.forms['frgrm']['cTerCalInt'].value  = '';
-																				document.forms['frgrm']['cTerRStInt'].value  = '';
-																				document.forms['frgrm']['cTerRFteInt'].value = '';
-																				document.forms['frgrm']['cTerRCreInt'].value = '';
-																				document.forms['frgrm']['cTerCIntInt'].value = '';
-																				document.forms['frgrm']['cTerRIcaInt'].value = '';
-																				document.forms['frgrm']['cTerAIvaInt'].value = '';
-																				document.forms['frgrm']['cTerAIfInt'].value = '';
-																				document.forms['frgrm']['cTerSIcaInt'].value = '';
-																				document.forms['frgrm']['nTasaCambio'].value = '';
-																				document.forms['frgrm']['dFechaProm'].value  = '';
-																				this.style.background='#00FFFF';"
+																	document.forms['frgrm']['cTerDVInt'].value   = '';
+																	document.forms['frgrm']['cTerNomInt'].value  = '';
+																	document.forms['frgrm']['cTerDir'].value     = '';
+																	document.forms['frgrm']['cTerTel'].value     = '';
+																	document.forms['frgrm']['cTerFax'].value     = '';
+																	document.forms['frgrm']['cTerCalInt'].value  = '';
+																	document.forms['frgrm']['cTerRStInt'].value  = '';
+																	document.forms['frgrm']['cTerRFteInt'].value = '';
+																	document.forms['frgrm']['cTerRCreInt'].value = '';
+																	document.forms['frgrm']['cTerCIntInt'].value = '';
+																	document.forms['frgrm']['cTerRIcaInt'].value = '';
+																	document.forms['frgrm']['cTerAIvaInt'].value = '';
+																	document.forms['frgrm']['cTerAIfInt'].value = '';
+																	document.forms['frgrm']['cTerSIcaInt'].value = '';
+																	document.forms['frgrm']['nTasaCambio'].value = '';
+																	document.forms['frgrm']['dFechaProm'].value  = '';
+																	this.style.background='#00FFFF';"
 												onBlur = "javascript:f_Links('cTerNomInt','VALID');this.style.background='#FFFFFF';">
 												</td>
 												<td Class = "name" colspan = "1"><br>
@@ -2532,13 +2532,13 @@
 									<?php $cCols = f_Format_Cols(47); echo $cCols; ?>
 										<tr>
 											<td Class = "name" colspan = "12">Tipo de Factura Eletr&oacute;nica<br>
-						<?php if ($_POST['cStep'] != 1) { ?>
-							<input type = "hidden" name = "cComTdoc" value = "<?php echo $_POST['cComTdoc'] ?>">
-						<?php } else { ?>
-							<select Class = "letrase" style = "width:240" name = "cComTdoc" value = "<?php echo $_POST['cComTdoc'] ?>">
-							<option value = "">[SELECCIONE]</option>
-							</select>
-						<?php } ?>
+												<?php if ($_POST['cStep'] != 1) { ?>
+													<input type = "hidden" name = "cComTdoc" value = "<?php echo $_POST['cComTdoc'] ?>">
+												<?php } else { ?>
+													<select Class = "letrase" style = "width:240" name = "cComTdoc" value = "<?php echo $_POST['cComTdoc'] ?>">
+													<option value = "">[SELECCIONE]</option>
+													</select>
+												<?php } ?>
 											</td>
 											<td Class = "name" colspan = "10">Tipo Operaci&oacute;n<br>
 												<select Class = "letrase" style = "width:200" name = "cTopId">
@@ -2803,16 +2803,16 @@
 								<td width="758" height="21"></td>
 								<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/siguiente.gif" style="cursor:pointer"
 								onClick = "javascript:
-															if ((document.forms['frgrm']['cComTCo'].value != document.forms['frgrm']['cComFCA'].value) ||
-																	(document.forms['frgrm']['cTerId'].value  != document.forms['frgrm']['cTerId_Ant'].value)) { // Tipo de Cobro vs. Forma de Cobro Anterior
-																fnBorrarGrilla('Grid_Tramites');
-															}
-															document.forms['frgrm']['cStep'].value = '2';
-															document.forms['frgrm']['cStep_Ant'].value = '1';
-															fnAsignarValores();
-															document.forms['frestado'].target='fmpro';
-									document.forms['frestado'].action='frfacvcl.php';
-									document.forms['frestado'].submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Siguiente
+														if ((document.forms['frgrm']['cComTCo'].value != document.forms['frgrm']['cComFCA'].value) ||
+																(document.forms['frgrm']['cTerId'].value  != document.forms['frgrm']['cTerId_Ant'].value)) { // Tipo de Cobro vs. Forma de Cobro Anterior
+															fnBorrarGrilla('Grid_Tramites');
+														}
+														document.forms['frgrm']['cStep'].value = '2';
+														document.forms['frgrm']['cStep_Ant'].value = '1';
+														fnAsignarValores();
+														document.forms['frestado'].target='fmpro';
+														document.forms['frestado'].action='frfacvcl.php';
+														document.forms['frestado'].submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Siguiente
 							</td>
 								<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:hand"
 									onClick ="javascript:f_Salir()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
@@ -2830,7 +2830,7 @@
 								onClick = "javascript:document.forms['frgrm']['cStep'].value = '1';
 																			document.forms['frgrm']['cStep_Ant'].value = '2';
 																			fnAsignarValores();
-																	document.forms['frestado'].target='fmwork';
+																			document.forms['frestado'].target='fmwork';
 																			document.forms['frestado'].action='frfacnue.php';
 																			document.forms['frestado'].submit()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anterior</td>
 							<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/siguiente.gif" style="cursor:pointer"

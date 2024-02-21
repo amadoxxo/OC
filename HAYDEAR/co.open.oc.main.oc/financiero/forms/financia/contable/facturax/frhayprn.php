@@ -443,10 +443,10 @@
     class PDF extends FPDF {
 
       function Header() {
-        global $cAlfa;    global $cRoot;   global $vSysStr; global $_COOKIE;   global $cPlesk_Skin_Directory;
-        global $vAgenDat; global $vResDat; global $vCocDat; global $cFormaPag; global $cMedioPago;
-        global $cPedido;  global $cDocId;  global $cDocTra; global $cBultos;   global $cPesBru;
-        global $cTasCam;  global $vComObs2;
+        global $cAlfa;    global $cRoot;    global $vSysStr; global $_COOKIE;   global $cPlesk_Skin_Directory;
+        global $vAgenDat; global $vResDat;  global $vCocDat; global $cFormaPag; global $cMedioPago;
+        global $cPedido;  global $cDocId;   global $cDocTra; global $cBultos;   global $cPesBru;
+        global $cTasCam;  global $vComObs2; global $nValAdu; global $cDocSuf;   global $cSucId; global $vDceDat;
 
         if ($vCocDat['regestxx'] == "INACTIVO") {
           $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/facturaanulada.jpg',10,50,180,180);
@@ -489,11 +489,14 @@
 
         // Informacion factura
         $this->SetFont('Arial', 'B', 9);
-        $this->setXY($posx + 140, $posy);
+        $this->setXY($posx + 140, $posy+1);
         $this->MultiCell(70, 4, utf8_decode("FACTURA ELECTRÓNICA\n DE VENTA"), 0, 'C');
+        $this->setX($posx + 148);
+        $this->SetFont('Arial', 'B', 10);
+        $this->Cell(2, 6, "No.", 0, 0, 'L');
         $this->setX($posx + 156);
         $this->SetFont('Arial', '', 9);
-        $this->MultiCell(40, 6, $vResDat['resprexx']." ".$vCocDat['comcscxx'], 1, 'C');
+        $this->MultiCell(40, 6, $vResDat['comidxxx']." ".$vCocDat['comcodxx'] ." ". $vCocDat['comcscxx'], 1, 'C');
         $this->setXY($posx + 138, $posy+16);
         $this->SetFont('Arial', '', 7);
         $this->MultiCell(60, 3, utf8_decode("NO SOMOS GRANDES CONTRIBUYENTES,\n Actividad Económica No. 5229 ICA 9.66\n Régimen Común IVA"), 0, 'R');
@@ -502,71 +505,71 @@
         // Informacion facturar a
         $this->setXY($posx+3, $posy+4);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(23, 4, utf8_decode("FACTURADO A:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("FACTURADO A:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vCocDat['CLINOMXX']), 0, 'J');
         $this->setX($posx+3);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(15, 4, utf8_decode("NIT:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("NIT:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, number_format($vCocDat['CLIIDXXX'], 0, '', '.'). "-" .f_Digito_Verificacion($vCocDat['CLIIDXXX']), 0, 'L');
         $this->setX($posx+3);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(20, 4, utf8_decode("DIRECCION:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("DIRECCION:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(83, 4, utf8_decode($vCocDat['CLIDIRXX']), 0, 'L');
         $this->setX($posx+3);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(15, 4, utf8_decode("TELÉFONO:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("TELÉFONO:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(83, 4, utf8_decode($vComObs2[18]), 0, 'L');
+        $this->MultiCell(83, 4, utf8_decode($vCocDat['CLITELXX']), 0, 'L');
         $this->setX($posx+3);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(20, 4, utf8_decode("DOC. TRANS:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("DOC. TRANS:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(83, 4, utf8_decode($cPedido), 0, 'L');
+        $this->MultiCell(83, 4, utf8_decode($cDocTra), 0, 'L');
         $this->setX($posx+3);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(15, 4, utf8_decode("VALOR CIF:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("VALOR CIF:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(83, 4, utf8_decode($vComObs2[19]), 0, 'L');
+        $this->MultiCell(83, 4, utf8_decode($nValAdu), 0, 'L');
         $this->setX($posx+3);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(23, 4, utf8_decode("REFERENCIA:"), 0, 0, 'L');
+        $this->Cell(22, 4, utf8_decode("REFERENCIA:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(75, 4, utf8_decode($vComObs2[20]), 0, 'L');
+        $this->MultiCell(75, 4, utf8_decode($vDceDat), 0, 'L');
         $posyy = $this->GetY();
 
         $this->setXY($posx + 130, $posy+4);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(40, 4, utf8_decode("FECHA TRANSMISION:"), 0, 0, 'L');
+        $this->Cell(30, 4, utf8_decode("FECHA TRANSMISION:"), 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->MultiCell(42, 4, utf8_decode($vCocDat['comfecxx']). " " .utf8_decode($vCocDat['reghcrex']), 0, 'L');
+        $this->setX($posx + 130);
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(30, 4, utf8_decode("FECHA EMISION:"), 0, 0, 'L');
+        $this->SetFont('Arial', '', 7.5);
+        $this->MultiCell(42, 4, utf8_decode($vCocDat['comfecxx']). " " .utf8_decode($vCocDat['reghcrex']), 0, 'L');
+        $this->setX($posx + 130);
+        $this->SetFont('Arial', '', 7.5);
+        $this->Cell(30, 4, utf8_decode("FECHA VENCIMIENTO:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(42, 4, utf8_decode($vCocDat['comfecve']), 0, 'L');
         $this->setX($posx + 130);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(40, 4, utf8_decode("FECHA EMISION:"), 0, 0, 'L');
-        $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(42, 4, utf8_decode($vCocDat['comfecve']), 0, 'L');
-        $this->setX($posx + 130);
-        $this->SetFont('Arial', '', 7.5);
-        $this->Cell(40, 4, utf8_decode("FECHA VENCIMIENTO:"), 0, 0, 'L');
-        $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(42, 4, utf8_decode($vCocDat['comfecve']), 0, 'L');
-        $this->setX($posx + 130);
-        $this->SetFont('Arial', '', 7.5);
-        $this->Cell(40, 4, utf8_decode("FORMA DE PAGO:"), 0, 0, 'L');
+        $this->Cell(30, 4, utf8_decode("FORMA DE PAGO:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
         $this->MultiCell(42, 4, utf8_decode($cFormaPag), 0, 'L');
         $this->setX($posx + 130);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(40, 4, utf8_decode("NUMERO PEDIDO:"), 0, 0, 'L');
+        $this->Cell(30, 4, utf8_decode("NUMERO PEDIDO:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(42, 4, utf8_decode($cFormaPag), 0, 'L');
+        $this->MultiCell(42, 4, utf8_decode($cPedido), 0, 'L');
         $this->setX($posx + 130);
         $this->SetFont('Arial', '', 7.5);
-        $this->Cell(20, 4, utf8_decode("NUMERO DO:"), 0, 0, 'L');
+        $this->Cell(30, 4, utf8_decode("NUMERO DO:"), 0, 0, 'L');
         $this->SetFont('Arial', '', 7.5);
-        $this->MultiCell(43, 4, utf8_decode($cDocId), 0, 'L');
+        $this->MultiCell(43, 4, utf8_decode($cSucId)."-".utf8_decode($cDocId)."-".utf8_decode($cDocSuf), 0, 'L');
 
         $posyy = $this->GetY() > $posyy ? $this->GetY() : $posyy;
         $this->RoundedRect($posx, $posy+2.5, 200, 31, 5, 'D');
@@ -791,22 +794,22 @@
     $nTotalIPGra   = 0;
     $nTotalIPNoGra = 0;
 
-    //$mDatIP = array_merge($mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP);
-    //$mDatIP = array_merge($mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP);
-    //$mDatIP = array_merge($mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP);
+    // $mDatIP = array_merge($mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP);
+    // $mDatIP = array_merge($mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP);
+    // $mDatIP = array_merge($mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP, $mDatIP);
 
     // Imprimo Pagos a Terceros
     if (count($mIngTer) > 0 || $nBandPcc == 1) {//Si la matriz de Pcc o Bandera de PCC de Detalle viene en 1
       $pdf->SetFont('arial','B',8);
       $pdf->setXY($posx,$pyy);
       $pdf->Cell(67,6,utf8_decode("DETALLE PAGOS A TERCEROS"),0,0,'L');
-      $pdf->Line(93,81,93,195);
+      $pdf->Line(93,72,93,205);
       $pdf->setXY($posx+105,$pyy);
       $pdf->Cell(10,6,utf8_decode("CONCEPTO"),0,0,'L');
-      $pdf->Line(148,81,148,195);
+      $pdf->Line(148,72,148,205);
       $pdf->setXY($posx+147,$pyy);
       $pdf->Cell(10,6,utf8_decode("FACTURA #"),0,0,'L');
-      $pdf->Line(178,81,178,195);
+      $pdf->Line(178,72,178,205);
       $pdf->setXY($posx+180,$pyy);
       $pdf->Cell(10,6,utf8_decode("VALOR"),0,0,'L');
       $pyy = $posy+6;
@@ -846,9 +849,9 @@
         $pdf->setX($posx);
         $pdf->Row(array(
           $mIngTer[$i]['ctodesxx'] . " " . $cDescrip,
-          utf8_decode($cUniMedi),
-          "1",
-          number_format($mIngTer[$i]['totalxxx'],2,'.',',')
+          $mIngTer[$i]['ctodesxx'],
+          $mIngTer[$i]['facturax'],
+          number_format($nVlrBase,2,'.',','),
         ));
       }//for($i=0;$i<count($mIngTer);$i++){
 
@@ -913,10 +916,9 @@
           $pdf->setX($posx);
           $pdf->Row(array(
             $mDatIP[$k]['comobsxx'],
-            utf8_decode($cUniMedi),
+            "",
             $mDatIP[$k]['canfexxx'],
             number_format($nVlrUnit,2,'.',','),
-            // number_format($mDatIP[$k]['comvlrxx'],2,'.',',')
           ));
         }//if($mDatIP[$k]['comctocx'] == 'IP'){
       }// for($k=$nPosIP;$k<(count($mDatIP));$k++) {
@@ -1069,94 +1071,64 @@
     }
 
     // Recuadro de los Item
-    $pdf->Rect($posx, $posy-3, 200, 195-($posy-3));
+    $pdf->Rect($posx, $posy-3, 200, 205-($posy-3));
 
     $posx	= 8;
-    $posy = 200;
+    $posy = 220;
   
     $pdf->SetFont('Arial', 'B', 7);
     $pdf->setXY($posx, $posy-47);
-    $pdf->Cell(35, 4, "Total Ingresos para Terceros", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
-    $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nTotalPCC, 2, '.', ','), 0, 0, 'R');
-    $pdf->ln(4);
-    $pdf->setX($posx);
-    $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Total Ingresos Propios", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
-    $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format(($nTotalIPGra + $nTotalIPNoGra), 2, '.', ','), 0, 0, 'R');
-    $pdf->ln(4);
-    $pdf->setX($posx);
-    $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "IVA", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
-    $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nIva, 2, '.', ','), 0, 0, 'R');
-    $pdf->ln(4);
-    $pdf->setX($posx);
-    $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Total Factura", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 4, "SUBTOTAL", 0, 0, 'L');
     $pdf->setX($posx + 175);
     $pdf->Cell(25, 4, number_format($nSubTotal, 2, '.', ','), 0, 0, 'R');
     $pdf->ln(4);
     $pdf->setX($posx);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Retefuente" , 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 4, "IVA GENERADO", 0, 0, 'L');
     $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nTotRfte, 2, '.', ','), 0, 0, 'R');
+    $pdf->Cell(25, 4, number_format($nIva, 2, '.', ','), 0, 0, 'R');
     $pdf->ln(4);
     $pdf->setX($posx);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Reteiva", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 4, "RETE-ICA", 0, 0, 'L');
     $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nTotRiva, 2, '.', ','), 0, 0, 'R');
+    $pdf->Cell(25, 4, "-".number_format($nTotRica, 2, '.', ','), 0, 0, 'R');
     $pdf->ln(4);
     $pdf->setX($posx);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Reteica", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 4, "RETE-IVA", 0, 0, 'L');
     $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nTotRica, 2, '.', ','), 0, 0, 'R');
+    $pdf->Cell(25, 4, "-".number_format($nTotRiva, 2, '.', ','), 0, 0, 'R');
     $pdf->ln(4);
     $pdf->setX($posx);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Anticipo", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 4, "RETE-FUENTE" , 0, 0, 'L');
     $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nTotAnt, 2, '.', ','), 0, 0, 'R');
+    $pdf->Cell(25, 4, "-".number_format($nTotRfte, 2, '.', ','), 0, 0, 'R');
     $pdf->ln(4);
     $pdf->setX($posx);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 4, "Saldo a su Favor", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 4, "ANTICIPOS RECIBIDOS", 0, 0, 'L');
     $pdf->setX($posx + 175);
-    $pdf->Cell(25, 4, number_format($nSaldoFavor > 0 ? $nSaldoFavor : 0, 2, '.', ','), 0, 0, 'R');
+    $pdf->Cell(25, 4, "-".number_format($nTotAnt, 2, '.', ','), 0, 0, 'R');
     $pdf->ln(4);
     $pdf->setX($posx);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(35, 5, "Total a Pagar", 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(35, 5, "TOTAL", 0, 0, 'L');
     $pdf->setX($posx + 175);
     $pdf->Cell(25, 5, number_format($nSaldoFavor > 0 ? 0 : $nTotPag, 2, '.', ','), 0, 0, 'R');
 
     // Valor en letras
-    $posy += 42;
+    $posy += 32;
     $nTotPag   = $nSaldoFavor > 0 ? $nSaldoFavor : $nTotPag;
     $cVlrLetra = f_Cifra_Php(str_replace("-","",abs($nTotPag)),"PESO");
     $pdf->setXY($posx, $posy-46);
-    $pdf->SetFont('Arial', 'B', 8);
-    $pdf->Cell(22, 5,"Valor en Pesos:",0,0,'L');
-    $pdf->SetFont('Arial', '', 7);
-    $pdf->MultiCell(133, 5, utf8_decode($cVlrLetra), 0, 'L');
+    $pdf->SetFont('Arial', '', 6.5);
+    $pdf->Cell(140, 5, "Valor en Pesos:" . utf8_decode($cVlrLetra), 0, 0, 'L');
     $pdf->Rect($posx, $posy-46, 200, 6);
-    $pdf->SetFont('Arial', 'B', 8);
+    $pdf->SetFont('Arial', '', 6.5);
     $pdf->setXY($posx, $posy-39);
-    $pdf->Cell(140, 5, 'Observaciones: ' . utf8_decode($vCocDat['comobsxx']), 0, 'L');
+    $pdf->Cell(140, 5, 'Observaciones: ' . utf8_decode($vCocDat['comobsxx']), 0, 0, 'L');
     $pdf->Rect($posx, $posy-39, 200, 6);
 
     $cFile = f_Buscar_Niveles_Hasta_Opencomex(getcwd()).$vSysStr['system_download_directory']."/pdf_".$_COOKIE['kUsrId']."_".date("YmdHis").".pdf";

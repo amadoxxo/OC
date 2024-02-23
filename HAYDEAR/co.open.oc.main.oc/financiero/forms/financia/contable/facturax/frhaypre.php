@@ -1,8 +1,8 @@
 <?php
   /**
-	 * Imprime Factura de EXPORCOMEX.
-	 * --- Descripcion: Permite Imprimir Factura de Venta Agencia de EXPORCOMEX por Vista Previa.
-	 * @author Juan Jose Trujillo Ch. <juan.trujillo@openits.co>
+	 * Imprime Factura de HAYDEAR.
+	 * --- Descripcion: Permite Imprimir Factura de Venta Agencia de HAYDEAR por Vista Previa.
+	 * @author Elian Amado Ramirez. <elian.amado@openits.co>
    * @package openComex
 	 * @version 001
 	 */
@@ -149,13 +149,15 @@
 	$qCliFac .= "IF($cAlfa.SIAI0150.PAIIDXXX != \"\",$cAlfa.SIAI0150.PAIIDXXX,\"\") AS PAIIDXXX,";
 	$qCliFac .= "IF($cAlfa.SIAI0150.DEPIDXXX != \"\",$cAlfa.SIAI0150.DEPIDXXX,\"\") AS DEPIDXXX,";
 	$qCliFac .= "IF($cAlfa.SIAI0150.CLICPOSX != \"\",$cAlfa.SIAI0150.CLICPOSX,\"\") AS CLICPOSX,";
-	$qCliFac .= "IF($cAlfa.SIAI0150.CIUIDXXX != \"\",$cAlfa.SIAI0150.CIUIDXXX,\"\") AS CIUIDXXX ";
+	$qCliFac .= "IF($cAlfa.SIAI0150.CIUIDXXX != \"\",$cAlfa.SIAI0150.CIUIDXXX,\"\") AS CIUIDXXX,";
+	$qCliFac .= "IF($cAlfa.SIAI0150.CLIFORPX != \"\",$cAlfa.SIAI0150.CLIFORPX,\"\") AS CLIFORPX ";
 	$qCliFac .= "FROM $cAlfa.SIAI0150 ";
 	$qCliFac .= "WHERE ";
 	$qCliFac .= "$cAlfa.SIAI0150.CLIIDXXX = \"{$_POST['cTerIdInt']}\" AND ";
 	$qCliFac .= "$cAlfa.SIAI0150.REGESTXX = \"ACTIVO\" LIMIT 0,1 ";
 	$xCliFac  = f_MySql("SELECT","",$qCliFac,$xConexion01,"");
 	// f_Mensaje(__FILE__,__LINE__,$qCliDat."~".mysql_num_rows($xCliFac));
+  $vCliFac = array();
 	if (mysql_num_rows($xCliFac) > 0) {
 		$vCliFac = mysql_fetch_array($xCliFac);
 	}
@@ -260,22 +262,24 @@
     $vDesc = explode("^",$_POST['cComObs_PCCA' .($i+1)]);
     if ($_POST['cTipo_PCCA'.($i+1)] == "IMPUESTO_FINANCIERO") { //si es GMF debe mostrarse en GMF
       $nInd_mIngTer = count($mIngTer);
-			$mIngTer[$nInd_mIngTer]['cComId']   = $_POST['cComId_PCCA' .($i+1)];
-      $mIngTer[$nInd_mIngTer]['cComObs']  = $_POST['cComObs_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['nVlrIva']  = 0;
-      $mIngTer[$nInd_mIngTer]['nBaseIva'] = 0;
-      $mIngTer[$nInd_mIngTer]['nComVlr']  = $_POST['nComVlr_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['cComCsc3'] = "";
-      $mIngTer[$nInd_mIngTer]['cUniMed']  = ($vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] != '') ? $vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] : "A9"; // Unidad de medida
+			$mIngTer[$nInd_mIngTer]['cComId']     = $_POST['cComId_PCCA' .($i+1)];
+      $mIngTer[$nInd_mIngTer]['cComObs']    = $_POST['cComObs_PCCA'.($i+1)];
+      $mIngTer[$nInd_mIngTer]['cProveedor'] = $_POST['cComObs_PCCA'.($i+1)];
+      $mIngTer[$nInd_mIngTer]['nVlrIva']    = 0;
+      $mIngTer[$nInd_mIngTer]['nBaseIva']   = 0;
+      $mIngTer[$nInd_mIngTer]['nComVlr']    = $_POST['nComVlr_PCCA'.($i+1)];
+      $mIngTer[$nInd_mIngTer]['cComCsc3']   = "";
+      $mIngTer[$nInd_mIngTer]['cUniMed']    = ($vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] != '') ? $vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] : "A9"; // Unidad de medida
     } else {
       $nInd_mIngTer = count($mIngTer);
-			$mIngTer[$nInd_mIngTer]['cComId']   = $_POST['cComId_PCCA' .($i+1)];
-      $mIngTer[$nInd_mIngTer]['cComObs']  = $vDesc[0] . " " . $vDesc[1]; // Se concatena el nombre del Proveedor
-      $mIngTer[$nInd_mIngTer]['nVlrIva']  = ($_POST['nVlrIva_PCCA'.($i+1)]+0);
-      $mIngTer[$nInd_mIngTer]['nBaseIva'] = $_POST['nBaseIva_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['nComVlr']  = $_POST['nComVlr_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['cComCsc3'] = ($_POST['cComDocIn_PCCA'.($i+1)] != "") ? $_POST['cComDocIn_PCCA'.($i+1)] : $_POST['cComCsc3_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['cUniMed']  = ($vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] != '') ? $vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] : "A9"; // Unidad de medida
+			$mIngTer[$nInd_mIngTer]['cComId']     = $_POST['cComId_PCCA' .($i+1)];
+      $mIngTer[$nInd_mIngTer]['cComObs']    = trim($vDesc[0]); // Descripcion del concepto
+      $mIngTer[$nInd_mIngTer]['cProveedor'] = trim($vDesc[1]); // Nombre del proveedor
+      $mIngTer[$nInd_mIngTer]['nVlrIva']    = ($_POST['nVlrIva_PCCA'.($i+1)]+0);
+      $mIngTer[$nInd_mIngTer]['nBaseIva']   = $_POST['nBaseIva_PCCA'.($i+1)];
+      $mIngTer[$nInd_mIngTer]['nComVlr']    = $_POST['nComVlr_PCCA'.($i+1)];
+      $mIngTer[$nInd_mIngTer]['cComCsc3']   = ($_POST['cComDocIn_PCCA'.($i+1)] != "") ? $_POST['cComDocIn_PCCA'.($i+1)] : $_POST['cComCsc3_PCCA'.($i+1)];
+      $mIngTer[$nInd_mIngTer]['cUniMed']    = ($vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] != '') ? $vCtoCon["{$_POST['cComId_PCCA'.($i+1)]}"]['umeidxxx'] : "A9"; // Unidad de medida
     }
   }//for ($i=0;$i<$_POST['nSecuencia_PCCA'];$i++) {
   // Fin Codigo para imprimir los ingresos para terceros
@@ -321,11 +325,10 @@
   class PDF extends FPDF {
 
     function Header() {
-      global $cAlfa;    global $cRoot;    global $vSysStr; global $_COOKIE;   global $cPlesk_Skin_Directory;
-      global $vAgenDat; global $vResDat;  global $vCliFac; global $cFormaPag; global $cMedioPago;
-      global $cPedido;  global $cDocId;   global $cDocTra; global $cBultos;   global $cPesBru;
-      global $cTasCam;  global $vComObs2; global $nValAdu; global $cDocSuf;   global $cSucId;
-      global $vDceDat;  global $dFecEmi;  global $dFecVen; global $dHorEmi;
+      global $vSysStr; global $cPlesk_Skin_Directory;    global $vResDat;  
+      global $vCliFac; global $cPedido;  global $cDocId; global $cDocTra;
+      global $nValAdu; global $cDocSuf;  global $cSucId; global $dFecEmi;
+      global $dFecVen; global $dHorEmi;  global $vDatDo;
 
       $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/copianovalida.jpg',10,50,180,180);
 
@@ -337,7 +340,7 @@
 
       $this->SetFont('Arial', '', 6);
       $this->TextWithDirection(212,170,utf8_decode("Actividad Económica 6390 TARIFA 9.66 X 1.000- RÉGIMEN COMÚN"),'U');  
-      $cResolucion  = "Autorización para factura electrónica según Resolución DIAN No.".$vResDat['residxxx']." Fecha ".$this->fechaCastellano($vResDat['resfdexx']). " Numeración Autorizada del No.";
+      $cResolucion  = "Autorización para factura electrónica según Resolución DIAN No.".$vResDat['residxxx']." Fecha ".date("Y/m/d", strtotime($vResDat['resfdexx'])). " Numeración Autorizada del No.";
       $cResponsable = "{$vResDat['resprexx']}"."{$vResDat['resdesxx']}". " hasta {$vResDat['resprexx']}"."{$vResDat['reshasxx']}";
       $this->TextWithDirection(3.5,210,utf8_decode($cResolucion),'U');
       $this->TextWithDirection(5.5,140,utf8_decode($cResponsable),'U');
@@ -369,7 +372,7 @@
       $this->Cell(2, 6, "No.", 0, 0, 'L');
       $this->setX($posx + 156);
       $this->SetFont('Arial', '', 9);
-      $this->MultiCell(40, 6, $vResDat['comidxxx']." ".$vCliFac['comcodxx'] ." ". $vCliFac['comcscxx'], 1, 'C');
+      $this->MultiCell(40, 6, "", 1, 'C');
       $this->setXY($posx + 138, $posy+16);
       $this->SetFont('Arial', '', 7);
       $this->MultiCell(60, 3, utf8_decode("NO SOMOS GRANDES CONTRIBUYENTES,\n Actividad Económica No. 5229 ICA 9.66\n Régimen Común IVA"), 0, 'R');
@@ -410,29 +413,29 @@
       $this->SetFont('Arial', '', 7.5);
       $this->Cell(22, 4, utf8_decode("REFERENCIA:"), 0, 0, 'L');
       $this->SetFont('Arial', '', 7.5);
-      $this->MultiCell(75, 4, utf8_decode($vDceDat), 0, 'L');
+      $this->MultiCell(75, 4, utf8_decode($vDatDo['doctipxx']), 0, 'L');
       $posyy = $this->GetY();
 
       $this->setXY($posx + 130, $posy+4);
       $this->SetFont('Arial', '', 7.5);
       $this->Cell(30, 4, utf8_decode("FECHA TRANSMISION:"), 0, 0, 'L');
       $this->SetFont('Arial', '', 7.5);
-      $this->MultiCell(42, 4, utf8_decode($dFecEmi). " " .utf8_decode($dHorEmi), 0, 'L');
+      $this->MultiCell(42, 4, date("Y/m/d", strtotime($dFecEmi)). " " .utf8_decode($dHorEmi), 0, 'L');
       $this->setX($posx + 130);
       $this->SetFont('Arial', '', 7.5);
       $this->Cell(30, 4, utf8_decode("FECHA EMISION:"), 0, 0, 'L');
       $this->SetFont('Arial', '', 7.5);
-      $this->MultiCell(42, 4, utf8_decode($dFecEmi). " " .utf8_decode($dHorEmi), 0, 'L');
+      $this->MultiCell(42, 4, utf8_decode(date("Y/m/d", strtotime($dFecEmi))). " " .utf8_decode($dHorEmi), 0, 'L');
       $this->setX($posx + 130);
       $this->SetFont('Arial', '', 7.5);
       $this->Cell(30, 4, utf8_decode("FECHA VENCIMIENTO:"), 0, 0, 'L');
       $this->SetFont('Arial', '', 7.5);
-      $this->MultiCell(42, 4, utf8_decode($dFecVen), 0, 'L');
+      $this->MultiCell(42, 4, utf8_decode(date("Y/m/d", strtotime($dFecVen))), 0, 'L');
       $this->setX($posx + 130);
       $this->SetFont('Arial', '', 7.5);
       $this->Cell(30, 4, utf8_decode("FORMA DE PAGO:"), 0, 0, 'L');
       $this->SetFont('Arial', '', 7.5);
-      $this->MultiCell(42, 4, utf8_decode($cFormaPag), 0, 'L');
+      $this->MultiCell(42, 4, utf8_decode($vCliFac["CLIFORPX"]), 0, 'L');
       $this->setX($posx + 130);
       $this->SetFont('Arial', '', 7.5);
       $this->Cell(30, 4, utf8_decode("NUMERO PEDIDO:"), 0, 0, 'L');
@@ -462,9 +465,9 @@
       $this->MultiCell(200, 2.5, utf8_decode("Esta factura se homologa a la ley 1231 del 2008, como título valor o mecanismo de financiación\n AGENCIA DE ADUANAS CORPORACION INTERNACIONAL DE COMERCIO EXTERIOR HAYDEAR S.A.S NIVEL 2 OFICINA\n PRINCIPAL BOGOTÁ: CALLE 104C No. 47 A 22 Tel: 7043555 - 7043559-7043562\n SUCURSALES: Cartagena, Barranquilla, Santa Marta, Buenaventura E-mail: gerencia@haydear.com\n Impreso por NOMBRE DEL FABRICANTE DEL SOFTWARE - PROVEEDOR TECNOLÓGICO: OPENTECNOLOGIA SA\n NIT: 830135010 NOMBRE DEL SOFTWARE: OPEN-V"), 0, 'C');
 
       // Paginacion
-      // $this->setXY($posx,$posy+15);
-      // $this->SetFont('Arial','B',8);
-      // $this->Cell(200,4,utf8_decode('Página: ').$this->PageNo().' de {nb}',0,0,'C');
+      $this->setXY($posx,$posy+15);
+      $this->SetFont('Arial','B',8);
+      $this->Cell(200,4,utf8_decode('Página: ').$this->PageNo().' de {nb}',0,0,'C');
     }
 
     function Setwidths($w) {
@@ -623,29 +626,6 @@
           ($h - $y3) * $this->k
       ));
     }
-
-    function fechaCastellano($dFecha) {
-      $nombreCompletoMeses = [
-        1 => 'ENERO',
-        2 => 'FEBRERO',
-        3 => 'MARZO',
-        4 => 'ABRIL',
-        5 => 'MAYO',
-        6 => 'JUNIO',
-        7 => 'JULIO',
-        8 => 'AGOSTO',
-        9 => 'SEPTIEMBRE',
-        10 => 'OCTUBRE',
-        11 => 'NOVIEMBRE',
-        12 => 'DICIEMBRE'
-      ];
-  
-      $dia = date("d", strtotime($dFecha));
-      $anio = date("Y", strtotime($dFecha));
-    
-      $mes = $nombreCompletoMeses[date("n", strtotime($dFecha))];
-      return $dia . " DE ". $mes . " DE " . $anio;
-    }
   }
 
   $pdf = new PDF('P','mm','Letter');
@@ -659,8 +639,7 @@
   $pdf->AddPage();
   $posy	   = $pdf->GetY()+3; 
   $posx	   = 8;
-  $posfin  = 240;
-  $nCount  = 0; 
+  $posfin  = 220;
   $pyy     = $posy;
 
   $nTotalPCC     = 0;
@@ -676,13 +655,10 @@
     $pdf->SetFont('arial','B',8);
     $pdf->setXY($posx,$pyy);
     $pdf->Cell(67,6,utf8_decode("DETALLE PAGOS A TERCEROS"),0,0,'L');
-    $pdf->Line(93,72,93,205);
     $pdf->setXY($posx+105,$pyy);
     $pdf->Cell(10,6,utf8_decode("CONCEPTO"),0,0,'L');
-    $pdf->Line(148,72,148,205);
     $pdf->setXY($posx+147,$pyy);
     $pdf->Cell(10,6,utf8_decode("FACTURA #"),0,0,'L');
-    $pdf->Line(178,72,178,205);
     $pdf->setXY($posx+180,$pyy);
     $pdf->Cell(10,6,utf8_decode("VALOR"),0,0,'L');
     $pyy = $posy+6;
@@ -693,41 +669,40 @@
     $pdf->setXY($posx,$pyy);
 
     for($i=0;$i<count($mIngTer);$i++){
-      $nCount++;
       $pyy = $pdf->GetY();
       if($pyy > $posfin){
+        $pdf->Line(93,72,93,$pdf->getY());
+        $pdf->Line(148,72,148,$pdf->getY());
+        $pdf->Line(178,72,178,$pdf->getY());
         $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3));
         $pdf->AddPage();
         $pyy = $posy+5;
         $pdf->setXY($posx,$pyy);
       }
-      //Consulto la descripcion de la Unidad de medida
-      $cUniMedi  = '';
-      $qUniMedi  = "SELECT umedesxx ";
-			$qUniMedi .= "FROM $cAlfa.fpar0157 ";
-			$qUniMedi .= "WHERE ";
-			$qUniMedi .= "umeidxxx = \"{$mIngTer[$i]['cUniMed']}\" LIMIT 0,1";
-			$xUniMedi  = mysql_query($qUniMedi, $xConexion01);
-      if (mysql_num_rows($xUniMedi) > 0) {
-        $vUniMedi = mysql_fetch_array($xUniMedi);
-        $cUniMedi = $vUniMedi['umedesxx'];
-      }
-
       $nTotalPCC += $mIngTer[$i]['nComVlr'];
-      $nVlrBase   = ($mIngTer[$i]['nBaseIva'] > 0) ? $mIngTer[$i]['nBaseIva'] : $mIngTer[$i]['nComVlr'];
-      $cDescrip   = ($mIngTer[$i]['cComCsc3'] != "") ? " Base: " . number_format($mIngTer[$i]['nBaseIva'],2,'.',',') . " Iva: " . number_format($mIngTer[$i]['nVlrIva'],2,'.',',') . " FC. " . $mIngTer[$i]['cComCsc3'] : "";
 
       $pdf->SetFont('arial','',7);
       $pdf->setX($posx);
       $pdf->Row(array(
-        $mIngTer[$i]['cComObs'] . " " . $cDescrip,
+        $mIngTer[$i]['cProveedor'],
         $mIngTer[$i]['cComObs'],
         $mIngTer[$i]['facturax'],
-        number_format($nVlrBase,2,'.',','),
+        number_format($mIngTer[$i]['nComVlr'],0,',','.'),
       ));
     }//for($i=0;$i<count($mIngTer);$i++){
 
+    $pyy += 7;
+    $pdf->setXY($posx,$pyy);
+    $pdf->SetFont('arial','',7.5);
+    $pdf->Cell(85,6,utf8_decode("SUBTOTAL INGRESOS TERCEROS"),0,0,'L');
+    $pdf->Cell(85,6,"",0,0,'L');
+    $pdf->Cell(30,6,number_format($nTotalPCC,0,',','.'),0,0,'R');
+    $pyy += 5;
+
     if($pyy > $posfin){
+      $pdf->Line(93,72,93,$pdf->getY());
+      $pdf->Line(148,72,148,$pdf->getY());
+      $pdf->Line(178,72,178,$pdf->getY());
       $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3));
       $pdf->AddPage();
       $pyy = $posy+5;
@@ -742,13 +717,8 @@
     $pdf->SetFont('arial','B',8);
     $pdf->setXY($posx,$pyy);
     $pdf->Cell(67,6,utf8_decode("DETALLE INGRESOS PROPIOS"),0,0,'L');
-    $pdf->Line(93,81,93,195);
-    $pdf->setXY($posx+105,$pyy);
-    $pdf->Cell(10,6,utf8_decode("CONCEPTO"),0,0,'L');
-    $pdf->Line(148,81,148,195);
     $pdf->setXY($posx+147,$pyy);
     $pdf->Cell(10,6,utf8_decode("CANTIDAD"),0,0,'L');
-    $pdf->Line(178,81,178,195);
     $pdf->setXY($posx+180,$pyy);
     $pdf->Cell(10,6,utf8_decode("VALOR"),0,0,'L');
     $pyy += 6;
@@ -761,6 +731,9 @@
     for($k=0;$k<(count($mIngPro));$k++) {
       $pyy = $pdf->GetY();
       if($pyy > $posfin){
+        $pdf->Line(93,72,93  ,$pdf->getY());
+        $pdf->Line(148,72,148,$pdf->getY());
+        $pdf->Line(178,72,178,$pdf->getY());
         $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3));
         $pdf->AddPage();
         $pyy = $posy+5;
@@ -768,21 +741,7 @@
       }
 
       if($mIngPro[$k]['comvlr01'] != 0) {
-        $nCount++;
-        // Consulto la descripcion de la Unidad de medida
-        $cUniMedi  = '';
-        $qUniMedi  = "SELECT umedesxx ";
-        $qUniMedi .= "FROM $cAlfa.fpar0157 ";
-        $qUniMedi .= "WHERE ";
-        $qUniMedi .= "umeidxxx = \"{$mIngPro[$k]['unidadfe']}\" LIMIT 0,1";
-        $xUniMedi  = mysql_query($qUniMedi, $xConexion01);
-        if (mysql_num_rows($xUniMedi) > 0) {
-          $vUniMedi = mysql_fetch_array($xUniMedi);
-          $cUniMedi = $vUniMedi['umedesxx'];
-        }
-
         $nTotalIPGra += $mIngPro[$k]['comvlrxx'];
-        $nVlrUnit = ($mIngPro[$k]['unidadfe'] != "A9" && $mIngPro[$k]['canfexxx'] > 0) ? ($mIngPro[$k]['comvlrxx']/$mIngPro[$k]['canfexxx']) : $mIngPro[$k]['comvlrxx'];
 
         $pdf->SetFont('arial','',7);
         $pdf->setX($posx);
@@ -790,7 +749,7 @@
           $mIngPro[$k]['comobsxx'],
           "",
           $mIngPro[$k]['canfexxx'],
-          number_format($nVlrUnit,2,'.',','),
+          number_format($mIngPro[$k]['comvlrxx'],0,',','.'),
         ));
       }
     }
@@ -798,6 +757,9 @@
     for($k=0;$k<(count($mIngPro));$k++) {
       $pyy = $pdf->GetY();
       if($pyy > $posfin){
+        $pdf->Line(93,72,93,$pdf->getY());
+        $pdf->Line(148,72,148,$pdf->getY());
+        $pdf->Line(178,72,178,$pdf->getY());
         $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3));
         $pdf->AddPage();
         $pyy = $posy+5;
@@ -805,37 +767,30 @@
       }
 
       if($mIngPro[$k]['comvlr01'] == 0) {
-        $nCount++;
-        //Consulto la descripcion de la Unidad de medida
-        $cUniMedi  = '';
-        $qUniMedi  = "SELECT umedesxx ";
-        $qUniMedi .= "FROM $cAlfa.fpar0157 ";
-        $qUniMedi .= "WHERE ";
-        $qUniMedi .= "umeidxxx = \"{$mIngPro[$k]['unidadfe']}\" LIMIT 0,1";
-        $xUniMedi  = mysql_query($qUniMedi, $xConexion01);
-        if (mysql_num_rows($xUniMedi) > 0) {
-          $vUniMedi = mysql_fetch_array($xUniMedi);
-          $cUniMedi = $vUniMedi['umedesxx'];
-        }
-
         $nTotalIPNoGra += $mIngPro[$k]['comvlrxx'];
-        $nVlrUnit = ($mIngPro[$k]['unidadfe'] != "A9" && $mIngPro[$k]['canfexxx'] > 0) ? ($mIngPro[$k]['comvlrxx']/$mIngPro[$k]['canfexxx']) : $mIngPro[$k]['comvlrxx'];
 
         $pdf->SetFont('arial','',7);
         $pdf->setX($posx);
         $pdf->Row(array(
-          $nCount,
-          $mIngPro[$k]['ctoidxxx'],
           $mIngPro[$k]['comobsxx'],
-          utf8_decode($cUniMedi),
+          "",
           $mIngPro[$k]['canfexxx'],
-          number_format($nVlrUnit,2,'.',','),
-          number_format($mIngPro[$k]['comvlrxx'],2,'.',',')
+          number_format($mIngPro[$k]['comvlrxx'],0,',','.')
         ));
       }
     }
 
+    $pyy += 3;
+    $pdf->setXY($posx,$pyy);
+    $pdf->Cell(85,6,utf8_decode("SUBTOTAL INGRESOS PROPIOS"),0,0,'L');
+    $pdf->Cell(85,6,"",0,0,'L');
+    $pdf->Cell(30,6,number_format(($nTotalIPGra+$nTotalIPNoGra),0,',','.'),0,0,'R');
+    $pyy += 5;
+
     if($pyy > $posfin){
+      $pdf->Line(93,72,93,$pdf->getY());
+      $pdf->Line(148,72,148,$pdf->getY());
+      $pdf->Line(178,72,178,$pdf->getY());
       $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3));
       $pdf->AddPage();
       $pyy = $posy+5;
@@ -846,8 +801,9 @@
   // Fin Imprimo Ingresos Propios
 
   // Se calculan los valores de los totales
-  $nTotIva   = $_POST['nIPAIva'];
-  $nSubTotal = $nTotalPCC + $nTotIva + $nTotalIPGra + $nTotalIPNoGra;
+  $nTotIva       = $_POST['nIPAIva'];
+  $nAnticipoReal = abs($_POST['nIPAAnt']);
+  $nSubTotal     = $nTotalPCC + $nTotalIPGra + $nTotalIPNoGra;
 
   $nTotRfte = 0;
   $nPorRfte = 0;
@@ -870,30 +826,22 @@
     $nPorRiva  = $_POST['nPorIva_IPA' .($i+1)];
   }
 
-  $cNegativo = "";
-  if ($_POST['nIPASal'] > 0) {
-    $cNegativo = "";
-  } else {
-    $cNegativo = "-";
-  }
-  $nTotPag = $nSubTotal - ($nTotRfte + $nTotRica + $nTotRiva);
-
-  $nSaldoFavor = 0;
-  $nAnticipoReal = abs($_POST['nIPAAnt']);
-  if($cNegativo == "-") {
-    $nSaldoFavor = abs($nTotPag - $nAnticipoReal);
-  } else {
-    $nTotPag = abs($nTotPag - $nAnticipoReal);
-  }
+  $nTotPag = ($nSubTotal + $nTotIva) - ($nTotRfte + $nTotRica + $nTotRiva + $nAnticipoReal);
 
   // Imprimo los Totales
-  if($pyy > 195){
-    $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3));
+  if($pyy > 180){
+    $pdf->Line(93,72,93,$pdf->getY()+45);
+    $pdf->Line(148,72,148,$pdf->getY()+45);
+    $pdf->Line(178,72,178,$pdf->getY()+45);
+    $pdf->Rect($posx, $posy-3, 200, $pdf->getY()-($posy-3)+45);
     $pdf->AddPage();
     $pyy = $posy;
   }
 
   // Recuadro de los Item
+  $pdf->Line(93,72,93,205);
+  $pdf->Line(148,72,148,205);
+  $pdf->Line(178,72,178,205);
   $pdf->Rect($posx, $posy-3, 200, 205-($posy-3));
 
   $posx	= 8;
@@ -902,47 +850,46 @@
   $pdf->setXY($posx, $posy-47);
   $pdf->Cell(35, 4, "SUBTOTAL", 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 4, number_format($nSubTotal, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 4, number_format($nSubTotal, 0, ',', '.'), 0, 0, 'R');
   $pdf->ln(4);
   $pdf->setX($posx);
   $pdf->SetFont('Arial', 'B', 7);
   $pdf->Cell(35, 4, "IVA GENERADO", 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 4, number_format($nTotIva, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 4, number_format($nTotIva, 0, ',', '.'), 0, 0, 'R');
   $pdf->ln(4);
   $pdf->setX($posx);
   $pdf->SetFont('Arial', 'B', 7);
   $pdf->Cell(35, 4, "RETE-ICA", 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 4, "-".number_format($nTotRica, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 4, "-".number_format($nTotRica, 0, ',', '.'), 0, 0, 'R');
   $pdf->ln(4);
   $pdf->setX($posx);
   $pdf->SetFont('Arial', 'B', 7);
   $pdf->Cell(35, 4, "RETE-IVA", 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 4, "-".number_format($nTotRiva, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 4, "-".number_format($nTotRiva, 0, ',', '.'), 0, 0, 'R');
   $pdf->ln(4);
   $pdf->setX($posx);
   $pdf->SetFont('Arial', 'B', 7);
   $pdf->Cell(35, 4, "RETE-FUENTE" , 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 4, "-".number_format($nTotRfte, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 4, "-".number_format($nTotRfte, 0, ',', '.'), 0, 0, 'R');
   $pdf->ln(4);
   $pdf->setX($posx);
   $pdf->SetFont('Arial', 'B', 7);
   $pdf->Cell(35, 4, "ANTICIPOS RECIBIDOS", 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 4, "-".number_format($nAnticipoReal, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 4, "-".number_format($nAnticipoReal, 0, ',', '.'), 0, 0, 'R');
   $pdf->ln(4);
   $pdf->setX($posx);
   $pdf->SetFont('Arial', 'B', 7);
   $pdf->Cell(35, 5, "TOTAL", 0, 0, 'L');
   $pdf->setX($posx + 175);
-  $pdf->Cell(25, 5, number_format($nSaldoFavor > 0 ? 0 : $nTotPag, 2, '.', ','), 0, 0, 'R');
+  $pdf->Cell(25, 5, number_format($nTotPag, 0, ',', '.'), 0, 0, 'R');
 
   // Valor en letras
   $posy += 32;
-  $nTotPag   = $nSaldoFavor > 0 ? $nSaldoFavor : $nTotPag;
   $cVlrLetra = f_Cifra_Php(str_replace("-","",abs($nTotPag)),"PESO");
   $pdf->setXY($posx, $posy-46);
   $pdf->SetFont('Arial', '', 6.5);
@@ -950,8 +897,8 @@
   $pdf->Rect($posx, $posy-46, 200, 6);
   $pdf->SetFont('Arial', '', 6.5);
   $pdf->setXY($posx, $posy-39);
-  $pdf->Cell(140, 5, 'Observaciones: ' . utf8_decode($vCliFac['comobsxx']), 0, 0, 'L');
-  $pdf->Rect($posx, $posy-39, 200, 6);
+  $pdf->MultiCell(190, 3.5, 'Observaciones: ' . $_POST['cComObs'], 0, 'L');
+  $pdf->Rect($posx, $posy-39, 200, 8);
 
   $cFile = f_Buscar_Niveles_Hasta_Opencomex(getcwd()).$vSysStr['system_download_directory']."/pdf_".$_COOKIE['kUsrId']."_".date("YmdHis").".pdf";
   $pdf->Output($cFile);

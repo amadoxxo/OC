@@ -852,8 +852,8 @@
 					case 'MANATIAL': case 'TEMANATIAL': case 'DEMANATIAL': cRuta = 'frmanprn.php';    break;
           case 'DSVSASXX': case 'TEDSVSASXX': case 'DEDSVSASXX': cRuta = 'frdsvprn.php';    break;
           case 'FEDEXEXP': case 'DEFEDEXEXP': case 'TEFEDEXEXP': cRuta = 'frfedprn.php';    break;
-          case 'EXPORCOM': case 'DEEXPORCOM': case 'TEEXPORCOM': cRuta = 'frexpprn.php';    break;
-          case 'HAYDEARX': case 'DEHAYDEARX': case 'TEHAYDEARX': cRuta = 'frhayprn.php';    break;
+          case 'EXPORCOM': case 'DEEXPORCOM': case 'TEEXPORCOM': cRuta = 'frexpprn.php';    break; 
+          case 'HAYDEARX': case 'DEHAYDEARX': case 'TEHAYDEARX': cRuta = 'frhayprn.php';    break; 
           case 'ALADUANA': case 'TEALADUANA': case 'DEALADUANA':
             if (confirm("Imprimir PDF con formato estandar")) {
               if (confirm("Imprimir Factura con Retenciones?")) {
@@ -1620,8 +1620,8 @@
 					case 'MANATIAL': case 'TEMANATIAL': case 'DEMANATIAL': cRuta = 'frmanprn.php';    break;
 					case 'DSVSASXX': case 'TEDSVSASXX': case 'DEDSVSASXX': cRuta = 'frdsvprn.php';    break;
           case 'FEDEXEXP': case 'DEFEDEXEXP': case 'TEFEDEXEXP': cRuta = 'frfedprn.php';    break;
-          case 'EXPORCOM': case 'DEEXPORCOM': case 'TEEXPORCOM': cRuta = 'frexpprn.php';    break;
-          case 'HAYDEARX': case 'DEHAYDEARX': case 'TEHAYDEARX': cRuta = 'frhayprn.php';    break;
+          case 'EXPORCOM': case 'DEEXPORCOM': case 'TEEXPORCOM': cRuta = 'frexpprn.php';    break; 
+          case 'HAYDEARX': case 'DEHAYDEARX': case 'TEHAYDEARX': cRuta = 'frhayprn.php';    break; 
           case 'ALADUANA': case 'TEALADUANA': case 'DEALADUANA':
             if (confirm("Imprimir PDF con formato estandar")) {
               if (confirm("Imprimir Factura con Retenciones?")) {

@@ -85,7 +85,7 @@ class cMigra {
 
 				$qAlter  = "ALTER TABLE sys00121 ";
 				$qAlter .= "ADD doccrefa varchar(2) NOT NULL, ";
-				$qAlter .= "COMMENT=\"Aplica Refacturacion [Aplica para Imprtaciones, Exportaciones y Transitos]\" ";
+				$qAlter .= "COMMENT=\"Aplica Refacturacion [Aplica para Importaciones, Exportaciones y Transitos]\" ";
 				$xAlter  = mysql_query($qAlter,_CONEXION_);
 
 				if ($xAlter) {

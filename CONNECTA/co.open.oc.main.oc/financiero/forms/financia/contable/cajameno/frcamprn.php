@@ -381,6 +381,11 @@
 								case "TEHAYDEARX":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logohaydear.jpeg',14,8,35,15);
 								break;
+								case "CONNECTA":
+								case "DECONNECTA":
+								case "TECONNECTA":
+									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,8,25,15);
+								break;
   							default://Logo open
   								$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',17,9,25,15);
   							break;
@@ -856,6 +861,11 @@
 								case "DEHAYDEARX":
 								case "TEHAYDEARX":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logohaydear.jpeg',13,$py+2,36,16);
+								break;
+								case "CONNECTA":
+								case "DECONNECTA":
+								case "TECONNECTA":
+									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,$py+3,25,15);
 								break;
 								default://Logo open
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',17,$py+4,25,15);

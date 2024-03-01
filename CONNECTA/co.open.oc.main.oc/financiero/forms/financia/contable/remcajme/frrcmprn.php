@@ -398,6 +398,11 @@
 								case "TEHAYDEARX":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logohaydear.jpeg',12,$py+3,37,17);
 								break;
+								case "CONNECTA":
+								case "DECONNECTA":
+								case "TECONNECTA":
+									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,$py+3,25,15);
+								break;
 	  						default://Logo open
 	  							$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',17,$py+4,25,15);
 	  						break;

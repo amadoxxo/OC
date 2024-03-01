@@ -342,6 +342,11 @@
 					case "TEHAYDEARX": //HAYDEARX
 						$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logohaydear.jpeg',$posx,$posy+3,50,18);
 					break;
+					case "CONNECTA":   //CONNECTA
+					case "DECONNECTA": //CONNECTA
+					case "TECONNECTA": //CONNECTA
+						$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',$posx,$posy+3,35,20);
+					break;
 				}
 
         // Datos del documento soporte

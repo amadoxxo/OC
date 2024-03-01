@@ -61,7 +61,7 @@ if ($argv[5] != "") {
 
 for ($i=0;$i<count($aconn);$i++){
 	$vdb  = $aconn[$i]['DB'];
-	$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\Agrega un campo a la tabla sys00121 en la base de datos DHLEXPRE: ".$vdb;
+	$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\Agrega un campo a la tabla sys00121 en: ".$vdb;
 	system("/bin/echo -e '$cMsj' >> "._DIRLOG_._FILELOG_); echo "\n\n\n".$cMsj."\n\n\n";
 	$oMigra->fnEjecutarQueries(0,100,$vdb);
 }
@@ -83,9 +83,7 @@ class cMigra {
 				$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t"."Se Selecciona BD: ".$pdb;
 				system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo $cMsj."\n";
 
-				$qAlter  = "ALTER TABLE sys00121 ";
-				$qAlter .= "ADD doccrefa varchar(2) NOT NULL, ";
-				$qAlter .= "COMMENT=\"Aplica Refacturacion [Aplica para Importaciones, Exportaciones y Transitos]\" ";
+				$qAlter  = "ALTER TABLE sys00121 ADD doccrefa VARCHAR(2) NOT NULL COMMENT \"Aplica Refacturacion [Aplica para Importaciones, Exportaciones y Transitos]\" AFTER docrecin";
 				$xAlter  = mysql_query($qAlter,_CONEXION_);
 
 				if ($xAlter) {

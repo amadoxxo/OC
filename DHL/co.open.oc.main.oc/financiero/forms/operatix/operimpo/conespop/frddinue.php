@@ -464,14 +464,14 @@
                       <label><input type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>No" value="NO" onclick="javascript:f_Verificar('<?php echo $cId ?>');f_Prende_Check('<?php echo $mDatos[$cKey]['accionjs'] ?>');">NO</label>
                       <label><input type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>Si" value="SI" onclick="javascript:f_Verificar('<?php echo $cId ?>');f_Prende_Check('<?php echo $mDatos[$cKey]['accionjs'] ?>');">SI</label>
                     <?php } else {
-                      if ($cAlfa == 'DHLEXPRE' || $cAlfa == 'TEDHLEXPRE' || $cAlfa == 'DEDHLEXPRE') {
-                    ?>
-                      <label><input disabled type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>No" value="NO" onclick="javascript:f_Verificar('<?php echo $cId ?>');">NO</label>
-                      <label><input disabled type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>Si" value="SI" onclick="javascript:f_Verificar('<?php echo $cId ?>');">SI</label>
-                    <?php } else { ?>
-                      <label><input type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>No" value="NO" onclick="javascript:f_Verificar('<?php echo $cId ?>');">NO</label>
-                      <label><input type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>Si" value="SI" onclick="javascript:f_Verificar('<?php echo $cId ?>');">SI</label>
-                    <?php } ?>
+                        if ($mDatos[$cKey]['camcones'] == "oDocRecFa" && ($cAlfa == 'DHLEXPRE' || $cAlfa == 'TEDHLEXPRE' || $cAlfa == 'DEDHLEXPRE')) {
+                      ?>
+                        <label><input disabled type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>No" value="NO" onclick="javascript:f_Verificar('<?php echo $cId ?>');">NO</label>
+                        <label><input disabled type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>Si" value="SI" onclick="javascript:f_Verificar('<?php echo $cId ?>');">SI</label>
+                      <?php } else { ?>
+                        <label><input type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>No" value="NO" onclick="javascript:f_Verificar('<?php echo $cId ?>');">NO</label>
+                        <label><input type="radio" name = "<?php echo $mDatos[$cKey]['camcones'] ?>" id="<?php echo $cId ?>Si" value="SI" onclick="javascript:f_Verificar('<?php echo $cId ?>');">SI</label>
+                      <?php } ?>
                     <? } ?>
                   </td>
                   <td Class = "clase08" align="left" style="border:#FFFFFF 1px solid;height:25px;width:130px">
@@ -672,6 +672,9 @@ function f_CargaData($xDoiId,$xSucId,$xDocSuf,$xTerIdInt) {
     if ($mTabId[$cKey]['camcone3'] != "") {
       $xRDD[$mTabId[$cKey]['camcamp3']] = ($xRDD[$mTabId[$cKey]['camcamp3']] == "0.00") ? "" : $xRDD[$mTabId[$cKey]['camcamp3']];
     }
+
+    // Si la condicion especial es Aplica Refacturacion, esta vacia y el cliente es DHLEXPRE se debe marcar en NO por defecto
+    $xRDD[$cKey] = ($mTabId[$cKey]['camcones'] == "oDocRecFa" && $xRDD[$cKey] == "" && ($cAlfa == 'DHLEXPRE' || $cAlfa == 'TEDHLEXPRE' || $cAlfa == 'DEDHLEXPRE')) ? "NO" : $xRDD[$cKey];
     ?> 
     <script languaje = "javascript">
       <?php if(!empty($xRDD[$cKey]) && $xRDD[$cKey] != "NO") { ?>

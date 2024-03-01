@@ -727,6 +727,13 @@
                         <img src = "<?php echo $cPlesk_Skin_Directory ?>/logohaydear.jpeg" style="height: 70px;width:200">
                       </td>
                     <?php break;
+                    case "CONNECTA":   //CONNECTA
+                    case "DECONNECTA": //CONNECTA
+                    case "TECONNECTA": //CONNECTA ?>
+                      <td class="name" style="font-size:14px;width:100px">
+                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/logoconnecta.jpg" style="height: 80px;width:120">
+                      </td>
+                    <?php break;
                   }?>
                   <td class="name" style="font-size:14px">
                     <center><br><span style="font-size:18px"> <?php echo "REPORTE DE ESTADO DE CARTERA AL ". $cFecha ?></span></center><br>
@@ -1565,6 +1572,11 @@
           case "DEHAYDEARX":
           case "TEHAYDEARX":
             $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logohaydear.jpeg',8,12,30,11);
+          break;
+          case "CONNECTA":
+          case "DECONNECTA":
+          case "TECONNECTA":
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',8,11,25,13);
           break;
         }
 

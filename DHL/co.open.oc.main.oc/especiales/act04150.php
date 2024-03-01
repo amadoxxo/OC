@@ -61,7 +61,7 @@ if ($argv[5] != "") {
 
 for ($i=0;$i<count($aconn);$i++){
 	$vdb  = $aconn[$i]['DB'];
-	$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\Se Crea un Nuevo concepto de cobro en la tabla fpar0129 para Impo, Expo y Tránsito: ".$vdb;
+	$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\Se Crea un Nuevo concepto de cobro en la tabla fpar0129 y fpar0145 para Impo, Expo y Transito: ".$vdb;
 	system("/bin/echo -e '$cMsj' >> "._DIRLOG_._FILELOG_); echo "\n\n\n".$cMsj."\n\n\n";
 	$oMigra->fnEjecutarQueries(0,100,$vdb);
 }
@@ -83,14 +83,8 @@ class cMigra {
 				$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t"."Se Selecciona BD: ".$pdb;
 				system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo $cMsj."\n";
 
-				$qInsert  = "INSERT INTO fpar0129 (";
-				$qInsert .= "seridxxx, serdesxx, serdespx, pucidxxx, pucmovxx, ctoidxxx, pucidexx, pucmovex, ctoidexx, ccoidxxx, sccidxxx, serordxx, fcoidxxx, sertopxx, pucivaxx, pucrftex, pucaftex, pucrftet, pucaftet, pucrcrxx, pucacrxx, pucricax, pucaicax, pucrivax, pucriva1, ";
-				$qInsert .= "sercxcip, sersgxxx, serchsax, sercones, pucadbel, pucadnas, ctoe2kxx, sersapid, serchald, sercodse, sermasap, sersapcx, sersapix, sersapic, sersapiv, sersapca, sersapcl, sercwccx, sersapxx, sersapcr, sercipal, seraplcu, serclapr, cceidxxx, umeidxxx, ";
-				$qInsert .= "regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp";
-				$qInsert .= ") VALUES (";
-				$qInsert .= "\"1134\", \"COBRO REFACTURACION\", \"COBRO REFACTURACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"1134\", \"100\", \"IMPORTACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", ";
-				$qInsert .= "\"\", \"\", \"\", \"|100~doccrefa|\", \"\", \"0\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"0000-00-00 00:00:00\", \"0000-00-00 00:00:00\", \"\", \"\", \"\", \"\", \"\", ";
-				$qInsert .= "\"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+				$qInsert  = "INSERT INTO fpar0129 (seridxxx, serdesxx, serdespx, pucidxxx, pucmovxx, ctoidxxx, pucidexx, pucmovex, ctoidexx, ccoidxxx, sccidxxx, serordxx, fcoidxxx, sertopxx, pucivaxx, pucrftex, pucaftex, pucrftet, pucaftet, pucrcrxx, pucacrxx, pucricax, pucaicax, pucrivax, pucriva1, sercxcip, sersgxxx, serchsax, sercones, pucadbel, pucadnas, ctoe2kxx, sersapid, serchald, sercodse, sermasap, sersapcx, sersapix, sersapic, sersapiv, sersapca, sersapcl, sercwccx, sersapxx, sersapcr, sercipal, seraplcu, serclapr, cceidxxx, umeidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES (";
+				$qInsert .= "\"1134\", \"COBRO REFACTURACION\", \"COBRO REFACTURACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"1134\", \"100\", \"IMPORTACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"|100~doccrefa|\", \"\", \"0\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"0000-00-00 00:00:00\", \"0000-00-00 00:00:00\", \"\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
 				$xInsert  = mysql_query($qInsert,_CONEXION_);
 				if ($xInsert) {
 					$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo Nuevo Concepto de Cobro en la tabla fpar0129: ".$pdb;
@@ -101,14 +95,8 @@ class cMigra {
 					system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
 				}
 
-				$qInsert  = "INSERT INTO fpar0129 (";
-				$qInsert .= "seridxxx, serdesxx, serdespx, pucidxxx, pucmovxx, ctoidxxx, pucidexx, pucmovex, ctoidexx, ccoidxxx, sccidxxx, serordxx, fcoidxxx, sertopxx, pucivaxx, pucrftex, pucaftex, pucrftet, pucaftet, pucrcrxx, pucacrxx, pucricax, pucaicax, pucrivax, pucriva1, ";
-				$qInsert .= "sercxcip, sersgxxx, serchsax, sercones, pucadbel, pucadnas, ctoe2kxx, sersapid, serchald, sercodse, sermasap, sersapcx, sersapix, sersapic, sersapiv, sersapca, sersapcl, sercwccx, sersapxx, sersapcr, sercipal, seraplcu, serclapr, cceidxxx, umeidxxx, ";
-				$qInsert .= "regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp";
-				$qInsert .= ") VALUES (";
-				$qInsert .= "\"277\", \"COBRO REFACTURACION\", \"COBRO REFACTURACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"277\", \"200\", \"EXPORTACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", ";
-				$qInsert .= "\"\", \"\", \"\", \"|200~doccrefa|\", \"\", \"0\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"0000-00-00 00:00:00\", \"0000-00-00 00:00:00\", \"\", \"\", \"\", \"\", \"\", ";
-				$qInsert .= "\"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+				$qInsert  = "INSERT INTO fpar0129 (seridxxx, serdesxx, serdespx, pucidxxx, pucmovxx, ctoidxxx, pucidexx, pucmovex, ctoidexx, ccoidxxx, sccidxxx, serordxx, fcoidxxx, sertopxx, pucivaxx, pucrftex, pucaftex, pucrftet, pucaftet, pucrcrxx, pucacrxx, pucricax, pucaicax, pucrivax, pucriva1, sercxcip, sersgxxx, serchsax, sercones, pucadbel, pucadnas, ctoe2kxx, sersapid, serchald, sercodse, sermasap, sersapcx, sersapix, sersapic, sersapiv, sersapca, sersapcl, sercwccx, sersapxx, sersapcr, sercipal, seraplcu, serclapr, cceidxxx, umeidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES (";
+				$qInsert .= "\"277\", \"COBRO REFACTURACION\", \"COBRO REFACTURACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"277\", \"200\", \"EXPORTACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"|200~doccrefa|\", \"\", \"0\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"0000-00-00 00:00:00\", \"0000-00-00 00:00:00\", \"\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
 				$xInsert  = mysql_query($qInsert,_CONEXION_);
 				if ($xInsert) {
 					$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo Nuevo Concepto de Cobro en la tabla fpar0129: ".$pdb;
@@ -119,14 +107,8 @@ class cMigra {
 					system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
 				}
 
-				$qInsert  = "INSERT INTO fpar0129 (";
-				$qInsert .= "seridxxx, serdesxx, serdespx, pucidxxx, pucmovxx, ctoidxxx, pucidexx, pucmovex, ctoidexx, ccoidxxx, sccidxxx, serordxx, fcoidxxx, sertopxx, pucivaxx, pucrftex, pucaftex, pucrftet, pucaftet, pucrcrxx, pucacrxx, pucricax, pucaicax, pucrivax, pucriva1, ";
-				$qInsert .= "sercxcip, sersgxxx, serchsax, sercones, pucadbel, pucadnas, ctoe2kxx, sersapid, serchald, sercodse, sermasap, sersapcx, sersapix, sersapic, sersapiv, sersapca, sersapcl, sercwccx, sersapxx, sersapcr, sercipal, seraplcu, serclapr, cceidxxx, umeidxxx, ";
-				$qInsert .= "regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp";
-				$qInsert .= ") VALUES (";
-				$qInsert .= "\"311\", \"COBRO REFACTURACION\", \"COBRO REFACTURACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"311\", \"300\", \"TRANSITO\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", ";
-				$qInsert .= "\"\", \"\", \"\", \"|300~doccrefa|\", \"\", \"0\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"0000-00-00 00:00:00\", \"0000-00-00 00:00:00\", \"\", \"\", \"\", \"\", \"\", ";
-				$qInsert .= "\"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+				$qInsert  = "INSERT INTO fpar0129 (seridxxx, serdesxx, serdespx, pucidxxx, pucmovxx, ctoidxxx, pucidexx, pucmovex, ctoidexx, ccoidxxx, sccidxxx, serordxx, fcoidxxx, sertopxx, pucivaxx, pucrftex, pucaftex, pucrftet, pucaftet, pucrcrxx, pucacrxx, pucricax, pucaicax, pucrivax, pucriva1, sercxcip, sersgxxx, serchsax, sercones, pucadbel, pucadnas, ctoe2kxx, sersapid, serchald, sercodse, sermasap, sersapcx, sersapix, sersapic, sersapiv, sersapca, sersapcl, sercwccx, sersapxx, sersapcr, sercipal, seraplcu, serclapr, cceidxxx, umeidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES (";
+				$qInsert .= "\"311\", \"COBRO REFACTURACION\", \"COBRO REFACTURACION\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"311\", \"300\", \"TRANSITO\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"|300~doccrefa|\", \"\", \"0\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"0000-00-00 00:00:00\", \"0000-00-00 00:00:00\", \"\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
 				$xInsert  = mysql_query($qInsert,_CONEXION_);
 				if ($xInsert) {
 					$cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo Nuevo Concepto de Cobro en la tabla fpar0129: ".$pdb;
@@ -137,9 +119,7 @@ class cMigra {
 					system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
 				}
 
-				$qInsert  = "INSERT INTO fpar0145 (";
-				$qInsert .= "`seridxxx`, `fcoidxxx`, `dcecampo`, `dcedesxx`, `regusrxx`, `regfcrex`, `reghcrex`, `regfmodx`, `reghmodx`, `regestxx`, `regstamp`";
-				$qInsert .= ") VALUES (";
+				$qInsert  = "INSERT INTO fpar0145 (seridxxx, fcoidxxx, dcecampo, dcedesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES (";
 				$qInsert .= "\"1134\", \"100\", \"doccrefa\", \"APLICA REFACTURACION\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
 				$xInsert  = mysql_query($qInsert,_CONEXION_);
 				if ($xInsert) {
@@ -151,9 +131,7 @@ class cMigra {
 					system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
 				}
 
-				$qInsert  = "INSERT INTO fpar0145 (";
-				$qInsert .= "`seridxxx`, `fcoidxxx`, `dcecampo`, `dcedesxx`, `regusrxx`, `regfcrex`, `reghcrex`, `regfmodx`, `reghmodx`, `regestxx`, `regstamp`";
-				$qInsert .= ") VALUES (";
+				$qInsert  = "INSERT INTO fpar0145 (seridxxx, fcoidxxx, dcecampo, dcedesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES (";
 				$qInsert .= "\"277\", \"200\", \"doccrefa\", \"APLICA REFACTURACION\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
 				$xInsert  = mysql_query($qInsert,_CONEXION_);
 				if ($xInsert) {
@@ -165,9 +143,7 @@ class cMigra {
 					system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
 				}
 
-				$qInsert  = "INSERT INTO fpar0145 (";
-				$qInsert .= "`seridxxx`, `fcoidxxx`, `dcecampo`, `dcedesxx`, `regusrxx`, `regfcrex`, `reghcrex`, `regfmodx`, `reghmodx`, `regestxx`, `regstamp`";
-				$qInsert .= ") VALUES (";
+				$qInsert  = "INSERT INTO fpar0145 (seridxxx, fcoidxxx, dcecampo, dcedesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES (";
 				$qInsert .= "\"311\", \"300\", \"doccrefa\", \"APLICA REFACTURACION\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
 				$xInsert  = mysql_query($qInsert,_CONEXION_);
 				if ($xInsert) {

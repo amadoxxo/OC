@@ -316,9 +316,10 @@
 				$this->SetFont('verdana','',7);
 				$this->Cell(100,4, substr($vCocDat['CLINOMXX'], 0, 53),0,0,'L');
 				//Nit
-				$this->setX($posx+112);
+				$cNit = ($vCocDat['TDIIDXXX'] == "31") ? $vCocDat['terid2xx']."-".f_Digito_Verificacion($vCocDat['terid2xx']) : $vCocDat['terid2xx'];
+				$this->setX($posx+119);
 				$this->SetFont('verdanab','',7);
- 				$this->Cell(20,4," Nit: ".$vCocDat['terid2xx']."-".f_Digito_Verificacion($vCocDat['terid2xx']),0,0,'L');
+ 				$this->Cell(20,4," Nit: ".$cNit,0,0,'R');
 
  				$this->Ln(4);
  				//Ciudad
@@ -960,7 +961,8 @@
   		$qCocDat .= "IF($cAlfa.SIAI0150.DEPIDXXX != \"\",$cAlfa.SIAI0150.DEPIDXXX,\"\") AS DEPIDXXX, ";
   		$qCocDat .= "IF($cAlfa.SIAI0150.CIUIDXXX != \"\",$cAlfa.SIAI0150.CIUIDXXX,\"\") AS CIUIDXXX, ";
   		$qCocDat .= "IF($cAlfa.SIAI0150.CLINRPXX != \"\",$cAlfa.SIAI0150.CLINRPXX,\"\") AS CLINRPXX, ";
-  		$qCocDat .= "IF($cAlfa.SIAI0150.CLIPLAXX != \"\",$cAlfa.SIAI0150.CLIPLAXX,\"\") AS CLIPLAXX ";
+  		$qCocDat .= "IF($cAlfa.SIAI0150.CLIPLAXX != \"\",$cAlfa.SIAI0150.CLIPLAXX,\"\") AS CLIPLAXX, ";
+  		$qCocDat .= "IF($cAlfa.SIAI0150.TDIIDXXX != \"\",$cAlfa.SIAI0150.TDIIDXXX,\"\") AS TDIIDXXX ";
   		$qCocDat .= "FROM $cAlfa.fcoc$cNewYear ";
   		$qCocDat .= "LEFT JOIN $cAlfa.fpar0008 ON $cAlfa.fcoc$cNewYear.ccoidxxx = $cAlfa.fpar0008.ccoidxxx ";
   		$qCocDat .= "LEFT JOIN $cAlfa.SIAI0150 ON $cAlfa.fcoc$cNewYear.terid2xx = $cAlfa.SIAI0150.CLIIDXXX ";

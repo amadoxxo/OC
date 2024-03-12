@@ -204,7 +204,8 @@
   $qCliDat .= "$cAlfa.SIAI0150.DEPIDXXX, ";
   $qCliDat .= "$cAlfa.SIAI0150.CIUIDXXX, ";
   $qCliDat .= "$cAlfa.SIAI0150.CLICONTX, ";
-  $qCliDat .= "$cAlfa.SIAI0150.CLIPLAXX  ";
+  $qCliDat .= "$cAlfa.SIAI0150.CLIPLAXX, ";
+  $qCliDat .= "$cAlfa.SIAI0150.TDIIDXXX  ";
   $qCliDat .= "FROM $cAlfa.SIAI0150 ";
   $qCliDat .= "WHERE ";
   $qCliDat .= "$cAlfa.SIAI0150.CLIIDXXX = \"{$_POST['cTerIdInt']}\" AND ";
@@ -1300,9 +1301,10 @@
       $this->SetFont('verdana','',7);
       $this->Cell(100,4, substr($vCliDat['CLINOMXX'], 0, 53),0,0,'L');
       //Nit
-      $this->setX($posx+112);
+      $cNit = ($vCliDat['TDIIDXXX'] == "31") ? $vCliDat['CLIIDXXX']."-".f_Digito_Verificacion($vCliDat['CLIIDXXX']) : $vCliDat['CLIIDXXX'];
+      $this->setX($posx+119);
       $this->SetFont('verdanab','',7);
-      $this->Cell(20,4," Nit: ". $vCliDat['CLIIDXXX']."-".f_Digito_Verificacion($vCliDat['CLIIDXXX']),0,0,'L');
+      $this->Cell(20,4," Nit: ". $cNit,0,0,'R');
 
       $this->Ln(4);
       //Ciudad

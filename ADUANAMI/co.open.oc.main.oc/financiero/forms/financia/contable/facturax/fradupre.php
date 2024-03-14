@@ -1431,7 +1431,10 @@
   $pdf->SetAutoPageBreak(0,0);
   $pdf->AddPage();
 
+	$cMoneda = "";
   if($vCliDat['CLINRPXX'] != "SI"){
+		$cMoneda = "PESO";
+
 	  $posy = 90;
 	  $posx = 10;
 	  $posFin = 170;
@@ -1776,9 +1779,15 @@
 	  	$pdf->Cell(34,10,"",0,0,'R');
 	  }
 
+		$pdf->setXY(10,$posy+7.7);
+		$pdf->SetFont('verdanab','',6);
+		$cVlrLetra = f_Cifra_Php(abs($nTotPag),$cMoneda);
+		$pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
 
   }else{
 	  ##Si calidad de Tercero es NORESIDENTE Imprimo factura en Dolares##
+		$cMoneda = "DOLAR";
+
 	  $posy = 90;
 	  $posx = 10;
 	  $posFin = 170;
@@ -2056,12 +2065,12 @@
 	  	$cNegativo = "";
 	  }
 	  $posy += 7;
-  } ##Fin Si calidad de Terceros es NORESIDENTE Imprimo factura en Dolares ##
 
-	$pdf->setXY(10,$posy+7.7);
-	$pdf->SetFont('verdanab','',6);
-	$cVlrLetra = f_Cifra_Php(abs($nTotPag),"PESOS M/CTE");
-	$pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
+		$pdf->setXY(10,$posy+1);
+		$pdf->SetFont('verdanab','',6);
+		$cVlrLetra = f_Cifra_Php(abs($nTotPag),$cMoneda);
+		$pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
+  } ##Fin Si calidad de Terceros es NORESIDENTE Imprimo factura en Dolares ##
 
   $cFile = f_Buscar_Niveles_Hasta_Opencomex(getcwd()).$vSysStr['system_download_directory']."/pdf_".$_COOKIE['kUsrId']."_".date("YmdHis").".pdf";
 	$pdf->Output($cFile);

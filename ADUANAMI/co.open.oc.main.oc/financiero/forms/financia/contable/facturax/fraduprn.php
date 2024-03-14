@@ -1719,7 +1719,10 @@
     }
 
   //$pdf->AddPage();
+	$cMoneda = "";
   if($vCocDat['CLINRPXX'] != "SI"){
+		$cMoneda = "PESO";
+
 	  $posy = 90;
 	  $posx = 10;
 	  $posFin = 170;
@@ -2152,7 +2155,14 @@
 	  }
 
 	  $posy += 5;
+
+		$pdf->setXY(10,$posy+7);
+	  $pdf->SetFont('verdanab','',6);
+    $cVlrLetra = f_Cifra_Php(abs($nTotPag), $cMoneda);
+    $pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
 	}else{#Si es igual a NORESIDENTE
+		$cMoneda = "DOLAR";
+
 		$posy = 90;
 	  $posx = 10;
 	  $posFin = 170;
@@ -2578,12 +2588,12 @@
       $pdf->Cell(34,10,"",0,0,'R');
 	  }
 	  $posy += 5;
-	}
-  
-    $pdf->setXY(10,$posy+7);
+
+		$pdf->setXY(10,$posy-28);
 	  $pdf->SetFont('verdanab','',6);
-    $cVlrLetra = f_Cifra_Php(abs($nTotPag),"PESOS M/CTE");
+    $cVlrLetra = f_Cifra_Php(abs($nTotPag), $cMoneda);
     $pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
+	}
 
   ##Si la Calidad del Tercero es NORESIDENTE pinto factura en dolares##
   ##Fin Si la Calidad del Tercero es NORESIDENTE pinto factura en dolares##

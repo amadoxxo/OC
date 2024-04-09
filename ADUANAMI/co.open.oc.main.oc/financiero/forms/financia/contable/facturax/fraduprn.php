@@ -1719,10 +1719,7 @@
     }
 
   //$pdf->AddPage();
-	$cMoneda = "";
   if($vCocDat['CLINRPXX'] != "SI"){
-		$cMoneda = "PESO";
-
 	  $posy = 90;
 	  $posx = 10;
 	  $posFin = 170;
@@ -2158,11 +2155,9 @@
 
 		$pdf->setXY(10,$posy+7);
 	  $pdf->SetFont('verdanab','',6);
-    $cVlrLetra = f_Cifra_Php(abs($nTotPag), $cMoneda);
+    $cVlrLetra = f_Cifra_Php(abs($nTotPag), "PESO");
     $pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
 	}else{#Si es igual a NORESIDENTE
-		$cMoneda = "DOLAR";
-
 		$posy = 90;
 	  $posx = 10;
 	  $posFin = 170;
@@ -2591,7 +2586,7 @@
 
 		$pdf->setXY(10,$posy-28);
 	  $pdf->SetFont('verdanab','',6);
-    $cVlrLetra = f_Cifra_Php(abs($nTotPag), $cMoneda);
+    $cVlrLetra = f_Cifra_Php(abs($nTotPag), "DOLAR");
     $pdf->MultiCell(120, 2.5, "SON:" . utf8_decode($cVlrLetra),0,'L');
 	}
 

@@ -235,7 +235,7 @@ switch ($gTipo) {
 		case "4":
 			$cTexto  = "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"580\">";
 				$cTexto .= "<tr bgcolor = \"".$vSysStr['system_row_title_color_ini']."\">";
-					$cTexto .= "<td Class = \"clase08\" width = \"20\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:f_Links(\'cExclusionPagTer\',\'VALID\');\" style = \"cursor:hand\" alt=\"Adicionar Concepto Contable\" >" : "" )."</center></td>";
+					$cTexto .= "<td Class = \"clase08\" width = \"20\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:fnAddNewRowImp(\'Grid_ValUniTer\');\" style = \"cursor:hand\" alt=\"Adicionar Concepto Contable\" >" : "" )."</center></td>";
 					$cTexto .= "<td Class = \"clase08\" width = \"120\">Concepto</td>";
 					$cTexto .= "<td Class = \"clase08\" width = \"440\">Descripci&oacute;n</td>";
 				$cTexto .= "</tr>";

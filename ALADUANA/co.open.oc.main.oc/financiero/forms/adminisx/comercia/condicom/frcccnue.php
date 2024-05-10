@@ -178,6 +178,15 @@
             zWindow2 = window.open(zRuta,"zWindow2",zWinPro);
             zWindow2.focus();
 					break;
+          case "cValUniTerceros":
+            var zNx      = (zX-750)/2;
+            var zNy      = (zY-400)/2;
+            var zWinPro  = "width=750,scrollbars=1,height=400,left="+zNx+",top="+zNy;
+            var zCliId   =  document.forms['frgrm']['cCliId'].value.toUpperCase();
+            var zRuta    = 'frccccon.php?cCliId='+zCliId+'&gFacA='+document.forms['frgrm']['cFacA'].value;
+            zWindow2 = window.open(zRuta,"zWindow2",zWinPro);
+            zWindow2.focus();
+          break;
   			  case "cGruGesId":
 						var zCliId  =  document.forms['frgrm']['cCliId'].value.toUpperCase();
 						var zNx     = (zX-520)/2;
@@ -304,6 +313,27 @@
               alert(cError+"Verifique.");
             }
 					break;
+          case "cUmeId":
+            if (xSwitch == "VALID") {
+							var zRuta  = "frccc157.php?gWhat=VALID&gFunction="+xLink+"&gUmeId="+document.forms['frgrm']['cUmeId'].value.toUpperCase()+"";
+							parent.fmpro.location = zRuta;
+            } else {
+              if (xSwitch == "WINDOW") {
+                var zNx     = (zX-600)/2;
+								var zNy     = (zY-250)/2;
+
+								var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
+								var zRuta   = "frccc157.php?gWhat=WINDOW&gFunction="+xLink+"&gUmeId="+document.forms['frgrm']['cUmeId'].value.toUpperCase()+"";
+								zWindow = window.open(zRuta,"zWindow",zWinPro);
+								zWindow.focus();
+              } else {
+                if (xSwitch == "EXACT") {
+									var zRuta  = "frccc157.php?gWhat=EXACT&gFunction="+xLink+"&gUmeId="+document.forms['frgrm']['cUmeId'].value.toUpperCase()+"";
+									parent.fmpro.location = zRuta;
+                }
+              }
+            }
+          break;
         }
 			}
 
@@ -468,42 +498,70 @@
         fnAddNewRowCiuFac(xTabla);
       }
 
-      function fnAddNewRowImp(xTabla) {
-      
-        var cGrid           = document.getElementById(xTabla);
-        var nLastRow        = cGrid.rows.length;
-        var nSecuencia      = nLastRow+1;
-        var cTableRow       = cGrid.insertRow(nLastRow);
-        var cConcepto       = 'cConcepto'        + xTabla + nSecuencia; // Concepto
-        var cDescripcion    = 'cDescripcion'     + xTabla + nSecuencia; // Descripcion
-        var cUnidadMedida   = 'cUnidadMedida'    + xTabla + nSecuencia; // UnidadMedida
-        var cValorUnitario  = 'cValorUnitario'   + xTabla + nSecuencia; // ValorUnitario
-        var oBtnDel         = 'oBtnDel' + xTabla + nSecuencia; // Boton de Borrar Row
-        
-        TD_xAll = cTableRow.insertCell(0);
-        TD_xAll.style.width  = "151px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:151;text-align:left' name = '"+cConcepto+"' id = '"+cConcepto+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
+    function fnAddNewRowImp(xTabla) {
 
-        TD_xAll = cTableRow.insertCell(1);
-        TD_xAll.style.width  = "190px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:190;text-align:left' name = '"+cDescripcion+"' id = '"+cDescripcion+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
+      var cGrid           = document.getElementById(xTabla);
+      var nLastRow        = cGrid.rows.length;
+      var nSecuencia      = nLastRow+1;
+      var cTableRow       = cGrid.insertRow(nLastRow);
+      var cConcepto       = 'cConcepto'        + xTabla + nSecuencia; // Concepto
+      var cDescripcion    = 'cDescripcion'     + xTabla + nSecuencia; // Descripcion
+      var cUmeId          = 'cUmeId';                                 // UnidadMedida
+      var cValorUnitario  = 'cValorUnitario'   + xTabla + nSecuencia; // ValorUnitario
+      var oBtnDel         = 'oBtnDel' + xTabla + nSecuencia; // Boton de Borrar Row
 
-        TD_xAll = cTableRow.insertCell(2);
-        TD_xAll.style.width  = "113px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:113;text-align:left' name = '"+cUnidadMedida+"' id = '"+cUnidadMedida+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
+      TD_xAll = cTableRow.insertCell(0);
+      TD_xAll.style.width  = "151px";
+      TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:151;text-align:left' name = '"+cConcepto+"' id = '"+cConcepto+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
 
-        TD_xAll = cTableRow.insertCell(3);
-        TD_xAll.style.width  = "105px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:105;text-align:left' name = '"+cValorUnitario+"' id = '"+cValorUnitario+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
+      TD_xAll = cTableRow.insertCell(1);
+      TD_xAll.style.width  = "190px";
+      TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:190;text-align:left' name = '"+cDescripcion+"' id = '"+cDescripcion+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
 
-        TD_xAll = cTableRow.insertCell(4);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'button' style = 'width:020;text-align:center' name = "+oBtnDel+" id = "+oBtnDel+" value = 'X' "+
-                                "onClick = 'javascript:fnDeleteRowImp(this.value,\""+nSecuencia+"\",\""+xTabla+"\");'>";
+      TD_xAll = cTableRow.insertCell(2);
+      TD_xAll.style.width  = "113px";
+      TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:113;text-align:left'"
+                            + "name = \""+cUmeId+"\" id = \""+cUmeId+"\" onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'"
+                            + "onBlur = 'javascript:this.value=this.value.toUpperCase(); f_Links(\"cUmeId\",\"VALID\");"
+                            + "this.style.background=\"<?php echo $vSysStr['system_imput_onblur_color'] ?>\"'"
+                            + "onFocus='javascript:document.frgrm.cUmeId.value = \"\"; this.style.background=\"<?php echo $vSysStr['system_imput_onfocus_color'] ?>\"'>";
 
-        document.forms['frgrm']['nSecuencia_' + xTabla].value = nSecuencia;
+      TD_xAll = cTableRow.insertCell(3);
+      TD_xAll.style.width  = "105px";
+      TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:105;text-align:left' name = '"+cValorUnitario+"' id = '"+cValorUnitario+"' onKeyUp='javascript:f_Enter(event,this.name,\""+xTabla+"\");'>";
+
+      TD_xAll = cTableRow.insertCell(4);
+      TD_xAll.style.width  = "20px";
+      TD_xAll.innerHTML    = "<input type = 'button' style = 'width:020;text-align:center' name = "+oBtnDel+" id = "+oBtnDel+" value = 'X' "+
+                              "onClick = 'javascript:fnDeleteRowImp(this.value,\""+nSecuencia+"\",\""+xTabla+"\");'>";
+
+      document.forms['frgrm']['nSecuencia_' + xTabla].value = nSecuencia;
     }
-    </script>
+
+    function f_Enter(e,xName,xTabla) {
+      var code;
+      if (!e) {
+        var e = window.event;
+      }
+      if (e.keyCode) {
+        code = e.keyCode;
+      } else {
+        if (e.which) {
+          code = e.which;
+        }
+      }
+      if (code == 13) {
+        if (xName == 'cCuenta' + xTabla + eval(document.forms['frgrm']['nSecuencia_' + xTabla].value)) {
+          if (document.forms['frgrm'][xName].value !== '' ) {
+            fnAddNewRowImp(xTabla);
+          } else {
+            alert("Digite una Cuenta antes de Adicionar una nueva Fila.");
+          }
+        }
+      }
+    }
+
+  </script>
 	</head>
 	<body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
 		<center>
@@ -808,8 +866,11 @@
                                 </tr>
                                 <tr>
                                   <td class = "clase08" width = "151" align="left">Concepto</td>
-                                  <td class = "clase08" width = "190" align="left">Descripcion</td>
-                                  <td class = "clase08" width = "113" align="left">Unidad de Medida</td>
+                                  <td class = "clase08" width = "190" align="left">Descripci&oacute;n</td>
+                                  <td class = "name"    width = "113" align="left">
+                                    <a href="javascript:document.frgrm.cUmeId.value = '';
+                                                        f_Links('cUmeId', 'VALID')" id="cCodUmed">Unidad de Medida</a>
+                                  </td>
                                   <td class = "clase08" width = "105" align="left">Valor Unitario</td>
                                   <td class = "clase08" width = "020" align="right">&nbsp;</td>
                                 </tr>

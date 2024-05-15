@@ -231,16 +231,69 @@ switch ($gTipo) {
 			<script languaje = "javascript">
 				parent.fmwork.document.getElementById('overDescuentos').innerHTML = '<?php echo $cTexto ?>';
 			</script>
-	 <?php break;
-		case "4":
+	<?php break;
+		case "4": // Valores Unitarios Conceptos Pagos a Terceros
 			$cTexto  = "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"580\">";
 				$cTexto .= "<tr bgcolor = \"".$vSysStr['system_row_title_color_ini']."\">";
-					$cTexto .= "<td Class = \"clase08\" width = \"20\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:fnAddNewRowImp(\'Grid_ValUniTer\');\" style = \"cursor:hand\" alt=\"Adicionar Concepto Contable\" >" : "" )."</center></td>";
+					$cTexto .= "<td Class = \"clase08\" width = \"20\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_create-dir_bg.gif\" onClick =\"javascript:f_Links(\'cValUniTerceros\',\'VALID\');\" style = \"cursor:hand\" alt=\"Adicionar Concepto Contable\" >" : "" )."</center></td>";
 					$cTexto .= "<td Class = \"clase08\" width = \"120\">Concepto</td>";
 					$cTexto .= "<td Class = \"clase08\" width = \"440\">Descripci&oacute;n</td>";
 				$cTexto .= "</tr>";
+			 /***** Primero Cargo una Matriz con los Conceptos *****/
+			if ($gValUniTer != "") {
+				$mMatrizInt = explode("~",$gValUniTer);
+			} else {
+				$mMatrizInt = array();
+			}
+		 	/***** Fin de Explotar el Campo de Conceptos Padres e Hijos *****/
+			/***** Cuando Salgo de Este Proceso Tengo Cargada la Matriz $zMatrizCon con los Conceptos *****/
+			for ($i=0;$i<count($mMatrizInt);$i++) {
+				if ($mMatrizInt[$i] != "") {
+					$qConCtb  = "SELECT ctoidxxx, ";
+					$qConCtb .= "COALESCE(NULLIF(ctodesxx, ''), ctodesxp) AS descripcion, "; 
+					$qConCtb .= "regestxx ";
+					$qConCtb .= "FROM $cAlfa.fpar0119 ";
+					$qConCtb .= "WHERE regestxx = 'ACTIVO' AND ctopccxx = 'SI' ";
+					$qConCtb .= "UNION ALL ";
+					$qConCtb .= "SELECT ctoidxxx, ";
+					$qConCtb .= "ctodesxx AS descripcion, ";
+					$qConCtb .= "regestxx ";
+					$qConCtb .= "FROM $cAlfa.fpar0121 ";
+					$qConCtb .= "WHERE regestxx = 'ACTIVO' AND ctotipxx = 'TERCEROS'";
+					$xConCtb = f_MySql("SELECT", "", $qConCtb, $xConexion01, "");
+					if (mysql_num_rows($xConCtb) > 0) {
+						$y = 0;
+						while ($xRCD = mysql_fetch_array($xConCtb)) {
+							$y ++;
+							$cId  = $xRCD['ctoidxxx'];
+							$zColor = "{$vSysStr['system_row_impar_color_ini']}";
+							if($y % 2 == 0) {
+								$zColor = "{$vSysStr['system_row_par_color_ini']}";
+							}
+							$cTexto .= "<tr bgcolor = \"".$zColor."\">";
+								$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelCom(\'$cId\');\" style = \"cursor:hand\" alt=\"Borrar Intermediario: ".$mMatrizInt[$i]." - ".substr($xRCD['descripcion'],0,60)."\" >" : "")."</center></td>";
+								$cTexto .= "<td Class = \"clase08\">".substr($xRCD['ctoidxxx'],0,10)."</td>";
+								$cTexto .= "<td Class = \"clase08\">".f_Digito_Verificacion($xRCD['ctoidxxx'])."</td>";
+								$cTexto .= "<td Class = \"clase08\">".substr($xRCD['descripcion'],0,60)."</td>";
+							$cTexto .= "</tr>";
+						}
+					} else {
+						$cId  = $mMatrizInt[$i];
+						$zColor = "{$vSysStr['system_row_impar_color_ini']}";
+						if($y % 2 == 0) {
+							$zColor = "{$vSysStr['system_row_par_color_ini']}";
+						}
+						$cTexto .= "<tr bgcolor = \"".$zColor."\">";
+							$cTexto .= "<td Class = \"clase08\"><center>".(($_COOKIE['kModo'] != "VER") ? "<img src = \"".$cPlesk_Skin_Directory."/btn_remove-selected_bg.gif\" onClick =\"javascript:uDelCom(\'$cId\');\" style = \"cursor:hand\" alt=\"Borrar Intermediario: ".$mMatrizInt[$i]." - ".substr($xRCD['NOMBRE'],0,60)."\" >" : "")."</center></td>";
+							$cTexto .= "<td Class = \"clase08\">".substr($mMatrizInt[$i],0,10)."</td>";
+							$cTexto .= "<td Class = \"clase08\">".f_Digito_Verificacion($mMatrizInt[$i])."</td>";
+							$cTexto .= "<td Class = \"clase08\">".substr("SIN DESCRIPCION",0,60)."</td>";
+						$cTexto .= "</tr>";
+					}
+				}
+			}
 			$cTexto .= "</table>"; ?>
-			<script>
+			<script language = "javascript">
 				parent.fmwork.document.getElementById('overDivValUniTer').innerHTML = '<?php echo $cTexto ?>';
 			</script>
 		<?php break;

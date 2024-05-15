@@ -183,7 +183,7 @@
             var zNy      = (zY-400)/2;
             var zWinPro  = "width=750,scrollbars=1,height=400,left="+zNx+",top="+zNy;
             var zCliId   =  document.forms['frgrm']['cCliId'].value.toUpperCase();
-            var zRuta    = 'frccccon.php?cCliId='+zCliId+'&gFacA='+document.forms['frgrm']['cFacA'].value;
+            var zRuta    = 'frccccon.php?cCliId='+zCliId+'&gValUniTer='+document.forms['frgrm']['cValUniTer'].value;
             zWindow2 = window.open(zRuta,"zWindow2",zWinPro);
             zWindow2.focus();
           break;
@@ -358,7 +358,7 @@
      	}
 
       function fnCargarValoresUnitariosTerceros(){
-        var cRuta = "frcccgri.php?gTipo=4&gValUniTer"+document.forms['frgrm']['cValUniTer'].value;
+        var cRuta = "frcccgri.php?gTipo=4&gValUniTer="+document.forms['frgrm']['cValUniTer'].value;
         parent.fmpro4.location = cRuta;
       }
 
@@ -1574,6 +1574,12 @@
             case "DEDHLEXPRE":
               fnCargarDescuentos();
             break;
+            case "ALADUANA":
+            case "TEALADUANA":
+            case "DEALADUANA":
+              fnCargarValoresUnitariosTerceros();
+              fnAddNewRowImp('Grid_ValUniTer');
+            break;
             default:
               //No hace nada
             break;
@@ -1616,6 +1622,11 @@
             case "DEDHLEXPRE":
               fnCargarDescuentos();
             break;
+            case "ALADUANA":
+            case "TEALADUANA":
+            case "DEALADUANA":
+              fnCargarValoresUnitariosTerceros();
+              fnAddNewRowImp('Grid_ValUniTer');
             break;
             default:
               //No hace nada

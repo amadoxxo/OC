@@ -26,7 +26,7 @@
 	          var cRuta = "frcccsav.php?cCliId=<?php echo $cCliId ?>&cCadena="+cadeni+"&cFacA="+window.opener.document.forms['frgrm']['cFacA'].value+"&tipsave=5";
 	          var Msj  = f_makeRequest(cRuta);              
 	        } else  {
-	          alert('Debe Seleccionar un Vendedor. Verifique.');
+	          alert('Debe Seleccionar un Concepto. Verifique.');
 	        }
 	      }
 
@@ -67,7 +67,7 @@
 	              var mRetorno = cRetorno.split("|");
 	              if (mRetorno[0] == "true") {
 	                window.opener.document.forms['frgrm']['cFacA'].value = mRetorno[1];
-	                window.opener.f_CargarFacturara();                
+	                window.opener.fnCargarValoresUnitariosTerceros();                
 	                window.close();
 	              } else {
 	                alert(mRetorno[1]);
@@ -124,20 +124,20 @@
 			   			<legend>Conceptos Contables</legend>
 	  					<form name = "frgrm" action = "" method = "post" target = "fmpro">
 	  						<?php
-	  						$qCliDat  = "SELECT ctoidxxx, ";
-								$qCliDat .= "COALESCE(NULLIF(ctodesxx, ''), ctodesxp) AS descripcion, "; 
-								$qCliDat .= "regestxx ";
-								$qCliDat .= "FROM $cAlfa.fpar0119 ";
-								$qCliDat .= "WHERE regestxx = 'ACTIVO' AND ctopccxx = 'SI' ";
-								$qCliDat .= "UNION ALL ";
-								$qCliDat .= "SELECT ctoidxxx, ";
-								$qCliDat .= "ctodesxx AS descripcion, ";
-								$qCliDat .= "regestxx ";
-								$qCliDat .= "FROM $cAlfa.fpar0121 ";
-								$qCliDat .= "WHERE regestxx = 'ACTIVO' AND ctotipxx = 'TERCEROS'";
-								$xCliDat = f_MySql("SELECT", "", $qCliDat, $xConexion01, "");
+	  						$qConCtb  = "SELECT ctoidxxx, ";
+								$qConCtb .= "COALESCE(NULLIF(ctodesxx, ''), ctodesxp) AS descripcion, "; 
+								$qConCtb .= "regestxx ";
+								$qConCtb .= "FROM $cAlfa.fpar0119 ";
+								$qConCtb .= "WHERE regestxx = 'ACTIVO' AND ctopccxx = 'SI' ";
+								$qConCtb .= "UNION ALL ";
+								$qConCtb .= "SELECT ctoidxxx, ";
+								$qConCtb .= "ctodesxx AS descripcion, ";
+								$qConCtb .= "regestxx ";
+								$qConCtb .= "FROM $cAlfa.fpar0121 ";
+								$qConCtb .= "WHERE regestxx = 'ACTIVO' AND ctotipxx = 'TERCEROS'";
+								$xConCtb = f_MySql("SELECT", "", $qConCtb, $xConexion01, "");
 
-								if (mysql_num_rows($xCliDat) > 0) {
+								if (mysql_num_rows($xConCtb) > 0) {
 									?>
 									<center>
 					    			<table cellspacing = "0" cellpadding = "1" border = "1" width = "450">
@@ -150,7 +150,7 @@
 											<?php
 											$y = 0;
 											$cont = 0;
-											while ($zRCom = mysql_fetch_array($xCliDat)) {
+											while ($zRCom = mysql_fetch_array($xConCtb)) {
 												$serv = $zRCom['ctoidxxx'];
 							          $vb   = $serv;
 							          $cvb  = 0;

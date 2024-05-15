@@ -1,7 +1,7 @@
 <?php
   /**
-	 * Imprime Factura de Venta ALADUANA.
-	 * --- Descripcion: Permite Imprimir Factura de Venta.
+	 * Imprime Factura de Venta Sin Formato ALADUANA.
+	 * --- Descripcion: Permite Imprimir Factura de Venta Sin Formato.
 	 * @author Camilo Dulce <camilo.dulce@opentecnologia.com.co>
 	 */
   include("../../../../libs/php/utility.php");
@@ -15,9 +15,9 @@
   $cAno    = substr($mPrints[0][4],0,4);
   $cEstiloLetra = 'arial';
   $cEstiloLetraOfton = 'ofton1';
-  $cEstiloLetrab = 'arialb';
+	$cEstiloLetrab = 'arialb';
 
-  $gRetenciones = isset($_REQUEST['gRetenciones']) && $gRetenciones == "NO" ? 0 : 1;
+	$gRetenciones = isset($_REQUEST['gRetenciones']) && $gRetenciones == "NO" ? 0 : 1;
 
   //Busco los comprobantes donde El tipo de Comprobante sea RCM
   $qFpar117  = "SELECT comidxxx, comcodxx ";
@@ -226,8 +226,8 @@
   	$mDatGmf = array();
 
   	if ($nFilCod > 0) {
-      //Cargo la Matriz con los ROWS del Cursor
-      $mCodDat = array();
+  		//Cargo la Matriz con los ROWS del Cursor
+  		$mCodDat = array();
   		while ($xRCD = mysql_fetch_array($xCodDat)) {
 
         if($xRCD['comctocx'] == "PCC" && $xRCD['comidc2x'] != "X"){
@@ -274,11 +274,11 @@
 							}
 						}
 					}
-  			} else {
+				} else {
 					$vDatosIp[0] = $xRCD['comobsxx'];
-        }
+				}
 
-        if ($nSwitch_Encontre_Concepto == 0) {
+				if ($nSwitch_Encontre_Concepto == 0) {
 					$nInd_mConData = count($mCodDat);
 					$mCodDat[$nInd_mConData] = $xRCD;
 					$mCodDat[$nInd_mConData]['comobsxx'] = $vDatosIp[0];
@@ -288,8 +288,8 @@
 					for ($nP=0; $nP<count($vDatosIp[3]); $nP++) {
 						$mCodDat[$nInd_mConData]['itemcanx'][str_replace(" ","_","{$vDatosIp[3][$nP]['despdfxx']}")] = $vDatosIp[3][$nP]['valpdfxx'];
 					}
-        }
-  		}
+				}
+      }
   		// Fin de Cargo la Matriz con los ROWS del Cursor
     }
 
@@ -423,7 +423,7 @@
     $nAnoIniDo = (($dFecMay-1) <  $vSysStr['financiero_ano_instalacion_modulo']) ? $vSysStr['financiero_ano_instalacion_modulo'] : ($dFecMay-1);
     ##Fin Exploto campo Matriz para traer primer Do y traer Datos de Tasa de Cambio, Documento de Transporte, Bultos, Peso ##
 
-    ##Trayendo Datos de Do Dependiendo del Tipo de Operacion ##
+		##Trayendo Datos de Do Dependiendo del Tipo de Operacion ##
     $vDatDo = f_Datos_Operativos_Do($cSucId, $cDocId, $cDocSuf);
     $vDceDat    = $vDatDo['decdatxx'];
     $cTasCam    = $vDatDo['tascamxx']; //Tasa de Cambio
@@ -443,7 +443,7 @@
     $cPaiOri    = $vDatDo['paioride']; //Pais Origen
     $cDesMer    = $vDatDo['desmerxx']; //Descripcion Mercancia
     $cNumVap    = $vDatDo['numvapxx']; //Numero vapor
-    $cLimStk    = $vDatDo['limstkxx']; //Autoadhesivo de la primera declaracion
+    $cLimStk    = $vDatDo['limstkxx'];    //Autoadhesivo de la primera declaracion
     $cLugIngDes = $vDatDo['lindesxx']; //Lugar de Ingreso Descripcion
     $cSucDes    = $vDatDo['sucdesxx']; //Sucursal del DO
     $cObsCom    = $vDatDo['doiobsal']; //Observacion ALADUANA
@@ -500,6 +500,7 @@
     $mIngTer = array();
 
     for ($i=0;$i<count($mIT);$i++) {
+
       //Traer descripcion concepto
       $cObs = explode("^",$mIT[$i][2]);
 
@@ -559,7 +560,6 @@
       $mIngTer[$nInd_mIngTer]['ctochald'] = $mCtoDes["{$mIT[$i][1]}"];//Cod
       $mIngTer[$nInd_mIngTer]['ctodesxx'] = trim($cObs[0]);//Descripcion
       $mIngTer[$nInd_mIngTer]['ctoidxxx'] = $mIT[$i][1];//CtoId
-
   
       if (trim($cObs[0]) == "IMPUESTO A LAS VENTAS" && trim($cObs[1]) == "DIAN") {
         $mIngTer[$nInd_mIngTer]['costoxxx'] = 0;//Costo
@@ -616,14 +616,14 @@
   	$cCscFac = ($vCocDat['regestxx'] == "PROVISIONAL") ?  "XXXXX" : $vCocDat['comcscxx'];
     // Fin de Codigo para imprimir los ingresos para terceros
 
-    ##Traigo la Forma de Pago##
+		##Traigo la Forma de Pago##
 		$vCodFormPago = explode("~", $vCocDat['comobs2x']);
 
     $cFormaPag = "";
 		if ($vCodFormPago[14] == "1") {
-			$cFormaPag = "CONTADO";
-		} elseif($vCodFormPago[14] == "2") {
 			$cFormaPag = "CREDITO";
+		} elseif($vCodFormPago[14] == "2") {
+			$cFormaPag = "CONTADO";
 		}
 		##FIN Traigo la Forma de Pago##
 		
@@ -641,10 +641,6 @@
 		}
     ##FIN Traigo el Medio de Pago##
 
-    // echo "<pre>";
-    // print_r($mCodDat);
-    // die();
-
     ## Codigo Para Imprimir Original y numero de Copias ##
     $cRoot = $_SERVER['DOCUMENT_ROOT'];
 
@@ -657,13 +653,13 @@
     ##Fin Switch para incluir fuente y clase pdf segun base de datos ##
     class PDF extends FPDF {
   		function Header() {
-  			global $cAlfa;   global $cRoot;   global $cPlesk_Skin_Directory;
-  			global $gCcoId;  global $gSccId;  global $gMesDes; global $cDocId;  global $cDocSuf; global $vCiuDat;
-  			global $cUsrNom; global $vAgeDat; global $vCocDat; global $vConDat; global $cPedido; global $cSucDes;
-  			global $vResDat; global $cDocTra; global $cPesBru; global $_COOKIE; global $vPaiDat; global $vDceDat;
-        global $nValAdu; global $vCccDat; global $cCscFac; global $cEstiloLetra; global $cEstiloLetraOfton;
-        global $vSysStr; global $cDesMer; global $cLimStk; global $cNumVap; global $mCodDat; global $cLugIngDes;
-        global $cSucId;  global $VMedioPago; global $cFormaPag;
+  			global $cAlfa;   global $cRoot;         global $cPlesk_Skin_Directory;  global $vCocDat;
+  			global $gCcoId;  global $gMesDes;       global $vAgeDat;  global $cDocId;  global $cDocSuf;
+  			global $cUsrNom; global $vCiuDat;       global $vDceDat;  global $vConDat; global $cPedido;   
+  			global $vResDat; global $cDocTra;       global $cPesBru;  global $cEstiloLetraOfton;
+        global $nValAdu; global $vCccDat;       global $cCscFac;  global $cDesMer; global $cLimStk;
+        global $vSysStr; global $cEstiloLetra;  global $_COOKIE;  global $cLugIngDes; global $cSucDes;
+				global $cNumVap; global $mCodDat;       global $cSucId;   
 
         if ($vCocDat['regestxx'] == "INACTIVO") {
           $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/facturaanulada.jpg',10,50,190,190);
@@ -677,49 +673,49 @@
         $nPosX = 5;
         $nPosY = 6;
 
-    		$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoaladuana.jpg',$nPosX,$nPosY+2,55);
-        //
-    		$this->SetFont($cEstiloLetra,'B',14);
-    		$this->setXY($nPosX+52,$nPosY);
-        $this->Cell(60,4,utf8_decode("AGENCIA DE ADUANAS"),0,0,'');
-        $this->setXY($nPosX+50,$nPosY+5);
-        $this->Cell(62,4,utf8_decode("ALADUANA S.A.S  NIVEL 1"),0,0,'');
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->setXY($nPosX+47,$nPosY+10);
-        $this->Cell(70,3,"Nit: ".number_format($vSysStr['financiero_nit_agencia_aduanas'],0,'','.')."-".f_Digito_Verificacion($vSysStr['financiero_nit_agencia_aduanas']),0,0,'C');
-        $this->setXY($nPosX+47,$nPosY+13);
-        $this->Cell(70,3,utf8_decode("http://wwww.aladuana.com"),0,0,'C');
-        $this->setXY($nPosX+47,$nPosY+16);
-        $this->Cell(70,3,utf8_decode("facturacion@aladuana.com"),0,0,'C');
+				// $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoaladuana.jpeg',$nPosX,$nPosY+2,55);
+				// //
+    		// $this->SetFont($cEstiloLetra,'B',14);
+    		// $this->setXY($nPosX+52,$nPosY);
+        // $this->Cell(60,4,utf8_decode("AGENCIA DE ADUANAS"),0,0,'');
+        // $this->setXY($nPosX+50,$nPosY+5);
+        // $this->Cell(62,4,utf8_decode("ALADUANA S.A.S  NIVEL 1"),0,0,'');
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->setXY($nPosX+47,$nPosY+10);
+        // $this->Cell(70,3,"Nit: ".number_format($vSysStr['financiero_nit_agencia_aduanas'],0,'','.')."-".f_Digito_Verificacion($vSysStr['financiero_nit_agencia_aduanas']),0,0,'C');
+        // $this->setXY($nPosX+47,$nPosY+13);
+        // $this->Cell(70,3,utf8_decode("http://wwww.aladuana.com"),0,0,'C');
+        // $this->setXY($nPosX+47,$nPosY+16);
+        // $this->Cell(70,3,utf8_decode("facturacion@aladuana.com"),0,0,'C');
 
-        $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/aladuanaiso2.jpeg',$nPosX+120,$nPosY+3,19,20);
+        // $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/aladuanaiso2.jpeg',$nPosX+120,$nPosY+3,19,20);
 
-        $this->SetFont($cEstiloLetra,'B',5);
-        $this->setXY($nPosX+47,$nPosY+21.5);
-        $cObservaciones  = "OBSERVACIONES: Esta Factura de venta se asimila en sus efectos legales a una letra de cambio ARTICULO 774 del Código ";
-        $cObservaciones .= "de Comercio. La Cancelación de esta factura después de la fecha de vencimiento, causará intereses de mora a la tasa ";
-        $cObservaciones .= "autorizada por la Superintendencia Bancaria";
-        $this->Multicell(70,2,utf8_decode($cObservaciones),0,'J');
+        // $this->SetFont($cEstiloLetra,'B',5);
+        // $this->setXY($nPosX+47,$nPosY+21.5);
+        // $cObservaciones  = "OBSERVACIONES: Esta Factura de venta se asimila en sus efectos legales a una letra de cambio ARTICULO 774 del Código ";
+        // $cObservaciones .= "de Comercio. La Cancelación de esta factura después de la fecha de vencimiento, causará intereses de mora a la tasa ";
+        // $cObservaciones .= "autorizada por la Superintendencia Bancaria";
+        // $this->Multicell(70,2,utf8_decode($cObservaciones),0,'J');
 
-        $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/aladuanabasc2_factura.jpg',$nPosX+141,$nPosY,24,25);
+        // $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/aladuanabasc2_factura.jpg',$nPosX+141,$nPosY,24,25);
 
-        /** Factura de venta **/
-        $this->setXY($nPosX+166,$nPosY+3);
-        $this->SetFont($cEstiloLetra,'B',8);
-  		  $this->Cell(38,7,utf8_decode("FACTURA DE VENTA"),0,0,'C', true);
-        $this->Rect($nPosX+166, $nPosY+3, 38, 17);
-        $this->setXY($nPosX+167,$nPosX+13);
-        $this->SetFont($cEstiloLetra,'',13);
-        $this->Cell(37,4,utf8_decode("No. ".$cCscFac),0,0,'C');
-        $this->setXY($nPosX+168,$nPosX+22);
-        $this->SetFont($cEstiloLetra,'B',5);
-  		  $this->MultiCell(28,2,utf8_decode("IVA E ICA REGIMEN COMUN NO SOMOS GRANDES CONTRIBUYENTES\nSOMOS RETENEDORES DE IVA"),0,'C');
+        // /** Factura de venta **/
+        // $this->setXY($nPosX+166,$nPosY+3);
+        // $this->SetFont($cEstiloLetra,'B',8);
+  		  // $this->Cell(38,7,utf8_decode("FACTURA DE VENTA"),0,0,'C', true);
+        // $this->Rect($nPosX+166, $nPosY+3, 38, 17);
+        // $this->setXY($nPosX+167,$nPosX+13);
+        // $this->SetFont($cEstiloLetra,'',13);
+        // $this->Cell(37,4,utf8_decode("No. ".$cCscFac),0,0,'C');
+        // $this->setXY($nPosX+168,$nPosX+22);
+        // $this->SetFont($cEstiloLetra,'B',5);
+  		  // $this->MultiCell(28,2,utf8_decode("IVA E ICA REGIMEN COMUN NO SOMOS GRANDES CONTRIBUYENTES\nSOMOS RETENEDORES DE IVA"),0,'C');
 
         $nPosX = 6;
         $nPosY += 17;
 
-        /*** Ciudad y Fecha***/
-        $this->SetFont($cEstiloLetra,'B',8);
+				/*** Ciudad y Fecha***/
+				$this->SetFont($cEstiloLetra,'B',8);
         $this->setXY($nPosX,$nPosY+27);
         $this->Cell(26,5,utf8_decode("CIUDAD Y FECHA:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
@@ -737,86 +733,86 @@
           $cFecVen = date('Y-m-d');
         }else{
           $cFecVen = $vCocDat['comfecve'];
-        }
+				}
 
-        $cSucursal = $cSucDes;
+				$cSucursal = $cSucDes;
         if($cSucId == "RCH" || $cSucId == "SMR" || $cSucDes == "TOLU"){
           $cSucursal = "CARTAGENA";
         }elseif($cSucId == "IPI"){
           $cSucursal = "BOGOTA";
-        }
+				}
         $this->Cell(33,5,$cSucursal.", ".$vCocDat['comfecxx'],0,0,'');
-        $this->setXY($nPosX+100,$nPosY+27);
-        $this->SetFont($cEstiloLetra,'B',8);
-        $this->Cell(27,5,"VENCIMIENTO: ",0,0,'L');
-        $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(27,5,$cFecVen,0,0,'L');
+				$this->setXY($nPosX+100,$nPosY+27);
+				$this->SetFont($cEstiloLetra,'B',8);
+				$this->Cell(27,5,"VENCIMIENTO: ",0,0,'L');
+				$this->SetFont($cEstiloLetraOfton,'',8);
+				$this->Cell(27,5,$cFecVen,0,0,'L');
         /*** Fin Busco Saldo para colocar fecha de vencimiento ***/
 
-        /*** Pedido ***/
-        $this->setXY($nPosX+160,$nPosY+27);
+				/*** Pedido ***/
+				$this->setXY($nPosX+160,$nPosY+27);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(12,5,utf8_decode("PEDIDO:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
         $this->Cell(40,5,$cPedido,0,0,'L');
 
         /*** DO ***/
-        $this->setXY($nPosX,$nPosY+32);
-        $this->SetFont($cEstiloLetra,'B',8);
+				$this->setXY($nPosX,$nPosY+32);
+				$this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(19,5,utf8_decode("DO:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
         $this->Cell(50,5,$cDocId."-".str_pad($cDocSuf,3,"0",STR_PAD_LEFT),0,0,'L');
 
-        /*** FORMA PAGO ***/
+				/*** FORMA PAGO ***/
         $this->setXY($nPosX+100,$nPosY+32);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(27,5,utf8_decode("FORMA DE PAGO"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(40,5,$cFormaPag,0,0,'L');
+				$this->Cell(40,5,$cFormaPag,0,0,'L');
 
-        /*** Telefono ***/
-        $this->setXY($nPosX+160,$nPosY+32);
+				/*** Telefono ***/
+				$this->setXY($nPosX+160,$nPosY+32);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(22,5,utf8_decode("TEL:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(50,5,$vCocDat['CLITELXX'],0,0,'L');
+				$this->Cell(50,5,$vCocDat['CLITELXX'],0,0,'L');
 
         /*** SEÑOR(ES) ***/
         $this->setXY($nPosX,$nPosY+37);
         $this->SetFont($cEstiloLetra,'B',8);
-        $this->Cell(19,5,utf8_decode("SEÑOR:(ES)"),0,0,'L');
+				$this->Cell(19,5,utf8_decode("SEÑOR:(ES)"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',7);
-        $this->Cell(90,5,utf8_decode(substr($vCocDat['CLINOMXX'], 0, 73)),0,0,'L');
-
-        /*** MEDIO DE PAGO ***/
+				$this->Cell(90,5,utf8_decode(substr($vCocDat['CLINOMXX'], 0, 73)),0,0,'L');
+				
+				/*** MEDIO DE PAGO ***/
         $this->setXY($nPosX+100,$nPosY+37);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(27,5,utf8_decode("MEDIO DE PAGO"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
         $this->Cell(40,5,substr(utf8_decode($VMedioPago['mpadesxx']), 0, 25),0,0,'L');
 
-        /*** V.R. CIF ***/
+				/*** V.R. CIF ***/
         $this->setXY($nPosX+160,$nPosY+37);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(22,5,utf8_decode("V.R. CIF:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(30,5,$nValAdu,0,0,'L');
+				$this->Cell(30,5,$nValAdu,0,0,'L');
 
         /*** Direccion ***/
         $this->setXY($nPosX,$nPosY+42);
-        $this->SetFont($cEstiloLetra,'B',8);
+				$this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(19,5,utf8_decode("DIRECCION:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',7);
-        $this->Cell(90,5,utf8_decode(substr($vCocDat['CLIDIR3X'], 0, 73)),0,0,'L');
-
-        /*** Mercancia ***/
+				$this->Cell(90,5,utf8_decode(substr($vCocDat['CLIDIR3X'], 0, 73)),0,0,'L');
+				
+				/*** Mercancia ***/
         $this->setXY($nPosX+100,$nPosY+42);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(27,5,utf8_decode("MERCANCIA:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(56,5,substr($cDesMer, 0, 25),0,0,'L');
-
-        /*** VAPOR ***/
+				$this->Cell(56,5,$cDesMer,0,0,'L');
+				
+				/*** VAPOR ***/
         $this->setXY($nPosX+160,$nPosY+42);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(22,5,utf8_decode("VAPOR:"),0,0,'L');
@@ -830,28 +826,28 @@
         $this->SetFont($cEstiloLetraOfton,'',8);
         $this->Cell(33,5,$vCocDat['terid2xx']."-".f_Digito_Verificacion($vCocDat['terid2xx']),0,0,'L');
 
-        /*** DECLARACION ***/
+				/*** DECLARACION ***/
         $this->setXY($nPosX+100,$nPosY+47);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(27,5,utf8_decode("DECLARACION:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(23,5,$cLimStk,0,0,'L');
+				$this->Cell(23,5,$cLimStk,0,0,'L');
 
-        /*** Peso ***/
+				/*** Peso ***/
         $this->setXY($nPosX+160,$nPosY+47);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(22,5,utf8_decode("PESO:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(25,5,number_format($cPesBru,2,'.',','),0,0,'L');
+				$this->Cell(25,5,number_format($cPesBru,2,'.',','),0,0,'L');
 
-        /*** Guia/Bl ***/
+				/*** Guia/Bl ***/
         $this->setXY($nPosX,$nPosY+52);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(19,5,utf8_decode("GUIA/BL:"),0,0,'L');
         $this->SetFont($cEstiloLetraOfton,'',8);
-        $this->Cell(56,5,$cDocTra,0,0,'L');
+				$this->Cell(56,5,$cDocTra,0,0,'L');
 
-        /*** PUERTO/TRANS ***/
+				/*** PUERTO/TRANS ***/
         $this->setXY($nPosX+100,$nPosY+52);
         $this->SetFont($cEstiloLetra,'B',8);
         $this->Cell(27,5,utf8_decode("PUERTO/TRANS:"),0,0,'L');
@@ -860,113 +856,114 @@
 
         $this->setXY($nPosX+10,$nPosY+60);
         $this->Cell(100,5,"CONCEPTO",0,0,'');
-        $this->Cell(28,5,"CANTIDAD",0,0,'C');
-        $this->Cell(28,5,"BASE/VALOR",0,0,'C');
-        $this->Cell(28,5,"TOTAL",0,0,'C');
+        $this->Cell(30,5,"CANTIDAD",0,0,'C');
+        $this->Cell(30,5,"BASE/VALOR",0,0,'C');
+        $this->Cell(30,5,"TOTAL",0,0,'C');
 
   		}//Function Header
 
   		function Footer() {
-  		  global $cRoot; global $cPlesk_Skin_Directory; global $cNomCopia; global $vResDat;
-        global $nContPage; global $vCocDat; global $mCodDat; global $cSaldo; global $vSysStr;
-        global $cEstiloLetra; global $gCorreo; global $nb; global $vUsrNom;
+  		  global $cRoot;        global $cPlesk_Skin_Directory;    global $cNomCopia;  global $cSaldo;
+        global $nContPage;    global $vCocDat;                  global $mCodDat;    global $vUsrNom;
+        global $cEstiloLetra; global $gCorreo;                  global $nb;
+        global $vResDat;      global $vSysStr;
 
-        $nPosY = 216;
-        $nPosX = 6;
+        $nPosY = 213;
+				$nPosX = 6;
 
-        $this->setXY($nPosX,$nPosY);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(9,3,utf8_decode("Bogota: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(75,3,utf8_decode("Cra. 103 No. 25B-86 P3. PBX: (1) 4151556 * Fax: Ext. 102 * E-mail: bogota@aladuana.com"),0,0,'');
+				// $this->setXY($nPosX,$nPosY);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(9,3,utf8_decode("Bogota: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(75,3,utf8_decode("Cra. 103 No. 25B-86 P3. PBX: (1) 4151556 * Fax: Ext. 102 * E-mail: bogota@aladuana.com"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+3.5);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(16,3,utf8_decode("Buenaventura: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(80,3,utf8_decode("Calle 7 No. 3-11, Ed. Pacific Trade Center Oficina 1802 * Tel.: (2) 241 3884 - 241 3885 - 241 2425"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+3.5);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(16,3,utf8_decode("Buenaventura: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(80,3,utf8_decode("Calle 7 No. 3-11, Ed. Pacific Trade Center Oficina 1802 * Tel.: (2) 241 3884 - 241 3885 - 241 2425"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+6.5);
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(30,3,utf8_decode("Email: buenaventura@aladuana.com"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+6.5);
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(30,3,utf8_decode("Email: buenaventura@aladuana.com"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+9.5);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(12,3,utf8_decode("Cartagena: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(63,3,utf8_decode("Manga Avenida Miramar No. 23-87 * Tel.: (5) 660 9397 - 660 9448"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+9.5);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(12,3,utf8_decode("Cartagena: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(63,3,utf8_decode("Manga Avenida Miramar No. 23-87 * Tel.: (5) 660 9397 - 660 9448"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+12.5);
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(44,3,utf8_decode("Fax: (5) 660 9448 * E-mail: cartagena@aladuana.com"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+12.5);
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(44,3,utf8_decode("Fax: (5) 660 9448 * E-mail: cartagena@aladuana.com"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+15.5);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(14,3,utf8_decode("Barranquilla: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(95,3,utf8_decode("Cll. 70 No. 52 - 29 Ofc. 102 Edif. Centro Comercial Miracentro * Tel.: (5) 332 3390 * E-mail: barranquilla@aladuana.com"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+15.5);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(14,3,utf8_decode("Barranquilla: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(95,3,utf8_decode("Cll. 70 No. 52 - 29 Ofc. 102 Edif. Centro Comercial Miracentro * Tel.: (5) 332 3390 * E-mail: barranquilla@aladuana.com"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+18.5);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(10,3,utf8_decode("Medellín: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(82,3,utf8_decode("Cra. 43b No. 14-51 Of. 705 Ed. Alcala * Tel.: (4) 311 8074 - 311 8357 * Email: medellin@aladuana.com"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+18.5);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(10,3,utf8_decode("Medellín: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(82,3,utf8_decode("Cra. 43b No. 14-51 Of. 705 Ed. Alcala * Tel.: (4) 311 8074 - 311 8357 * Email: medellin@aladuana.com"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+21.5);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(9,3,utf8_decode("Cucuta: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(104,3,utf8_decode("Avenida Camilo Daza No. 21 - 99 Of. 303 Edificio Emycar * Tel.: (7) 587 6156 * Cel.: 317 512 0318* E-mail: cucuta@aladuana.com"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+21.5);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(9,3,utf8_decode("Cucuta: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(104,3,utf8_decode("Avenida Camilo Daza No. 21 - 99 Of. 303 Edificio Emycar * Tel.: (7) 587 6156 * Cel.: 317 512 0318* E-mail: cucuta@aladuana.com"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+24.5);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->Cell(5,3,utf8_decode("Cali: "),0,0,'');
-        $this->SetFont($cEstiloLetra,'',6);
-        $this->Cell(105,3,utf8_decode("Av. 3FN No. 59 -120 Casa 24 Unidad Recodo de la Flora * Cel.: 315 512 3442 * Email: cali@aladuana.com"),0,0,'');
+        // $this->setXY($nPosX,$nPosY+24.5);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->Cell(5,3,utf8_decode("Cali: "),0,0,'');
+        // $this->SetFont($cEstiloLetra,'',6);
+        // $this->Cell(105,3,utf8_decode("Av. 3FN No. 59 -120 Casa 24 Unidad Recodo de la Flora * Cel.: 315 512 3442 * Email: cali@aladuana.com"),0,0,'');
 
-        $this->Line($nPosX+136,$nPosY+5,$nPosX+136,$nPosY+27);
-        $this->setXY($nPosX+138,$nPosY+8);
-        $this->SetFont($cEstiloLetra,'B',5);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA BOGOTA, D.C. 5229; ICA TARIFA 9.66X1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+10);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA BUENAVENTURA: 5229; ICA TARIFA 10X1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+12);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA CARTAGENA: 5229; ICA TARIFA 8X1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+14);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA BARRANQUILLA: 5229; ICA TARIFA 10X1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+16);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA MEDELLIN: 5229: ICA TARIFA 6X1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+18);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA CUCUTA: 5229; ICA TARIFA 7x1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+20);
-        $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA CALI: 5229; ICA TARIFA 10x1000"),0,0,'');
-        $this->setXY($nPosX+138,$nPosY+22);
-        $this->Cell(63,2,utf8_decode("CF0301 V02"),0,0,'');
+        // $this->Line($nPosX+136,$nPosY+5,$nPosX+136,$nPosY+27);
+        // $this->setXY($nPosX+141,$nPosY+8);
+        // $this->SetFont($cEstiloLetra,'B',5);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA BOGOTA, D.C. 5229; ICA TARIFA 9.66X1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+10);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA BUENAVENTURA: 5229; ICA TARIFA 10X1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+12);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA CARTAGENA: 5229; ICA TARIFA 8X1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+14);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA BARRANQUILLA: 5229; ICA TARIFA 10X1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+16);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA MEDELLIN: 5229: ICA TARIFA 6X1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+18);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA CUCUTA: 5229; ICA TARIFA 7x1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+20);
+        // $this->Cell(63,2,utf8_decode("ACTIVIDAD ECONOMICA CALI: 5229; ICA TARIFA 10x1000"),0,0,'');
+        // $this->setXY($nPosX+141,$nPosY+22);
+        // $this->Cell(63,2,utf8_decode("CF0301 V02"),0,0,'');
 
-        $this->setXY($nPosX,$nPosY+28);
-        $this->SetTextColor(30, 30, 70);
-        $this->SetFillColor(255,255,255);
-        $this->SetFont($cEstiloLetra,'B',6);
-        $this->MultiCell(200,3.5,utf8_decode("Nota: Apreciado Cliente: favor consignar en las siguientes cuentas corrientes Bancolombia No. 237955408-95, Cód.recaudo 06993, ref:8300109054 o Banco Itaú No. 011362845 a nombre de AGENCIA DE ADUANAS ALADUANA S.A.S"),0,'',true);
-        $this->SetTextColor(0,0,0);
+        // $this->setXY($nPosX,$nPosY+28);
+        // $this->SetTextColor(30, 30, 70);
+        // $this->SetFillColor(255,255,255);
+        // $this->SetFont($cEstiloLetra,'B',6);
+        // $this->MuliCell(200,3.5,utf8_decode("Nota: Apreciado Cliente: favor consignar en las siguientes cuentas corrientes Bancolombia No. 237955408-95, Cód.recaudo 06993, ref:8300109054 o Banco Itaú No. 011362845 a nombre de AGENCIA DE ADUANAS ALADUANA S.A.S"),0,0,'',true);
+        // $this->SetTextColor(0,0,0);
 
         // $this->setXY($nPosX,$nPosY+33);
         // $this->SetFont($cEstiloLetra,'B',6);
         // $this->Cell(206,5,utf8_decode($cNomCopia),0,0,'C');
 
-        $this->SetFont($cEstiloLetra,'',6);
+				$this->SetFont($cEstiloLetra,'',6);
         $dFechaInicial = date_create($vResDat['resfdexx']);
         $dFechaFinal   = date_create($vResDat['resfhaxx']);
         $nDiferencia   = date_diff($dFechaInicial, $dFechaFinal);
         $nMesesVigencia = ( $nDiferencia->y * 12 ) + $nDiferencia->m + (($nDiferencia->d > 0) ? 1 : 0);
-        $this->RotatedText($nPosX-1.5,215,utf8_decode("AUTORIZACIÓN DIAN No. {$vResDat['residxxx']} DEL ".$vResDat['resfdexx']." DEL ".$vResDat['resprexx'].$vResDat['resdesxx']." AL ".$vResDat['resprexx'].$vResDat['reshasxx']." AUTORIZACIÓN VIGENCIA {$nMesesVigencia} MESES"),90);
+        // $this->RotatedText($nPosX-1.5,215,utf8_decode("AUTORIZACIÓN DIAN No. {$vResDat['residxxx']} DEL ".$vResDat['resfdexx']." DEL ".$vResDat['resprexx'].$vResDat['resdesxx']." AL ".$vResDat['resprexx'].$vResDat['reshasxx']." AUTORIZACIÓN VIGENCIA {$nMesesVigencia} MESES"),90);
     		$this->RotatedText($nPosX+207.5,260,utf8_decode("Impreso por openTecnologia S.A Nit 830.135.010-5."),90);
 
-        $nPosY = 248;
-        $this->setXY($nPosX,$nPosY+3);
+        $nPosY = 240;
+        $this->setXY($nPosX,$nPosY);
         $this->SetFont($cEstiloLetra,'',7);
         $this->Cell(40,4, utf8_decode("FECHA Y HORA DE VALIDACIÓN: ").substr($vCocDat['compcevd'],0,16),0,0,'L');
-        $this->Ln(5);
+        $this->Ln(6);
         $this->setX($nPosX);
         $this->SetFont($cEstiloLetra,'B',7);
         $this->Cell(40,4, utf8_decode("REPRESENTACIÓN IMPRESA DE LAFACTURA ELECTRÓNICA"),0,0,'L');
@@ -992,9 +989,9 @@
 					QRcode::png($vCocDat['compceqr'], $cFileQR, "H", 10, 1);
 					$this->Image($cFileQR,$nPosX+150,$nPosY+8,22,22);
         }
-      }
+  		}
 
-      // rota la celda
+			// rota la celda
   		function RotatedText($x,$y,$txt,$angle){
   			//Text rotated around its origin
   			$this->Rotate($angle,$x,$y);
@@ -1002,7 +999,7 @@
   			$this->Rotate(0);
   		}
 
-      // rota la celda
+  		// rota la celda
   		var $angle=0;
   		function Rotate($angle,$x=-1,$y=-1){
   			if($x==-1)
@@ -1020,7 +1017,7 @@
   				$cy=($this->h-$y)*$this->k;
   				$this->_out(sprintf('q %.5f %.5f %.5f %.5f %.2f %.2f cm 1 0 0 1 %.2f %.2f cm',$c,$s,-$s,$c,$cx,$cy,-$cx,-$cy));
   			}
-      }
+			}
 
   		function Setwidths($w) {
   			//Set the array of column widths
@@ -1153,7 +1150,7 @@
 
   	  $nPosY = $pdf->GetY()+5;
   	  $nPosX = 16;
-  	  $nPosFin = 195;
+  	  $nPosFin = 230;
   	  $nb = 1;
   	  $pyy = $nPosY;
 
@@ -1269,8 +1266,8 @@
 
   				if($mCodDat[$k]['comctocx'] == "IP" && $mCodDat[$k]['comvlr01'] != 0 ) {
 
-            $cValor = "";
-						foreach ($mCodDat[$k]['itemcanx'] as $cKey => $cValue) {
+  					$cValor = "";
+  					foreach ($mCodDat[$k]['itemcanx'] as $cKey => $cValue) {
 							if ($cKey == "CONTENEDORES_DE_20") {
 								$cValor .= " CONTENEDORES DE 20: (".number_format($cValue,0,'.',',').')';
 							} elseif ($cKey == "CONTENEDORES_DE_40") {
@@ -1278,7 +1275,7 @@
 							} elseif ($cKey == "UNIDADES_DE_CARGA_SUELTA") {
 								$cValor .= " UNIDADES DE CARGA SUELTA: (".number_format($cValue,0,'.',',').')';
 							}
-            }
+						}
 
             $nValorUnitario  = ($mCodDat[$k]['unidadfe'] != "A9" && $mCodDat[$k]['canfexxx'] > 0) ? ($mCodDat[$k]['comvlrxx']/$mCodDat[$k]['canfexxx']) : $mCodDat[$k]['comvlrxx'];
             $cCtoCodigo      = ($vCtoSer["{$mCodDat[$k]['ctoidxxx']}"]['serclapr'] == "001") ? $vCtoSer["{$mCodDat[$k]['ctoidxxx']}"]['cceidxxx'] : ltrim($mCodDat[$k]['ctoidxxx'], "0");
@@ -1310,7 +1307,7 @@
   				if($mCodDat[$k]['comctocx'] == "IP" && $mCodDat[$k]['comvlr01'] == 0 ) {
 
   					$cValor = "";
-						foreach ($mCodDat[$k]['itemcanx'] as $cKey => $cValue) {
+  					foreach ($mCodDat[$k]['itemcanx'] as $cKey => $cValue) {
 							if ($cKey == "CONTENEDORES_DE_20") {
 								$cValor .= " CONTENEDORES DE 20: (".number_format($cValue,0,'.',',').')';
 							} elseif ($cKey == "CONTENEDORES_DE_40") {
@@ -1359,8 +1356,8 @@
         $pdf->SetFont($cEstiloLetraOfton,'',8);
 
         $pdf->setX($nPosX);
-				$pdf->Row(array("TOTAL INGRESOS PROPIOS",
-												"",
+        $pdf->Row(array("TOTAL INGRESOS PROPIOS",
+                        "",
                         number_format(($nSubtotalIPGra+$nSubtotalIPNoGra),2,'.',','),
                         number_format(($nTotalIPGra+$nTotalIPNoGra),2,'.',',')));
 
@@ -1453,22 +1450,22 @@
        * Para imprimir este valor se debe tomar el campo comfpxx de cabecera, posicion 13 donde se guarda el valor del anticipo
        */
       // if ($vCocDat['CLINRPXX'] == "SI") {
-        // for ($k=0;$k<count($mCodDat);$k++) {
-        // 	if($mCodDat[$k]['comctocx'] == 'CD' && strpos($mCodDat[$k]['comobsxx'],'ANTICIPOS') > 0){
-        // 		$nTotAnt += $mCodDat[$k]['comvlrxx'];
-        // 	}
-        // }
-      // } else {
-        $mComFp = f_Explode_Array($vCocDat['comfpxxx'],"|","~");
-        for ($k=0;$k<count($mComFp);$k++) {
-          if($mComFp[$k][13] != "" && $mComFp[$k][13] != 0){
-            $nTotAnt += $mComFp[$k][13];
-          }
-        }
-      // }
-      /*
-       * Fin de Recorrido al campo comfpxxx para imprimir valor de anticipo.
-       */
+   		// for ($k=0;$k<count($mCodDat);$k++) {
+   		// 	if($mCodDat[$k]['comctocx'] == 'CD' && strpos($mCodDat[$k]['comobsxx'],'ANTICIPOS') > 0){
+       // 		$nTotAnt += $mCodDat[$k]['comvlrxx'];
+   		// 		}
+   		// 	}
+   		// } else {
+   			$mComFp = f_Explode_Array($vCocDat['comfpxxx'],"|","~");
+   			for ($k=0;$k<count($mComFp);$k++) {
+   				if($mComFp[$k][13] != "" && $mComFp[$k][13] != 0){
+   					$nTotAnt += $mComFp[$k][13];
+   				}
+   			}
+   		// }
+     /*
+      * Fin de Recorrido al campo comfpxxx para imprimir valor de anticipo.
+      */
       ##Fin Busco valor de Anticipo ##
 
       for ($k=0;$k<count($mCodDat);$k++) {
@@ -1596,8 +1593,8 @@
           }//if($nFilPuc > 0){
         }//if($mCodDat[$k]['comctocx'] == 'RETCRE'){
 
-  			// Auto Retencion de ICA
-  			if($mCodDat[$k]['comctocx'] == 'ARETICA'){
+        // Auto Retencion de ICA
+        if($mCodDat[$k]['comctocx'] == 'ARETICA'){
           $qPucDat  = "SELECT $cAlfa.fpar0115.pucretxx,";
           $qPucDat .= "pucdesxx ";
           $qPucDat .= "FROM $cAlfa.fpar0115 ";
@@ -1661,28 +1658,28 @@
       /*** Fin Bloque de IVA ***/
 
       if($gRetenciones == 1) {
-        /** Imprimo Retenciones **/
-        if(count($mRetIva) > 0 || count($mRetFte) > 0 || count($mRetIca) > 0){
-          $pyy = ($pdf->GetY() > $pyy) ? $pdf->GetY(): $pyy;
-          if($pyy > $nPosFin){//Validacion para siguiente pagina si se excede espacio de impresion
-            $pdf->AddPage();
-            $nb++;
+				/** Imprimo Retenciones **/
+				if(count($mRetIva) > 0 || count($mRetFte) > 0 || count($mRetIca) > 0){
+					$pyy = ($pdf->GetY() > $pyy) ? $pdf->GetY(): $pyy;
+					if($pyy > $nPosFin){//Validacion para siguiente pagina si se excede espacio de impresion
+						$pdf->AddPage();
+						$nb++;
             $nPosY = $pdf->GetY()+10;
-            $nPosX = 16;
-            $pyy = $nPosY;
-            $pdf->SetFont($cEstiloLetraOfton,'',8);
-            $pdf->setXY($nPosX,$pyy);
-          }
-
-          $pdf->setXY($nPosX,$pyy);
-          $pdf->SetFont($cEstiloLetraOfton,'',8);
-          $pdf->Cell(67,6,utf8_decode("RETENCIONES"),0,0,'L');
-
-          $pyy += 6;
-          $pdf->setXY($nPosX+5,$pyy);
-          $pdf->SetWidths(array(123,28,28));
-          $pdf->SetAligns(array("L","R","R"));
-          $pdf->SetFont($cEstiloLetraOfton,'',8);
+						$nPosX = 16;
+						$pyy = $nPosY;
+						$pdf->SetFont($cEstiloLetraOfton,'',8);
+						$pdf->setXY($nPosX,$pyy);
+					}
+	
+					$pdf->setXY($nPosX,$pyy);
+					$pdf->SetFont($cEstiloLetraOfton,'',8);
+					$pdf->Cell(67,6,utf8_decode("RETENCIONES"),0,0,'L');
+	
+					$pyy += 6;
+					$pdf->setXY($nPosX+5,$pyy);
+					$pdf->SetWidths(array(123,28,28));
+					$pdf->SetAligns(array("L","R","R"));
+					$pdf->SetFont($cEstiloLetraOfton,'',8);
 
           for($i=0;$i<count($mRetIva);$i++){
             $pyy = $pdf->GetY();
@@ -1738,33 +1735,33 @@
                             number_format($mRetIca[$i]['comvlrxx'],2,'.',',')));
           }
 
-          /** Imprimo Total Retenciones **/
-          $pyy = ($pdf->GetY() > $pyy) ? $pdf->GetY(): $pyy;
-          if($pyy > $nPosFin){//Validacion para siguiente pagina si se excede espacio de impresion
-            $pdf->AddPage();
-            $nb++;
+        /** Imprimo Total Retenciones **/
+					$pyy = ($pdf->GetY() > $pyy) ? $pdf->GetY(): $pyy;
+					if($pyy > $nPosFin){//Validacion para siguiente pagina si se excede espacio de impresion
+						$pdf->AddPage();
+						$nb++;
             $nPosY = $pdf->GetY()+10;
-            $nPosX = 16;
-            $pyy = $nPosY;
-            $pdf->SetFont($cEstiloLetraOfton,'',8);
-            $pdf->setXY($nPosX,$pyy);
-          }
-
-          $pdf->setXY($nPosX,$pyy);
-          $pdf->SetWidths(array(100,28,28,28));
-          $pdf->SetAligns(array("L","R","R","R"));
-          $pdf->SetFont($cEstiloLetraOfton,'',8);
-
-          $pdf->setX($nPosX);
-          $pdf->Row(array("TOTAL RETENCIONES",
-                          "",
-                          "",
-                          number_format(($nTotRfte+$nTotIva+$nTotIca),2,'.',',')));
+						$nPosX = 16;
+						$pyy = $nPosY;
+						$pdf->SetFont($cEstiloLetraOfton,'',8);
+						$pdf->setXY($nPosX,$pyy);
+					}
+	
+					$pdf->setXY($nPosX,$pyy);
+					$pdf->SetWidths(array(100,28,28,28));
+					$pdf->SetAligns(array("L","R","R","R"));
+					$pdf->SetFont($cEstiloLetraOfton,'',8);
+	
+					$pdf->setX($nPosX);
+					$pdf->Row(array("TOTAL RETENCIONES",
+													"",
+													"",
+													number_format(($nTotRfte+$nTotIva+$nTotIca),2,'.',',')));
 
           $pyy += 6;
           /** Fin Imprimi Total Retenciones **/
-        }
-      }
+				}
+			}
   		/*** Fin Retenciones ***/
 
       /*** Bloque de anticipos ***/
@@ -1812,7 +1809,7 @@
       $pdf->SetAligns(array("J"));
       $pdf->SetFont($cEstiloLetraOfton,'',8);
 
-      $pdf->setX($nPosX);
+			$pdf->setX($nPosX);
       switch($vDceDat){
         case "IMPORTACION":
         case "TRANSITO":
@@ -1857,10 +1854,11 @@
       $pdf->setXY($nPosX,$pyy);
       $pdf->MultiCell(100,4,utf8_decode($nTotletra),0,'L');
       ##Fin Imprimo Valor en Letras##
+
     }//for($y=1; $y<=2; $y++){
 
    	$cFile = f_Buscar_Niveles_Hasta_Opencomex(getcwd()).$vSysStr['system_download_directory']."/pdf_".$_COOKIE['kUsrId']."_".date("YmdHis").".pdf";
-    $pdf->Output($cFile);
+  	$pdf->Output($cFile);
 
     if (file_exists($cFile)){
       chmod($cFile,intval($vSysStr['system_permisos_archivos'],8));

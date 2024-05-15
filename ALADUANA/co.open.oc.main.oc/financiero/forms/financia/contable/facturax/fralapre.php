@@ -406,7 +406,7 @@
       $mIngTer[$nInd_mIngTer]['nBaseIva'] = $_POST['nComVlr_PCCA'.($i+1)];
       $mIngTer[$nInd_mIngTer]['nVlrIva']  = 0;
       $mIngTer[$nInd_mIngTer]['nComVlr']  = $_POST['nComVlr_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['cCtoId']   = $_POST['cComId_PCCA1'];
+      $mIngTer[$nInd_mIngTer]['cCtoId']   = $_POST['cComId_PCCA'.($i+1)];
     } elseif (trim($_POST['cComObs_PCCA' .($i+1)]) == "IMPUESTO A LAS VENTAS" && trim($vDesc[1]) == "DIAN") {
       $nInd_mIngTer = count($mIngTer);
       $mIngTer[$nInd_mIngTer]['ctochald'] = $mCtoDes["{$_POST['cComId_PCCA'.($i+1)]}"];
@@ -414,7 +414,7 @@
       $mIngTer[$nInd_mIngTer]['nBaseIva'] = 0;
       $mIngTer[$nInd_mIngTer]['nVlrIva']  = $_POST['nComVlr_PCCA'.($i+1)];
       $mIngTer[$nInd_mIngTer]['nComVlr']  = $_POST['nComVlr_PCCA'.($i+1)];
-      $mIngTer[$nInd_mIngTer]['cCtoId']   = $_POST['cComId_PCCA1'];
+      $mIngTer[$nInd_mIngTer]['cCtoId']   = $_POST['cComId_PCCA'.($i+1)];
     } else {
       //Si tiene IVA
       //en el item se envia el valor de la base, costo 
@@ -422,6 +422,7 @@
       $nInd_mIngTer = count($mIngTer);
       $mIngTer[$nInd_mIngTer]['ctochald'] = $mCtoDes["{$_POST['cComId_PCCA'.($i+1)]}"];
       $mIngTer[$nInd_mIngTer]['cComObs']  = $vDesc[0];
+      $mIngTer[$nInd_mIngTer]['cCtoId']   = $_POST['cComId_PCCA'.($i+1)];
 
       if (($_POST['nVlrIva_PCCA'.($i+1)]+0) > 0) {
         $mIngTer[$nInd_mIngTer]['nBaseIva'] = $_POST['nComVlr_PCCA'.($i+1)] - $_POST['nVlrIva_PCCA'.($i+1)];
@@ -950,7 +951,7 @@
         for ($nVC=0; $nVC<count($mVlrCto); $nVC++) {
           // Obtiene la cantidad y valor unitario del concepto parametrizado en la condiciones comerciales
           if ($mIngTer[$i]['cCtoId'] == $mVlrCto[$nVC][0]) {
-            $nCantidad  = $mIngTer[$i]['comvlrxx'] / $mVlrCto[$nVC][2];
+            $nCantidad  = $mIngTer[$i]['nComVlr'] / $mVlrCto[$nVC][2];
             $intVlrBase = $mVlrCto[$nVC][2];
           }
         }
@@ -959,7 +960,7 @@
       $pdf->setX($nPosX);
       $pdf->Row(array(
         $mIngTer[$i]['ctochald']." ".utf8_decode($mIngTer[$i]['cComObs']),
-        $nCantidad,
+        number_format($nCantidad,2,'.',','),
         number_format($intVlrBase,2,'.',','),
         number_format($mIngTer[$i]['nComVlr'],2,'.',',')
       ));

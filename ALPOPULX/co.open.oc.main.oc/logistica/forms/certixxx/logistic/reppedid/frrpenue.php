@@ -44,18 +44,18 @@
             document.forms['frgrm']['cDepNum'].value     = '';
 
             if (xSwitch == "VALID") {
-              var zRuta = "frrce150.php?gWhat=VALID"+
-                                       "&gFunction=cCliId"+
-                                       "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase();
+              var zRuta = "frrpe150.php?gWhat=VALID"+
+                                        "&gFunction=cCliId"+
+                                        "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase();
 
               parent.fmpro.location = zRuta;
             } else {
               var zNx     = (nX-600)/2;
               var zNy     = (nY-250)/2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = "frrce150.php?gWhat=WINDOW"+
-                                         "&gFunction=cCliId"+
-                                         "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase();
+              var zRuta   = "frrpe150.php?gWhat=WINDOW"+
+                                          "&gFunction=cCliId"+
+                                          "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase();
 
               zWindow = window.open(zRuta,"zWindow",zWinPro);
               zWindow.focus();
@@ -63,7 +63,7 @@
           break;
           case "cCliNom":
             if (xSwitch == "VALID") {
-              var zRuta  = "frrce150.php?gWhat=VALID"+
+              var zRuta  = "frrpe150.php?gWhat=VALID"+
                                         "&gFunction=cCliNom"+
                                         "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase();
 
@@ -72,9 +72,9 @@
               var zNx     = (nX-600)/2;
               var zNy     = (nY-250)/2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = "frrce150.php?gWhat=WINDOW"+
-                                   "&gFunction=cCliNom"+
-                                   "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase();
+              var zRuta   = "frrpe150.php?gWhat=WINDOW"+
+                                    "&gFunction=cCliNom"+
+                                    "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase();
 
               zWindow = window.open(zRuta,"zWindow",zWinPro);
               zWindow.focus();
@@ -132,7 +132,7 @@
               document.forms['frgrm']['cDepNum'].value = '';
             } else {
               if (xSwitch == "VALID") {
-                var zRuta = "frrce155.php?gWhat=VALID" +
+                var zRuta = "frrpe155.php?gWhat=VALID" +
                                           "&gFunction=cDepNum" +
                                           "&gDepNum="+document.forms['frgrm']['cDepNum'].value +
                                           "&gCliId="+document.forms['frgrm']['cCliId'].value;
@@ -141,95 +141,13 @@
                 var nNx     = (nX-600)/2;
                 var nNy     = (nY-250)/2;
                 var zWinPro = 'width=600,scrollbars=1,height=250,left='+nNx+',top='+nNy;
-                var zRuta   = "frrce155.php?gWhat=WINDOW" +
+                var zRuta   = "frrpe155.php?gWhat=WINDOW" +
                                             "&gFunction=cDepNum" +
                                             "&gDepNum="+document.forms['frgrm']['cDepNum'].value +
                                             "&gCliId="+document.forms['frgrm']['cCliId'].value;
                 zWindow = window.open(zRuta,"zWindow",zWinPro);
                 zWindow.focus();
               }
-            }
-          break;
-          // Organizacion de venta
-          case "cOrvSap":
-            if (xSwitch == "VALID") {
-              var zRuta  = "frrce001.php?gWhat=VALID"+
-                                        "&gFunction=cOrvSap"+
-                                        "&gOrvSap="+document.forms['frgrm']['cOrvSap'].value.toUpperCase();
-              parent.fmpro.location = zRuta;
-            } else {
-              var zNx     = (nX-600)/2;
-              var zNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = "frrce001.php?gWhat=WINDOW"+
-                                        "&gFunction=cOrvSap"+
-                                        "&gOrvSap="+document.forms['frgrm']['cOrvSap'].value.toUpperCase();
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          case "cOrvDes":
-            if (xSwitch == "VALID") {
-              var zRuta  = "frrce001.php?gWhat=VALID"+
-                                        "&gFunction=cOrvDes"+
-                                        "&gOrvDes="+document.forms['frgrm']['cOrvDes'].value.toUpperCase();
-              parent.fmpro.location = zRuta;
-            } else {
-              var zNx     = (nX-600)/2;
-              var zNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = "frrce001.php?gWhat=WINDOW"+
-                                        "&gFunction=cOrvDes"+
-                                        "&gOrvDes="+document.forms['frgrm']['cOrvDes'].value.toUpperCase();
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          // Oficina de venta
-          case "cOfvSap":
-            if (document.forms['frgrm']['cOrvSap'].value != "") {
-              if (xSwitch == "VALID") {
-                var zRuta  = "frrce002.php?gWhat=VALID"+
-                                          "&gFunction=cOfvSap"+
-                                          "&gOrvSap="+document.forms['frgrm']['cOrvSap'].value.toUpperCase()+
-                                          "&gOfvSap="+document.forms['frgrm']['cOfvSap'].value.toUpperCase();
-                parent.fmpro.location = zRuta;
-              } else {
-                var zNx     = (nX-600)/2;
-                var zNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frrce002.php?gWhat=WINDOW"+
-                                          "&gFunction=cOfvSap"+
-                                          "&gOrvSap="+document.forms['frgrm']['cOrvSap'].value.toUpperCase()+
-                                          "&gOfvSap="+document.forms['frgrm']['cOfvSap'].value.toUpperCase();
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            } else {
-              alert('Debe Seleccionar la Organizacion de Venta,\nVerifique.');
-            }
-          break;
-          case "cOfvDes":
-            if (document.forms['frgrm']['cOrvSap'].value != "") {
-              if (xSwitch == "VALID") {
-                var zRuta  = "frrce002.php?gWhat=VALID"+
-                                          "&gFunction=cOfvDes"+
-                                          "&gOrvSap="+document.forms['frgrm']['cOrvSap'].value.toUpperCase()+
-                                          "&gOfvDes="+document.forms['frgrm']['cOfvDes'].value.toUpperCase();
-                parent.fmpro.location = zRuta;
-              } else {
-                var zNx     = (nX-600)/2;
-                var zNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frrce002.php?gWhat=WINDOW"+
-                                          "&gFunction=cOfvDes"+
-                                          "&gOrvSap="+document.forms['frgrm']['cOrvSap'].value.toUpperCase()+
-                                          "&gOfvDes="+document.forms['frgrm']['cOfvDes'].value.toUpperCase();
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            } else {
-              alert('Debe Seleccionar la Organizacion de Venta,\nVerifique.');
             }
           break;
         }
@@ -248,14 +166,12 @@
         } 
 
         if (nSwitch == 0) {
-          var cRuta = "frrceprn.php?gCliId="    +document.forms['frgrm']['cCliId'].value+
+          var cRuta = "frrpeprn.php?gCliId="    +document.forms['frgrm']['cCliId'].value+
                                   "&gDepNum="   +document.forms['frgrm']['cDepNum'].value+
                                   "&gPerAno="   +document.forms['frgrm']['cPerAno'].value+
                                   "&gMifId="    +document.forms['frgrm']['cMifId'].value+
                                   "&gMifAnio="  +document.forms['frgrm']['cPerAno'].value+
                                   "&gDepNum="   +document.forms['frgrm']['cDepNum'].value+
-                                  "&gOrvSap="   +document.forms['frgrm']['cOrvSap'].value+
-                                  "&gOfvSap="   +document.forms['frgrm']['cOfvSap'].value+
                                   "&gEstCert="  +document.forms['frgrm']['cEstCert'].value+
                                   "&gDesde="    +document.forms['frgrm']['dDesde'].value+
                                   "&gHasta="    +document.forms['frgrm']['dHasta'].value;
@@ -349,7 +265,7 @@
     </script>
   </head>
   <body>
-    <form name='frgrm' action='frrceprn.php' method="POST" target="fmpro">
+    <form name='frgrm' action='frrpeprn.php' method="POST" target="fmpro">
       <center>
         <table width="480" cellspacing="0" cellpadding="0" border="0"><tr><td>
           <fieldset>

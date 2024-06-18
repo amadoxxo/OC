@@ -1,7 +1,7 @@
 <?php
   /**
    * --- Descripcion: Consulta los Depósitos: 
-   * @author Juan Jose Trujillo Ch. <juan.trujillo@openits.co>
+   * @author Elian Amado. <elian.amado@openits.co>
    * @package openComex
    * @version 001
    */

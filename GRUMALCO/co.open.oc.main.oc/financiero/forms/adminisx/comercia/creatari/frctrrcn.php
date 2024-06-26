@@ -372,10 +372,10 @@
   <body>
     <form name='frgrm' action='frctrrcg.php' method="POST" target="fmpro">
       <center>
-        <table width="540" cellspacing="0" cellpadding="0" border="0"><tr><td>
+        <table width="500" cellspacing="0" cellpadding="0" border="0"><tr><td>
           <fieldset>
             <legend>Generaci&oacute;n de Reporte Tarifas Consolidado </legend>
-            <table border = '0' cellpadding = '0' cellspacing = '0' width='540'>
+            <table border = '0' cellpadding = '0' cellspacing = '0' width='500'>
               <?php $zCol = f_Format_Cols(25);
               echo $zCol;?>
               <tr>
@@ -388,6 +388,10 @@
                   </select>
                 </td>
               </tr>
+
+
+
+
               <tr>
                 <td Class = "name" colspan = "5"><br>Tipo Operacion:</td>
                 <td Class = "name" colspan = "20"><br>
@@ -400,6 +404,8 @@
                   </select>
                 </td>
               </tr>
+
+
               <tr>
                 <td Class = "name" colspan = "5"><br><br>Tarifa por:</td>
                 <td Class = "name" colspan = "5"><br><br>
@@ -413,7 +419,7 @@
                                         document.forms['frgrm']['cCliNom'].value = '';
                                         document.forms['frgrm']['cCliDV'].value  = '';
                                         f_Links('cCliId','VALID')" id = "lCliId"><br><label id="lblCliId">Nit</label></a><br>
-                  <input type = "text" Class = "letra" style = "width:120;text-align:center" name = "cCliId"
+                  <input type = "text" Class = "letra" style = "width:080;text-align:center" name = "cCliId"
                         onBlur = "javascript:this.value=this.value.toUpperCase();
                                               f_Links('cCliId','VALID');
                                               this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
@@ -466,11 +472,11 @@
                                         this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'">
                   <input type = "hidden" name = "cFcoIds" readonly>
                 </td>
-                <td class="clase08" colspan="1"><br>&nbsp;<br>
+                <td class="name" colspan="1"><br>&nbsp;<br>
                   <input type = "text" Class = "letra" style = "width:20;margin-top:1;text-align:center" readonly>
                 </td>
-                <td Class = "name" colspan = "17"><br>Descripci&oacute;n<br>
-                  <input type = "text" Class = "letra" style = "width:360" name = "cSerDes"
+                <td Class = "name" colspan = "16"><br>Descripci&oacute;n<br>
+                  <input type = "text" Class = "letra" style = "width:320" name = "cSerDes"
                     onFocus="javascript:document.forms['frgrm']['cSerId'].value  = '';
                                         document.forms['frgrm']['cSerDes'].value = '';
                                         document.forms['frgrm']['cFcoId'].value  = '';
@@ -482,6 +488,9 @@
                                         this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'">
                 </td>
               </tr>
+
+
+
               <tr>
                 <td Class = "name" colspan = "5"><br><br><label>Forma Cobro:</label></td>
                 <td Class = "name" colspan = "3">
@@ -496,11 +505,11 @@
                                       document.forms['frgrm']['cFcoDes'].value = '';
                                       this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                 </td>
-                <td class="clase08" colspan="1"><br>&nbsp;<br>
+                <td class="name" colspan="1"><br>&nbsp;<br>
                   <input type = "text" Class = "letra" style = "width:20;margin-top:1;text-align:center" readonly>
                 </td>
-                <td Class = "name" colspan = "17"><br>Descripci&oacute;n<br>
-                  <input type = "text" Class = "letra" style = "width:360" name = "cFcoDes"
+                <td Class = "name" colspan = "16"><br>Descripci&oacute;n<br>
+                  <input type = "text" Class = "letra" style = "width:320" name = "cFcoDes"
                   onBlur = "javascript:this.value=this.value.toUpperCase();
                                         f_Links('cFcoDes','VALID');
                                         this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"

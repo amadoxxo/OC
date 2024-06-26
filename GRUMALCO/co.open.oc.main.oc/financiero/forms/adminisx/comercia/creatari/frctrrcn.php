@@ -161,7 +161,7 @@
             if (xSwitch == "VALID") {
               var cRuta  = "frctr129.php?gWhat=VALID"+
                                         "&gFunction=cSerDes"+
-                                        "&cSerDes="+document.forms['frgrm']['cSerDes'].value.toUpperCase()+
+                                        "&gSerDes="+document.forms['frgrm']['cSerDes'].value.toUpperCase()+
                                         "&gTipo=REPORTE";
               parent.fmpro.location = cRuta;
             } else {
@@ -170,7 +170,7 @@
               var zWinPro = "width=750,scrollbars=1,height=250,left="+zNx+",top="+zNy;
               var cRuta   = "frctr129.php?gWhat=WINDOW"+
                                         "&gFunction=cSerDes"+
-                                        "&gSerId="+document.forms['frgrm']['cSerDes'].value.toUpperCase()+
+                                        "&gSerDes="+document.forms['frgrm']['cSerDes'].value.toUpperCase()+
                                         "&gTipo=REPORTE";
               var zWindow = window.open(cRuta,"zWindow",zWinPro);
               zWindow.focus();
@@ -198,7 +198,7 @@
           case "cFcoDes":
             if (xSwitch == "VALID") {
               var cRuta  = "frctr130.php?gWhat=VALID&gFunction=cFcoDes"+
-                                        "&cFcoDess="+document.forms['frgrm']['cFcoDes'].value.toUpperCase()+
+                                        "&gFcoDes="+document.forms['frgrm']['cFcoDes'].value.toUpperCase()+
                                         "&gTipo=REPORTE";
               parent.fmpro.location = cRuta;
             } else {
@@ -206,7 +206,7 @@
               var zNy     = (zY-250)/2;
               var zWinPro = "width=500,scrollbars=1,height=250,left="+zNx+",top="+zNy;
               var cRuta   = "frctr130.php?gWhat=WINDOW&gFunction=cFcoDes"+
-                                        "&gFcoId="+document.forms['frgrm']['cFcoDes'].value.toUpperCase()+
+                                        "&gFcoDes="+document.forms['frgrm']['cFcoDes'].value.toUpperCase()+
                                         "&gTipo=REPORTE";
               var zWindow = window.open(cRuta,"zWindow",zWinPro);
               zWindow.focus();
@@ -462,7 +462,7 @@
                                         document.forms['frgrm']['cFcoIds'].value = '';
                                         document.forms['frgrm']['cFcoDes'].value = '';
                                         this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>';"
-                    onblur = "javascript:f_Links('cSerId','VALID');
+                    onBlur = "javascript:f_Links('cSerId','WINDOW');
                                         this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'">
                   <input type = "hidden" name = "cFcoIds" readonly>
                 </td>
@@ -470,20 +470,16 @@
                   <input type = "text" Class = "letra" style = "width:20;margin-top:1;text-align:center" readonly>
                 </td>
                 <td Class = "name" colspan = "17"><br>Descripci&oacute;n<br>
-                  <input type = "text" Class = "letra" style = "width:360" name = "cSerDes" id="cSerDes"
-                        onBlur = "javascript:document.forms['frgrm']['cSerId'].value   = '';
-                                              document.forms['frgrm']['cSerDes'].value = '';
-                                              document.forms['frgrm']['cFcoId'].value  = '';
-                                              document.forms['frgrm']['cFcoIds'].value = '';
-                                              document.forms['frgrm']['cFcoDes'].value = '';
-                                              f_Links('cSerDes','VALID');
-                                              this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
-                        onFocus="javascript:document.forms['frgrm']['cSerId'].value  = '';
-                                            document.forms['frgrm']['cSerDes'].value = '';
-                                            document.forms['frgrm']['cFcoId'].value  = '';
-                                            document.forms['frgrm']['cFcoIds'].value = '';
-                                            document.forms['frgrm']['cFcoDes'].value = '';
-                                            this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
+                  <input type = "text" Class = "letra" style = "width:360" name = "cSerDes"
+                    onFocus="javascript:document.forms['frgrm']['cSerId'].value  = '';
+                                        document.forms['frgrm']['cSerDes'].value = '';
+                                        document.forms['frgrm']['cFcoId'].value  = '';
+                                        document.forms['frgrm']['cFcoIds'].value = '';
+                                        document.forms['frgrm']['cFcoDes'].value = '';
+                                        this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>';"
+                    onBlur = "javascript:this.value=this.value.toUpperCase();
+                                        f_Links('cSerDes','WINDOW');
+                                        this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'">
                 </td>
               </tr>
               <tr>
@@ -491,7 +487,7 @@
                 <td Class = "name" colspan = "3">
                   <a href = "javascript:document.forms['frgrm']['cFcoId'].value = '';
                                         document.forms['frgrm']['cFcoDes'].value = '';
-                                        f_Links('cFcoId','VALID')" id="lFcoId"><br>C&oacute;digo</a><br>
+                                        f_Links('cFcoId','WINDOW')" id="lFcoId"><br>C&oacute;digo</a><br>
                   <input type = "text" Class = "letra" style = "width:060;text-align:center" name = "cFcoId"
                   onBlur = "javascript:this.value=this.value.toUpperCase();
                                         f_Links('cFcoId','VALID');

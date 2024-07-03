@@ -1246,7 +1246,7 @@
 												?>
 												<tr>
 													<td class="name">
-														<center><img width="80" height="40" style="left: 13px;margin-top: 8px;margin-left: 10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg"><br>REPORTE DE CONSECUTIVOS DE COMPROBANTES
+														<center><img width="80" height="40" style="left: 13px;margin-top: 8px;margin-left: 10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG"><br>REPORTE DE CONSECUTIVOS DE COMPROBANTES
 													</td>
 												</tr>
 												<?php if ($cNomCom != "") { ?>
@@ -2431,7 +2431,7 @@
 										$this->SetXY(6, 7);
 										$this->Cell(204.5, 24, '', 1, 0, 'C');
 	
-										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoopen.jpg', 8, 11, 35, 17);
+										$this->Image($cRoot . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 8, 11, 35, 17);
 	
 										$this->SetFont('verdana', '', 12);
 										$this->SetXY(6, 8);

@@ -489,7 +489,7 @@
 														case "OPENEBCO":    //OPENEBCO
 														case "DEOPENEBCO":  //OPENEBCO
 														case "TEOPENEBCO":  //OPENEBCO ?>
-															<td class="name"><center><img width="85" height="45" style="left: 15px;margin-top: 4px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg"></td><?php	
+															<td class="name"><center><img width="85" height="45" style="left: 15px;margin-top: 4px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG"></td><?php	
 														break;
 													}?>
 												</tr>
@@ -1369,7 +1369,7 @@
 										$this->Cell(51, 28, '', 1, 0, 'C');
 										$this->Cell(221, 28, '', 1, 0, 'C');
 										// Dibujo //
-										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoopen.jpg', 7, 11, 45, 20);
+										$this->Image($cRoot . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 7, 11, 45, 20);
 										$this->SetFont('verdana', '', 16);
 										$this->SetXY(55, 13);
 										$this->Cell(221, 8, "REPORTE DE MOVIMIENTO DE DOCUMENTOS", 0, 0, 'C');

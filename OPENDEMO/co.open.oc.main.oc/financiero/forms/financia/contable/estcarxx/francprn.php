@@ -733,7 +733,7 @@
 																	case "OPENEBCO":   //OPENEBCO
 																	case "DEOPENEBCO": //OPENEBCO
 																	case "TEOPENEBCO": //OPENEBCO ?>
-																			<img width="120" style="margin-left: 10px;" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/logoopen.jpg' ?>">
+																			<img width="120" style="margin-left: 10px;" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/opentecnologia.JPG' ?>">
 																		<?php break;
 																	default:
 																		//No hace nada
@@ -2258,7 +2258,7 @@
 										case "OPENEBCO":   //OPENEBCO
 										case "DEOPENEBCO": //OPENEBCO
 										case "TEOPENEBCO": //OPENEBCO
-											$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoopen.jpg', 16, 8.5, 35, 13);
+											$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 16, 8.5, 35, 13);
 										break;
 									}
 

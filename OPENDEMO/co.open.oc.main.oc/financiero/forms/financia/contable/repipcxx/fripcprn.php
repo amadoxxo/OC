@@ -934,7 +934,7 @@
                             case "TEOPENEBCO": //OPENEBCO
                               ?>
                               <td class="name" style="width: 80px;">
-                                <img width="180" style="margin-top:5px;margin-bottom:5px;margin-left:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg">
+                                <img width="180" style="margin-top:5px;margin-bottom:5px;margin-left:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG">
                               </td>
                               <?php
                               $nColRes = 1;

@@ -735,7 +735,7 @@
 														case "TEOPENEBCO": //OPENEBCO ?>
 															<td rowspan="2" class="name" width="100%">
 																<center>
-																	<img width="100" height="50" style="left: 18px;margin-top: 4px;margin-left:10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg">
+																	<img width="100" height="50" style="left: 18px;margin-top: 4px;margin-left:10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG">
 																	<br><span style="font-size:14px;font-weight:bold">DE CUENTA POR <?php echo $cTipoCta ?></span><br>
 																	<?php echo $cMes . " " . substr($fec, 8, 2) . " DE " . substr($fec, 0, 4) ?>
 																</center><br>
@@ -1499,7 +1499,7 @@
 									case "OPENEBCO":   // OPENEBCO
 									case "DEOPENEBCO": // OPENEBCO
 									case "TEOPENEBCO": // OPENEBCO
-										$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoopen.jpg',14,8,27,13);
+										$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',14,8,27,13);
 									break;
 								}
 

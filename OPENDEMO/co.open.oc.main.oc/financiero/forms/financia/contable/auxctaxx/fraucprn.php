@@ -498,7 +498,7 @@
                     case "OPENEBCO":
                     case "DEOPENEBCO":
                     case "TEOPENEBCO":?>
-                      <td class="name"><center><img width="160" height="80" style="left: 28px;margin-top: -40px;position: absolute;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg"></td>
+                      <td class="name"><center><img width="160" height="80" style="left: 28px;margin-top: -40px;position: absolute;" src = "<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG"></td>
                     <?php
                     break;
                   }?>
@@ -908,7 +908,7 @@
                   case "OPENEBCO":
                   case "DEOPENEBCO":
                   case "TEOPENEBCO":
-                    $this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoopen.jpg', 14,8.5,35,12);
+                    $this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 14,8.5,35,12);
                   break;
                 }
                 $this->SetFont('verdana','',16);

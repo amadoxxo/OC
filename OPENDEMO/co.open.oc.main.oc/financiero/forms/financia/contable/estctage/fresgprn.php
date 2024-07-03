@@ -1021,7 +1021,7 @@
                       case "DEOPENEBCO":  //OPENEBCO
                       case "TEOPENEBCO":  //OPENEBCO ?>
                         <td class="name" style="font-size:14px;width:80px">
-                          <img src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg" style="width:200;margin:5px;">
+                          <img src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG" style="width:200;margin:5px;">
                         </td>
                       <?php	break;
                     }?>
@@ -1878,7 +1878,7 @@
             case "OPENEBCO":    //OPENEBCO
             case "DEOPENEBCO":  //OPENEBCO
             case "TEOPENEBCO":  //OPENEBCO  
-              $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoopen.jpg', 6, 11, 35, 13);
+              $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 6, 11, 35, 13);
             break;
           }
 

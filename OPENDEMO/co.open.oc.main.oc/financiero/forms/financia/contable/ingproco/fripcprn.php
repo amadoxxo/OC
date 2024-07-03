@@ -965,7 +965,7 @@
                     case "TEOPENEBCO": //OPENEBCO
                       ?>
                       <td class = "name" style="width: 150px;"><center>
-                        <img width="200" height="80" style="left: 15px;margin-top:6px;margin-bottom:5px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg">
+                        <img width="200" height="80" style="left: 15px;margin-top:6px;margin-bottom:5px;" src = "<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG">
                       </td>
                       <?php
                       $nColRes = 1;

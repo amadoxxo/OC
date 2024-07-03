@@ -835,7 +835,7 @@ if ($cEjePro == 0) {
                         case "TEOPENEBCO": //OPENEBCO
                           ?>
                             <td class="name" colspan="1" align="left">
-                              <img width="200" height="80" style="left: 15px;margin-top:6px;margin-bottom:5px;margin-left:5px;margin-right:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg">
+                              <img width="200" height="80" style="left: 15px;margin-top:6px;margin-bottom:5px;margin-left:5px;margin-right:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG">
                             </td>
                             <td class="name" colspan="17" align="left">
                               <font size="3">
@@ -1679,7 +1679,7 @@ if ($cEjePro == 0) {
                   case "OPENEBCO":   //OPENEBCO
                   case "DEOPENEBCO": //OPENEBCO
                   case "TEOPENEBCO": //OPENEBCO
-                    $this->Image($cRoot . $cPlesk_Skin_Directory . '/logoopen.jpg', 7,9,40,20);
+                    $this->Image($cRoot . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 7,9,40,20);
                   break;
                 }
 

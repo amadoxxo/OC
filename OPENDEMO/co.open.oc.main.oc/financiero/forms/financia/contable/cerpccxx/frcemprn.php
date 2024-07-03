@@ -370,7 +370,7 @@
 								case "OPENEBCO":   //OPENEBCO
 								case "DEOPENEBCO": //OPENEBCO
 								case "TEOPENEBCO": //OPENEBCO
-									$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoopen.jpg', 6, 7, 40, 20);
+									$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 6, 7, 40, 20);
 								break;
 							}
 							##Fin Switch para imprimir LOGO##
@@ -653,7 +653,7 @@
 					case "OPENEBCO":   //OPENEBCO
 					case "DEOPENEBCO": //OPENEBCO
 					case "TEOPENEBCO": //OPENEBCO
-						$pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoopen.jpg', 6, 7, 45, 20);
+						$pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 6, 7, 45, 20);
 					break;
 				}
 				##Switch para imprimir LOGO##

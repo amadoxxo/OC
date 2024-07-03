@@ -604,7 +604,7 @@
 												case "TEOPENEBCO": //OPENEBCO
 													?>
 													<center>
-														<img width="120" style="left: 10px;margin-top:5px;margin-bottom:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/logoopen.jpg">
+														<img width="120" style="left: 10px;margin-top:5px;margin-bottom:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/opentecnologia.JPG">
 														<br />
 													</center>
 													<?php
@@ -2072,7 +2072,7 @@
 		
 										$this->SetXY($nPosXAnt, 6);
 										$this->Cell($nLarXAnt, 28, '', 1, 0, 'C');
-										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoopen.jpg', 15, 6.5, 40, 20);
+										$this->Image($cRoot . $cPlesk_Skin_Directory . '/opentecnologia.JPG', 15, 6.5, 40, 20);
 		
 										$this->SetFont('verdana', '', 12);
 										$this->SetXY(13, 7);

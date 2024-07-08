@@ -122,11 +122,10 @@
         $qPedido .= "$cAlfa.lpca$cAnio.cliidxxx = \"$gCliId\" AND ";
       }
       if ($gDepNum != "") {
-        $qPedido .= "$cAlfa.lpde$cAnio.depnumxx = \"$gDepNum\" AND ";
+        $qPedido .= "$cAlfa.lpca$cAnio.pedmemde LIKE \"%$gDepNum%\" AND ";
       }
-      if ($gMifId != "") {
-        $qPedido .= "$cAlfa.lpca$cAnio.mifidxxx = \"$gMifId\" AND ";
-        $qPedido .= "$cAlfa.lpca$cAnio.mifidano = \"$gMifAnio\" AND ";
+      if ($gPedId != "") {
+        $qPedido .= "$cAlfa.lpca$cAnio.pedidxxx = \"$gPedId\" AND ";
       }
       $qPedido .= "$cAlfa.lpca$cAnio.regfcrex BETWEEN \"$gDesde\" AND \"$gHasta\" ";
       if ($gEstCert != "") {
@@ -134,7 +133,7 @@
       }
       $qPedido .= "ORDER BY $cAlfa.lpde$cAnio.peddidxx ASC ";
       $xPedido  = f_MySql("SELECT","",$qPedido,$xConexion01,"");
-      echo $qPedido . " - " . mysql_num_rows($xPedido) . "<br>";
+      // echo $qPedido . " - " . mysql_num_rows($xPedido) . "<br>";
 
       $cComId    = "";
       $cComCod   = "";
@@ -494,9 +493,9 @@
     f_Mensaje(__FILE__,__LINE__,$cMsj."Verifique.");
   }
 
-  echo "<pre>";
-  print_r($mData);
-  die();
+  // echo "<pre>";
+  // print_r($mData);
+  // die();
 
   // Inicia a pintar el Excel
   if (count($mData) > 0) {

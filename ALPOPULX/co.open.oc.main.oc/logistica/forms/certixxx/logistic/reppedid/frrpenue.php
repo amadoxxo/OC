@@ -36,11 +36,11 @@
         switch (xLink) {
           // Cliente
           case "cCliId":
-            document.forms['frgrm']['cMifComId'].value   = '';
-            document.forms['frgrm']['cMifComCod'].value  = '';
-            document.forms['frgrm']['cMifComCsc'].value  = '';
-            document.forms['frgrm']['cMifComCsc2'].value = '';
-            document.forms['frgrm']['cMifId'].value      = '';
+            document.forms['frgrm']['cPedComId'].value   = '';
+            document.forms['frgrm']['cPedComCod'].value  = '';
+            document.forms['frgrm']['cPedComCsc'].value  = '';
+            document.forms['frgrm']['cPedComCsc2'].value = '';
+            document.forms['frgrm']['cPedId'].value      = '';
             document.forms['frgrm']['cDepNum'].value     = '';
 
             if (xSwitch == "VALID") {
@@ -81,47 +81,47 @@
             }
           break;
           // MIF
-          case "cMifComCsc":
+          case "cPedComCsc":
             var nSwitch = 0;
-            if(document.forms['frgrm']['cMifComCsc'].value != ""){
-              if(document.forms['frgrm']['cMifComCsc'].value.length < 1){
+            if(document.forms['frgrm']['cPedComCsc'].value != ""){
+              if(document.forms['frgrm']['cPedComCsc'].value.length < 1){
                 nSwitch = 1;
-                alert('Debe Digitar al Menos Un Digito de la M.I.F,\nVerifique.');
+                alert('Debe Digitar al Menos Un Digito de Pedido,\nVerifique.');
               }
 
               if(document.forms['frgrm']['cCliId'].value == ""){
                 nSwitch = 1;
-                alert('Debe Seleccionar un Cliente para Consultar la M.I.F,\nVerifique.');
+                alert('Debe Seleccionar un Cliente para Consultar el Pedido,\nVerifique.');
               }
 
               if (nSwitch == 0) {
                 if (xSwitch == "VALID") {
-                  var zRuta = "frlmca00.php?gModo="  +xSwitch+"&gFunction="+xLink+
+                  var zRuta = "frlpca00.php?gModo="  +xSwitch+"&gFunction="+xLink+
                                           "&gPerAno="+document.forms['frgrm']['cPerAno'].value +
-                                          "&gComCsc="+document.forms['frgrm']['cMifComCsc'].value +
+                                          "&gComCsc="+document.forms['frgrm']['cPedComCsc'].value +
                                           "&gCliId=" +document.forms['frgrm']['cCliId'].value;
                   parent.fmpro.location = zRuta;
                 } else if(xSwitch == "WINDOW") {
                   var nNx      = (nX-500)/2;
                   var nNy      = (nY-250)/2;
                   var zWinPro  = "width=500,scrollbars=1,height=250,left="+nNx+",top="+nNy;
-                  var zRuta = "frlmca00.php?gModo="  +xSwitch+"&gFunction="+xLink+
+                  var zRuta = "frlpca00.php?gModo="  +xSwitch+"&gFunction="+xLink+
                                           "&gPerAno="+document.forms['frgrm']['cPerAno'].value +
-                                          "&gComCsc="+document.forms['frgrm']['cMifComCsc'].value + 
+                                          "&gComCsc="+document.forms['frgrm']['cPedComCsc'].value + 
                                           "&gCliId=" +document.forms['frgrm']['cCliId'].value;
                   zWindow = window.open(zRuta,xLink,zWinPro);
                   zWindow.focus();
                 } else if (xSwitch == "EXACT") {
-                  var zRuta = "frlmca00.php?gModo=EXACT&gFunction=" + xLink +
+                  var zRuta = "frlpca00.php?gModo=EXACT&gFunction=" + xLink +
                                           "&gPerAno=" +document.forms['frgrm']['cPerAno'].value +
-                                          "&gComCod=" +document.frgrm['cMifComCod'].value +
-                                          "&gComCsc=" +document.frgrm['cMifComCsc'].value +
-                                          "&gComCsc2="+document.frgrm['cMifComCsc2'].value +
+                                          "&gComCod=" +document.frgrm['cPedComCod'].value +
+                                          "&gComCsc=" +document.frgrm['cPedComCsc'].value +
+                                          "&gComCsc2="+document.frgrm['cPedComCsc2'].value +
                                           "&gCliId="  +document.frgrm['cCliId'].value;
                   parent.fmpro.location = zRuta;
                 }
               } else {
-                document.forms['frgrm']['cMifComCsc'].value = "";
+                document.forms['frgrm']['cPedComCsc'].value = "";
               }
             }
           break;
@@ -169,7 +169,7 @@
           var cRuta = "frrpeprn.php?gCliId="    +document.forms['frgrm']['cCliId'].value+
                                   "&gDepNum="   +document.forms['frgrm']['cDepNum'].value+
                                   "&gPerAno="   +document.forms['frgrm']['cPerAno'].value+
-                                  "&gMifId="    +document.forms['frgrm']['cMifId'].value+
+                                  "&gPedId="    +document.forms['frgrm']['cPedId'].value+
                                   "&gMifAnio="  +document.forms['frgrm']['cPerAno'].value+
                                   "&gDepNum="   +document.forms['frgrm']['cDepNum'].value+
                                   "&gEstCert="  +document.forms['frgrm']['cEstCert'].value+
@@ -321,30 +321,30 @@
                     document.forms['frgrm']['cPerAno'].value = "<?php echo date('Y') ?>";
                   </script>
                 </td>
-                <input type="hidden" name="cMifId">
+                <input type="hidden" name="cPedId">
                 <td Class = "clase08" colspan = "2">Id<br>
-                  <input type = "text" Class = "letra" style = "width:40" name = "cMifComId" readonly>
+                  <input type = "text" Class = "letra" style = "width:40" name = "cPedComId" readonly>
                 </td>
                 <td Class = "clase08" colspan = "2">Cod<br>
-                  <input type = "text" Class = "letra" style = "width:40" name = "cMifComCod" value = "<?php echo $cComCod ?>" readonly>
+                  <input type = "text" Class = "letra" style = "width:40" name = "cPedComCod" value = "<?php echo $cComCod ?>" readonly>
                 </td>
                 <td Class = "clase08" colspan = "5">Pedido<br>
-                  <input type = "text" Class = "letra" style = "width:100" name = "cMifComCsc"
+                  <input type = "text" Class = "letra" style = "width:100" name = "cPedComCsc"
                         onBlur = "javascript:f_FixFloat(this);
                                             this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'
-                                            if(document.forms['frgrm']['cMifComCsc'].value.length > 0){
-                                              fnLinks('cMifComCsc','VALID');
+                                            if(document.forms['frgrm']['cPedComCsc'].value.length > 0){
+                                              fnLinks('cPedComCsc','VALID');
                                             }else{
                                               alert('Debe Digitar al Menos Un Digito de la Pedido');
                                             }"
-                        onFocus = "javascript:document.forms['frgrm']['cMifComId'].value   = '';
-                                              document.forms['frgrm']['cMifComCod'].value  = '';
-                                              document.forms['frgrm']['cMifComCsc'].value  = '';
-                                              document.forms['frgrm']['cMifComCsc2'].value = '';
-                                              document.forms['frgrm']['cMifId'].value      = '';
+                        onFocus = "javascript:document.forms['frgrm']['cPedComId'].value   = '';
+                                              document.forms['frgrm']['cPedComCod'].value  = '';
+                                              document.forms['frgrm']['cPedComCsc'].value  = '';
+                                              document.forms['frgrm']['cPedComCsc2'].value = '';
+                                              document.forms['frgrm']['cPedId'].value      = '';
                                               this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                 </td>
-                <input type="hidden" name="cMifComCsc2">
+                <input type="hidden" name="cPedComCsc2">
 
                 <td Class = "clase08" colspan = "1"></td>
                 <td Class = "clase08" colspan = "11">
@@ -362,10 +362,12 @@
                 <td Class = "clase08" colspan = "9"><br>
                   <select Class = "letrase" name = "cEstCert" style = "width:180">
                     <option value = "" selected>[SELECCIONE]</option>
-                    <option value = "ENPROCESO">EN PROCESO</option>
-                    <option value = "ANULADO">ANULADA</option>
-                    <option value = "VALIDACION_FINANCIERA">VALIDACION FINANCIERA</option>
-                    <option value = "CERTIFICADO">CERTIFICADA</option>
+                    <option value = "PENDIENTE">PENDIENTE</option>
+                    <option value = "ACTIVO">ACTIVO</option>
+                    <option value = "FACTURADO">FACTURADO</option>
+                    <option value = "ANULADO">ANULADO</option>
+                    <option value = "RECHAZADO">RECHAZADO</option>
+                    <option value = "NOTA_CREDITO">NOTA CR&Eacute;DITO</option>
                   </select>
                 </td>
               </tr>

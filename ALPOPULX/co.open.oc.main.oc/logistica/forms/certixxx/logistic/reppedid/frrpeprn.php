@@ -100,42 +100,77 @@
     $nAnioDesde = substr($gDesde, 0, 4);
     $cAnioAnt   = ($nAnioDesde < $vSysStr['logistica_ano_instalacion_modulo']) ? $vSysStr['logistica_ano_instalacion_modulo'] : $nAnioDesde;
 
-    $mClientes = array();
-    $mDeposito = array();
-    $nCantReg  = 0;
+    $mClientes  = array();
+    $mOrgVentas = array();
+    $mOfiVentas = array();
+    $mCentLog   = array();
+    $mSector    = array();
+    $mObjFact   = array();
+    $nCantReg   = 0;
     for ($cAnio=$cAnioAnt;$cAnio<=date('Y');$cAnio++) {
-      // Consulta la cabecera de la certificacion
-      $qCertiCab  = "SELECT ";
-      $qCertiCab .= "$cAlfa.lcca$cAnio.* ";
-      $qCertiCab .= "FROM $cAlfa.lcca$cAnio ";
-      $qCertiCab .= "WHERE ";
+      // Consulta el movimiento del pedido
+      $qPedido  = "SELECT ";
+      $qPedido .= "$cAlfa.lpde$cAnio.*, ";
+      $qPedido .= "$cAlfa.lpde$cAnio.pedvlrxx AS pedvlrde, ";
+      $qPedido .= "$cAlfa.lpde$cAnio.regestxx AS regestde, ";
+      $qPedido .= "$cAlfa.lpde$cAnio.regfmodx AS regfmodd, ";
+      $qPedido .= "$cAlfa.lpca$cAnio.* ";
+      $qPedido .= "FROM $cAlfa.lpde$cAnio ";
+      $qPedido .= "LEFT JOIN $cAlfa.lpca$cAnio ON $cAlfa.lpde$cAnio.pedidxxx = $cAlfa.lpca$cAnio.pedidxxx ";
+      $qPedido .= "WHERE ";
       if ($gCliId != "") {
-        $qCertiCab .= "$cAlfa.lcca$cAnio.cliidxxx = \"$gCliId\" AND ";
+        $qPedido .= "$cAlfa.lpca$cAnio.cliidxxx = \"$gCliId\" AND ";
       }
       if ($gDepNum != "") {
-        $qCertiCab .= "$cAlfa.lcca$cAnio.depnumxx = \"$gDepNum\" AND ";
+        $qPedido .= "$cAlfa.lpde$cAnio.depnumxx = \"$gDepNum\" AND ";
       }
       if ($gMifId != "") {
-        $qCertiCab .= "$cAlfa.lcca$cAnio.mifidxxx = \"$gMifId\" AND ";
-        $qCertiCab .= "$cAlfa.lcca$cAnio.mifidano = \"$gMifAnio\" AND ";
+        $qPedido .= "$cAlfa.lpca$cAnio.mifidxxx = \"$gMifId\" AND ";
+        $qPedido .= "$cAlfa.lpca$cAnio.mifidano = \"$gMifAnio\" AND ";
       }
-      $qCertiCab .= "$cAlfa.lcca$cAnio.regfcrex BETWEEN \"$gDesde\" AND \"$gHasta\" ";
+      $qPedido .= "$cAlfa.lpca$cAnio.regfcrex BETWEEN \"$gDesde\" AND \"$gHasta\" ";
       if ($gEstCert != "") {
-        $qCertiCab .= "AND $cAlfa.lcca$cAnio.regestxx = \"$gEstCert\" ";
+        $qPedido .= "AND $cAlfa.lpca$cAnio.regestxx = \"$gEstCert\" ";
       }
-      $qCertiCab .= "ORDER BY $cAlfa.lcca$cAnio.ceridxxx ASC ";
-      $xCertiCab  = f_MySql("SELECT","",$qCertiCab,$xConexion01,"");
-      // echo $qCertiCab . " - " . mysql_num_rows($xCertiCab) . "<br>";
+      $qPedido .= "ORDER BY $cAlfa.lpde$cAnio.peddidxx ASC ";
+      $xPedido  = f_MySql("SELECT","",$qPedido,$xConexion01,"");
+      echo $qPedido . " - " . mysql_num_rows($xPedido) . "<br>";
 
-      if (mysql_num_rows($xCertiCab) > 0) {
-        while ($xRCC = mysql_fetch_array($xCertiCab)) {
-          $cNumMif = "";
-          $nItem   = 0;
+      $cComId    = "";
+      $cComCod   = "";
+      $cComCsc   = "";
+      $cComCsc2  = "";
+      $nItem     = 0;
+      $cNumMif   = "";
+      $cEstMif   = "";
+      $cNumCert  = "";
+      $cEstCert  = "";
+      if (mysql_num_rows($xPedido) > 0) {
+        while ($xRPE = mysql_fetch_array($xPedido)) {
+          
+          $nInd_mData = count($mData);
+
+          $nCantReg++;
+          if (($nCantReg % _NUMREG_) == 0) { $xConexion01 = fnReiniciarConexion(); }
+
+            // Detecta el cambio de comprobante
+            if ($cComId != $xRCC['comidxxx'] || $cComCod != $xRCC['comcodxx'] || $cComCsc != $xRCC['comcscxx'] || $cComCsc2 != $xRCC['comcsc2x']) {
+              $cComId   = $xRCC['comidxxx'];
+              $cComCod  = $xRCC['comcodxx'];
+              $cComCsc  = $xRCC['comcscxx'];
+              $cComCsc2 = $xRCC['comcsc2x'];
+              $nItem    = 0;
+              $cEstMif  = "";
+              $cNumCert = "";
+              $cEstCert = "";
+  
+              
+            }
 
           // Consulta la información del cliente
-          if(in_array($xRCC['cliidxxx'], $mClientes)){
-            $xRCC['clinomxx'] = $mClientes[$xRCC['cliidxxx']]['clinomxx'];
-            $xRCC['clisapxx'] = $mClientes[$xRCC['cliidxxx']]['clisapxx'];
+          if(in_array($xRPE['cliidxxx'], $mClientes)){
+            $xRPE['clinomxx'] = $mClientes[$xRPE['cliidxxx']]['clinomxx'];
+            $xRPE['clisapxx'] = $mClientes[$xRPE['cliidxxx']]['clisapxx'];
           } else {
             $qCliente  = "SELECT ";
             $qCliente .= "cliidxxx, ";
@@ -143,159 +178,325 @@
             $qCliente .= "clisapxx ";
             $qCliente .= "FROM $cAlfa.lpar0150 ";
             $qCliente .= "WHERE ";
-            $qCliente .= "cliidxxx = \"{$xRCC['cliidxxx']}\" LIMIT 0,1 ";
+            $qCliente .= "cliidxxx = \"{$xRPE['cliidxxx']}\" LIMIT 0,1 ";
             $xCliente  = f_MySql("SELECT", "", $qCliente, $xConexion01, "");
             if (mysql_num_rows($xCliente)) {
               $vCliente  = mysql_fetch_array($xCliente);
-              $mClientes[$xRCC['cliidxxx']][] = $vCliente;
-              $xRCC['clinomxx'] = $vCliente['clinomxx'];
-              $xRCC['clisapxx'] = $vCliente['clisapxx'];
+              $mClientes[$xRPE['cliidxxx']][] = $vCliente;
+              $xRPE['clinomxx'] = $vCliente['clinomxx'];
+              $xRPE['clisapxx'] = $vCliente['clisapxx'];
             }
           }
 
-          // Consulta el numero de la MIF
-          if ($xRCC['certipxx'] == "AUTOMATICA") {
-            $cMifAnio = $xRCC['mifidano'];
-            $qMifCab  = "SELECT ";
-            $qMifCab .= "lmca$cMifAnio.comidxxx, ";
-            $qMifCab .= "lmca$cMifAnio.comcodxx, ";
-            $qMifCab .= "lmca$cMifAnio.comprexx, ";
-            $qMifCab .= "lmca$cMifAnio.comcscxx, ";
-            $qMifCab .= "lmca$cMifAnio.comcsc2x ";
-            $qMifCab .= "FROM $cAlfa.lmca$cMifAnio ";
-            $qMifCab .= "WHERE ";
-            $qMifCab .= "lmca$cMifAnio.mifidxxx = \"{$xRCC['mifidxxx']}\" LIMIT 0,1";
-            $xMifCab  = f_MySql("SELECT", "", $qMifCab, $xConexion01, "");
-            if (mysql_num_rows($xMifCab) > 0) {
-              $vMifCab = mysql_fetch_array($xMifCab);
-              $cNumMif = $vMifCab['comidxxx'] ."-". $vMifCab['comprexx'] ."-". $vMifCab['comcscxx'];
-            }
-          }
-
-          // Consulta informacion del deposito
-          if(in_array($xRCC['depnumxx'], $mDeposito)){
-            $xRCC['orvdesxx'] = $mDeposito[$xRCC['depnumxx']]['orvdesxx'];
-            $xRCC['ofvdesxx'] = $mDeposito[$xRCC['depnumxx']]['orvdesxx'];
-          } else {
+          // Si el deposito es automatico la informacion del Paso 2 del deposito se obtine del deposito
+          if ($xRPE["pedtipxx"] == "AUTOMATICA" && $xRPE["depnumxx"] != "") {
+            // Consulta informacion del deposito
             $qDeposito  = "SELECT ";
-            $qDeposito .= "depnumxx, ";
+            $qDeposito .= "lpar0155.depnumxx, ";
+            $qDeposito .= "lpar0155.ccoidocx, ";
+            $qDeposito .= "lpar0007.tdeidxxx, ";
+            $qDeposito .= "lpar0007.tdedesxx, ";
             $qDeposito .= "lpar0001.orvsapxx, ";
             $qDeposito .= "lpar0001.orvdesxx, ";
             $qDeposito .= "lpar0002.ofvsapxx, ";
-            $qDeposito .= "lpar0002.ofvdesxx ";
+            $qDeposito .= "lpar0002.ofvdesxx, ";
+            $qDeposito .= "lpar0003.closapxx, ";
+            $qDeposito .= "lpar0003.clodesxx, ";
+            $qDeposito .= "lpar0009.secsapxx, ";
+            $qDeposito .= "lpar0009.secdesxx, ";
+            $qDeposito .= "lpar0155.regestxx ";
             $qDeposito .= "FROM $cAlfa.lpar0155 ";
+            $qDeposito .= "LEFT JOIN $cAlfa.lpar0007 ON $cAlfa.lpar0155.tdeidxxx = $cAlfa.lpar0007.tdeidxxx ";
             $qDeposito .= "LEFT JOIN $cAlfa.lpar0001 ON $cAlfa.lpar0155.orvsapxx = $cAlfa.lpar0001.orvsapxx ";
             $qDeposito .= "LEFT JOIN $cAlfa.lpar0002 ON $cAlfa.lpar0155.orvsapxx = $cAlfa.lpar0002.orvsapxx AND $cAlfa.lpar0155.ofvsapxx = $cAlfa.lpar0002.ofvsapxx ";
+            $qDeposito .= "LEFT JOIN $cAlfa.lpar0003 ON $cAlfa.lpar0155.orvsapxx = $cAlfa.lpar0003.orvsapxx AND $cAlfa.lpar0155.ofvsapxx = $cAlfa.lpar0003.ofvsapxx AND $cAlfa.lpar0155.closapxx = $cAlfa.lpar0003.closapxx ";
+            $qDeposito .= "LEFT JOIN $cAlfa.lpar0009 ON $cAlfa.lpar0155.secsapxx = $cAlfa.lpar0009.secsapxx ";
             $qDeposito .= "WHERE ";
-            $qDeposito .= "depnumxx = \"{$xRCC['depnumxx']}\" LIMIT 0,1 ";
+            $qDeposito .= "lpar0155.depnumxx = \"{$xRPE['depnumxx']}\" ";
             $xDeposito  = f_MySql("SELECT", "", $qDeposito, $xConexion01, "");
-            if (mysql_num_rows($xDeposito)) {
-              $vDeposito  = mysql_fetch_array($xDeposito);
-              $mDeposito[$xRCC['depnumxx']][] = $vDeposito;
-              $xRCC['orvdesxx'] = $vDeposito['orvdesxx'];
-              $xRCC['ofvdesxx'] = $vDeposito['ofvdesxx'];
+            $vDeposito = array();
+            if (mysql_num_rows($xDeposito) > 0) {
+              $vDeposito = mysql_fetch_array($xDeposito);
             }
+
+            // Informacion de Deposito de Pedidos
+            $mData[$nInd_mData]['orgvntsx'] = $vDeposito['orvsapxx'];  // ORGANIZACIÓN VENTAS
+            $mData[$nInd_mData]['desorgvt'] = $vDeposito['orvdesxx'];  // DESCRIPCIÓN ORG. VENTAS
+            $mData[$nInd_mData]['oficvnts'] = $vDeposito['ofvsapxx'];  // OFICINA VTAS
+            $mData[$nInd_mData]['desofcvt'] = $vDeposito['ofvdesxx'];  // DESCRIPCIÓN OFI. VENTAS
+            $mData[$nInd_mData]['centlogx'] = $vDeposito['closapxx'];  // CENTRO LOGÍSTICO
+            $mData[$nInd_mData]['desctlog'] = $vDeposito['clodesxx'];  // DESCRIPCIÓN CENTRO LOGÍSTICO
+            $mData[$nInd_mData]['sectorxx'] = $vDeposito['secsapxx'];  // SECTOR
+            $mData[$nInd_mData]['dessectx'] = $vDeposito['secdesxx'];  // DESCRIPCIÓN SECTOR
+          } else if ($xRPE["pedtipxx"] == "MANUAL") {
+
+            // Consulta la Organización Ventas
+            if(in_array($xRPE['orvsapxx'], $mOrgVentas)){
+              $cDesOrgVen = $mOrgVentas[$xRPE['orvsapxx']]['orvdesxx'];
+            } else {
+              $qOrgVentas  = "SELECT ";
+              $qOrgVentas .= "orvsapxx, ";
+              $qOrgVentas .= "orvdesxx ";
+              $qOrgVentas .= "FROM $cAlfa.lpar0001 ";
+              $qOrgVentas .= "WHERE ";
+              $qOrgVentas .= "orvsapxx = \"{$xRPE['orvsap2x']}\" LIMIT 0,1 ";
+              $xOrgVentas  = f_MySql("SELECT", "", $qOrgVentas, $xConexion01, "");
+              if (mysql_num_rows($xOrgVentas)) {
+                $vOrgVentas  = mysql_fetch_array($xOrgVentas);
+                $mOrgVentas[$xRPE['orvsapxx']][] = $vOrgVentas;
+                $cDesOrgVen = $vOrgVentas['orvdesxx'];
+              }
+            }
+
+            // Consulta la Oficina de Ventas
+            if(in_array($xRPE['ofvsapxx'], $mOfiVentas)){
+              $cDesOfiVen = $mOfiVentas[$xRPE['ofvsapxx']]['ofvdesxx'];
+            } else {
+              $qOfiVentas  = "SELECT ";
+              $qOfiVentas .= "ofvsapxx, ";
+              $qOfiVentas .= "ofvdesxx ";
+              $qOfiVentas .= "FROM $cAlfa.lpar0002 ";
+              $qOfiVentas .= "WHERE ";
+              $qOfiVentas .= "ofvsapxx = \"{$xRPE['ofvsap2x']}\" LIMIT 0,1 ";
+              $xOfiVentas  = f_MySql("SELECT", "", $qOfiVentas, $xConexion01, "");
+              if (mysql_num_rows($xOfiVentas)) {
+                $vOfiVentas  = mysql_fetch_array($xOfiVentas);
+                $mOfiVentas[$xRPE['ofvsapxx']][] = $vOfiVentas;
+                $cDesOfiVen = $vOfiVentas['ofvdesxx'];
+              }
+            }
+
+            // Consulta la Centro Logistico
+            if(in_array($xRPE['closapxx'], $mCentLog)){
+              $cDesCosLog = $mCentLog[$xRPE['closapxx']]['clodesxx'];
+            } else {
+              $qCentLog  = "SELECT ";
+              $qCentLog .= "closapxx, ";
+              $qCentLog .= "clodesxx ";
+              $qCentLog .= "FROM $cAlfa.lpar0003 ";
+              $qCentLog .= "WHERE ";
+              $qCentLog .= "closapxx = \"{$xRPE['closapxx']}\" LIMIT 0,1 ";
+              $xCentLog  = f_MySql("SELECT", "", $qCentLog, $xConexion01, "");
+              if (mysql_num_rows($xCentLog)) {
+                $vCentLog  = mysql_fetch_array($xCentLog);
+                $mCentLog[$xRPE['closapxx']][] = $vCentLog;
+                $cDesCosLog = $vCentLog['clodesxx'];
+              }
+            }
+
+            // Consulta del Sector
+            if(in_array($xRPE['secsapxx'], $mSector)){
+              $cDesSect = $mSector[$xRPE['secsapxx']]['secdesxx'];
+            } else {
+              $qSector  = "SELECT ";
+              $qSector .= "secsapxx, ";
+              $qSector .= "secdesxx ";
+              $qSector .= "FROM $cAlfa.lpar0009 ";
+              $qSector .= "WHERE ";
+              $qSector .= "secsapxx = \"{$xRPE['secsapxx']}\" LIMIT 0,1 ";
+              $xSector  = f_MySql("SELECT", "", $qSector, $xConexion01, "");
+              if (mysql_num_rows($xSector)) {
+                $vSector  = mysql_fetch_array($xSector);
+                $mSector[$xRPE['secsapxx']][] = $vSector;
+                $cDesSect = $vSector['secdesxx'];
+              }
+            }
+
+            $mData[$nInd_mData]['orgvntsx'] = $xRPE['orvsap2x'];  // ORGANIZACIÓN VENTAS
+            $mData[$nInd_mData]['desorgvt'] = $cDesOrgVen;        // DESCRIPCIÓN ORG. VENTAS
+            $mData[$nInd_mData]['oficvnts'] = $xRPE['ofvsap2x'];  // OFICINA VTAS
+            $mData[$nInd_mData]['desofcvt'] = $cDesOfiVen;        // DESCRIPCIÓN OFI. VENTAS
+            $mData[$nInd_mData]['centlogx'] = $xRPE['closapxx'];  // CENTRO LOGÍSTICO
+            $mData[$nInd_mData]['desctlog'] = $cDesCosLog;        // DESCRIPCIÓN CENTRO LOGÍSTICO
+            $mData[$nInd_mData]['sectorxx'] = $xRPE['secsapxx'];  // SECTOR
+            $mData[$nInd_mData]['dessectx'] = $cDesSect;          // DESCRIPCIÓN SECTOR
+
+            // Consulta la MIF
+            $nAnio = $xRPE['mifidano'];
+            $qMifCab  = "SELECT ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.mifidxxx, ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.comidxxx, ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.comcodxx, ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.comprexx, ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.comcscxx, ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.comcsc2x, ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.regestxx ";
+            $qMifCab .= "FROM $cAlfa.lmca$nAnio ";
+            $qMifCab .= "WHERE ";
+            $qMifCab .= "$cAlfa.lmca$nAnio.mifidxxx = \"{$xRPE['mifidxxx']}\"";
+            $xMifCab  = f_MySql("SELECT", "", $qMifCab, $xConexion01, "");
+            $vMifCab = array();
+            if (mysql_num_rows($xMifCab) > 0) {
+              $vMifCab = mysql_fetch_array($xMifCab);
+              $cNumMif = $vMifCab['comidxxx'] ."-". $vMifCab['comprexx'] ."-". $vMifCab['comcscxx'];
+              $cEstMif = $vMifCab['regestxx'];
+            }
+
+            // Consulta la Certificacion
+            $nAnio = $xRPE['ceranoxx'];
+            $qCertiCab  = "SELECT ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.ceridxxx, ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.comidxxx, ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.comcodxx, ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.comprexx, ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.comcscxx, ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.comcsc2x, ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.regestxx  ";
+            $qCertiCab .= "FROM $cAlfa.lcca$nAnio ";
+            $qCertiCab .= "WHERE ";
+            $qCertiCab .= "$cAlfa.lcca$nAnio.ceridxxx = \"{$xRPE['ceridxxx']}\"";
+            $xCertiCab = f_MySql("SELECT","",$qCertiCab,$xConexion01,"");
+            $vCertiCab = array();
+            if (mysql_num_rows($xCertiCab) > 0) {
+              $vCertiCab = mysql_fetch_array($xCertiCab);
+              $cNumCert  = $vCertiCab['comidxxx'] ."-". $vCertiCab['comprexx'] ."-". $vCertiCab['comcscxx'];
+              $cEstCert  = $vCertiCab['regestxx'];
+            }
+
+            $mData[$nInd_mData]['nummifxx'] = $cNumMif;  // N° MIF
+            $mData[$nInd_mData]['estmifxx'] = $cEstMif;  // ESTADO MIF
+            $mData[$nInd_mData]['numcert2'] = $cNumCert; // N° CERTIFICACIÓN
+            $mData[$nInd_mData]['estcerti'] = $cEstCert; // ESTADO CERTIFICACIÓN
           }
 
-          // Consulta el detalle del pedido
-          $qCertiDet  = "SELECT ";
-          $qCertiDet .= "$cAlfa.lcde$cAnio.*, ";
-          $qCertiDet .= "IF($cAlfa.lcde$cAnio.sersapxx != \"\",$cAlfa.lpar0011.serdesxx,\"\") AS serdesxx, ";
-          $qCertiDet .= "IF($cAlfa.lcde$cAnio.obfidxxx != \"\",$cAlfa.lpar0004.obfdesxx,\"\") AS obfdesxx, ";
-          $qCertiDet .= "IF($cAlfa.lcde$cAnio.ufaidxxx != \"\",$cAlfa.lpar0006.ufadesxx,\"\") AS ufadesxx, ";
-          $qCertiDet .= "IF($cAlfa.lcde$cAnio.cebidxxx != \"\",$cAlfa.lpar0010.cebcodxx,\"\") AS cebcodxx, ";
-          $qCertiDet .= "IF($cAlfa.lcde$cAnio.cebidxxx != \"\",$cAlfa.lpar0010.cebdesxx,\"\") AS cebdesxx ";
-          $qCertiDet .= "FROM $cAlfa.lcde$cAnio ";
-          $qCertiDet .= "LEFT JOIN $cAlfa.lpar0004 ON $cAlfa.lcde$cAnio.obfidxxx = $cAlfa.lpar0004.obfidxxx ";
-          $qCertiDet .= "LEFT JOIN $cAlfa.lpar0006 ON $cAlfa.lcde$cAnio.ufaidxxx = $cAlfa.lpar0006.ufaidxxx ";
-          $qCertiDet .= "LEFT JOIN $cAlfa.lpar0010 ON $cAlfa.lcde$cAnio.cebidxxx = $cAlfa.lpar0010.cebidxxx ";
-          $qCertiDet .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lcde$cAnio.sersapxx = $cAlfa.lpar0011.sersapxx ";
-          $qCertiDet .= "WHERE ";
-          $qCertiDet .= "$cAlfa.lcde$cAnio.ceridxxx = \"{$xRCC['ceridxxx']}\" ";
-          $qCertiDet .= "ORDER BY $cAlfa.lcde$cAnio.ceridxxx ASC ";
-          $xCertiDet  = f_MySql("SELECT","",$qCertiDet,$xConexion01,"");
-          // echo $qCertiDet ." - ". mysql_num_rows($xCertiDet) . "<br>";
-          // die();
+          $mData[$nInd_mData]['condcomx'] = ($xRPE['ccoidocx'] != "" ) ? $xRPE['ccoidocx'] : $xRPE['ccoidoc2'];  // N° COND. COMERCIAL
+          $mData[$nInd_mData]['deposito'] = ($xRPE['depnumxx'] != "" ) ? $xRPE['depnumxx'] : $xRPE['depnum2x'];  // DEPÓSITO
 
-          if (mysql_num_rows($xCertiDet) > 0) {
-            while ($xRCD = mysql_fetch_array($xCertiDet)) {
-              $nCantReg++;
-              if (($nCantReg % _NUMREG_) == 0) { $xConexion01 = fnReiniciarConexion(); }
-
-              // Informacion de cabecera de la certificacion
-              $nInd_mData = count($mData);
-              $mData[$nInd_mData]['itemxxxx'] = ($nItem += 1);      // Numero Item
-              $mData[$nInd_mData]['numcerti'] = $xRCC['comidxxx'] ."-". $xRCC['comprexx'] ."-". $xRCC['comcscxx']; // Numero Certificacion
-              $mData[$nInd_mData]['cliidxxx'] = $xRCC['cliidxxx'];  // Nit del Cliente
-              $mData[$nInd_mData]['clisapxx'] = $xRCC['clisapxx'];  // Cod. SAP del Cliente
-              $mData[$nInd_mData]['clinomxx'] = $xRCC['clinomxx'];  // Nombre del Cliente
-              $mData[$nInd_mData]['nummifxx'] = $cNumMif;           // Numero de la MIF
-              $mData[$nInd_mData]['cerfdexx'] = $xRCC['cerfdexx'];  // Fecha Vigencia Desde
-              $mData[$nInd_mData]['cerfhaxx'] = $xRCC['cerfhaxx'];  // Fecha Vigencia Hasta
-              $mData[$nInd_mData]['depnumxx'] = $xRCC['depnumxx'];  // Numero del Deposito
-              $mData[$nInd_mData]['orvdesxx'] = $xRCC['orvdesxx'];  // Descripcion Organizacion de Venta
-              $mData[$nInd_mData]['ofvdesxx'] = $xRCC['ofvdesxx'];  // Descripcion Oficina de Venta
-              // Informacion de detalle de la certificacion
-              $mData[$nInd_mData]['sersapxx'] = $xRCD['sersapxx'];  // Cod. SAP del Servicio
-              $mData[$nInd_mData]['serdesxx'] = $xRCD['serdesxx'];  // Descripcion del Servicio
-              $mData[$nInd_mData]['subdesxx'] = $xRCD['subdesxx'];  // Descripcion del Subservicio
-              $mData[$nInd_mData]['obfdesxx'] = $xRCD['obfdesxx'];  // Descripcion del Objeto Facturable
-              $mData[$nInd_mData]['ufadesxx'] = $xRCD['ufadesxx'];  // Descripcion de la Unidad Facturable
-              $mData[$nInd_mData]['cebcodxx'] = $xRCD['cebcodxx'];  // Codigo CEBE
-              $mData[$nInd_mData]['cebdesxx'] = $xRCD['cebdesxx'];  // Descripcion CEBE
-              $mData[$nInd_mData]['basexxxx'] = $xRCD['basexxxx'];  // Base
-              $mData[$nInd_mData]['cerdconx'] = $xRCD['cerdconx'];  // Condicion
-              $mData[$nInd_mData]['cerdestx'] = $xRCD['cerdestx'];  // Estatus
-              // Informacion de cabecera de la certificacion
-              $mData[$nInd_mData]['cerobsxx'] = $xRCC['cerobsxx'];  // Observaciones Generales
-              $mData[$nInd_mData]['cerusufa'] = $xRCC['cerusufa'];  // Usuario Certificacion para Facturacion
-              $mData[$nInd_mData]['cerobsfa'] = $xRCC['cerobsfa'];  // Observacion Certificacion para Facturacion
-              $mData[$nInd_mData]['cerusufi'] = $xRCC['cerusufi'];  // Usuario Certificacion para Financiero
-              $mData[$nInd_mData]['cerobsfi'] = $xRCC['cerobsfi'];  // Observacion Certificacion para Financiero
-              $mData[$nInd_mData]['cerusuap'] = ($xRCC['regestxx'] == "CERTIFICADO" && $xRCC['cerusuar'] != "") ? $xRCC['cerusuar'] : "";  // Usuario Aprobado Financiero
-              $mData[$nInd_mData]['cerobsap'] = ($xRCC['regestxx'] == "CERTIFICADO" && $xRCC['cerusuar'] != "") ? $xRCC['cerobsar'] : "";  // Observacion Aprobado Financiero
-              $mData[$nInd_mData]['cerusure'] = ($xRCC['regestxx'] == "ENPROCESO" && $xRCC['cerusuar'] != "")   ? $xRCC['cerusuar'] : "";  // Usuario Rechazado Financiero
-              $mData[$nInd_mData]['cerobsre'] = ($xRCC['regestxx'] == "ENPROCESO" && $xRCC['cerusuar'] != "")   ? $xRCC['cerobsar'] : "";  // Observacion Rechazado Financiero
-              $mData[$nInd_mData]['cerusuan'] = $xRCC['cerusuan'];  // Usuario Anulacion
-              $mData[$nInd_mData]['cerobsan'] = $xRCC['cerobsan'];  // Observacion Anulacion
-              $mData[$nInd_mData]['regestxx'] = str_replace("_", " ", $xRCC['regestxx']); // Estado
-              $mData[$nInd_mData]['regfmodx'] = $xRCC['regfmodx'];  // Fecha Modificado
-            }
+          // Consulta del Servicio
+          if(in_array($xRPE['sersapxx'], $mServicio)){
+            $cDesServ = $mServicio[$xRPE['sersapxx']]['serdesxx'];
           } else {
-            $nInd_mData = count($mData);
-            $mData[$nInd_mData]['itemxxxx'] = ($nItem += 1);      // Numero Item
-            $mData[$nInd_mData]['numcerti'] = $xRCC['comidxxx'] ."-". $xRCC['comprexx'] ."-". $xRCC['comcscxx']; // Numero Certificacion
-            $mData[$nInd_mData]['cliidxxx'] = $xRCC['cliidxxx'];  // Nit del Cliente
-            $mData[$nInd_mData]['clisapxx'] = $xRCC['clisapxx'];  // Cod. SAP del Cliente
-            $mData[$nInd_mData]['clinomxx'] = $xRCC['clinomxx'];  // Nombre del Cliente
-            $mData[$nInd_mData]['nummifxx'] = $cNumMif;           // Numero de la MIF
-            $mData[$nInd_mData]['cerfdexx'] = $xRCC['cerfdexx'];  // Fecha Vigencia Desde
-            $mData[$nInd_mData]['cerfhaxx'] = $xRCC['cerfhaxx'];  // Fecha Vigencia Hasta
-            $mData[$nInd_mData]['depnumxx'] = $xRCC['depnumxx'];  // Numero del Deposito
-            $mData[$nInd_mData]['cerobsxx'] = $xRCC['cerobsxx'];  // Observaciones Generales
-            $mData[$nInd_mData]['cerusufa'] = $xRCC['cerusufa'];  // Usuario Certificacion para Facturacion
-            $mData[$nInd_mData]['cerobsfa'] = $xRCC['cerobsfa'];  // Observacion Certificacion para Facturacion
-            $mData[$nInd_mData]['cerusufi'] = $xRCC['cerusufi'];  // Usuario Certificacion para Financiero
-            $mData[$nInd_mData]['cerobsfi'] = $xRCC['cerobsfi'];  // Observacion Certificacion para Financiero
-            $mData[$nInd_mData]['cerusuap'] = ($xRCC['regestxx'] == "CERTIFICADO" && $xRCC['cerusuar'] != "") ? $xRCC['cerusuar'] : "";  // Usuario Aprobado Financiero
-            $mData[$nInd_mData]['cerobsap'] = ($xRCC['regestxx'] == "CERTIFICADO" && $xRCC['cerusuar'] != "") ? $xRCC['cerobsar'] : "";  // Observacion Aprobado Financiero
-            $mData[$nInd_mData]['cerusure'] = ($xRCC['regestxx'] == "ENPROCESO" && $xRCC['cerusuar'] != "")   ? $xRCC['cerusuar'] : "";  // Usuario Rechazado Financiero
-            $mData[$nInd_mData]['cerobsre'] = ($xRCC['regestxx'] == "ENPROCESO" && $xRCC['cerusuar'] != "")   ? $xRCC['cerobsar'] : "";  // Observacion Rechazado Financiero
-            $mData[$nInd_mData]['cerusuan'] = $xRCC['cerusuan'];  // Usuario Anulacion
-            $mData[$nInd_mData]['cerobsan'] = $xRCC['cerobsan'];  // Observacion Anulacion
-            $mData[$nInd_mData]['regestxx'] = str_replace("_", " ", $xRCC['regestxx']); // Estado
-            $mData[$nInd_mData]['regfmodx'] = $xRCC['regfmodx'];  // Fecha Modificado
+            $qServicio  = "SELECT ";
+            $qServicio .= "sersapxx, ";
+            $qServicio .= "serdesxx ";
+            $qServicio .= "FROM $cAlfa.lpar0011 ";
+            $qServicio .= "WHERE ";
+            $qServicio .= "sersapxx = \"{$xRPE['sersapxx']}\" LIMIT 0,1 ";
+            $xServicio  = f_MySql("SELECT", "", $qServicio, $xConexion01, "");
+            if (mysql_num_rows($xServicio)) {
+              $vServicio  = mysql_fetch_array($xServicio);
+              $mServicio[$xRPE['sersapxx']][] = $vServicio;
+              $cDesServ = $vServicio['serdesxx'];
+            }
           }
+
+          // Consulta del Subservicio
+          if(in_array($xRPE['subidxxx'], $mSubServ)){
+            $cDesSubSer = $mSubServ[$xRPE['subidxxx']]['subdesxx'];
+          } else {
+            $qSubServ  = "SELECT ";
+            $qSubServ .= "subidxxx, ";
+            $qSubServ .= "subdesxx ";
+            $qSubServ .= "FROM $cAlfa.lpar0012 ";
+            $qSubServ .= "WHERE ";
+            $qSubServ .= "sersapxx = \"{$xRPE['sersapxx']}\" AND ";
+            $qSubServ .= "subidxxx = \"{$xRPE['subidxxx']}\" LIMIT 0,1 ";
+            $xSubServ  = f_MySql("SELECT", "", $qSubServ, $xConexion01, "");
+            if (mysql_num_rows($xSubServ)) {
+              $vSubServ  = mysql_fetch_array($xSubServ);
+              $mSubServ[$xRPE['subidxxx']][] = $vSubServ;
+              $cDesSubSer = $vSubServ['subdesxx'];
+            }
+          }
+
+          // Consulta del Codigo Cebe
+          if(in_array($xRPE['cebidxxx'], $mCodCebe)){
+            $cCodCebe = $mCodCebe[$xRPE['cebidxxx']]['cebcodxx'];
+            $cDesCebe = $mCodCebe[$xRPE['cebidxxx']]['cebdesxx'];
+          } else {
+            $qCodCebe  = "SELECT ";
+            $qCodCebe .= "cebidxxx, ";
+            $qCodCebe .= "cebcodxx, ";
+            $qCodCebe .= "cebdesxx ";
+            $qCodCebe .= "FROM $cAlfa.lpar0010 ";
+            $qCodCebe .= "WHERE ";
+            $qCodCebe .= "cebidxxx = \"{$xRPE['cebidxxx']}\" LIMIT 0,1 ";
+            $xCodCebe  = f_MySql("SELECT", "", $qCodCebe, $xConexion01, "");
+            if (mysql_num_rows($xCodCebe)) {
+              $vCodCebe  = mysql_fetch_array($xCodCebe);
+              $mCodCebe[$xRPE['cebidxxx']][] = $vCodCebe;
+              $cCodCebe = $vCodCebe['cebcodxx'];
+              $cDesCebe = $vCodCebe['cebdesxx'];
+            }
+          }
+
+          // Consulta Unidad Facturable
+          if(in_array($xRPE['ufaidxxx'], $mUniFact)){
+            $cDesUniFact = $mUniFact[$xRPE['ufaidxxx']]['ufadesxx'];
+          } else {
+            $qUniFact  = "SELECT ";
+            $qUniFact .= "ufaidxxx, ";
+            $qUniFact .= "ufadesxx ";
+            $qUniFact .= "FROM $cAlfa.lpar0006 ";
+            $qUniFact .= "WHERE ";
+            $qUniFact .= "ufaidxxx = \"{$xRPE['ufaidxxx']}\" LIMIT 0,1 ";
+            $xUniFact  = f_MySql("SELECT", "", $qUniFact, $xConexion01, "");
+            if (mysql_num_rows($xUniFact)) {
+              $vUniFact  = mysql_fetch_array($xUniFact);
+              $mUniFact[$xRPE['ufaidxxx']][] = $vUniFact;
+              $cDesUniFact = $vUniFact['ufadesxx'];
+            }
+          }
+  
+          // Consulta Objeto Facturable
+          if(in_array($xRPE['obfidxxx'], $mObjFact)){
+            $cDesObjFac = $mObjFact[$xRPE['obfidxxx']]['obfdesxx'];
+          } else {
+            $qObjFact  = "SELECT ";
+            $qObjFact .= "obfidxxx, ";
+            $qObjFact .= "obfdesxx ";
+            $qObjFact .= "FROM $cAlfa.lpar0004 ";
+            $qObjFact .= "WHERE ";
+            $qObjFact .= "obfidxxx = \"{$xRPE['obfidxxx']}\" LIMIT 0,1 ";
+            $xObjFact  = f_MySql("SELECT", "", $qObjFact, $xConexion01, "");
+            if (mysql_num_rows($xObjFact)) {
+              $vObjFact  = mysql_fetch_array($xObjFact);
+              $mObjFact[$xRPE['obfidxxx']][] = $vObjFact;
+              $cDesObjFac = $vObjFact['obfdesxx'];
+            }
+          }
+         
+          // Informacion de Cabecera de Pedidos
+          $mData[$nInd_mData]['numpedid'] = $xRPE['comprexx']."-".$xRPE['comcscxx']; // N° PEDIDO
+          $mData[$nInd_mData]['docusapx'] = "";                 // DOCUMENTO SAP
+          $mData[$nInd_mData]['comfecxx'] = date("Y-m-d", strtotime($xRPE['comfecxx']));  // FECHA PEDIDO
+          $mData[$nInd_mData]['cliidxxx'] = $xRPE['cliidxxx'];  // NIT
+          $mData[$nInd_mData]['clisapxx'] = $xRPE['clisapxx'];  // COD. SAP CLIENTE
+          $mData[$nInd_mData]['clinomxx'] = $xRPE['clinomxx'];  // CLIENTE
+          $mData[$nInd_mData]['fecdesde'] = ($xRPE['pedtipxx'] == "AUTOMATICA") ? $xRPE['cerfdexx'] : $xRPE['pedfdexx'];  // FECHA DESDE
+          $mData[$nInd_mData]['fechasta'] = ($xRPE['pedtipxx'] == "AUTOMATICA") ? $xRPE['cerfhaxx'] : $xRPE['pedfhaxx'];  // FECHA HASTA
+
+          // Informacion de detalle del Paso 3 del Pedido
+          $mData[$nInd_mData]['itemxxxx'] = ($nItem++);         // ITEM
+          $mData[$nInd_mData]['cseidxxx'] = $xRPE['cseidxxx'];  // COND. DE SERVICIO
+          $mData[$nInd_mData]['sersapxx'] = $xRPE['sersapxx'];  // COD. SAP
+          $mData[$nInd_mData]['serdesxx'] = $cDesServ;          // SERVICIO
+          $mData[$nInd_mData]['subidxxx'] = $cDesSubSer;        // SUB SERVICIO
+          $mData[$nInd_mData]['cebcodxx'] = $cCodCebe;          // COD. CEBE
+          $mData[$nInd_mData]['cebdesxx'] = $cDesCebe;          // DESCRIPCIÓN CEBE
+          $mData[$nInd_mData]['ufaidxxx'] = $xRPE['ufaidxxx'];  // ID UNID FACTURABLE
+          $mData[$nInd_mData]['unifactx'] = $cDesUniFact;       // UNIDAD FACTURABLE
+          $mData[$nInd_mData]['obfidxxx'] = $xRPE['obfidxxx'];  // ID OBJ FACTURABLE
+          $mData[$nInd_mData]['obfdesxx'] = $cDesObjFac;        // OBJETO FACTURABLE
+          $mData[$nInd_mData]['pedbasex'] = $xRPE['pedbasex'];  // BASE
+          $mData[$nInd_mData]['pedtarix'] = $xRPE['pedtarix'];  // TARIFA
+          $mData[$nInd_mData]['pedcalcu'] = $xRPE['pedcalcu'];  // CÁLCULO
+          $mData[$nInd_mData]['pedminix'] = $xRPE['pedminix'];  // MÍNIMA
+          $mData[$nInd_mData]['pedvlrxx'] = $xRPE['pedvlrde'];  // VALOR. PEDIDO
+          $mData[$nInd_mData]['regestxx'] = $xRPE['regestxx'];  // ESTADO
+          $mData[$nInd_mData]['regfcrex'] = $xRPE['regfcrex'];  // FECHA ESTADO
+          $mData[$nInd_mData]['pedtipxx'] = $xRPE['pedtipxx'];  // TIPO DE PEDIDO
+          $mData[$nInd_mData]['regusrxx'] = $xRPE['regusrxx'];  // USUARIO PEDIDO
         }
       }
-    }
-  }  else {
+    }  
+  } else {
     f_Mensaje(__FILE__,__LINE__,$cMsj."Verifique.");
   }
 
-  // echo "<pre>";
-  // print_r($mData);
-  // die();
+  echo "<pre>";
+  print_r($mData);
+  die();
 
   // Inicia a pintar el Excel
   if (count($mData) > 0) {
@@ -372,40 +573,48 @@
 
       for ($i=0; $i < count($mData); $i++) { 
         $data .= '<tr>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.$mData[$i]['itemxxxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['numcerti'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.$mData[$i]['numpedid'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['docusapx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['comfecxx'].'</td>';
           $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['cliidxxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['clisapxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['clisapxx'].'</td>';
           $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['clinomxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['orgvntsx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['desorgvt']).'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['oficvnts'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['desofcvt']).'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['centlogx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['desctlog']).'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['sectorxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['dessectx']).'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['condcomx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['deposito'].'</td>';
           $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['nummifxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.date("Y-m-d", strtotime($mData[$i]['cerfdexx'])).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.date("Y-m-d", strtotime($mData[$i]['cerfhaxx'])).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['depnumxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['orvdesxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['ofvdesxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['sersapxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.utf8_decode($mData[$i]['serdesxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.utf8_decode($mData[$i]['subdesxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.utf8_decode($mData[$i]['obfdesxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.utf8_decode($mData[$i]['ufadesxx']).'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['estmifxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['numcert2'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['estcerti'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.(($mData[$i]['fecdesde'] != "" && $mData[$i]['fecdesde'] != "0000-00-00") ? date("Y-m-d", strtotime($mData[$i]['fecdesde'])) : '').'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.(($mData[$i]['fecdesde'] != "" && $mData[$i]['fecdesde'] != "0000-00-00") ? date("Y-m-d", strtotime($mData[$i]['fechasta'])) : '').'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:center;">'.$mData[$i]['itemxxxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cseidxxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['sersapxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['serdesxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.$mData[$i]['subidxxx'].'</td>';
           $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.$mData[$i]['cebcodxx'].'</td>';
           $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.utf8_decode($mData[$i]['cebdesxx']).'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['basexxxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerdconx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerdestx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerobsxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerusufa'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerobsfa'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerusufi'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerobsfi'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerusuap'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerobsap'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerusure'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerobsre'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerusuan'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['cerobsan'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.$mData[$i]['ufaidxxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.$mData[$i]['unifactx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['obfidxxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['obfdesxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['pedbasex'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['pedtarix'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['pedcalcu'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['pedminix'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['pedvlrxx'].'</td>';
           $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['regestxx'].'</td>';
-          $data .= '<td width="200px" style="font-size:14px;text-align:right;">'.date("Y-m-d", strtotime($mData[$i]['regfmodx'])).'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['regfcrex'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['pedtipxx'].'</td>';
+          $data .= '<td width="200px" style="font-size:14px;text-align:left;">'.$mData[$i]['regusrxx'].'</td>';
         $data .= '</tr>';
       }
 

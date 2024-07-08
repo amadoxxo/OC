@@ -328,14 +328,14 @@
                 <td Class = "clase08" colspan = "2">Cod<br>
                   <input type = "text" Class = "letra" style = "width:40" name = "cMifComCod" value = "<?php echo $cComCod ?>" readonly>
                 </td>
-                <td Class = "clase08" colspan = "5">M.I.F<br>
+                <td Class = "clase08" colspan = "5">Pedido<br>
                   <input type = "text" Class = "letra" style = "width:100" name = "cMifComCsc"
                         onBlur = "javascript:f_FixFloat(this);
                                             this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'
                                             if(document.forms['frgrm']['cMifComCsc'].value.length > 0){
                                               fnLinks('cMifComCsc','VALID');
                                             }else{
-                                              alert('Debe Digitar al Menos Un Digito de la M.I.F');
+                                              alert('Debe Digitar al Menos Un Digito de la Pedido');
                                             }"
                         onFocus = "javascript:document.forms['frgrm']['cMifComId'].value   = '';
                                               document.forms['frgrm']['cMifComCod'].value  = '';

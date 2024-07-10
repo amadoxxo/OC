@@ -1,12 +1,11 @@
 <?php
-  /**
-   * --- Descripcion: Consulta los Clientes:
-   * @author Juan Jose Trujillo Ch <juan.trujillo@openits.co>
-   * @package openComex
+	/**
+	 * --- Descripcion: Consulta los Clientes:
+	 * @author Juan Jose Trujillo Ch. <juan.trujillo@openits.co>
+	 * @package openComex
    * @version 001
-   */
-
-  include("../../../../../financiero/libs/php/utility.php");
+	 */
+	include("../../../../../financiero/libs/php/utility.php");
   
   if ($gWhat != "" && $gFunction != "") { ?>
     <!DOCTYPE html>
@@ -31,20 +30,13 @@
                     switch ($gWhat) {
                       case "WINDOW":
                         $qDatCli  = "SELECT ";
-                        $qDatCli .= "cliidxxx, ";
-                        $qDatCli .= "clisapxx, ";
+                        $qDatCli .= "cliidxxx, clisapxx, ";
                         $qDatCli .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx,";
                         $qDatCli .= "regestxx ";
                         $qDatCli .= "FROM $cAlfa.lpar0150 ";                        
                         $qDatCli .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cCliId':
-                            $qDatCli .= "cliidxxx LIKE \"%$gCliId%\" AND ";
-                          break;
-                          case 'cCliNom':
-                            $qDatCli .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
-                          break;
-                        }
+                        $qDatCli .= "cliidxxx LIKE \"%$gCliId%\" AND ";
+                        $qDatCli .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
                         $qDatCli .= "cliclixx = \"SI\" AND ";
                         $qDatCli .= "regestxx = \"ACTIVO\" ";
                         $qDatCli .= "ORDER BY cliidxxx ";
@@ -99,19 +91,12 @@
                       break;
                       case "VALID":
                         $qDatCli  = "SELECT ";
-                        $qDatCli .= "cliidxxx, ";
-                        $qDatCli .= "clisapxx, ";
+                        $qDatCli .= "cliidxxx, clisapxx, ";
                         $qDatCli .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx ";
                         $qDatCli .= "FROM $cAlfa.lpar0150 ";
                         $qDatCli .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cCliId':
-                            $qDatCli .= "cliidxxx LIKE \"%$gCliId%\" AND ";
-                          break;
-                          case 'cCliNom':
-                            $qDatCli .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
-                          break;
-                        }
+                        $qDatCli .= "cliidxxx LIKE \"%$gCliId%\" AND ";
+                        $qDatCli .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
                         $qDatCli .= "cliclixx = \"SI\" AND ";
                         $qDatCli .= "regestxx = \"ACTIVO\" ";
                         $qDatCli .= "ORDER BY cliidxxx";
@@ -144,23 +129,17 @@
                             parent.fmwork.document.forms['frgrm'].cCliId.value  = "";
                             parent.fmwork.document.forms['frgrm'].cCliDV.value  = "";
                             parent.fmwork.document.forms['frgrm'].cCliNom.value = "";
-                            parent.fmwork.document.forms['frgrm'].cCliSap.value = "";
                           </script>
                           <?php
                         }
                       break;
                       case "EXACT":
                         $qDatCli  = "SELECT ";
-                        $qDatCli .= "cliidxxx, ";
-                        $qDatCli .= "clisapxx, ";
+                        $qDatCli .= "cliidxxx, clisapxx,";
                         $qDatCli .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx ";
                         $qDatCli .= "FROM $cAlfa.lpar0150 ";
                         $qDatCli .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cCliId':
-                            $qDatCli .= "cliidxxx = \"$gCliId\" AND ";
-                          break;
-                        }
+                        $qDatCli .= "cliidxxx = \"$gCliId\" AND ";
                         $qDatCli .= "cliclixx = \"SI\" AND ";
                         $qDatCli .= "regestxx = \"ACTIVO\" ";
                         $qDatCli .= "LIMIT 0,1";
@@ -184,7 +163,7 @@
         </center>
       </body>
     </html>
-  <?php
-  } else {
-    f_Mensaje(__FILE__,__LINE__,"No se Recibieron Parametros Completos.");
-  } ?>
+	<?php
+	} else {
+		f_Mensaje(__FILE__,__LINE__,"No se Recibieron Parametros Completos.");
+	} ?>

@@ -35,14 +35,16 @@
                         $qOfiVenta .= "regestxx ";
                         $qOfiVenta .= "FROM $cAlfa.lpar0002 ";
                         $qOfiVenta .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cOfvSap':
+                            $qOfiVenta .= "ofvsapxx LIKE \"%$gOfvSap%\" AND ";
+                          break;
+                          case 'cOfvDes':
+                            $qOfiVenta .= "ofvdesxx LIKE \"%$gOfvDes%\" AND ";
+                          break;
+                        }
                         if ($gGrid != "") {
                           $qOfiVenta .= "orvsapxx = \"$gOrvSap\" AND ";
-                        }
-                        if ($gOfvSap != "") {
-                          $qOfiVenta .= "ofvsapxx LIKE \"%$gOfvSap%\" AND ";
-                        }
-                        if ($gOfvDes != "") {
-                          $qOfiVenta .= "ofvdesxx LIKE \"%$gOfvDes%\" AND ";
                         }
                         $qOfiVenta .= "regestxx = \"ACTIVO\" ";
                         $qOfiVenta .= "ORDER BY ofvsapxx ";
@@ -99,14 +101,16 @@
                         $qOfiVenta .= "regestxx ";
                         $qOfiVenta .= "FROM $cAlfa.lpar0002 ";
                         $qOfiVenta .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cOfvSap':
+                            $qOfiVenta .= "ofvsapxx LIKE \"%$gOfvSap%\" AND ";
+                          break;
+                          case 'cOfvDes':
+                            $qOfiVenta .= "ofvdesxx LIKE \"%$gOfvDes%\" AND ";
+                          break;
+                        }
                         if ($gGrid != "") {
                           $qOfiVenta .= "orvsapxx = \"$gOrvSap\" AND ";
-                        }
-                        if ($gOfvSap != "") {
-                          $qOfiVenta .= "ofvsapxx LIKE \"%$gOfvSap%\" AND ";
-                        }
-                        if ($gOfvDes != "") {
-                          $qOfiVenta .= "ofvdesxx LIKE \"%$gOfvDes%\" AND ";
                         }
                         $qOfiVenta .= "regestxx = \"ACTIVO\" ";
                         $qOfiVenta .= "ORDER BY ofvsapxx ";
@@ -147,14 +151,16 @@
                         $qOfiVenta .= "regestxx ";
                         $qOfiVenta .= "FROM $cAlfa.lpar0002 ";
                         $qOfiVenta .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cOfvSap':
+                            $qOfiVenta .= "ofvsapxx = \"$gOfvSap\" AND ";
+                          break;
+                          case 'cOfvDes':
+                            $qOfiVenta .= "ofvdesxx = \"$gOfvDes\" AND ";
+                          break;
+                        }
                         if ($gGrid != "") {
                           $qOfiVenta .= "orvsapxx = \"$gOrvSap\" AND ";
-                        }
-                        if ($gOfvSap != "") {
-                          $qOfiVenta .= "ofvsapxx = \"$gOfvSap\" AND ";
-                        }
-                        if ($gOfvDes != "") {
-                          $qOfiVenta .= "ofvdesxx = \"$gOfvDes\" AND ";
                         }
                         $qOfiVenta .= "regestxx = \"ACTIVO\" ";
                         $qOfiVenta .= "ORDER BY ofvsapxx ";

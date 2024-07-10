@@ -33,13 +33,13 @@
                         $qUniFact .= "ufaidxxx, ";
                         $qUniFact .= "ufadesxx, ";
                         $qUniFact .= "regestxx ";
-                        $qUniFact .= "FROM $cAlfa.lpar0006 ";
+                        $qUniFact .= "FROM $cAlfa.lpar0006 ";                        
                         $qUniFact .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cUfaId':
-                            $qUniFact .= "(ufaidxxx LIKE \"%$gUfaId%\" OR ";
-                            $qUniFact .= "ufadesxx LIKE \"%$gUfaId%\") AND ";
-                          break;
+                        if ($gUfaId != "") {
+                          $qUniFact .= "ufaidxxx LIKE \"%$gUfaId%\" AND ";
+                        }
+                        if ($gUfaDes != "") {
+                          $qUniFact .= "ufadesxx LIKE \"%$gUfaDes%\" AND ";
                         }
                         $qUniFact .= "regestxx = \"ACTIVO\" ";
                         $qUniFact .= "ORDER BY ufaidxxx ";
@@ -50,7 +50,7 @@
                           <center>
                             <table cellspacing = "0" cellpadding = "1" border = "1" width = "500">
                               <tr bgcolor = '#D6DFF7'>
-                                <td width = "100" Class = "name"><center>ID</center></td>
+                                <td width = "100" Class = "name"><center>Id</center></td>
                                 <td width = "350" Class = "name"><center>Descripci&oacute;n</center></td>
                                 <td width = "050" Class = "name"><center>Estado</center></td>
                               </tr>
@@ -59,8 +59,9 @@
                                   if (mysql_num_rows($xUniFact) > 1) { ?>
                                     <tr>
                                       <td width = "100" class= "name">
-                                          <a href = "javascript:window.opener.document.forms['frgrm']['cUfaId'+'<?php echo $gGrid.$gSecuencia ?>'].value  = '<?php echo $xRUF['ufaidxxx']?>';
-                                                                window.opener.fnLinks('cUfaId','EXACT','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                                          <a href = "javascript:window.opener.document.forms['frgrm'].cUfaId.value  = '<?php echo $xRUF['ufaidxxx']?>';
+                                                                window.opener.document.forms['frgrm'].cUfaDes.value = '<?php echo $xRUF['ufadesxx']?>';
+                                                                window.opener.fnLinks('cUfaId','EXACT',0);
                                                                 window.close();"><?php echo $xRUF['ufaidxxx'] ?></a>
                                       </td>
                                       <td width = "350" class= "name"><?php echo $xRUF['ufadesxx'] ?></td>
@@ -69,8 +70,9 @@
                                     <?php
                                   }else { ?>
                                     <script languaje="javascript">
-                                      window.opener.document.forms['frgrm']['cUfaId'+'<?php echo $gGrid.$gSecuencia ?>'].value  = "<?php echo $xRUF['ufaidxxx'] ?>";
-                                      window.opener.fnLinks('cUfaId', 'EXACT', '<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                                      window.opener.document.forms['frgrm'].cUfaId.value  = "<?php echo $xRUF['ufaidxxx'] ?>";
+                                      window.opener.document.forms['frgrm'].cUfaDes.value = "<?php echo $xRUF['ufadesxx'] ?>";
+                                      window.opener.fnLinks('cUfaId', 'EXACT', 0);
                                       window.close();
                                     </script>
                                     <?php
@@ -92,13 +94,13 @@
                         $qUniFact .= "ufaidxxx, ";
                         $qUniFact .= "ufadesxx, ";
                         $qUniFact .= "regestxx ";
-                        $qUniFact .= "FROM $cAlfa.lpar0006 ";
+                        $qUniFact .= "FROM $cAlfa.lpar0006 ";                        
                         $qUniFact .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cUfaId':
-                            $qUniFact .= "(ufaidxxx LIKE \"%$gUfaId%\" OR ";
-                            $qUniFact .= "ufadesxx LIKE \"%$gUfaId%\") AND ";
-                          break;
+                        if ($gUfaId != "") {
+                          $qUniFact .= "ufaidxxx LIKE \"%$gUfaId%\" AND ";
+                        }
+                        if ($gUfaDes != "") {
+                          $qUniFact .= "ufadesxx LIKE \"%$gUfaDes%\" AND ";
                         }
                         $qUniFact .= "regestxx = \"ACTIVO\" ";
                         $qUniFact .= "ORDER BY ufaidxxx ";
@@ -111,13 +113,14 @@
                               $gUfaId = $xRUF['ufaidxxx'];
                               ?>
                               <script language = "javascript">
-                                parent.fmwork.document.forms['frgrm']['cUfaId'+'<?php echo $gGrid.$gSecuencia ?>'].value  = "<?php echo $xRUF['ufaidxxx'] ?>";
-                                parent.fmwork.fnLinks('cUfaId','EXACT','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                                parent.fmwork.document.forms['frgrm'].cUfaId.value  = "<?php echo $xRUF['ufaidxxx'] ?>";
+                                parent.fmwork.document.forms['frgrm'].cUfaDes.value = "<?php echo $xRUF['ufadesxx'] ?>";
+                                parent.fmwork.fnLinks('cUfaId','EXACT',0);
                               </script>
                             <?php }
                           }else{ ?>
                             <script language = "javascript">
-                              parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                              parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW');
                               window.close();
                             </script>
                           <?php
@@ -125,7 +128,8 @@
                         }else{ ?>
                           <script language = "javascript">
                             alert('No hay registros coincidentes');
-                            parent.fmwork.document.forms['frgrm']['cUfaId'+'<?php echo $gGrid.$gSecuencia ?>'].value  = "";
+                            parent.fmwork.document.forms['frgrm'].cUfaId.value  = "";
+                            parent.fmwork.document.forms['frgrm'].cUfaDes.value = "";
                           </script>
                           <?php
                         }
@@ -135,20 +139,21 @@
                         $qUniFact .= "ufaidxxx, ";
                         $qUniFact .= "ufadesxx, ";
                         $qUniFact .= "regestxx ";
-                        $qUniFact .= "FROM $cAlfa.lpar0006 ";
+                        $qUniFact .= "FROM $cAlfa.lpar0006 ";                        
                         $qUniFact .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cUfaId':
-                            $qUniFact .= "(ufaidxxx = \"$gUfaId\" OR ";
-                            $qUniFact .= "ufadesxx = \"$gUfaId\") AND ";
-                          break;
+                        if ($gUfaId != "") {
+                          $qUniFact .= "ufaidxxx = \"$gUfaId\" AND ";
+                        }
+                        if ($gUfaDes != "") {
+                          $qUniFact .= "ufadesxx = \"$gUfaDes\" AND ";
                         }
                         $qUniFact .= "regestxx = \"ACTIVO\" ";
                         $qUniFact .= "ORDER BY ufaidxxx ";
                         $xUniFact  = f_MySql("SELECT","",$qUniFact,$xConexion01,"");
                         while ($xRUF = mysql_fetch_array($xUniFact)) { ?>
                           <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cUfaId'+'<?php echo $gGrid.$gSecuencia ?>'].value  = "<?php echo $xRUF['ufaidxxx'] ?>";
+                            parent.fmwork.document.forms['frgrm'].cUfaId.value  = "<?php echo $xRUF['ufaidxxx'] ?>";
+                            parent.fmwork.document.forms['frgrm'].cUfaDes.value = "<?php echo $xRUF['ufadesxx'] ?>";
                           </script>
                           <?php 
                         }

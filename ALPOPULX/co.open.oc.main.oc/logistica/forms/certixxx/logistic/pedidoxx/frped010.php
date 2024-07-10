@@ -34,11 +34,13 @@
                         $qCodCebe .= "cebcodxx, ";
                         $qCodCebe .= "cebdesxx, ";
                         $qCodCebe .= "regestxx ";
-                        $qCodCebe .= "FROM $cAlfa.lpar0010 ";                        
+                        $qCodCebe .= "FROM $cAlfa.lpar0010 ";
                         $qCodCebe .= "WHERE ";
-                        if ($gCebCod != "") {
-                          $qCodCebe .= "cebcodxx LIKE \"%$gCebCod%\" AND ";
-                        } 
+                        switch ($gFunction) {
+                          case 'cCebCod':
+                            $qCodCebe .= "cebcodxx LIKE \"%$gCebCod%\" AND ";
+                          break;
+                        }
                         $qCodCebe .= "regestxx = \"ACTIVO\" ";
                         $qCodCebe .= "ORDER BY cebidxxx ";
                         $xCodCebe  = f_MySql("SELECT","",$qCodCebe,$xConexion01,"");
@@ -97,11 +99,13 @@
                         $qCodCebe .= "cebcodxx, ";
                         $qCodCebe .= "cebdesxx, ";
                         $qCodCebe .= "regestxx ";
-                        $qCodCebe .= "FROM $cAlfa.lpar0010 ";                        
+                        $qCodCebe .= "FROM $cAlfa.lpar0010 ";
                         $qCodCebe .= "WHERE ";
-                        if ($gCebCod != "") {
-                          $qCodCebe .= "cebcodxx LIKE \"%$gCebCod%\" AND ";
-                        } 
+                        switch ($gFunction) {
+                          case 'cCebCod':
+                            $qCodCebe .= "cebcodxx LIKE \"%$gCebCod%\" AND ";
+                          break;
+                        }
                         $qCodCebe .= "regestxx = \"ACTIVO\" ";
                         $qCodCebe .= "ORDER BY cebidxxx ";
                         $xCodCebe  = f_MySql("SELECT","",$qCodCebe,$xConexion01,"");
@@ -142,9 +146,13 @@
                         $qCodCebe .= "cebcodxx, ";
                         $qCodCebe .= "cebdesxx, ";
                         $qCodCebe .= "regestxx ";
-                        $qCodCebe .= "FROM $cAlfa.lpar0010 ";                        
+                        $qCodCebe .= "FROM $cAlfa.lpar0010 ";
                         $qCodCebe .= "WHERE ";
-                        $qCodCebe .= "cebcodxx = \"$gCebCod\" AND ";
+                        switch ($gFunction) {
+                          case 'cCebCod':
+                            $qCodCebe .= "cebcodxx = \"$gCebCod\" AND ";
+                          break;
+                        }
                         $qCodCebe .= "regestxx = \"ACTIVO\" ";
                         $qCodCebe .= "ORDER BY cebidxxx ";
                         $xCodCebe  = f_MySql("SELECT","",$qCodCebe,$xConexion01,"");

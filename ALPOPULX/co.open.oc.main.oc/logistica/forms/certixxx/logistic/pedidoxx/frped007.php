@@ -33,13 +33,15 @@
                         $qTipoDep .= "tdeidxxx, ";
                         $qTipoDep .= "tdedesxx, ";
                         $qTipoDep .= "regestxx ";
-                        $qTipoDep .= "FROM $cAlfa.lpar0007 ";                        
+                        $qTipoDep .= "FROM $cAlfa.lpar0007 ";
                         $qTipoDep .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cTdeDes':
+                            $qTipoDep .= "tdedesxx LIKE \"%$gTdeDes%\" AND ";
+                          break;
+                        }
                         if ($gTdeId != "") {
                           $qTipoDep .= "tdeidxxx LIKE \"%$gTdeId%\" AND ";
-                        }
-                        if ($gTdeDes != "") {
-                          $qTipoDep .= "tdedesxx LIKE \"%$gTdeDes%\" AND ";
                         }
                         $qTipoDep .= "regestxx = \"ACTIVO\" ";
                         $qTipoDep .= "ORDER BY tdeidxxx ";
@@ -94,13 +96,15 @@
                         $qTipoDep .= "tdeidxxx, ";
                         $qTipoDep .= "tdedesxx, ";
                         $qTipoDep .= "regestxx ";
-                        $qTipoDep .= "FROM $cAlfa.lpar0007 ";                        
+                        $qTipoDep .= "FROM $cAlfa.lpar0007 ";
                         $qTipoDep .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cTdeDes':
+                            $qTipoDep .= "tdedesxx LIKE \"%$gTdeDes%\" AND ";
+                          break;
+                        }
                         if ($gTdeId != "") {
                           $qTipoDep .= "tdeidxxx LIKE \"%$gTdeId%\" AND ";
-                        }
-                        if ($gTdeDes != "") {
-                          $qTipoDep .= "tdedesxx LIKE \"%$gTdeDes%\" AND ";
                         }
                         $qTipoDep .= "regestxx = \"ACTIVO\" ";
                         $qTipoDep .= "ORDER BY tdeidxxx ";
@@ -139,13 +143,15 @@
                         $qTipoDep .= "tdeidxxx, ";
                         $qTipoDep .= "tdedesxx, ";
                         $qTipoDep .= "regestxx ";
-                        $qTipoDep .= "FROM $cAlfa.lpar0007 ";                        
+                        $qTipoDep .= "FROM $cAlfa.lpar0007 ";
                         $qTipoDep .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cTdeDes':
+                            $qTipoDep .= "tdedesxx = \"$gTdeDes\" AND ";
+                          break;
+                        }
                         if ($gTdeId != "") {
                           $qTipoDep .= "tdeidxxx = \"$gTdeId\" AND ";
-                        }
-                        if ($gTdeDes != "") {
-                          $qTipoDep .= "tdedesxx = \"$gTdeDes\" AND ";
                         }
                         $qTipoDep .= "regestxx = \"ACTIVO\" ";
                         $qTipoDep .= "ORDER BY tdeidxxx ";

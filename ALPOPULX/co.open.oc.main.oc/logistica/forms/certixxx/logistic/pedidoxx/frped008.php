@@ -35,11 +35,13 @@
                         $qCanalDist .= "regestxx ";
                         $qCanalDist .= "FROM $cAlfa.lpar0008 ";                        
                         $qCanalDist .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cCdiDes':
+                            $qCanalDist .= "cdidesxx LIKE \"%$gCdiDes%\" AND ";
+                          break;
+                        }
                         if ($gCdiSap != "") {
                           $qCanalDist .= "cdisapxx LIKE \"%$gCdiSap%\" AND ";
-                        }
-                        if ($gCdiDes != "") {
-                          $qCanalDist .= "cdidesxx LIKE \"%$gCdiDes%\" AND ";
                         }
                         $qCanalDist .= "regestxx = \"ACTIVO\" ";
                         $qCanalDist .= "ORDER BY cdisapxx ";
@@ -96,11 +98,13 @@
                         $qCanalDist .= "regestxx ";
                         $qCanalDist .= "FROM $cAlfa.lpar0008 ";                        
                         $qCanalDist .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cCdiDes':
+                            $qCanalDist .= "cdidesxx LIKE \"%$gCdiDes%\" AND ";
+                          break;
+                        }
                         if ($gCdiSap != "") {
                           $qCanalDist .= "cdisapxx LIKE \"%$gCdiSap%\" AND ";
-                        }
-                        if ($gCdiDes != "") {
-                          $qCanalDist .= "cdidesxx LIKE \"%$gCdiDes%\" AND ";
                         }
                         $qCanalDist .= "regestxx = \"ACTIVO\" ";
                         $qCanalDist .= "ORDER BY cdisapxx ";
@@ -141,11 +145,13 @@
                         $qCanalDist .= "regestxx ";
                         $qCanalDist .= "FROM $cAlfa.lpar0008 ";                        
                         $qCanalDist .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cCdiDes':
+                            $qCanalDist .= "cdidesxx = \"$gCdiDes\" AND ";
+                          break;
+                        }
                         if ($gCdiSap != "") {
                           $qCanalDist .= "cdisapxx = \"$gCdiSap\" AND ";
-                        }
-                        if ($gCdiDes != "") {
-                          $qCanalDist .= "cdidesxx = \"$gCdiDes\" AND ";
                         }
                         $qCanalDist .= "regestxx = \"ACTIVO\" ";
                         $qCanalDist .= "ORDER BY cdisapxx ";

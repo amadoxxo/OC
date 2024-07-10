@@ -34,13 +34,9 @@
                         $qCondiCom .= "cliidxxx, ";
                         $qCondiCom .= "ccotipxx, ";
                         $qCondiCom .= "regestxx ";
-                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";
+                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";                        
                         $qCondiCom .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cCcoIdOc':
-                            $qCondiCom .= "ccoidocx LIKE \"%$gCcoIdOc%\" AND ";
-                          break;
-                        }
+                        $qCondiCom .= "ccoidocx LIKE \"%$gCcoIdOc%\" AND ";
                         $qCondiCom .= "cliidxxx = \"$gCliId\" AND ";
                         $qCondiCom .= "regestxx = \"ACTIVO\" ";
                         $qCondiCom .= "ORDER BY ccoidocx ";
@@ -61,7 +57,7 @@
                                   if (mysql_num_rows($xCondiCom) > 1) { ?>
                                     <tr>
                                       <td width = "150" class= "name">
-                                          <a href = "javascript:window.opener.document.forms['frgrm']['cCcoIdOc'+'<?php echo $gGrid . $gSecuencia ?>'].value = '<?php echo $xRCC['ccoidocx']?>';
+                                          <a href = "javascript:window.opener.document.forms['frgrm']['cCcoIdOc'].value = '<?php echo $xRCC['ccoidocx']?>';
                                                                 window.close();"><?php echo $xRCC['ccoidocx'] ?></a>
                                       </td>
                                       <td width = "150" class= "name"><?php echo $xRCC['cliidxxx'] ?></td>
@@ -71,7 +67,7 @@
                                     <?php
                                   }else { ?>
                                     <script languaje="javascript">
-                                      window.opener.document.forms['frgrm']['cCcoIdOc'+'<?php echo $gGrid . $gSecuencia ?>'].value = "<?php echo $xRCC['ccoidocx'] ?>";
+                                      window.opener.document.forms['frgrm']['cCcoIdOc'].value = "<?php echo $xRCC['ccoidocx'] ?>";
                                       window.close();
                                     </script>
                                     <?php
@@ -94,13 +90,9 @@
                         $qCondiCom .= "cliidxxx, ";
                         $qCondiCom .= "ccotipxx, ";
                         $qCondiCom .= "regestxx ";
-                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";
+                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";                        
                         $qCondiCom .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cCcoIdOc':
-                            $qCondiCom .= "ccoidocx = \"$gCcoIdOc\" AND ";
-                          break;
-                        }
+                        $qCondiCom .= "ccoidocx = \"$gCcoIdOc\" AND ";
                         $qCondiCom .= "cliidxxx = \"$gCliId\" AND ";
                         $qCondiCom .= "regestxx = \"ACTIVO\" ";
                         $xCondiCom  = f_MySql("SELECT","",$qCondiCom,$xConexion01,"");
@@ -109,12 +101,12 @@
                           while ($xRCC = mysql_fetch_array($xCondiCom)) {
                             ?>
                             <script language = "javascript">
-                              parent.fmwork.document.forms['frgrm']['cCcoIdOc'+'<?php echo $gGrid . $gSecuencia ?>'].value = "<?php echo $xRCC['ccoidocx'] ?>";
+                              parent.fmwork.document.forms['frgrm']['cCcoIdOc'].value = "<?php echo $xRCC['ccoidocx'] ?>";
                             </script>
                           <?php }
                         }else{ ?>
                           <script language = "javascript">
-                            parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                            parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW');
                             window.close();
                           </script>
                         <?php

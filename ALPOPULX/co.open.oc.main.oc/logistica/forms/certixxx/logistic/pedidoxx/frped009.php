@@ -33,13 +33,15 @@
                         $qSectores .= "secsapxx, ";
                         $qSectores .= "secdesxx, ";
                         $qSectores .= "regestxx ";
-                        $qSectores .= "FROM $cAlfa.lpar0009 ";                        
+                        $qSectores .= "FROM $cAlfa.lpar0009 ";
                         $qSectores .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cSecDes':
+                            $qSectores .= "secdesxx LIKE \"%$gSecDes%\" AND ";
+                          break;
+                        }
                         if ($gSecSap != "") {
                           $qSectores .= "secsapxx LIKE \"%$gSecSap%\" AND ";
-                        }
-                        if ($gSecDes != "") {
-                          $qSectores .= "secdesxx LIKE \"%$gSecDes%\" AND ";
                         }
                         $qSectores .= "regestxx = \"ACTIVO\" ";
                         $qSectores .= "ORDER BY secsapxx ";
@@ -96,11 +98,13 @@
                         $qSectores .= "regestxx ";
                         $qSectores .= "FROM $cAlfa.lpar0009 ";                        
                         $qSectores .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cSecDes':
+                            $qSectores .= "secdesxx LIKE \"%$gSecDes%\" AND ";
+                          break;
+                        }
                         if ($gSecSap != "") {
                           $qSectores .= "secsapxx LIKE \"%$gSecSap%\" AND ";
-                        }
-                        if ($gSecDes != "") {
-                          $qSectores .= "secdesxx LIKE \"%$gSecDes%\" AND ";
                         }
                         $qSectores .= "regestxx = \"ACTIVO\" ";
                         $qSectores .= "ORDER BY secsapxx ";
@@ -141,11 +145,13 @@
                         $qSectores .= "regestxx ";
                         $qSectores .= "FROM $cAlfa.lpar0009 ";                        
                         $qSectores .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cSecDes':
+                            $qSectores .= "secdesxx = \"$gSecDes\" AND ";
+                          break;
+                        }
                         if ($gSecSap != "") {
                           $qSectores .= "secsapxx = \"$gSecSap\" AND ";
-                        }
-                        if ($gSecDes != "") {
-                          $qSectores .= "secdesxx = \"$gSecDes\" AND ";
                         }
                         $qSectores .= "regestxx = \"ACTIVO\" ";
                         $qSectores .= "ORDER BY secsapxx ";

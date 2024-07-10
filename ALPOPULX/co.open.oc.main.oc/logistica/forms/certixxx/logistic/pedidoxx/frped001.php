@@ -98,11 +98,13 @@
                         $qOrgVenta .= "regestxx ";
                         $qOrgVenta .= "FROM $cAlfa.lpar0001 ";
                         $qOrgVenta .= "WHERE ";
-                        if ($gOrvSap != "") {
-                          $qOrgVenta .= "orvsapxx LIKE \"%$gOrvSap%\" AND ";
-                        }
-                        if ($gOrvDes != "") {
-                          $qOrgVenta .= "orvdesxx LIKE \"%$gOrvDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cOrvSap':
+                            $qOrgVenta .= "orvsapxx LIKE \"%$gOrvSap%\" AND ";
+                          break;
+                          case 'cOrvDes':
+                            $qOrgVenta .= "orvdesxx LIKE \"%$gOrvDes%\" AND ";
+                          break;
                         }
                         $qOrgVenta .= "regestxx = \"ACTIVO\" ";
                         $qOrgVenta .= "ORDER BY orvsapxx ";
@@ -143,11 +145,13 @@
                         $qOrgVenta .= "regestxx ";
                         $qOrgVenta .= "FROM $cAlfa.lpar0001 ";
                         $qOrgVenta .= "WHERE ";
-                        if ($gOrvSap != "") {
-                          $qOrgVenta .= "orvsapxx = \"$gOrvSap\" AND ";
-                        }
-                        if ($gOrvDes != "") {
-                          $qOrgVenta .= "orvdesxx = \"$gOrvDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cOrvSap':
+                            $qOrgVenta .= "orvsapxx = \"$gOrvSap\" AND ";
+                          break;
+                          case 'cOrvDes':
+                            $qOrgVenta .= "orvdesxx = \"$gOrvDes\" AND ";
+                          break;
                         }
                         $qOrgVenta .= "regestxx = \"ACTIVO\" ";
                         $qOrgVenta .= "ORDER BY orvsapxx ";

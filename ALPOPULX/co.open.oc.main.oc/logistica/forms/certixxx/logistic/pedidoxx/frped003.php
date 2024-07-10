@@ -33,15 +33,17 @@
                         $qCentroLog .= "closapxx, ";
                         $qCentroLog .= "clodesxx, ";
                         $qCentroLog .= "regestxx ";
-                        $qCentroLog .= "FROM $cAlfa.lpar0003 ";                        
+                        $qCentroLog .= "FROM $cAlfa.lpar0003 ";
                         $qCentroLog .= "WHERE ";
                         $qCentroLog .= "orvsapxx = \"$gOrvSap\" AND ";
                         $qCentroLog .= "ofvsapxx = \"$gOfvSap\" AND ";
+                        switch ($gFunction) {
+                          case 'cCloDes':
+                            $qCentroLog .= "clodesxx LIKE \"%$gCloDes%\" AND ";
+                          break;
+                        }
                         if ($gCloSap != "") {
                           $qCentroLog .= "closapxx LIKE \"%$gCloSap%\" AND ";
-                        }
-                        if ($gCloDes != "") {
-                          $qCentroLog .= "clodesxx LIKE \"%$gCloDes%\" AND ";
                         }
                         $qCentroLog .= "regestxx = \"ACTIVO\" ";
                         $qCentroLog .= "ORDER BY closapxx ";
@@ -100,11 +102,13 @@
                         $qCentroLog .= "WHERE ";
                         $qCentroLog .= "orvsapxx = \"$gOrvSap\" AND ";
                         $qCentroLog .= "ofvsapxx = \"$gOfvSap\" AND ";
+                        switch ($gFunction) {
+                          case 'cCloDes':
+                            $qCentroLog .= "clodesxx LIKE \"%$gCloDes%\" AND ";
+                          break;
+                        }
                         if ($gCloSap != "") {
                           $qCentroLog .= "closapxx LIKE \"%$gCloSap%\" AND ";
-                        }
-                        if ($gCloDes != "") {
-                          $qCentroLog .= "clodesxx LIKE \"%$gCloDes%\" AND ";
                         }
                         $qCentroLog .= "regestxx = \"ACTIVO\" ";
                         $qCentroLog .= "ORDER BY closapxx ";
@@ -147,11 +151,13 @@
                         $qCentroLog .= "WHERE ";
                         $qCentroLog .= "orvsapxx = \"$gOrvSap\" AND ";
                         $qCentroLog .= "ofvsapxx = \"$gOfvSap\" AND ";
+                        switch ($gFunction) {
+                          case 'cCloDes':
+                            $qCentroLog .= "clodesxx = \"$gCloDes\" AND ";
+                          break;
+                        }
                         if ($gCloSap != "") {
                           $qCentroLog .= "closapxx = \"$gCloSap\" AND ";
-                        }
-                        if ($gCloDes != "") {
-                          $qCentroLog .= "clodesxx = \"$gCloDes\" AND ";
                         }
                         $qCentroLog .= "regestxx = \"ACTIVO\" ";
                         $qCentroLog .= "ORDER BY closapxx ";

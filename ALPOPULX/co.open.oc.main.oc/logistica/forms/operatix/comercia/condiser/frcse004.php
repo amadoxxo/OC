@@ -33,13 +33,13 @@
                         $qObjFact .= "obfidxxx, ";
                         $qObjFact .= "obfdesxx, ";
                         $qObjFact .= "regestxx ";
-                        $qObjFact .= "FROM $cAlfa.lpar0004 ";
+                        $qObjFact .= "FROM $cAlfa.lpar0004 ";                        
                         $qObjFact .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cObfId':
-                            $qObjFact .= "(obfidxxx LIKE \"%$gObfId%\" OR ";
-                            $qObjFact .= "obfdesxx LIKE \"%$gObfId%\") AND ";
-                          break;
+                        if ($gObfId != "") {
+                          $qObjFact .= "obfidxxx LIKE \"%$gObfId%\" AND ";
+                        }
+                        if ($gObfDes != "") {
+                          $qObjFact .= "obfdesxx LIKE \"%$gObfDes%\" AND ";
                         }
                         $qObjFact .= "regestxx = \"ACTIVO\" ";
                         $qObjFact .= "ORDER BY obfidxxx ";
@@ -59,8 +59,9 @@
                                   if (mysql_num_rows($xObjFact) > 1) { ?>
                                     <tr>
                                       <td width = "100" class= "name">
-                                          <a href = "javascript:window.opener.document.forms['frgrm']['cObfId'+'<?php echo $gGrid . $gSecuencia ?>'].value  = '<?php echo $xROF['obfidxxx']?>';
-                                                                window.opener.fnLinks('cObfId','EXACT','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                                          <a href = "javascript:window.opener.document.forms['frgrm'].cObfId.value  = '<?php echo $xROF['obfidxxx']?>';
+                                                                window.opener.document.forms['frgrm'].cObfDes.value = '<?php echo $xROF['obfdesxx']?>';
+                                                                window.opener.fnLinks('cObfId','EXACT',0);
                                                                 window.close();"><?php echo $xROF['obfidxxx'] ?></a>
                                       </td>
                                       <td width = "350" class= "name"><?php echo $xROF['obfdesxx'] ?></td>
@@ -69,8 +70,9 @@
                                     <?php
                                   }else { ?>
                                     <script languaje="javascript">
-                                      window.opener.document.forms['frgrm']['cObfId'+'<?php echo $gGrid . $gSecuencia ?>'].value  = "<?php echo $xROF['obfidxxx'] ?>";
-                                      window.opener.fnLinks('cObfId', 'EXACT', '<?php echo $gSecuencia ?>', '<?php echo $gGrid ?>');
+                                      window.opener.document.forms['frgrm'].cObfId.value  = "<?php echo $xROF['obfidxxx'] ?>";
+                                      window.opener.document.forms['frgrm'].cObfDes.value = "<?php echo $xROF['obfdesxx'] ?>";
+                                      window.opener.fnLinks('cObfId', 'EXACT', 0);
                                       window.close();
                                     </script>
                                     <?php
@@ -92,13 +94,13 @@
                         $qObjFact .= "obfidxxx, ";
                         $qObjFact .= "obfdesxx, ";
                         $qObjFact .= "regestxx ";
-                        $qObjFact .= "FROM $cAlfa.lpar0004 ";
+                        $qObjFact .= "FROM $cAlfa.lpar0004 ";                        
                         $qObjFact .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cObfId':
-                            $qObjFact .= "(obfidxxx LIKE \"%$gObfId%\" OR ";
-                            $qObjFact .= "obfdesxx LIKE \"%$gObfId%\") AND ";
-                          break;
+                        if ($gObfId != "") {
+                          $qObjFact .= "obfidxxx LIKE \"%$gObfId%\" AND ";
+                        }
+                        if ($gObfDes != "") {
+                          $qObjFact .= "obfdesxx LIKE \"%$gObfDes%\" AND ";
                         }
                         $qObjFact .= "regestxx = \"ACTIVO\" ";
                         $qObjFact .= "ORDER BY obfidxxx ";
@@ -111,13 +113,14 @@
                               $gObfId = $xROF['obfidxxx'];
                               ?>
                               <script language = "javascript">
-                                parent.fmwork.document.forms['frgrm']['cObfId'+'<?php echo $gGrid . $gSecuencia ?>'].value  = "<?php echo $xROF['obfidxxx'] ?>";
-                                parent.fmwork.fnLinks('cObfId','EXACT','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                                parent.fmwork.document.forms['frgrm'].cObfId.value  = "<?php echo $xROF['obfidxxx'] ?>";
+                                parent.fmwork.document.forms['frgrm'].cObfDes.value = "<?php echo $xROF['obfdesxx'] ?>";
+                                parent.fmwork.fnLinks('cObfId','EXACT',0);
                               </script>
                             <?php }
                           }else{ ?>
                             <script language = "javascript">
-                              parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW','<?php echo $gSecuencia ?>','<?php echo $gGrid ?>');
+                              parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW');
                               window.close();
                             </script>
                           <?php
@@ -125,7 +128,8 @@
                         }else{ ?>
                           <script language = "javascript">
                             alert('No hay registros coincidentes');
-                            parent.fmwork.document.forms['frgrm']['cObfId'+'<?php echo $gGrid . $gSecuencia ?>'].value  = "";
+                            parent.fmwork.document.forms['frgrm'].cObfId.value  = "";
+                            parent.fmwork.document.forms['frgrm'].cObfDes.value = "";
                           </script>
                           <?php
                         }
@@ -135,20 +139,21 @@
                         $qObjFact .= "obfidxxx, ";
                         $qObjFact .= "obfdesxx, ";
                         $qObjFact .= "regestxx ";
-                        $qObjFact .= "FROM $cAlfa.lpar0004 ";
+                        $qObjFact .= "FROM $cAlfa.lpar0004 ";                        
                         $qObjFact .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cObfId':
-                            $qObjFact .= "(obfidxxx LIKE = \"$gObfId\" OR ";
-                            $qObjFact .= "obfdesxx LIKE = \"$gObfId\") AND ";
-                          break;
+                        if ($gObfId != "") {
+                          $qObjFact .= "obfidxxx = \"$gObfId\" AND ";
+                        }
+                        if ($gObfDes != "") {
+                          $qObjFact .= "obfdesxx = \"$gObfDes\" AND ";
                         }
                         $qObjFact .= "regestxx = \"ACTIVO\" ";
                         $qObjFact .= "ORDER BY obfidxxx ";
                         $xObjFact  = f_MySql("SELECT","",$qObjFact,$xConexion01,"");
                         while ($xROF = mysql_fetch_array($xObjFact)) { ?>
                           <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cObfId'+'<?php echo $gGrid . $gSecuencia ?>'].value  = "<?php echo $xROF['obfidxxx'] ?>";
+                            parent.fmwork.document.forms['frgrm'].cObfId.value  = "<?php echo $xROF['obfidxxx'] ?>";
+                            parent.fmwork.document.forms['frgrm'].cObfDes.value = "<?php echo $xROF['obfdesxx'] ?>";
                           </script>
                           <?php 
                         }

@@ -38,9 +38,13 @@
                         $qDatComp .= "comtcoxx, ";
                         $qDatComp .= "comccoxx, ";
                         $qDatComp .= "regestxx ";
-                        $qDatComp .= "FROM $cAlfa.lpar0117 ";                        
+                        $qDatComp .= "FROM $cAlfa.lpar0117 ";
                         $qDatComp .= "WHERE ";
-                        $qDatComp .= "comprexx LIKE \"%$gComPre%\" AND ";
+                        switch ($gFunction) {
+                          case 'cComPre':
+                            $qDatComp .= "comprexx LIKE \"%$gComPre%\" AND ";
+                          break;
+                        }
                         $qDatComp .= "comidxxx = \"P\" AND ";
                         $qDatComp .= "regestxx = \"ACTIVO\" ";
                         $qDatComp .= "ORDER BY comcodxx ";
@@ -102,9 +106,13 @@
                         $qDatComp .= "comtcoxx, ";
                         $qDatComp .= "comccoxx, ";
                         $qDatComp .= "regestxx ";
-                        $qDatComp .= "FROM $cAlfa.lpar0117 ";                        
+                        $qDatComp .= "FROM $cAlfa.lpar0117 ";
                         $qDatComp .= "WHERE ";
-                        $qDatComp .= "comprexx LIKE \"%$gComPre%\" AND ";
+                        switch ($gFunction) {
+                          case 'cComPre':
+                            $qDatComp .= "comprexx LIKE \"%$gComPre%\" AND ";
+                          break;
+                        }
                         $qDatComp .= "comidxxx = \"P\" AND ";
                         $qDatComp .= "regestxx = \"ACTIVO\" ";
                         $qDatComp .= "ORDER BY comcodxx ";
@@ -154,7 +162,11 @@
                         $qDatComp .= "regestxx ";
                         $qDatComp .= "FROM $cAlfa.lpar0117 ";
                         $qDatComp .= "WHERE ";
-                        $qDatComp .= "comprexx = \"$gComPre\" AND ";
+                        switch ($gFunction) {
+                          case 'cComPre':
+                            $qDatComp .= "comprexx = \"$gComPre\" AND ";
+                          break;
+                        }
                         $qDatComp .= "comidxxx = \"P\" AND ";
                         $qDatComp .= "regestxx = \"ACTIVO\" ";
                         $qDatComp .= "LIMIT 0,1";

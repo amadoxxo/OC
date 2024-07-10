@@ -33,10 +33,12 @@
                         $qSercicio .= "sersapxx, ";
                         $qSercicio .= "serdesxx, ";
                         $qSercicio .= "regestxx ";
-                        $qSercicio .= "FROM $cAlfa.lpar0011 ";                        
+                        $qSercicio .= "FROM $cAlfa.lpar0011 ";
                         $qSercicio .= "WHERE ";
-                        if ($gSerSap != "") {
-                          $qSercicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSerSap':
+                            $qSercicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
+                          break;
                         }
                         $qSercicio .= "regestxx = \"ACTIVO\" ";
                         $qSercicio .= "ORDER BY sersapxx ";
@@ -91,10 +93,12 @@
                         $qSercicio .= "sersapxx, ";
                         $qSercicio .= "serdesxx, ";
                         $qSercicio .= "regestxx ";
-                        $qSercicio .= "FROM $cAlfa.lpar0011 ";                        
+                        $qSercicio .= "FROM $cAlfa.lpar0011 ";
                         $qSercicio .= "WHERE ";
-                        if ($gSerSap != "") {
-                          $qSercicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSerSap':
+                            $qSercicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
+                          break;
                         }
                         if ($gSecDes != "") {
                           $qSercicio .= "serdesxx LIKE \"%$gSecDes%\" AND ";
@@ -136,10 +140,12 @@
                         $qSercicio .= "sersapxx, ";
                         $qSercicio .= "serdesxx, ";
                         $qSercicio .= "regestxx ";
-                        $qSercicio .= "FROM $cAlfa.lpar0011 ";                        
+                        $qSercicio .= "FROM $cAlfa.lpar0011 ";
                         $qSercicio .= "WHERE ";
-                        if ($gSerSap != "") {
-                          $qSercicio .= "sersapxx = \"$gSerSap\" AND ";
+                        switch ($gFunction) {
+                          case 'cSerSap':
+                            $qSercicio .= "sersapxx = \"$gSerSap\" AND ";
+                          break;
                         }
                         if ($gSecDes != "") {
                           $qSercicio .= "serdesxx = \"$gSecDes\" AND ";

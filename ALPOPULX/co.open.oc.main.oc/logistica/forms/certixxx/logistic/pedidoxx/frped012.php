@@ -36,10 +36,12 @@
                         $qSubServicios .= "regestxx ";
                         $qSubServicios .= "FROM $cAlfa.lpar0012 ";
                         $qSubServicios .= "WHERE ";
-                        $qSubServicios .= "sersapxx LIKE \"%$gSerSap%\" AND ";
-                        if ($gSubDes != "") {
-                          $qSubServicios .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSubDes':
+                            $qSubServicios .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                          break;
                         }
+                        $qSubServicios .= "sersapxx LIKE \"%$gSerSap%\" AND ";
                         $qSubServicios .= "regestxx = \"ACTIVO\" ";
                         $qSubServicios .= "ORDER BY sersapxx ";
                         $xSubServicios  = f_MySql("SELECT","",$qSubServicios,$xConexion01,"");
@@ -96,10 +98,12 @@
                         $qSubServicios .= "regestxx ";
                         $qSubServicios .= "FROM $cAlfa.lpar0012 ";
                         $qSubServicios .= "WHERE ";
-                        $qSubServicios .= "sersapxx LIKE \"%$gSerSap%\" AND ";
-                        if ($gSubDes != "") {
-                          $qSubServicios .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSubDes':
+                            $qSubServicios .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                          break;
                         }
+                        $qSubServicios .= "sersapxx LIKE \"%$gSerSap%\" AND ";
                         $qSubServicios .= "regestxx = \"ACTIVO\" ";
                         $qSubServicios .= "ORDER BY subidxxx ";
                         $xSubServicios  = f_MySql("SELECT","",$qSubServicios,$xConexion01,"");
@@ -141,8 +145,10 @@
                         $qSubServicios .= "FROM $cAlfa.lpar0012 ";
                         $qSubServicios .= "WHERE ";
                         $qSubServicios .= "sersapxx = \"$gSerSap\" AND ";
-                        if ($gSubDes != "") {
-                          $qSubServicios .= "subdesxx = \"$gSubDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cSubDes':
+                            $qSubServicios .= "subdesxx = \"$gSubDes\" AND ";
+                          break;
                         }
                         $qSubServicios .= "regestxx = \"ACTIVO\" ";
                         $qSubServicios .= "ORDER BY sersapxx ";

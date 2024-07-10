@@ -38,13 +38,17 @@
                         $qDeposito .= "FROM $cAlfa.lpar0155 ";
                         $qDeposito .= "LEFT JOIN $cAlfa.lpar0007 ON $cAlfa.lpar0155.tdeidxxx = $cAlfa.lpar0007.tdeidxxx ";
                         $qDeposito .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cDepNum':
+                            $qDeposito .= "lpar0155.depnumxx LIKE \"%$gDepNum%\" AND ";
+                          break;
+                        }
                         if ($gTdeId != "") {
                           $qDeposito .= "lpar0155.tdeidxxx = \"$gTdeId\" AND ";
                         }
                         if ($gCliId != "") {
                           $qDeposito .= "lpar0155.cliidxxx = \"$gCliId\" AND ";
                         }
-                        $qDeposito .= "lpar0155.depnumxx LIKE \"%$gDepNum%\" AND ";
                         $qDeposito .= "lpar0155.regestxx = \"ACTIVO\" ";
                         $xDeposito  = f_MySql("SELECT","",$qDeposito,$xConexion01,"");
                         // f_Mensaje(__FILE__, __LINE__,$qDeposito."~".mysql_num_rows($xDeposito));
@@ -96,13 +100,17 @@
                         $qDeposito .= "FROM $cAlfa.lpar0155 ";
                         $qDeposito .= "LEFT JOIN $cAlfa.lpar0007 ON $cAlfa.lpar0155.tdeidxxx = $cAlfa.lpar0007.tdeidxxx ";
                         $qDeposito .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cDepNum':
+                            $qDeposito .= "lpar0155.depnumxx LIKE \"%$gDepNum%\" AND ";
+                          break;
+                        }
                         if ($gTdeId != "") {
                           $qDeposito .= "lpar0155.tdeidxxx = \"$gTdeId\" AND ";
                         }
                         if ($gCliId != "") {
                           $qDeposito .= "lpar0155.cliidxxx = \"$gCliId\" AND ";
                         }
-                        $qDeposito .= "lpar0155.depnumxx LIKE \"%$gDepNum%\" AND ";
                         $qDeposito .= "lpar0155.regestxx = \"ACTIVO\" ";
                         $xDeposito  = f_MySql("SELECT","",$qDeposito,$xConexion01,"");
                         // f_Mensaje(__FILE__, __LINE__,$qDeposito."~".mysql_num_rows($xDeposito));
@@ -140,13 +148,17 @@
                         $qDeposito .= "FROM $cAlfa.lpar0155 ";
                         $qDeposito .= "LEFT JOIN $cAlfa.lpar0007 ON $cAlfa.lpar0155.tdeidxxx = $cAlfa.lpar0007.tdeidxxx ";
                         $qDeposito .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cDepNum':
+                            $qDeposito .= "lpar0155.depnumxx = \"$gDepNum\" AND ";                            
+                          break;
+                        }
                         if ($gTdeId != "") {
                           $qDeposito .= "lpar0155.tdeidxxx = \"$gTdeId\" AND ";
                         }
                         if ($gCliId != "") {
                           $qDeposito .= "lpar0155.cliidxxx = \"$gCliId\" AND ";
                         }
-                        $qDeposito .= "lpar0155.depnumxx = \"$gDepNum\" AND ";
                         $qDeposito .= "lpar0155.regestxx = \"ACTIVO\" ";
                         $qDeposito .= "ORDER BY lpar0155.depnumxx LIMIT 0,1 ";
                         $xDeposito  = f_MySql("SELECT","",$qDeposito,$xConexion01,"");

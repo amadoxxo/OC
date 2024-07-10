@@ -80,7 +80,7 @@
               zWindow.focus();
             }
           break;
-          // MIF
+          // Pedido
           case "cPedComCsc":
             var nSwitch = 0;
             if(document.forms['frgrm']['cPedComCsc'].value != ""){

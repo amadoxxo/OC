@@ -38,10 +38,10 @@ if ($gModo != "" && $gFunction != "") { ?>
                         $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
                         $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
                         $qPedCab .= "WHERE ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
-                        if ($gCliId != "") {
-                          $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
+                        if ($gFunction == "cPedComCsc") {
+                          $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
                         }
+                        $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") ";
                         $qPedCab .= "ORDER BY ABS($cAlfa.lpca$gPerAno.comcscxx) ASC ";
                         $xPedCab = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
@@ -113,10 +113,10 @@ if ($gModo != "" && $gFunction != "") { ?>
                         $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
                         $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
                         $qPedCab .= "WHERE ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
-                        if ($gCliId != "") {
-                          $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
+                        if ($gFunction == "cPedComCsc") {
+                          $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
                         }
+                        $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") ";
                         $xPedCab  = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
                         // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));
@@ -152,9 +152,7 @@ if ($gModo != "" && $gFunction != "") { ?>
                         $qPedCab .= "$cAlfa.lpca$gPerAno.comcodxx = \"$gComCod\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx = \"$gComCsc\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.comcsc2x = \"$gComCsc2\" AND ";
-                        if ($gCliId != "") {
-                          $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
-                        }
+                        $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") LIMIT 0,1 ";
                         $xPedCab  = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
                         // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));

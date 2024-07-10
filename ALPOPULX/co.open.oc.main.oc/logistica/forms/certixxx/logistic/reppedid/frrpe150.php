@@ -36,8 +36,14 @@
                         $qCliente .= "regestxx ";
                         $qCliente .= "FROM $cAlfa.lpar0150 ";                        
                         $qCliente .= "WHERE ";
-                        $qCliente .= "cliidxxx LIKE \"%$gCliId%\" AND ";
-                        $qCliente .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
+                        switch ($gFunction) {
+                          case 'cCliId':
+                            $qCliente .= "cliidxxx LIKE \"%$gCliId%\" AND ";
+                          break;
+                          case 'cCliNom':
+                            $qCliente .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
+                          break;
+                        }
                         $qCliente .= "cliclixx = \"SI\" AND ";
                         $qCliente .= "regestxx = \"ACTIVO\" ";
                         $qCliente .= "ORDER BY cliidxxx ";
@@ -94,8 +100,14 @@
                         $qCliente .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx ";
                         $qCliente .= "FROM $cAlfa.lpar0150 ";
                         $qCliente .= "WHERE ";
-                        $qCliente .= "cliidxxx LIKE \"%$gCliId%\" AND ";
-                        $qCliente .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
+                        switch ($gFunction) {
+                          case 'cCliId':
+                            $qCliente .= "cliidxxx LIKE \"%$gCliId%\" AND ";
+                          break;
+                          case 'cCliNom':
+                            $qCliente .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%$gCliNom%\" AND ";
+                          break;
+                        }
                         $qCliente .= "cliclixx = \"SI\" AND ";
                         $qCliente .= "regestxx = \"ACTIVO\" ";
                         $qCliente .= "ORDER BY cliidxxx";
@@ -137,18 +149,34 @@
                         $qCliente .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx ";
                         $qCliente .= "FROM $cAlfa.lpar0150 ";
                         $qCliente .= "WHERE ";
-                        $qCliente .= "cliidxxx = \"$gCliId\" AND ";
+                        switch ($gFunction) {
+                          case 'cCliId':
+                            $qCliente .= "cliidxxx = \"$gCliId\" AND ";
+                          break;
+                          case 'cCliNom':
+                            $qCliente .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) = \"$gCliNom\" AND ";
+                          break;
+                        }
                         $qCliente .= "cliclixx = \"SI\" AND ";
                         $qCliente .= "regestxx = \"ACTIVO\" ";
                         $qCliente .= "LIMIT 0,1";
                         $xCliente  = f_MySql("SELECT","",$qCliente,$xConexion01,"");
-                        while ($xRCL = mysql_fetch_array($xCliente)) { ?>
+                        if (mysql_num_rows($xDatDex) == 1) {
+                          $vCliente = mysql_fetch_array($xCliente);
+                          ?>
                           <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm'].cCliId.value  = "<?php echo $xRCL['cliidxxx'] ?>";
-                            parent.fmwork.document.forms['frgrm'].cCliDV.value  = "<?php echo gendv($xRCL['cliidxxx'])?>";
-                            parent.fmwork.document.forms['frgrm'].cCliNom.value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRCL['clinomxx']) ?>";
+                            parent.fmwork.document.forms['frgrm']['cCliId'].value  = "<?php echo $vCliente['cliidxxx'] ?>";
+                            parent.fmwork.document.forms['frgrm']['cCliDV'].value  = "<?php echo gendv($vCliente['cliidxxx'])?>";
+                            parent.fmwork.document.forms['frgrm']['cCliNom'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$vCliente['clinomxx']) ?>";
                           </script>
                           <?php 
+                        } else { ?>
+                          <script language = "javascript">
+                            parent.fmwork.document.forms['frgrm']['cCliId'].value  = "";
+                            parent.fmwork.document.forms['frgrm']['cCliDV'].value  = "";
+                            parent.fmwork.document.forms['frgrm']['cCliNom'].value = "";
+                          </script>
+                          <?php
                         }
                       break;
                     } ?>

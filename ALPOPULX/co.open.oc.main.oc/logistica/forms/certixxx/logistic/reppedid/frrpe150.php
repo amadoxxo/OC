@@ -34,7 +34,7 @@
                         $qCliente .= "cliidxxx, ";
                         $qCliente .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx,";
                         $qCliente .= "regestxx ";
-                        $qCliente .= "FROM $cAlfa.lpar0150 ";                        
+                        $qCliente .= "FROM $cAlfa.lpar0150 ";
                         $qCliente .= "WHERE ";
                         switch ($gFunction) {
                           case 'cCliId':

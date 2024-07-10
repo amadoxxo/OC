@@ -38,8 +38,10 @@ if ($gModo != "" && $gFunction != "") { ?>
                         $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
                         $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
                         $qPedCab .= "WHERE ";
-                        if ($gFunction == "cPedComCsc") {
-                          $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
+                        switch ($gFunction) {
+                          case 'cPedComCsc':
+                            $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
+                          break;
                         }
                         $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") ";
@@ -113,8 +115,10 @@ if ($gModo != "" && $gFunction != "") { ?>
                         $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
                         $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
                         $qPedCab .= "WHERE ";
-                        if ($gFunction == "cPedComCsc") {
-                          $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
+                        switch ($gFunction) {
+                          case 'cPedComCsc':
+                            $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
+                          break;
                         }
                         $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") ";
@@ -150,7 +154,11 @@ if ($gModo != "" && $gFunction != "") { ?>
                         $qPedCab .= "WHERE ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.comidxxx = \"P\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.comcodxx = \"$gComCod\" AND ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx = \"$gComCsc\" AND ";
+                        switch ($gFunction) {
+                          case 'cPedComCsc':
+                            $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx = \"$gComCsc\" AND ";
+                          break;
+                        }
                         $qPedCab .= "$cAlfa.lpca$gPerAno.comcsc2x = \"$gComCsc2\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
                         $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") LIMIT 0,1 ";

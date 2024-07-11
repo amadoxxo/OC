@@ -35,11 +35,13 @@
                       $qSqlCom .= "SUBSTRING(seridxxx,1,1) AS serid ";
 								    	$qSqlCom .= "FROM $cAlfa.fpar0129 ";
 								    	$qSqlCom .= "WHERE ";
-								    	if ($gSerId != "") {
-											$qSqlCom .= "seridxxx LIKE \"%$gSerId%\" AND ";
-											}
-											if ($gSerDes != "") {
-												$qSqlCom .= "serdesxx LIKE \"%$gSerDes%\" AND ";
+											switch ($gFunction) {
+												case 'cSerId':
+													$qSqlCom .= "seridxxx LIKE \"%$gSerId%\" AND ";
+												break;
+												case 'cSerDes':
+													$qSqlCom .= "serdesxx LIKE \"%$gSerDes%\" AND ";
+												break;
 											}
 								    	$qSqlCom .= "regestxx = \"ACTIVO\" ORDER BY serid,abs(seridxxx),sertopxx";
 	  									$xSqlCom  = f_MySql("SELECT","",$qSqlCom,$xConexion01,"");
@@ -167,11 +169,13 @@
                       $qSqlCom .= "SUBSTRING(seridxxx,1,1) AS serid ";
 											$qSqlCom .= "FROM $cAlfa.fpar0129 ";
 											$qSqlCom .= "WHERE ";
-											if ($gSerId != "") {
-												$qSqlCom .= "seridxxx = \"$gSerId\" AND ";
-											}
-											if ($gSerDes != "") {
-												$qSqlCom .= "serdesxx = \"$gSerDes\" AND ";
+											switch ($gFunction) {
+												case 'cSerId':
+													$qSqlCom .= "seridxxx = \"$gSerId\" AND ";
+												break;
+												case 'cSerDes':
+													$qSqlCom .= "serdesxx = \"$gSerDes\" AND ";
+												break;
 											}
 											$qSqlCom .= "regestxx = \"ACTIVO\" ORDER BY serid,abs(seridxxx),sertopxx";
 	  									$xSqlCom  = f_MySql("SELECT","",$qSqlCom,$xConexion01,"");

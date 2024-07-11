@@ -47,11 +47,13 @@
 		  								$qSqlFco  = "SELECT * ";
 								    	$qSqlFco .= "FROM $cAlfa.fpar0130 ";
 								    	$qSqlFco .= "WHERE ";
-											if ($gFcoId != "") {
-												$qSqlFco .= "$zWhere AND ";
-											}
-											if ($gFcoDes != "") {
-												$qSqlFco .= "fcodesxx LIKE \"%$gFcoDes%\" AND ";
+											switch ($gFunction) {
+												case 'cFcoId':
+													$qSqlFco .= "$zWhere AND ";
+												break;
+												case 'cFcoDes':
+													$qSqlFco .= "fcodesxx LIKE \"%$gFcoDes%\" AND ";
+												break;
 											}
 								    	$qSqlFco .= "regestxx = \"ACTIVO\" ORDER BY fcoidxxx";
 								    	//f_Mensaje(__FILE__,__LINE__,"Windows: ".$qSqlFco);
@@ -110,11 +112,13 @@
 		  									$qSqlFco  = "SELECT * ";
 												$qSqlFco .= "FROM $cAlfa.fpar0130 ";
 												$qSqlFco .= "WHERE ";
-												if ($gFcoId != "") {
-													$qSqlFco .= "fcoidxxx = \"$gFcoId\" AND ";
-												}
-												if ($gFcoDes != "") {
-													$qSqlFco .= "fcodesxx = \"$gFcoDes\" AND ";
+												switch ($gFunction) {
+													case 'cFcoId':
+														$qSqlFco .= "fcoidxxx = \"$gFcoId\" AND ";
+													break;
+													case 'cFcoDes':
+														$qSqlFco .= "fcodesxx = \"$gFcoDes\" AND ";
+													break;
 												}
 												$qSqlFco .= "regestxx = \"ACTIVO\" ORDER BY fcoidxxx LIMIT 0,1";
 		  									$xSqlFco  = f_MySql("SELECT","",$qSqlFco,$xConexion01,"");

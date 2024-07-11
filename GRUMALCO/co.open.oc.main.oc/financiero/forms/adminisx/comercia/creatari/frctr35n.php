@@ -38,7 +38,11 @@
 	  									$qSqlCli .= "$cAlfa.SIAI0150.REGESTXX ";
 	  									$qSqlCli .= "FROM $cAlfa.SIAI0150 ";
 	  									$qSqlCli .= "WHERE ";
-	  									$qSqlCli .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,TRIM(CONCAT($cAlfa.SIAI0150.CLINOM1X,\" \",$cAlfa.SIAI0150.CLINOM2X,\" \",$cAlfa.SIAI0150.CLIAPE1X,\" \",$cAlfa.SIAI0150.CLIAPE2X))) LIKE \"%$gCliNom%\" ORDER BY CLINOMXX";
+											switch ($gFunction) {
+												case 'cCliNom':
+													$qSqlCli .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,TRIM(CONCAT($cAlfa.SIAI0150.CLINOM1X,\" \",$cAlfa.SIAI0150.CLINOM2X,\" \",$cAlfa.SIAI0150.CLIAPE1X,\" \",$cAlfa.SIAI0150.CLIAPE2X))) LIKE \"%$gCliNom%\" ORDER BY CLINOMXX";
+												break;
+											}
 	  									$xSqlCli  = f_MySql("SELECT","",$qSqlCli,$xConexion01,"");
 
 	  									if ($xSqlCli && mysql_num_rows($xSqlCli) > 0) { ?>
@@ -107,7 +111,11 @@
 	  									$qSqlCli .= "$cAlfa.SIAI0150.REGESTXX ";
 											$qSqlCli .= "FROM $cAlfa.SIAI0150 ";
 											$qSqlCli .= "WHERE ";
-											$qSqlCli .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,TRIM(CONCAT($cAlfa.SIAI0150.CLINOM1X,\" \",$cAlfa.SIAI0150.CLINOM2X,\" \",$cAlfa.SIAI0150.CLIAPE1X,\" \",$cAlfa.SIAI0150.CLIAPE2X))) = \"$gCliNom\" ORDER BY CLINOMXX";
+											switch ($gFunction) {
+												case 'cCliNom':
+													$qSqlCli .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,TRIM(CONCAT($cAlfa.SIAI0150.CLINOM1X,\" \",$cAlfa.SIAI0150.CLINOM2X,\" \",$cAlfa.SIAI0150.CLIAPE1X,\" \",$cAlfa.SIAI0150.CLIAPE2X))) = \"$gCliNom\" ORDER BY CLINOMXX";
+												break;
+											}
 	  									$xSqlCli  = f_MySql("SELECT","",$qSqlCli,$xConexion01,"");
 
 	  									if ($xSqlCli && mysql_num_rows($xSqlCli) == 1) {

@@ -33,13 +33,15 @@
                         $qUniFact .= "ufaidxxx, ";
                         $qUniFact .= "ufadesxx, ";
                         $qUniFact .= "regestxx ";
-                        $qUniFact .= "FROM $cAlfa.lpar0006 ";                        
+                        $qUniFact .= "FROM $cAlfa.lpar0006 ";
                         $qUniFact .= "WHERE ";
-                        if ($gUfaId != "") {
-                          $qUniFact .= "ufaidxxx LIKE \"%$gUfaId%\" AND ";
-                        }
-                        if ($gUfaDes != "") {
-                          $qUniFact .= "ufadesxx LIKE \"%$gUfaDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cUfaId':
+                            $qUniFact .= "ufaidxxx LIKE \"%$gUfaId%\" AND ";
+                          break;
+                          case 'cUfaDes':
+                            $qUniFact .= "ufadesxx LIKE \"%$gUfaDes%\" AND ";
+                          break;
                         }
                         $qUniFact .= "regestxx = \"ACTIVO\" ";
                         $qUniFact .= "ORDER BY ufaidxxx ";
@@ -94,13 +96,15 @@
                         $qUniFact .= "ufaidxxx, ";
                         $qUniFact .= "ufadesxx, ";
                         $qUniFact .= "regestxx ";
-                        $qUniFact .= "FROM $cAlfa.lpar0006 ";                        
+                        $qUniFact .= "FROM $cAlfa.lpar0006 ";
                         $qUniFact .= "WHERE ";
-                        if ($gUfaId != "") {
-                          $qUniFact .= "ufaidxxx LIKE \"%$gUfaId%\" AND ";
-                        }
-                        if ($gUfaDes != "") {
-                          $qUniFact .= "ufadesxx LIKE \"%$gUfaDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cUfaId':
+                            $qUniFact .= "ufaidxxx LIKE \"%$gUfaId%\" AND ";
+                          break;
+                          case 'cUfaDes':
+                            $qUniFact .= "ufadesxx LIKE \"%$gUfaDes%\" AND ";
+                          break;
                         }
                         $qUniFact .= "regestxx = \"ACTIVO\" ";
                         $qUniFact .= "ORDER BY ufaidxxx ";
@@ -139,13 +143,15 @@
                         $qUniFact .= "ufaidxxx, ";
                         $qUniFact .= "ufadesxx, ";
                         $qUniFact .= "regestxx ";
-                        $qUniFact .= "FROM $cAlfa.lpar0006 ";                        
+                        $qUniFact .= "FROM $cAlfa.lpar0006 ";
                         $qUniFact .= "WHERE ";
-                        if ($gUfaId != "") {
-                          $qUniFact .= "ufaidxxx = \"$gUfaId\" AND ";
-                        }
-                        if ($gUfaDes != "") {
-                          $qUniFact .= "ufadesxx = \"$gUfaDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cUfaId':
+                            $qUniFact .= "ufaidxxx = \"$gUfaId\" AND ";
+                          break;
+                          case 'cUfaDes':
+                            $qUniFact .= "ufadesxx = \"$gUfaDes\" AND ";
+                          break;
                         }
                         $qUniFact .= "regestxx = \"ACTIVO\" ";
                         $qUniFact .= "ORDER BY ufaidxxx ";

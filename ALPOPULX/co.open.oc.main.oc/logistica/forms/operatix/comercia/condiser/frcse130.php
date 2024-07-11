@@ -33,13 +33,15 @@
                         $qFormaCobro .= "fcoidxxx, ";
                         $qFormaCobro .= "fcodesxx, ";
                         $qFormaCobro .= "regestxx ";
-                        $qFormaCobro .= "FROM $cAlfa.lpar0130 ";                        
+                        $qFormaCobro .= "FROM $cAlfa.lpar0130 ";
                         $qFormaCobro .= "WHERE ";
-                        if ($gFcoId != "") {
-                          $qFormaCobro .= "fcoidxxx LIKE \"%$gFcoId%\" AND ";
-                        }
-                        if ($gFcoDes != "") {
-                          $qFormaCobro .= "fcodesxx LIKE \"%$gFcoDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cFcoId':
+                            $qFormaCobro .= "fcoidxxx LIKE \"%$gFcoId%\" AND ";
+                          break;
+                          case 'cFcoDes':
+                            $qFormaCobro .= "fcodesxx LIKE \"%$gFcoDes%\" AND ";
+                          break;
                         }
                         $qFormaCobro .= "regestxx = \"ACTIVO\" ";
                         $qFormaCobro .= "ORDER BY fcoidxxx ";
@@ -96,13 +98,15 @@
                         $qFormaCobro .= "fcoidxxx, ";
                         $qFormaCobro .= "fcodesxx, ";
                         $qFormaCobro .= "regestxx ";
-                        $qFormaCobro .= "FROM $cAlfa.lpar0130 ";                        
+                        $qFormaCobro .= "FROM $cAlfa.lpar0130 ";
                         $qFormaCobro .= "WHERE ";
-                        if ($gFcoId != "") {
-                          $qFormaCobro .= "fcoidxxx LIKE \"%$gFcoId%\" AND ";
-                        }
-                        if ($gFcoDes != "") {
-                          $qFormaCobro .= "fcodesxx LIKE \"%$gFcoDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cFcoId':
+                            $qFormaCobro .= "fcoidxxx LIKE \"%$gFcoId%\" AND ";
+                          break;
+                          case 'cFcoDes':
+                            $qFormaCobro .= "fcodesxx LIKE \"%$gFcoDes%\" AND ";
+                          break;
                         }
                         $qFormaCobro .= "regestxx = \"ACTIVO\" ";
                         $qFormaCobro .= "ORDER BY fcoidxxx ";
@@ -142,13 +146,15 @@
                         $qFormaCobro .= "fcoidxxx, ";
                         $qFormaCobro .= "fcodesxx, ";
                         $qFormaCobro .= "regestxx ";
-                        $qFormaCobro .= "FROM $cAlfa.lpar0130 ";                        
+                        $qFormaCobro .= "FROM $cAlfa.lpar0130 ";
                         $qFormaCobro .= "WHERE ";
-                        if ($gFcoId != "") {
-                          $qFormaCobro .= "fcoidxxx = \"$gFcoId\" AND ";
-                        }
-                        if ($gFcoDes != "") {
-                          $qFormaCobro .= "fcodesxx = \"$gFcoDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cFcoId':
+                            $qFormaCobro .= "fcoidxxx = \"$gFcoId\" AND ";
+                          break;
+                          case 'cFcoDes':
+                            $qFormaCobro .= "fcodesxx = \"$gFcoDes\" AND ";
+                          break;
                         }
                         $qFormaCobro .= "regestxx = \"ACTIVO\" ";
                         $qFormaCobro .= "ORDER BY fcoidxxx ";

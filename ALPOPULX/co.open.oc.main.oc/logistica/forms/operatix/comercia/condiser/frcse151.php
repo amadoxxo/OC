@@ -34,9 +34,13 @@
                         $qCondiCom .= "cliidxxx, ";
                         $qCondiCom .= "ccotipxx, ";
                         $qCondiCom .= "regestxx ";
-                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";                        
+                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";
                         $qCondiCom .= "WHERE ";
-                        $qCondiCom .= "ccoidocx LIKE \"%$gCcoIdOc%\" AND ";
+                        switch ($gFunction) {
+                          case 'cCcoIdOc':
+                            $qCondiCom .= "ccoidocx LIKE \"%$gCcoIdOc%\" AND ";
+                          break;
+                        }
                         $qCondiCom .= "cliidxxx = \"$gCliId\" AND ";
                         $qCondiCom .= "regestxx = \"ACTIVO\" ";
                         $qCondiCom .= "ORDER BY ccoidocx ";
@@ -90,9 +94,13 @@
                         $qCondiCom .= "cliidxxx, ";
                         $qCondiCom .= "ccotipxx, ";
                         $qCondiCom .= "regestxx ";
-                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";                        
+                        $qCondiCom .= "FROM $cAlfa.lpar0151 ";
                         $qCondiCom .= "WHERE ";
-                        $qCondiCom .= "ccoidocx = \"$gCcoIdOc\" AND ";
+                        switch ($gFunction) {
+                          case 'cCcoIdOc':
+                            $qCondiCom .= "ccoidocx = \"$gCcoIdOc\" AND ";
+                          break;
+                        }
                         $qCondiCom .= "cliidxxx = \"$gCliId\" AND ";
                         $qCondiCom .= "regestxx = \"ACTIVO\" ";
                         $xCondiCom  = f_MySql("SELECT","",$qCondiCom,$xConexion01,"");

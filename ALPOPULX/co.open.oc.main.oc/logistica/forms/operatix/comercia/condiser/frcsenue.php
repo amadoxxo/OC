@@ -239,13 +239,13 @@
           case 'cSubDes':
             if (document.forms['frgrm']['cSerSap'].value != "") {
               if (xSwitch == "VALID") {
-                var zRuta  = "frcse012.php?gWhat=VALID&gFunction=cSerSap&gSubDes="+document.forms['frgrm']['cSerSap'].value.toUpperCase();
+                var zRuta  = "frcse012.php?gWhat=VALID&gFunction=cSubDes&gSubDes="+document.forms['frgrm']['cSerSap'].value.toUpperCase();
                 parent.fmpro.location = zRuta;
               } else {
                 var zNx     = (zX-600)/2;
                 var zNy     = (zY-250)/2;
                 var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frcse012.php?gWhat=WINDOW&gFunction=cSerSap&gSubDes="+document.forms['frgrm']['cSerSap'].value.toUpperCase();
+                var zRuta   = "frcse012.php?gWhat=WINDOW&gFunction=cSubDes&gSubDes="+document.forms['frgrm']['cSerSap'].value.toUpperCase();
                 zWindow = window.open(zRuta,"zWindow",zWinPro);
                 zWindow.focus();
               }

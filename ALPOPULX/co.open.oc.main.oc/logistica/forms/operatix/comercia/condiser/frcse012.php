@@ -33,15 +33,17 @@
                         $qSubservicio .= "subidxxx, ";
                         $qSubservicio .= "subdesxx, ";
                         $qSubservicio .= "regestxx ";
-                        $qSubservicio .= "FROM $cAlfa.lpar0012 ";                        
+                        $qSubservicio .= "FROM $cAlfa.lpar0012 ";
                         $qSubservicio .= "WHERE ";
+                        switch ($gFunction) {
+                          case 'cSubId':
+                            $qSubservicio .= "subidxxx LIKE \"%$gSubId%\" AND ";
+                          break;
+                          case 'cSubDes':
+                            $qSubservicio .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                          break;
+                        }
                         $qSubservicio .= "sersapxx = \"$gSerSap\" AND ";
-                        if ($gSubId != "") {
-                          $qSubservicio .= "subidxxx LIKE \"%$gSubId%\" AND ";
-                        }
-                        if ($gSubDes != "") {
-                          $qSubservicio .= "subdesxx LIKE \"%$gSubDes%\" AND ";
-                        }
                         $qSubservicio .= "regestxx = \"ACTIVO\" ";
                         $qSubservicio .= "ORDER BY subidxxx ";
                         $xSubservicio  = f_MySql("SELECT","",$qSubservicio,$xConexion01,"");
@@ -98,11 +100,13 @@
                         $qSubservicio .= "FROM $cAlfa.lpar0012 ";
                         $qSubservicio .= "WHERE ";
                         $qSubservicio .= "sersapxx = \"$gSerSap\" AND ";
-                        if ($gSubId != "") {
-                          $qSubservicio .= "subidxxx LIKE \"%$gSubId%\" AND ";
-                        }
-                        if ($gSubDes != "") {
-                          $qSubservicio .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSubId':
+                            $qSubservicio .= "subidxxx LIKE \"%$gSubId%\" AND ";
+                          break;
+                          case 'cSubDes':
+                            $qSubservicio .= "subdesxx LIKE \"%$gSubDes%\" AND ";
+                          break;
                         }
                         $qSubservicio .= "regestxx = \"ACTIVO\" ";
                         $qSubservicio .= "ORDER BY subidxxx ";
@@ -141,14 +145,16 @@
                         $qSubservicio .= "subidxxx, ";
                         $qSubservicio .= "subdesxx, ";
                         $qSubservicio .= "regestxx ";
-                        $qSubservicio .= "FROM $cAlfa.lpar0012 ";                        
+                        $qSubservicio .= "FROM $cAlfa.lpar0012 ";
                         $qSubservicio .= "WHERE ";
                         $qSubservicio .= "sersapxx = \"$gSerSap\" AND ";
-                        if ($gSubId != "") {
-                          $qSubservicio .= "subidxxx = \"$gSubId\" AND ";
-                        }
-                        if ($gSubDes != "") {
-                          $qSubservicio .= "subdesxx = \"$gSubDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cSubId':
+                            $qSubservicio .= "subidxxx = \"$gSubId\" AND ";
+                          break;
+                          case 'cSubDes':
+                            $qSubservicio .= "subdesxx = \"$gSubDes\" AND ";
+                          break;
                         }
                         $qSubservicio .= "regestxx = \"ACTIVO\" ";
                         $qSubservicio .= "ORDER BY subidxxx ";

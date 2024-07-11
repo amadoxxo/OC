@@ -33,13 +33,15 @@
                         $qObjFact .= "obfidxxx, ";
                         $qObjFact .= "obfdesxx, ";
                         $qObjFact .= "regestxx ";
-                        $qObjFact .= "FROM $cAlfa.lpar0004 ";                        
+                        $qObjFact .= "FROM $cAlfa.lpar0004 ";
                         $qObjFact .= "WHERE ";
-                        if ($gObfId != "") {
-                          $qObjFact .= "obfidxxx LIKE \"%$gObfId%\" AND ";
-                        }
-                        if ($gObfDes != "") {
-                          $qObjFact .= "obfdesxx LIKE \"%$gObfDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cObfId':
+                            $qObjFact .= "obfidxxx LIKE \"%$gObfId%\" AND ";
+                          break;
+                          case 'cObfDes':
+                            $qObjFact .= "obfdesxx LIKE \"%$gObfDes%\" AND ";
+                          break;
                         }
                         $qObjFact .= "regestxx = \"ACTIVO\" ";
                         $qObjFact .= "ORDER BY obfidxxx ";
@@ -94,13 +96,15 @@
                         $qObjFact .= "obfidxxx, ";
                         $qObjFact .= "obfdesxx, ";
                         $qObjFact .= "regestxx ";
-                        $qObjFact .= "FROM $cAlfa.lpar0004 ";                        
+                        $qObjFact .= "FROM $cAlfa.lpar0004 ";
                         $qObjFact .= "WHERE ";
-                        if ($gObfId != "") {
-                          $qObjFact .= "obfidxxx LIKE \"%$gObfId%\" AND ";
-                        }
-                        if ($gObfDes != "") {
-                          $qObjFact .= "obfdesxx LIKE \"%$gObfDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cObfId':
+                            $qObjFact .= "obfidxxx LIKE \"%$gObfId%\" AND ";
+                          break;
+                          case 'cObfDes':
+                            $qObjFact .= "obfdesxx LIKE \"%$gObfDes%\" AND ";
+                          break;
                         }
                         $qObjFact .= "regestxx = \"ACTIVO\" ";
                         $qObjFact .= "ORDER BY obfidxxx ";
@@ -139,13 +143,15 @@
                         $qObjFact .= "obfidxxx, ";
                         $qObjFact .= "obfdesxx, ";
                         $qObjFact .= "regestxx ";
-                        $qObjFact .= "FROM $cAlfa.lpar0004 ";                        
+                        $qObjFact .= "FROM $cAlfa.lpar0004 ";
                         $qObjFact .= "WHERE ";
-                        if ($gObfId != "") {
-                          $qObjFact .= "obfidxxx = \"$gObfId\" AND ";
-                        }
-                        if ($gObfDes != "") {
-                          $qObjFact .= "obfdesxx = \"$gObfDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cObfId':
+                            $qObjFact .= "obfidxxx = \"$gObfId\" AND ";
+                          break;
+                          case 'cObfDes':
+                            $qObjFact .= "obfdesxx = \"$gObfDes\" AND ";
+                          break;
                         }
                         $qObjFact .= "regestxx = \"ACTIVO\" ";
                         $qObjFact .= "ORDER BY obfidxxx ";

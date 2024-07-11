@@ -33,13 +33,15 @@
                         $qServicio .= "sersapxx, ";
                         $qServicio .= "serdesxx, ";
                         $qServicio .= "regestxx ";
-                        $qServicio .= "FROM $cAlfa.lpar0011 ";                        
+                        $qServicio .= "FROM $cAlfa.lpar0011 ";
                         $qServicio .= "WHERE ";
-                        if ($gSerSap != "") {
-                          $qServicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
-                        }
-                        if ($gSerDes != "") {
-                          $qServicio .= "serdesxx LIKE \"%$gSerDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSerSap':
+                            $qServicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
+                          break;
+                          case 'cSerDes':
+                            $qServicio .= "serdesxx LIKE \"%$gSerDes%\" AND ";
+                          break;
                         }
                         $qServicio .= "regestxx = \"ACTIVO\" ";
                         $qServicio .= "ORDER BY sersapxx ";
@@ -99,13 +101,15 @@
                         $qServicio .= "sersapxx, ";
                         $qServicio .= "serdesxx, ";
                         $qServicio .= "regestxx ";
-                        $qServicio .= "FROM $cAlfa.lpar0011 ";                        
+                        $qServicio .= "FROM $cAlfa.lpar0011 ";
                         $qServicio .= "WHERE ";
-                        if ($gSerSap != "") {
-                          $qServicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
-                        }
-                        if ($gSerDes != "") {
-                          $qServicio .= "serdesxx LIKE \"%$gSerDes%\" AND ";
+                        switch ($gFunction) {
+                          case 'cSerSap':
+                            $qServicio .= "sersapxx LIKE \"%$gSerSap%\" AND ";
+                          break;
+                          case 'cSerDes':
+                            $qServicio .= "serdesxx LIKE \"%$gSerDes%\" AND ";
+                          break;
                         }
                         $qServicio .= "regestxx = \"ACTIVO\" ";
                         $qServicio .= "ORDER BY sersapxx ";
@@ -150,13 +154,15 @@
                         $qServicio .= "sersapxx, ";
                         $qServicio .= "serdesxx, ";
                         $qServicio .= "regestxx ";
-                        $qServicio .= "FROM $cAlfa.lpar0011 ";                        
+                        $qServicio .= "FROM $cAlfa.lpar0011 ";
                         $qServicio .= "WHERE ";
-                        if ($gSerSap != "") {
-                          $qServicio .= "sersapxx = \"$gSerSap\" AND ";
-                        }
-                        if ($gSerDes != "") {
-                          $qServicio .= "serdesxx = \"$gSerDes\" AND ";
+                        switch ($gFunction) {
+                          case 'cSerSap':
+                            $qServicio .= "sersapxx = \"$gSerSap\" AND ";
+                          break;
+                          case 'cSerDes':
+                            $qServicio .= "serdesxx = \"$gSerDes\" AND ";
+                          break;
                         }
                         $qServicio .= "regestxx = \"ACTIVO\" ";
                         $qServicio .= "ORDER BY sersapxx ";

@@ -103,8 +103,8 @@
           ###################################
           // Tabla sys00038
           $qInsert  = "INSERT INTO sys00038 (modidxxx, proidxxx, prodirxx, protipxx, proinixx, prodesxx, proordxx, proverxx, proimgon, proimgof, proalcxx, proclixx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"2000\", \"220\", \"auexcser\", \"2\", \"fraesini.php\", \"Autorizacion Excluir Servicios\", \"0220\", \"SI\", \"btn_maillists_bg4.gif\", \"btn_maillists-disabled_bg4.gif\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
-          $xInsert  = mysql_query($qInsert,_CONEXION_); 
+          $qInsert .= "(\"2010\", \"220\", \"auexcser\", \"2\", \"fraesini.php\", \"Autorizacion Excluir Servicios\", \"0220\", \"SI\", \"btn_maillists_bg4.gif\", \"btn_maillists-disabled_bg4.gif\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
@@ -114,7 +114,9 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           } 
 
+          ###################################
           // Menú Autorización Modificar Campos Pedido
+          ###################################
           $qInsert  = "INSERT INTO sys00038 (modidxxx, proidxxx, prodirxx, protipxx, proinixx, prodesxx, proordxx, proverxx, proimgon, proimgof, proalcxx, proclixx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"2010\", \"230\", \"aumodcap\", \"2\", \"framcini.php\", \"Autorizacion Modificar Campos Pedido\", \"0230\", \"SI\", \"btn_edit1_bg.gif\", \"btn_edit1-disabled_bg.gif\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -129,8 +131,8 @@
 
           //tabla sys00039
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"2000\", \"220\", \"0\", \"\", \"CONSULTAR\", \"0000\", \"Consultar Autorizacion Excluir Cliente\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
-          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          $qInsert .= "(\"2010\", \"220\", \"0\", \"\", \"CONSULTAR\", \"0000\", \"Consultar Autorizacion Excluir Cliente\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el submenú de CONSULTAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
@@ -141,8 +143,8 @@
           }
 
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"2000\", \"220\", \"10\", \"fraesnue.php\", \"NUEVO\", \"0010\", \"Nueva Autorizacion Excluir Servicios\", \"btn_add-new-ticket_bg.gif\", \"btn_add-new-ticket-disabled_bg.gif\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
-          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          $qInsert .= "(\"2010\", \"220\", \"10\", \"fraesnue.php\", \"NUEVO\", \"0010\", \"Nueva Autorizacion Excluir Servicios\", \"btn_add-new-ticket_bg.gif\", \"btn_add-new-ticket-disabled_bg.gif\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el submenú de NUEVO para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
@@ -153,8 +155,8 @@
           }
 
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"2000\", \"220\", \"20\", \"\", \"EDITAR\", \"0020\", \"Editar Autorizacion Excluir Servicios\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
-          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          $qInsert .= "(\"2010\", \"220\", \"20\", \"\", \"EDITAR\", \"0020\", \"Editar Autorizacion Excluir Servicios\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el submenú de EDITAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
@@ -165,7 +167,7 @@
           }
 
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"2000\", \"220\", \"30\", \"\", \"ELIMINAR\", \"0030\", \"Eliminar Autorizacion Excluir Servicios\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $qInsert .= "(\"2010\", \"220\", \"30\", \"\", \"ELIMINAR\", \"0030\", \"Eliminar Autorizacion Excluir Servicios\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el submenú de ELIMINAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
@@ -176,7 +178,6 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Submenú CONSULTAR Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"2010\", \"230\", \"0\", \"\", \"CONSULTAR\", \"0000\", \"Consultar Autorizacion Modificar Campos Pedido\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -189,7 +190,6 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Submenú NUEVO Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"2010\", \"230\", \"10\", \"framcnue.php\", \"NUEVO\", \"0010\", \"Nueva Autorizacion Modificar Campos Pedido\", \"btn_add-new-ticket_bg.gif\", \"btn_add-new-ticket-disabled_bg.gif\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -202,7 +202,6 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Submenú EDITAR Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"2010\", \"230\", \"20\", \"\", \"EDITAR\", \"0020\", \"Editar Autorizacion Modificar Campos Pedido\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -215,7 +214,6 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Submenú ELIMINAR Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"2010\", \"230\", \"30\", \"\", \"ELIMINAR\", \"0030\", \"Eliminar Autorizacion Modificar Campos Pedido\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -230,7 +228,7 @@
 
           // Tabla sys00040
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"ADMIN\", \"2000\", \"220\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+          $qInsert .= "(\"ADMIN\", \"2010\", \"220\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de CONSULTAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
@@ -239,10 +237,10 @@
             $nSwitch = 1;
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
-          } 
+          }
 
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"ADMIN\", \"2000\", \"220\", \"10\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+          $qInsert .= "(\"ADMIN\", \"2010\", \"220\", \"10\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de NUEVO para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
@@ -251,10 +249,10 @@
             $nSwitch = 1;
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de NUEVO para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
-          } 
+          }
 
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"ADMIN\", \"2000\", \"220\", \"20\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+          $qInsert .= "(\"ADMIN\", \"2010\", \"220\", \"20\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de EDITAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
@@ -263,10 +261,10 @@
             $nSwitch = 1;
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de EDITAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
-          } 
+          }
 
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES";
-          $qInsert .= "(\"ADMIN\", \"2000\", \"220\", \"30\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+          $qInsert .= "(\"ADMIN\", \"2010\", \"220\", \"30\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
           if ($xInsert) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de ELIMINAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
@@ -275,9 +273,8 @@
             $nSwitch = 1;
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de ELIMINAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones]: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
-          } 
+          }
 
-          // Permiso CONSULTAR Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"ADMIN\", \"2010\", \"230\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -290,7 +287,6 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Permiso NUEVO Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"ADMIN\", \"2010\", \"230\", \"10\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -299,11 +295,10 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
           } else {
             $nSwitch = 1;
-            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opción de menú Autorización Modificar Campos Pedido: ".$pdb;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de NUEVO para la opción de menú Autorización Modificar Campos Pedido: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Permiso EDITAR Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"ADMIN\", \"2010\", \"230\", \"20\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -312,11 +307,10 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
           } else {
             $nSwitch = 1;
-            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opción de menú Autorización Modificar Campos Pedido: ".$pdb;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de EDITAR para la opción de menú Autorización Modificar Campos Pedido: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          // Permiso ELIMINAR Menú Autorización Modificar Campos Pedido
           $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
           $qInsert .= "(\"ADMIN\", \"2010\", \"230\", \"30\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
           $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -325,7 +319,7 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
           } else {
             $nSwitch = 1;
-            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opción de menú Autorización Modificar Campos Pedido: ".$pdb;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de ELIMINAR para la opción de menú Autorización Modificar Campos Pedido: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
@@ -339,22 +333,9 @@
           system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); //echo "\33[01;01;34m".$cMsj."\33[00m\n";
           while ($xRU = mysql_fetch_array($xUsuarios)) {
 
-            // Crear permisos - Formas de Cobro
-            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx) VALUES ";
-            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2000\", \"30\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\")";
-            $xInsert  = mysql_query($qInsert,_CONEXION_);
-            if ($xInsert) {
-              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de CONSULTAR para la opción de menú [Formas de Cobro] para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
-              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
-            } else {
-              $nSwitch = 1;
-              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opción de menú [Formas de Cobro] para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
-              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
-            }
-
             // Crear permisos - Autorizacion Excluir Servicios
             $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
-            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2000\", \"220\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"220\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
             $xInsert  = mysql_query($qInsert,_CONEXION_);
             if ($xInsert) {
               $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de CONSULTAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones] para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
@@ -366,7 +347,7 @@
             }
 
             $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
-            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2000\", \"220\", \"10\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"220\", \"10\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
             $xInsert  = mysql_query($qInsert,_CONEXION_);
             if ($xInsert) {
               $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de NUEVO para la opción de menú Autorizacion Excluir Servicios [Autorizaciones] para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
@@ -378,7 +359,7 @@
             }
 
             $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
-            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2000\", \"220\", \"20\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"220\", \"20\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
             $xInsert  = mysql_query($qInsert,_CONEXION_);
             if ($xInsert) {
               $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de EDITAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones] para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
@@ -390,7 +371,7 @@
             }
 
             $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
-            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2000\", \"220\", \"30\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"220\", \"30\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
             $xInsert  = mysql_query($qInsert,_CONEXION_);
             if ($xInsert) {
               $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de ELIMINAR para la opción de menú Autorizacion Excluir Servicios [Autorizaciones] para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
@@ -401,6 +382,54 @@
               system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
             }
 
+            // Crear permisos - Autorización Modificar Campos Pedido
+            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"230\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de CONSULTAR para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"230\", \"10\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de NUEVO para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de NUEVO para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"230\", \"20\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de EDITAR para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de EDITAR para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"2010\", \"230\", \"30\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de ELIMINAR para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de ELIMINAR para la opción de menú Autorización Modificar Campos Pedido para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
           }
       
         } else {

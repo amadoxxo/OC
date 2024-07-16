@@ -6,11 +6,10 @@
    * @version 001
    */
 
-  include("../../../../../financiero/libs/php/utility.php");
+include("../../../../../libs/php/utility.php");
 
-?>
+$cAnioIni = (date('Y') - 2);
 
-<?php 
 if ($gModo != "" && $gFunction != "") { ?>
   <html>
     <head>
@@ -34,60 +33,53 @@ if ($gModo != "" && $gFunction != "") { ?>
                     switch ($gModo) {
                       case "WINDOW":
                         // Traigo Datos del Pedido
-                        $qPedCab  = "SELECT ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
-                        $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
-                        $qPedCab .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cPedComCsc':
-                            $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
-                          break;
+                        $mDatos = array();
+                        for ($nAnio=$cAnioIni;$nAnio<=date('Y');$nAnio++) {
+                          $qPedCab  = "SELECT ";
+                          $qPedCab .= "$cAlfa.lpca$nAnio.*, ";
+                          $qPedCab .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,\"CLIENTE SIN NOMBRE\") AS clinomxx ";
+                          $qPedCab .= "FROM $cAlfa.lpca$nAnio ";
+                          $qPedCab .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpca$nAnio.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+                          $qPedCab .= "WHERE ";
+                          if ($gCliId != "") {
+                            $qPedCab .= "$cAlfa.lpca$nAnio.cliidxxx LIKE \"%$gCliId%\" AND ";
+                          }
+                          $qPedCab .= "$cAlfa.lpca$nAnio.regestxx IN (\"PROVISIONAL\") ";
+                          $qPedCab .= "ORDER BY ABS($cAlfa.lpca$nAnio.comcscxx) ASC ";
+                          $xPedCab = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
+                          // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));
+                          if (mysql_num_rows($xPedCab) > 0) {
+                            while($xRCC = mysql_fetch_array($xPedCab)) {
+                              $nInd_mDatos = count($mDatos);
+                              $mDatos[$nInd_mDatos] = $xRCC;
+                              $mDatos[$nInd_mDatos]['cceranox'] = $nAnio;
+                            }
+                          }
                         }
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") ";
-                        $qPedCab .= "ORDER BY ABS($cAlfa.lpca$gPerAno.comcscxx) ASC ";
-                        $xPedCab = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
-                        // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));
-                        if ($xPedCab && mysql_num_rows($xPedCab) > 0) { ?>
+                        if (count($mDatos) > 0) { ?>
                           <center>
-                            <table cellspacing = "0" cellpadding = "1" border = "1" width = "450">
-                              <tr>
+                            <table cellspacing = "0" cellpadding = "1" border = "1" width = "470">
+                              <tr bgcolor = '#D6DFF7'>
                                 <td width = "050" Class = "name"><center>ID</center></td>
-                                <td width = "050" Class = "name"><center>COD</center></td>
-                                <td width = "070" Class = "name"><center>PREFIJO</center></td>
-                                <td width = "080" Class = "name"><center>CONSECUTIVO 1</center></td>
-                                <td width = "150" Class = "name"><center>CONSECUTIVO 2</center></td>
-                                <td width = "050" Class = "name"><center>ESTADO</center></td>
+                                <td width = "110" Class = "name"><center>Cliente</center></td>
                               </tr>
                               <?php 
-                              while ($xRMC = mysql_fetch_array($xPedCab)) {
+                              for ($i=0; $i < count($mDatos); $i++) {
                                 if (mysql_num_rows($xPedCab) > 1) { ?>
                                   <tr>
-                                    <td width = "050" class= "name"> <?php echo $xRMC['comidxxx'] ?></td>
-                                    <td width = "050" class= "name"> <?php echo $xRMC['comcodxx'] ?></td>
-                                    <td width = "070" class= "name"> <?php echo $xRMC['comprexx'] ?></td>
                                     <td width = "100" class= "name">
-                                      <a href = "javascript:window.opener.document.forms['frgrm']['cPedId'].value      = '<?php echo $xRMC['pedidxxx']?>';
-                                                            window.opener.document.forms['frgrm']['cPedComId'].value   = '<?php echo $xRMC['comidxxx']?>';
-                                                            window.opener.document.forms['frgrm']['cPedComCod'].value  = '<?php echo $xRMC['comcodxx']?>';
-                                                            window.opener.document.forms['frgrm']['cPedComCsc'].value  = '<?php echo $xRMC['comcscxx']?>';
-                                                            window.opener.document.forms['frgrm']['cPedComCsc2'].value = '<?php echo $xRMC['comcsc2x']?>';
-                                                            window.opener.fnLinks('<?php echo $gFunction ?>','EXACT',0);
+                                      <a href = "javascript:window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                                                            window.opener.fnLinks('<?php echo $gFunction ?>','EXACT','<?php echo $gSecuencia ?>');
                                                             window.close();">
-                                                            <?php echo $xRMC['comcscxx'] ?>
+                                                            <?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>
                                       </a>
                                     </td>
-                                    <td width = "100" class= "name"> <?php echo $xRMC['comcsc2x'] ?></td>
-                                    <td width = "050" class= "name"> <?php echo $xRMC['regestxx'] ?></td>
+                                    <td width = "110" class= "name"> <?php echo $mDatos[$i]['clinomxx'] ?></td>
                                   </tr>
                                 <?php
                                 }else{ ?>
                                   <script language="javascript">
-                                    window.opener.document.forms['frgrm']['cPedId'].value      = '<?php echo $xRMC['pedidxxx'] ?>';
-                                    window.opener.document.forms['frgrm']['cPedComId'].value   = '<?php echo $xRMC['comidxxx'] ?>';
-                                    window.opener.document.forms['frgrm']['cPedComCod'].value  = '<?php echo $xRMC['comcodxx'] ?>';
-                                    window.opener.document.forms['frgrm']['cPedComCsc'].value  = '<?php echo $xRMC['comcscxx'] ?>';
-                                    window.opener.document.forms['frgrm']['cPedComCsc2'].value = '<?php echo $xRMC['comcsc2x'] ?>';
+                                    window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
                                     window.close();
                                   </script>
                                 <?php 
@@ -99,11 +91,7 @@ if ($gModo != "" && $gFunction != "") { ?>
                         } else {
                           f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros"); ?>
                           <script language="javascript">
-                            window.opener.document.forms['frgrm']['cPedId'].value      = '';
-                            window.opener.document.forms['frgrm']['cPedComId'].value   = '';
-                            window.opener.document.forms['frgrm']['cPedComCod'].value  = '';
-                            window.opener.document.forms['frgrm']['cPedComCsc'].value  = '';
-                            window.opener.document.forms['frgrm']['cPedComCsc2'].value = '';
+                            window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = '';
                             window.close();
                           </script>
                         <?php 
@@ -111,79 +99,45 @@ if ($gModo != "" && $gFunction != "") { ?>
                       break;
                       case "VALID":
                         // Traigo Datos de la MIF
-                        $qPedCab  = "SELECT ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
-                        $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
-                        $qPedCab .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cPedComCsc':
-                            $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx LIKE \"%$gComCsc%\" AND ";
-                          break;
+                        $mDatos = array();
+                        for ($nAnio=$cAnioIni;$nAnio<=date('Y');$nAnio++) {
+                          $qPedCab  = "SELECT ";
+                          $qPedCab .= "$cAlfa.lpca$nAnio.*, ";
+                          $qPedCab .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,\"CLIENTE SIN NOMBRE\") AS clinomxx ";
+                          $qPedCab .= "FROM $cAlfa.lpca$nAnio ";
+                          $qPedCab .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpca$nAnio.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+                          $qPedCab .= "WHERE ";
+                          if ($gCliId != "") {
+                            $qPedCab .= "$cAlfa.lpca$nAnio.cliidxxx LIKE \"%$gCliId%\" AND ";
+                          }
+                          $qPedCab .= "$cAlfa.lpca$nAnio.regestxx IN (\"PROVISIONAL\") ";
+                          $xPedCab = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
+                          // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));
+                          if (mysql_num_rows($xPedCab) > 0) {
+                            while($xRCC = mysql_fetch_array($xPedCab)) {
+                              $nInd_mDatos = count($mDatos);
+                              $mDatos[$nInd_mDatos] = $xRCC;
+                              $mDatos[$nInd_mDatos]['cceranox'] = $nAnio;
+                            }
+                          }
                         }
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") ";
-                        $xPedCab  = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
-                        // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));
-                        $vPedCab  = mysql_fetch_array($xPedCab);
-                        if (mysql_num_rows($xPedCab) > 0){
-                          if (mysql_num_rows($xPedCab) == 1){ 
-                            ?>
+                        if (count($mDatos) > 0){
+                          if (count($mDatos) == 1){
+                            for ($i=0; $i<count($mDatos); $i++) { 
+                              ?>
+                              <script language = "javascript">
+                                parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                              </script>
+                              <?php
+                            }
+                          } else { ?>
                             <script language = "javascript">
-                              parent.fmwork.document.forms['frgrm']['cPedId'].value      = '<?php echo $vPedCab['pedidxxx'] ?>';
-                              parent.fmwork.document.forms['frgrm']['cPedComId'].value   = '<?php echo $vPedCab['comidxxx'] ?>';
-                              parent.fmwork.document.forms['frgrm']['cPedComCod'].value  = '<?php echo $vPedCab['comcodxx'] ?>';
-                              parent.fmwork.document.forms['frgrm']['cPedComCsc'].value  = '<?php echo $vPedCab['comcscxx'] ?>';
-                              parent.fmwork.document.forms['frgrm']['cPedComCsc2'].value = '<?php echo $vPedCab['comcsc2x'] ?>';
+                              parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW', '<?php echo $gSecuencia ?>');
                             </script>
-                          <?php
-                          }else{ ?>
-                            <script language = "javascript">
-                              parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW', 0);
-                            </script>
-                          <?php
+                            <?php
                           }
                         }else{ 
                           f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros"); 
-                        }
-                      break;
-                      case "EXACT":
-                        // Traigo Datos de la MIF
-                        $qPedCab  = "SELECT ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.* ";
-                        $qPedCab .= "FROM $cAlfa.lpca$gPerAno ";
-                        $qPedCab .= "WHERE ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.comidxxx = \"P\" AND ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.comcodxx = \"$gComCod\" AND ";
-                        switch ($gFunction) {
-                          case 'cPedComCsc':
-                            $qPedCab .= "$cAlfa.lpca$gPerAno.comcscxx = \"$gComCsc\" AND ";
-                          break;
-                        }
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.comcsc2x = \"$gComCsc2\" AND ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.cliidxxx = \"$gCliId\" AND ";
-                        $qPedCab .= "$cAlfa.lpca$gPerAno.regestxx IN (\"PROVISIONAL\",\"ACTIVO\", \"FACTURADO\", \"ANULADO\", \"RECHAZADO\") LIMIT 0,1 ";
-                        $xPedCab  = f_MySql("SELECT","",$qPedCab,$xConexion01,"");
-                        // f_Mensaje(__FILE__,__LINE__,$qPedCab."~".mysql_num_rows($xPedCab));
-                        $vPedCab  = mysql_fetch_array($xPedCab);
-                        if (mysql_num_rows($xPedCab) == 1) { 
-                          ?>
-                          <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cPedId'].value      = '<?php echo $vPedCab['pedidxxx'] ?>';
-                            parent.fmwork.document.forms['frgrm']['cPedComId'].value   = '<?php echo $vPedCab['comidxxx'] ?>';
-                            parent.fmwork.document.forms['frgrm']['cPedComCod'].value  = '<?php echo $vPedCab['comcodxx'] ?>';
-                            parent.fmwork.document.forms['frgrm']['cPedComCsc'].value  = '<?php echo $vPedCab['comcscxx'] ?>';
-                            parent.fmwork.document.forms['frgrm']['cPedComCsc2'].value = '<?php echo $vPedCab['comcsc2x'] ?>';
-                          </script>
-                        <?php
-                        } else { ?>
-                          <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cPedId'].value      = '';
-                            parent.fmwork.document.forms['frgrm']['cPedComId'].value   = '';
-                            parent.fmwork.document.forms['frgrm']['cPedComCod'].value  = '';
-                            parent.fmwork.document.forms['frgrm']['cPedComCsc'].value  = '';
-                            parent.fmwork.document.forms['frgrm']['cPedComCsc2'].value = '';
-                          </script>
-                        <?php
                         }
                       break;
                     }

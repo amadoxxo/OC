@@ -808,7 +808,8 @@
          * Alpopular no se inicializa porque tiene una validacion particular que se hace mas abajo
          */
         var cRuta = '';
-        switch('<?php echo $kMysqlDb ?>'){
+        // switch('<?php echo $kMysqlDb ?>'){OPENEBCO
+        switch('OPENEBCO'){
           case 'UPSXXXXX': case 'TEUPSXXXXX': case 'DEUPSXXXXX': cRuta = 'frupsprn.php';    break;
           case 'GRUPOGLA': case 'TEGRUPOGLA': case 'DEGRUPOGLA': cRuta = 'frglaprn.php';    break;
           case 'ADUACARX': case 'TEADUACARX': case 'DEADUACARX': cRuta = 'frfacprn.php';    break;
@@ -1651,7 +1652,8 @@
          * Alpopular no se se le habilita la funcionalidad del ver facutura
          */
         var cRuta = '';
-        switch('<?php echo $kMysqlDb ?>'){
+        // switch('<?php echo $kMysqlDb ?>'){
+        switch('OPENEBCO'){
           case 'UPSXXXXX': case 'TEUPSXXXXX': case 'DEUPSXXXXX': cRuta = 'frupsprn.php';    break;
           case 'GRUPOGLA': case 'TEGRUPOGLA': case 'DEGRUPOGLA': cRuta = 'frglapr2.php';    break;
           case 'ADUACARX': case 'TEADUACARX': case 'DEADUACARX': cRuta = 'frfacprn.php';    break;

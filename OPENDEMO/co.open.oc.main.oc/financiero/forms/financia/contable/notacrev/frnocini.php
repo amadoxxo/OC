@@ -249,7 +249,8 @@
       	  	var zComCsc2= docun[3];
       	  	var zComFec= docun[4];
       	  	var prints = zComId+'~'+zComCod+'~'+zComCsc+'~'+zComCsc2+'~'+zComFec;
-      			switch ("<?php echo $kDf[3] ?>") {// DETRLXXXXX
+      			switch ("OPENEBCO") {// DETRLXXXXX
+      			// switch ("<?php echo $kDf[3] ?>") {// DETRLXXXXX
 							// case "DEADUANAMO":
 							case "DETRLXXXXX":
 							case "TETRLXXXXX":

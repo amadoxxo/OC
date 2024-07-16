@@ -90,7 +90,7 @@
           $qCreate .= "cliidxxx varchar(20) NOT NULL COMMENT \"Id del Cliente\",";
           $qCreate .= "ceridxxx int(10) NOT NULL COMMENT \"Id de la Certificacion\",";
           $qCreate .= "ceranoxx varchar(4) NOT NULL COMMENT \"Anio de la Certificacion\",";
-          $qCreate .= "cercscxx varchar(4) NOT NULL COMMENT \"Consecutivo de la Certificacion\",";
+          $qCreate .= "cercscxx varchar(50) NOT NULL COMMENT \"Consecutivo de la Certificacion\",";
           $qCreate .= "sersapxx varchar(7) NOT NULL COMMENT \"Codigo SAP Servicio\",";
           $qCreate .= "subidxxx varchar(10) NOT NULL COMMENT \"Id Subservicio\",";
           $qCreate .= "aesobsxx text NULL COMMENT \"Observacion Autorizacion\",";
@@ -125,7 +125,7 @@
           $qCreate .= "cliidxxx varchar(20) NOT NULL COMMENT \"Id del Cliente\",";
           $qCreate .= "pedidxxx int(10) NOT NULL COMMENT \"Id del Pedido\",";
           $qCreate .= "pedanoxx varchar(4)  NOT NULL COMMENT \"Anio de la Certificacion\",";
-          $qCreate .= "pedcscxx varchar(4)  NOT NULL COMMENT \"Consecutivo de la Certificacion\",";
+          $qCreate .= "pedcscxx varchar(50)  NOT NULL COMMENT \"Consecutivo de la Certificacion\",";
           $qCreate .= "sersapxx varchar(7)  NOT NULL COMMENT \"Codigo SAP Servicio\",";
           $qCreate .= "subidxxx varchar(10) NOT NULL COMMENT \"Id Subservicio\",";
           $qCreate .= "amcobsxx text NULL COMMENT \"Observacion Autorizacion\",";

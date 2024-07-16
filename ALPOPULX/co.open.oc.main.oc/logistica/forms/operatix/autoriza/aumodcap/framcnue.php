@@ -20,48 +20,58 @@
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory ?>/frnivel3.php";
       }
       
-      function fnLinks(xLink,xSwitch,xSecuencia) {
+      function fnLinks(xLink, xSwitch, xSecuencia = "") {
         var zX    = screen.width;
         var zY    = screen.height;
         switch (xLink){
           // Cliente
           case "cCliId":
             if (xSwitch == "VALID") {
-              var cRuta  = "fraec121.php?gWhat=VALID&gFunction=cCliId&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase();
-              // alert(cRuta);
+              var cRuta  = "fraec121.php?gWhat=VALID"+
+                                        "&gFunction=cCliId"+
+                                        "&gSecuencia="+xSecuencia+
+                                        "&gCliId="+document.forms['frgrm']['cCliId'+xSecuencia].value;
               parent.fmpro.location = cRuta;
             } else {
               var zNx     = (zX-600)/2;
               var zNy     = (zY-250)/2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var cRuta   = "fraec121.php?gWhat=WINDOW&gFunction=cCliId&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase();
+              var cRuta   = "fraec121.php?gWhat=WINDOW"+
+                                        "&gFunction=cCliId"+
+                                        "&gSecuencia="+xSecuencia+
+                                        "&gCliId="+document.forms['frgrm']['cCliId'+xSecuencia].value;
               // alert(cRuta);
               zWindow = window.open(cRuta,"zWindow",zWinPro);
               zWindow.focus();
             }
-          break;
+            break;
           case "cPedComCsc":
-            if (xSwitch == "VALID") {
-                  var zRuta = "fraecint.php?gModo="  +xSwitch+"&gFunction="+xLink+
-                                          "&gComCsc="+document.forms['frgrm']['cPedComCsc'].value +
-                                          "&gCliId=" +document.forms['frgrm']['cCliId'].value;
-                  parent.fmpro.location = zRuta;
-            } else if(xSwitch == "WINDOW") {
-              var nNx      = (nX-500)/2;
-              var nNy      = (nY-250)/2;
-              var zWinPro  = "width=500,scrollbars=1,height=250,left="+nNx+",top="+nNy;
-              var zRuta = "fraecint.php?gModo="  +xSwitch+"&gFunction="+xLink+
-                                      "&gComCsc="+document.forms['frgrm']['cPedComCsc'].value + 
-                                      "&gCliId=" +document.forms['frgrm']['cCliId'].value;
-              zWindow = window.open(zRuta,xLink,zWinPro);
-              zWindow.focus();
-            } else if (xSwitch == "EXACT") {
-              var zRuta = "fraecint.php?gModo=EXACT&gFunction=" + xLink +
-                                      "&gComCod=" +document.frgrm['cPedComCod'].value +
-                                      "&gComCsc=" +document.frgrm['cPedComCsc'].value +
-                                      "&gComCsc2="+document.frgrm['cPedComCsc2'].value +
-                                      "&gCliId="  +document.frgrm['cCliId'].value;
-              parent.fmpro.location = zRuta;
+            var nSwitch = 0;
+            if (document.forms['frgrm']['cCliId'+xSecuencia].value == "") {
+              nSwitch = 1;
+              alert('Debe Seleccionar un Cliente para Consultar el Pedido,\n');
+            }
+
+            if (nSwitch == 0) {
+              if (xSwitch == "VALID") {
+                    var zRuta = "fraecint.php?gModo="+xSwitch+
+                                            "&gFunction="+xLink+
+                                            "&gSecuencia="+xSecuencia+
+                                            "&gComCsc="+document.forms['frgrm']['cPedComCsc'+xSecuencia].value +
+                                            "&gCliId=" +document.forms['frgrm']['cCliId'+xSecuencia].value;
+                    parent.fmpro.location = zRuta;
+              } else if(xSwitch == "WINDOW") {
+                var nNx      = (zX-500)/2;
+                var nNy      = (zY-250)/2;
+                var zWinPro  = "width=500,scrollbars=1,height=250,left="+nNx+",top="+nNy;
+                var zRuta = "fraecint.php?gModo="+xSwitch+
+                                        "&gFunction="+xLink+
+                                        "&gSecuencia="+xSecuencia+
+                                        "&gComCsc="+document.forms['frgrm']['cPedComCsc'+xSecuencia].value +
+                                        "&gCliId=" +document.forms['frgrm']['cCliId'+xSecuencia].value;
+                zWindow = window.open(zRuta,xLink,zWinPro);
+                zWindow.focus();
+              }
             }
           break;
         }
@@ -122,19 +132,21 @@
         var cTableRow  = cGrid.insertRow(nLastRow);
         var cDocSeq  = 'cDocSeq'+ nSecuencia; // Hidden: Sucursal del DO
         var cSucId   = 'cSucId' + nSecuencia; // Hidden: Sucursal del DO
-        var cDocId   = 'cDocId' + nSecuencia; // Numero del DO
-        var cDocSuf  = 'cDocSuf'+ nSecuencia; // Hidden: Sufijo del DO
-        var cDocTip  = 'cDocTip'+ nSecuencia;
-        var cCliId   = 'cCliId' + nSecuencia;
-        var cCliDv   = 'cCliDv' + nSecuencia;
-        var cCliNom  = 'cCliNom'+ nSecuencia; 
-        var oBtnDel  = 'oBtnDel'+ nSecuencia; // Boton de Borrar Row
+        // var cDocId   = 'cDocId' + nSecuencia; // Numero del DO
+        // var cDocSuf  = 'cDocSuf'+ nSecuencia; // Hidden: Sufijo del DO
+        // var cDocTip  = 'cDocTip'+ nSecuencia;
+        // Campos del cliente
+        var cCliId   = 'cCliId'  + nSecuencia;
+        var cCliDV   = 'cCliDV'  + nSecuencia;
+        var cCliSap  = 'cCliSap' + nSecuencia;
+        var cCliNom  = 'cCliNom' + nSecuencia; 
+        var oBtnDel  = 'oBtnDel' + nSecuencia; // Boton de Borrar Row
         
-        //Campos de Factura A, cuando para el importador aplica la condicion comercial "Aplicar tarifas del Facturar a"
-        var cTerIdInt   = 'cTerIdInt' + nSecuencia;
-        var cTerDVInt   = 'cTerDVInt' + nSecuencia;
-        var cTerNomInt  = 'cTerNomInt'+ nSecuencia;
-        var cCcAplFa    = 'cCcAplFa'  + nSecuencia;
+        //Campos del No. de Pedido
+        var cPedComCsc  = 'cPedComCsc' + nSecuencia;
+        // var cTerDVInt   = 'cTerDVInt' + nSecuencia;
+        // var cTerNomInt  = 'cTerNomInt'+ nSecuencia;
+        // var cCcAplFa    = 'cCcAplFa'  + nSecuencia;
         
         var TD_xAll = cTableRow.insertCell(0);
         TD_xAll.style.width  = "70px";
@@ -144,40 +156,31 @@
         TD_xAll = cTableRow.insertCell(1);
         TD_xAll.style.width  = "190px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:left;padding:2px' name = 'cCliId' id = 'cCliId' " +
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cCliId+"' id = '"+cCliId+"' " +
                                       "onBlur = 'javascript:this.value=this.value.toUpperCase(); " +
-                                      "fnLinks(\"cCliId\",\"VALID\")' " +
-                                      "onFocus='javascript:document.forms[\"frgrm\"][\"cCliId\"].value  = \"\" " + 
-                                                          "document.forms[\"frgrm\"][\"cCliDV\"].value  = \"\" " +
-                                                          "document.forms[\"frgrm\"][\"cCliSap\"].value = \"\" " +
-                                                          "document.forms[\"frgrm\"][\"cCliNom\"].value = \"\" '> ";
+                                      "fnLinks(\"cCliId\",\"VALID\", \""+nSecuencia+"\");' >";
         
         TD_xAll = cTableRow.insertCell(2);
         TD_xAll.style.width  = "40px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:040px;border:0;text-align:center;padding:2px' name = 'cCliDV' id = 'cCliDV' readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:040px;border:0;text-align:center;padding:2px' name = '"+cCliDV+"' id = '"+cCliDV+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(3);
         TD_xAll.style.width  = "210px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:210px;border:0;text-align:center;padding:2px' name = 'cCliSap' id = 'cCliSap' readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:210px;border:0;text-align:center;padding:2px' name = '"+cCliSap+"' id = '"+cCliSap+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(4);
         TD_xAll.style.width  = "350px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:350px;border:0;text-align:left;padding:2px' name = 'cCliNom' id = 'cCliNom' readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:350px;border:0;text-align:center;padding:2px' name = '"+cCliNom+"' id = '"+cCliNom+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(5);
         TD_xAll.style.width  = "190px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:left;padding:2px' name = 'cPedComCsc' id = 'cPedComCsc' " +
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cPedComCsc+"' id = '"+cPedComCsc+"' " +
                                       "onBlur = 'javascript:this.value=this.value.toUpperCase(); " +
-                                      "if(document.forms[\"frgrm\"][\"cPedComCsc\"].value.length > 0) {" +
-                                        "fnLinks(\"cPedComCsc\", \"VALID\"); " + 
-                                      "} else {" +
-                                        "alert(\"Debe digitar al menos un NIT del cliente\"); " +
-                                      "}' " +
-                                      "onFocus='javascript:document.forms[\"cPedComCsc\"][\"cPedComCsc\"].value = \"\" '> ";
+                                      "fnLinks(\"cPedComCsc\", \"VALID\", \""+nSecuencia+"\");' >";
         
         TD_xAll = cTableRow.insertCell(6);
         TD_xAll.style.width  = "20px";
@@ -261,7 +264,7 @@
         }
       }
       
-      function f_Delete_Row(xNumRow,xSecuencia,xTabla) {        
+      function f_Delete_Row(xNumRow,xSecuencia,xTabla) {
         switch (xTabla) {
           case "Grid_Do": 
             var cGrid = document.getElementById(xTabla);
@@ -395,7 +398,7 @@
                           <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="17" align="center">&nbsp;&nbsp;Raz&oacute;n Social</td>
                           <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="12" align="center">&nbsp;&nbsp;&nbsp;No. Pedido</td>
                           <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="right">
-                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:fnPegarDo()" style = "cursor:pointer" title="Pegar DOs">
+                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:f_Add_New_Row_Do()" style = "cursor:pointer" title="Adicionar">
                             <img src = "<?php echo $cPlesk_Skin_Directory ?>/b_drop.png" onClick = "javascript:fnBorrarDos()" style = "cursor:pointer" title="Eliminar Todos">
                           </td>
                         </tr>

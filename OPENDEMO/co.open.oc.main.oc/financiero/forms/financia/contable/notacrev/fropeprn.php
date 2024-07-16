@@ -206,7 +206,7 @@
 			$posx = 11;
 			$posy = 15;
 			//Hoja Membrete
-			$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/hoja_membrete_open.jpg', $posx-12, $posy-7, 210);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/hoja_membrete_open.jpg', $posx-12, $posy-10, 212);
 			//Logo Texto laterar
 			$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/camaracomercio_openeb.jpg', $posx-9, $posy+43, 2);
 

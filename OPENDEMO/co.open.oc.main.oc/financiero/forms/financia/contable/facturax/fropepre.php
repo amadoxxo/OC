@@ -473,7 +473,7 @@
       $posx = 20;
       $posy = 15;
       // Hoja Membrete
-      $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/hoja_membrete_open.jpg', $posx-14, $posy-9, 200, 273);
+      $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/hoja_membrete_open.jpg', $posx-12, $posy-15, 197, 280);
 
       $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/copianovalida.jpg',10,50,180,180);
       $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/facturaanulada.jpg',10,50,180,180);

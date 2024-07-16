@@ -425,13 +425,12 @@
         global $cAlfa;   global $cRoot; global $cPlesk_Skin_Directory; global $vSysStr; global $_COOKIE;
 				global $vCocDat; global $vResDat; global $vCiuCfa; global $vPaiCfa; global $vDepCfa;
 				global $cFormaPag; global $vMedPag; global $cSucDes; global $vComObs2;
-
         
 				//Inicializo Posicion X,Y
         $posx = 20;
         $posy = 10;
         //Hoja Membrete
-        $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/hoja_membrete_open.jpg', $posx-14, $posy-9, 200);
+        $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/hoja_membrete_open.jpg', $posx-12, $posy-10, 197, 280);
 
         if ($vCocDat['regestxx'] == "INACTIVO") {
           $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/facturaanulada.jpg',15,50,180,180);

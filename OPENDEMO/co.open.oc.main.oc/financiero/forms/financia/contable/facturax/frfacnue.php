@@ -1476,7 +1476,8 @@
 
 			  var cRuta = '';
 
-				switch(document.forms['frgrm']['ckMysqlDb'].value){
+				// switch(document.forms['frgrm']['ckMysqlDb'].value){
+				switch('OPENEBCO'){
 					case 'UPSXXXXX': case 'TEUPSXXXXX': case 'DEUPSXXXXX': cRuta='frupspre.php'; break;
 					case 'GRUPOGLA': case 'TEGRUPOGLA': case 'DEGRUPOGLA': cRuta='frglapre.php'; break;
 					case 'ADUACARX': case 'TEADUACARX': case 'DEADUACARX': cRuta='frfacpre.php'; break;

@@ -69,6 +69,8 @@ if ($gWhat != "" && $gFunction != "") { ?>
                                   <tr>
                                     <td width = "100" class= "name">
                                       <a href = "javascript:window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                                                            window.opener.document.forms['frgrm']['cPedIds'   +'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['pedidxxx'] ?>';
+                                                            window.opener.document.forms['frgrm']['cAnioIds'  +'<?php echo $gSecuencia ?>'].value = '<?php echo substr($mDatos[$i]['comfecxx'], 0, 4) ?>';
                                                             window.opener.fnLinks('<?php echo $gFunction ?>','EXACT','<?php echo $gSecuencia ?>');
                                                             window.close();">
                                                             <?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>
@@ -79,7 +81,9 @@ if ($gWhat != "" && $gFunction != "") { ?>
                                 <?php
                                 }else{ ?>
                                   <script language="javascript">
-                                    window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                                    window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                                    window.opener.document.forms['frgrm']['cPedIds'   +'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['pedidxxx'] ?>';
+                                    window.opener.document.forms['frgrm']['cAnioIds'  +'<?php echo $gSecuencia ?>'].value = '<?php echo substr($mDatos[$i]['comfecxx'], 0, 4) ?>';
                                     window.close();
                                   </script>
                                 <?php 
@@ -91,7 +95,9 @@ if ($gWhat != "" && $gFunction != "") { ?>
                         } else {
                           f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros"); ?>
                           <script language="javascript">
-                            window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = "";
+                            window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
+                            window.opener.document.forms['frgrm']['cPedIds'+'<?php echo $gSecuencia ?>'].value    = "";
+                            window.opener.document.forms['frgrm']['cAnioIds'+'<?php echo $gSecuencia ?>'].value   = "";
                             window.close();
                           </script>
                         <?php 
@@ -126,7 +132,9 @@ if ($gWhat != "" && $gFunction != "") { ?>
                             for ($i=0; $i<count($mDatos); $i++) { 
                               ?>
                               <script language = "javascript">
-                                parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                                parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['comidxxx']."-".$mDatos[$i]['comprexx']."-".$mDatos[$i]['comcsc2x'] ?>';
+                                parent.fmwork.document.forms['frgrm']['cPedIds'   +'<?php echo $gSecuencia ?>'].value = '<?php echo $mDatos[$i]['pedidxxx'] ?>';
+                                parent.fmwork.document.forms['frgrm']['cAnioIds'  +'<?php echo $gSecuencia ?>'].value = '<?php echo substr($mDatos[$i]['comfecxx'], 0, 4) ?>';
                               </script>
                               <?php
                             }
@@ -142,6 +150,8 @@ if ($gWhat != "" && $gFunction != "") { ?>
                           ?>
                           <script language = "javascript">
                             parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
+                            parent.fmwork.document.forms['frgrm']['cPedIds'+'<?php echo $gSecuencia ?>'].value    = "";
+                            parent.fmwork.document.forms['frgrm']['cAnioIds'+'<?php echo $gSecuencia ?>'].value   = "";
                           </script>
                           <?php
                         }

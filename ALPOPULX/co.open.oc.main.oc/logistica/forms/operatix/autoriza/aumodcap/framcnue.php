@@ -128,8 +128,10 @@
         var nLastRow   = cGrid.rows.length;
         var nSecuencia = nLastRow+1;
         var cTableRow  = cGrid.insertRow(nLastRow);
-        var cAutSeq    = 'cAutSeq' + nSecuencia;
-        var cSucId     = 'cSucId'  + nSecuencia;
+        var cAutSeq    = 'cAutSeq'  + nSecuencia;
+        var cSucId     = 'cSucId'   + nSecuencia;
+        var cPedIds    = 'cPedIds'  + nSecuencia;
+        var cAnioIds   = 'cAnioIds' + nSecuencia;
         // Campos del cliente
         var cCliId     = 'cCliId'  + nSecuencia; // NIT del Cliente
         var cCliDV     = 'cCliDV'  + nSecuencia; // 
@@ -170,7 +172,9 @@
         TD_xAll.style.width  = "190px";
         TD_xAll.style.border = "1px solid #E6E6E6";
         TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cPedComCsc+"' id = '"+cPedComCsc+"' " +
-                                      "onBlur = 'javascript:fnLinks(\"cPedComCsc\", \"VALID\", \""+nSecuencia+"\");' >";
+                                      "onBlur = 'javascript:fnLinks(\"cPedComCsc\", \"VALID\", \""+nSecuencia+"\");' > " +
+                                      "<input type = 'hidden' name = '"+cPedIds+"' id = '"+cPedIds+"' readonly> " +
+                                      "<input type = 'hidden' name = '"+cAnioIds+"' id = '"+cAnioIds+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(6);
         TD_xAll.style.width  = "20px";
@@ -240,6 +244,8 @@
                 document.forms['frgrm']['cCliSap'    + i].value = document.forms['frgrm']['cCliSap'    + j].value;
                 document.forms['frgrm']['cCliNom'    + i].value = document.forms['frgrm']['cCliNom'    + j].value;
                 document.forms['frgrm']['cPedComCsc' + i].value = document.forms['frgrm']['cPedComCsc' + j].value;
+                document.forms['frgrm']['cPedIds'    + i].value = document.forms['frgrm']['cPedIds'    + j].value;
+                document.forms['frgrm']['cAnioIds'   + i].value = document.forms['frgrm']['cAnioIds'   + j].value;
               }
             }
             cGrid.deleteRow(nLastRow - 1);
@@ -256,17 +262,36 @@
         fnAddNewRow();
       }
       
-      function f_Valida(){//Valida datos de formulario, para poder pintar conceptos de Cobro a excluir
-        document.forms['frgrm'].target = 'fmpro';
+      function fnValidaciones(){
+        // var cGrid      = document.getElementById("Grid");
+        // var nLastRow   = cGrid.rows.length;
+        // var nSecuencia = nLastRow+1;
+        // var cMjs = "";
+        // Validaciones al seleccionar los Pedidos
+        // console.log(document.forms['frgrm']['nSecuencia'].value);
+        // if (document.forms['frgrm']['cCliId' + nSecuencia].value == "") {
+          //   cMjs += "Debe seleccionar el NIT del cliente,\n";
+        // }
+          
+        // if (document.forms['frgrm']['cPedComCsc' + nSecuencia].value == "") {
+          //   cMjs += "Debe seleccionar el Pedido,\n";
+        // }
+            
+        // if (cMjs != "") {
+          //   cMjs += "Verifique.";
+          //   alert(cMjs);
+        // }
+              
         document.forms['frgrm'].action = 'fraec20g.php';
         document.forms['frgrm']['cModo'].value = 'VALIDARDO';
+        document.forms['frgrm'].target = 'fmpro';
         document.forms['frgrm'].submit();
       }
       
       function f_VolverAtras () {
         f_Carga_Data();
         document.forms['frgrm'].target             = 'fmwork';
-        document.forms['frgrm'].action             = 'frmasnue.php';
+        document.forms['frgrm'].action             = 'framcnue.php';
         document.forms['frgrm']['cStep'].value     = '1';
         document.forms['frgrm']['cStep_Ant'].value = '2';
         document.forms['frgrm'].submit();
@@ -320,49 +345,55 @@
                   document.getElementById("cComMemo").style.display ="none";
                 </script>
                 
-                <fieldset id="Grid_Paso1"><?php if($_POST['cStep'] == "")	{ $_POST['cStep'] = "1"; } ?>
-                  <legend><b>Seleccione los Pedidos</b></legend>
-                  <center>
-                      <table border = '0' cellpadding = '0' cellspacing = '0' width='1160'>
-                        <?php $nCol = f_Format_Cols(58); echo $nCol;?>
-                        <tr height="25px">
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="04" align="left">&nbsp;&nbsp;Suc</td>
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="10" align="center">&nbsp;&nbsp;Nit</td>
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="center">Dv</td>
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="11" align="center">Cod SAP</td>
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="17" align="center">&nbsp;&nbsp;Raz&oacute;n Social</td>
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="12" align="center">&nbsp;&nbsp;&nbsp;No. Pedido</td>
-                          <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="right">
-                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:fnAddNewRow()" style = "cursor:pointer" title="Adicionar">
-                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/b_drop.png" onClick = "javascript:fnBorrarTodos()" style = "cursor:pointer" title="Eliminar Todos">
-                          </td>
-                        </tr>
-                      </table>
-                      <table border = "0" cellpadding = "0" cellspacing = "0" width = "1160" id = "Grid"></table>
-                  </center>
-                  <script languaje = "javascript">
-                    fnAddNewRow();
-                  </script>
-                </fieldset>
-                <fieldset>
-                  <legend>
-                    <b>Observaciones</b>
-                  </legend>
-                  <textarea name="" id=""></textarea>
-                </fieldset>
+                <div id="Grid_Paso1">
+                  <?php
+                    if ($_POST['cStep'] == "") {
+                      $_POST['cStep'] = "1";
+                    }
+                  ?>
+                  <fieldset id="Grid_Paso1">
+                    <legend><b>Seleccione los Pedidos</b></legend>
+                    <center>
+                        <table border = '0' cellpadding = '0' cellspacing = '0' width='1160'>
+                          <?php $nCol = f_Format_Cols(58); echo $nCol;?>
+                          <tr height="25px">
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="04" align="left">&nbsp;&nbsp;Suc</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="10" align="center">&nbsp;&nbsp;Nit</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="center">Dv</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="11" align="center">Cod SAP</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="17" align="center">&nbsp;&nbsp;Raz&oacute;n Social</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="12" align="center">&nbsp;&nbsp;&nbsp;No. Pedido</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="right">
+                              <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:fnAddNewRow()" style = "cursor:pointer" title="Adicionar">
+                              <img src = "<?php echo $cPlesk_Skin_Directory ?>/b_drop.png" onClick = "javascript:fnBorrarTodos()" style = "cursor:pointer" title="Eliminar Todos">
+                            </td>
+                          </tr>
+                        </table>
+                        <table border = "0" cellpadding = "0" cellspacing = "0" width = "1160" id = "Grid"></table>
+                    </center>
+                    <script languaje = "javascript">
+                      fnAddNewRow();
+                    </script>
+                  </fieldset>
+                  <fieldset>
+                    <legend>
+                      <b>Observaciones</b>
+                    </legend>
+                    <textarea name="" id=""></textarea>
+                  </fieldset>
+                </div>
 
                 <fieldset id="Grid_Paso2">
-                  <legend><b>Seleccione los Conceptos de Cobro a Excluir</b></legend>
+                  <legend><b>Seleccione los Servicios en que Desea Modificar los Valores</b></legend>
                   <center>
-                    <b>Nota:</b> Debe seleccionar los Ingresos Propios que desea excluir<br><br>
                     <table border = '0' cellpadding = '0' cellspacing = '0' width='1160'>
                       <?php $nCol = f_Format_Cols(58); echo $nCol;?>
                       <tr height="25px">
-                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="06" align="left">&nbsp;&nbsp;Tramite</td>
-                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="15" align="left">&nbsp;&nbsp;&nbsp;Importador</td>
-                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="15" align="left">&nbsp;&nbsp;&nbsp;Facturar a</td>
+                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="06" align="left">&nbsp;&nbsp;No. Pedido</td>
+                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="15" align="left">&nbsp;&nbsp;&nbsp;Cliente</td>
+                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="15" align="left">&nbsp;&nbsp;&nbsp;Cod SAP</td>
                         <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="17" align="left">&nbsp;&nbsp;&nbsp;Servicio</td>
-                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="04" align="left">&nbsp;&nbsp;Tipo Tarifa</td>
+                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="04" align="left">&nbsp;&nbsp;Subservicio</td>
                         <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="01" align = "center"><input type="checkbox" name="nCheckAll" onClick = "javascript:f_Marca()"></td>
                       </tr>
                     </table>
@@ -384,7 +415,7 @@
           <tr>
             <td width="978" height="21"></td>
             <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/siguiente.gif" style="cursor:pointer"
-              onClick = "javascript:f_Valida();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Siguiente
+              onClick = "javascript:fnValidaciones();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Siguiente
             </td>
             <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:hand"
               onClick ="javascript:fnRetorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
@@ -537,15 +568,31 @@
         for ($i=0; $i<$_POST['nSecuencia']; $i++) {
           if ($_POST['cSucId' .($i+1)] != "" && $_POST['cDocId' .($i+1)] != "" && $_POST['cDocSuf' .($i+1)] != "") {
             
-            $cTraSel .= "{$_POST['cSucId'.($i+1)]}~{$_POST['cDocId'.($i+1)]}~{$_POST['cDocSuf'.($i+1)]}~{$_POST['cCcAplFa'.($i+1)]}~{$_POST['cTerIdInt'.($i+1)]}|";
+            $cTraSel .= "{$_POST['cPedIds'.($i+1)]}~{$_POST['cAnioIds'.($i+1)]}|";
             
-            $qTramite  = "SELECT * ";
-            $qTramite .= "FROM $cAlfa.sys00121 ";
+            $qTramite .= "SELECT ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.pedidxxx, ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comidxxx, ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comcodxx, ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comprexx, ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comcscxx, ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comcsc2x, ";
+            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.cliidxxx, ";
+            $qTramite .= "$cAlfa.lpar0150.clinomxx, ";
+            $qTramite .= "$cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.*, ";
+            $qTramite .= "$cAlfa.lpar0011.sersapxx, ";
+            $qTramite .= "$cAlfa.lpar0011.serdesxx, ";
+            $qTramite .= "$cAlfa.lpar0012.subidxxx, ";
+            $qTramite .= "$cAlfa.lpar0012.subdesxx ";
+            $qTramite .= "FROM $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]} ";
+            $qTramite .= "LEFT JOIN $cAlfa.lpca{$_POST['cAnioIds'.($i+1)]} ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.pedidxxx = $cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.pedidxxx ";
+            $qTramite .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.sersapxx = $cAlfa.lpar0011.sersapxx ";
+            $qTramite .= "LEFT JOIN $cAlfa.lpar0012 ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.sersapxx = $cAlfa.lpar0012.sersapxx AND $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.subidxxx = $cAlfa.lpar0012.subidxxx ";
+            $qTramite .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
             $qTramite .= "WHERE ";
-            $qTramite .= "sucidxxx  = \"{$_POST['cSucId' .($i+1)]}\" AND ";
-            $qTramite .= "docidxxx  = \"{$_POST['cDocId' .($i+1)]}\" AND ";
-            $qTramite .= "docsufxx  = \"{$_POST['cDocSuf'.($i+1)]}\" AND ";
-            $qTramite .= "regestxx != \"INACTIVO\" LIMIT 0,1 ";
+            $qTramite .= "$cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.pedidxxx = \"{$_POST['cPedIds'.($i+1)]}\"";
+            // echo $qTramite . " - " . mysql_num_rows($xPedidoDet);
+          }
             $xTramite  = f_MySql("SELECT","",$qTramite,$xConexion01,"");
             // f_Mensaje(__FILE__,__LINE__,$qTramite." ~ ".mysql_num_rows($xTramite));
             if (mysql_num_rows($xTramite) > 0) {
@@ -665,20 +712,20 @@
                 
                 $nInd_mTarifas = count($mTarifas);
                 $mTarifas[$nInd_mTarifas] = $xRT;
-                $mTarifas[$nInd_mTarifas]['sucidxxx'] = $vTramite['sucidxxx'];
-                $mTarifas[$nInd_mTarifas]['docidxxx'] = $vTramite['docidxxx'];
-                $mTarifas[$nInd_mTarifas]['docsufxx'] = $vTramite['docsufxx'];
-                $mTarifas[$nInd_mTarifas]['cliidxxx'] = $vTramite['cliidxxx'];
+                $mTarifas[$nInd_mTarifas]['comidxxx'] = $vTramite['comidxxx'];
+                $mTarifas[$nInd_mTarifas]['comprexx'] = $vTramite['comprexx'];
+                $mTarifas[$nInd_mTarifas]['comcscxx'] = $vTramite['comcscxx'];
                 $mTarifas[$nInd_mTarifas]['clinomxx'] = $vTramite['clinomxx'];
-                $mTarifas[$nInd_mTarifas]['doctipxx'] = $vTramite['doctipxx'];
-                $mTarifas[$nInd_mTarifas]['ccaplfax'] = $vTramite['ccaplfax'];
-                $mTarifas[$nInd_mTarifas]['teridint'] = $vTramite['teridint'];
-                $mTarifas[$nInd_mTarifas]['ternoint'] = $vTramite['ternoint'];
+                $mTarifas[$nInd_mTarifas]['cliidxxx'] = $vTramite['cliidxxx'];
+                $mTarifas[$nInd_mTarifas]['sersapxx'] = $vTramite['sersapxx'];
+                $mTarifas[$nInd_mTarifas]['serdesxx'] = $vTramite['serdesxx'];
+                $mTarifas[$nInd_mTarifas]['subidxxx'] = $vTramite['subidxxx'];
+                $mTarifas[$nInd_mTarifas]['subdesxx'] = $vTramite['subdesxx'];
                 $mTarifas[$nInd_mTarifas]['excluida'] = $cExcluida;
               }
             } 
           } 
-        } ## for ($i=0; $i<$_POST['nSecuencia']; $i++) { ##
+        ## for ($i=0; $i<$_POST['nSecuencia']; $i++) { ##
         
         //Matriz para verificar si ya habia sido marcado
         $vCheckMarcados = array();
@@ -686,7 +733,7 @@
         
         for ($i=0; $i<count($mTarifas); $i++) {
             
-          $cId = $mTarifas[$i]['fcotptxx']."~".$mTarifas[$i]['fcotpixx']."~".$mTarifas[$i]['seridxxx']."~".$mTarifas[$i]['sucidxxx']."~".$mTarifas[$i]['docidxxx']."~".$mTarifas[$i]['docsufxx']."~".$mTarifas[$i]['ccaplfax']."~".$mTarifas[$i]['teridint'];
+          $cId = $mTarifas[$i]['comidxxx']."~".$mTarifas[$i]['cliidxxx']."~".$mTarifas[$i]['subidxxx'];
           
           if (count($vCheckMarcados) > 0) {
             $mTarifas[$i]['excluida'] = false;
@@ -697,11 +744,11 @@
           <script languaje = "javascript">
             f_Add_New_Row_Ip("<?php echo $cId ?>","<?php echo count($mTarifas) ?>","<?php echo $mTarifas[$i]['excluida'] ?>");
             
-            document.forms['frgrm']['cTramite'   + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['sucidxxx']}-{$mTarifas[$i]['docidxxx']}-{$mTarifas[$i]['docsufxx']}"; ?>";
+            document.forms['frgrm']['cTramite'   + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['comidxxx']}-{$mTarifas[$i]['comprexx']}-{$mTarifas[$i]['comcscxx']}"; ?>";
             document.forms['frgrm']['cImportador'+ document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['clinomxx']} [{$mTarifas[$i]['cliidxxx']}]"; ?>";
-            document.forms['frgrm']['cFacturara' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo (($mTarifas[$i]['teridint'] != "") ? "[{$mTarifas[$i]['teridint']}] {$mTarifas[$i]['ternoint']}" : "") ?>";
-            document.forms['frgrm']['cServicio'  + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "[{$mTarifas[$i]['seridxxx']}] {$mTarifas[$i]['serdesxx']}"; ?>";
-            document.forms['frgrm']['cTarifa'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['fcotptxx']}"; ?>"; 
+            document.forms['frgrm']['cFacturara' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['sersapxx']}"; ?>";
+            document.forms['frgrm']['cServicio'  + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['serdesxx']}"; ?>";
+            document.forms['frgrm']['cTarifa'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mTarifas[$i]['subdesxx']}"; ?>"; 
           </script>
         <?php }  ?>
         <script languaje="javascript">

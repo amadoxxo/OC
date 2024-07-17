@@ -63,6 +63,8 @@
                                                                 window.opener.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRDC['clisapxx']?>';
                                                                 window.opener.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRDC['clinomxx']?>';
                                                                 window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = '';
+                                                                window.opener.document.forms['frgrm']['cPedIds'+'<?php echo $gSecuencia ?>'].value = '';
+                                                                window.opener.document.forms['frgrm']['cAnioIds'+'<?php echo $gSecuencia ?>'].value = '';
                                                                 window.opener.fnLinks('cCliId','EXACT','<?php echo $gSecuencia ?>');
                                                                 window.close();"><?php echo $xRDC['cliidxxx'] ?></a>
                                       </td>
@@ -77,6 +79,8 @@
                                       window.opener.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clisapxx'] ?>";
                                       window.opener.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clinomxx'] ?>";
                                       window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
+                                      window.opener.document.forms['frgrm']['cPedIds'+'<?php echo $gSecuencia ?>'].value = "";
+                                      window.opener.document.forms['frgrm']['cAnioIds'+'<?php echo $gSecuencia ?>'].value = "";
                                       window.opener.fnLinks('cCliId', 'EXACT', '<?php echo $gSecuencia ?>');
                                       window.close();
                                     </script>
@@ -122,6 +126,8 @@
                                 parent.fmwork.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clisapxx'] ?>";
                                 parent.fmwork.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clinomxx'] ?>";
                                 parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
+                                parent.fmwork.document.forms['frgrm']['cPedIds'+'<?php echo $gSecuencia ?>'].value = "";
+                                parent.fmwork.document.forms['frgrm']['cAnioIds'+'<?php echo $gSecuencia ?>'].value = "";
                                 parent.fmwork.fnLinks('cCliId','EXACT','<?php echo $gSecuencia ?>');
                               </script>
                             <?php }
@@ -140,6 +146,8 @@
                             parent.fmwork.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value  = "";
                             parent.fmwork.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "";
                             parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
+                            parent.fmwork.document.forms['frgrm']['cPedIds'+'<?php echo $gSecuencia ?>'].value = "";
+                            parent.fmwork.document.forms['frgrm']['cAnioIds'+'<?php echo $gSecuencia ?>'].value = "";
                           </script>
                           <?php
                         }

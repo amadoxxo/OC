@@ -10,7 +10,7 @@ include("../../../../../libs/php/utility.php");
 
 $cAnioIni = (date('Y') - 2);
 
-if ($gModo != "" && $gFunction != "") { ?>
+if ($gWhat != "" && $gFunction != "") { ?>
   <html>
     <head>
       <title>Param&eacute;trica de Pedido</title>
@@ -30,7 +30,7 @@ if ($gModo != "" && $gFunction != "") { ?>
                 <legend>Param&eacute;trica de Pedido</legend>
                 <form name = "frgrm" action = "" method = "post" target = "fmpro">
                   <?php
-                    switch ($gModo) {
+                    switch ($gWhat) {
                       case "WINDOW":
                         // Traigo Datos del Pedido
                         $mDatos = array();
@@ -91,14 +91,14 @@ if ($gModo != "" && $gFunction != "") { ?>
                         } else {
                           f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros"); ?>
                           <script language="javascript">
-                            window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = '';
+                            window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value  = "";
                             window.close();
                           </script>
                         <?php 
                         }
                       break;
                       case "VALID":
-                        // Traigo Datos de la MIF
+                        // Traigo Datos del Pedido
                         $mDatos = array();
                         for ($nAnio=$cAnioIni;$nAnio<=date('Y');$nAnio++) {
                           $qPedCab  = "SELECT ";
@@ -133,11 +133,17 @@ if ($gModo != "" && $gFunction != "") { ?>
                           } else { ?>
                             <script language = "javascript">
                               parent.fmwork.fnLinks('<?php echo $gFunction ?>','WINDOW', '<?php echo $gSecuencia ?>');
+                              window.close();
                             </script>
                             <?php
                           }
                         }else{ 
-                          f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros"); 
+                          f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros");
+                          ?>
+                          <script language = "javascript">
+                            parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
+                          </script>
+                          <?php
                         }
                       break;
                     }

@@ -60,8 +60,9 @@
                                       <td width = "050" class= "name">
                                           <a href = "javascript:window.opener.document.forms['frgrm']['cCliId'+'<?php echo $gSecuencia ?>'].value  = '<?php echo $xRDC['cliidxxx']?>';
                                                                 window.opener.document.forms['frgrm']['cCliDV'+'<?php echo $gSecuencia ?>'].value  = '<?php echo gendv($xRDC['cliidxxx'])?>';
-                                                                window.opener.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRDC['clinomxx']?>';
                                                                 window.opener.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRDC['clisapxx']?>';
+                                                                window.opener.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRDC['clinomxx']?>';
+                                                                window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = '';
                                                                 window.opener.fnLinks('cCliId','EXACT','<?php echo $gSecuencia ?>');
                                                                 window.close();"><?php echo $xRDC['cliidxxx'] ?></a>
                                       </td>
@@ -73,8 +74,9 @@
                                     <script languaje="javascript">
                                       window.opener.document.forms['frgrm']['cCliId'+'<?php echo $gSecuencia ?>'].value  = "<?php echo $xRDC['cliidxxx'] ?>";
                                       window.opener.document.forms['frgrm']['cCliDV'+'<?php echo $gSecuencia ?>'].value  = "<?php echo gendv($xRDC['cliidxxx'])?>";
-                                      window.opener.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clinomxx'] ?>";
                                       window.opener.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clisapxx'] ?>";
+                                      window.opener.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clinomxx'] ?>";
+                                      window.opener.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
                                       window.opener.fnLinks('cCliId', 'EXACT', '<?php echo $gSecuencia ?>');
                                       window.close();
                                     </script>
@@ -117,8 +119,9 @@
                               <script language = "javascript">
                                 parent.fmwork.document.forms['frgrm']['cCliId'+'<?php echo $gSecuencia ?>'].value  = "<?php echo $xRDC['cliidxxx'] ?>";
                                 parent.fmwork.document.forms['frgrm']['cCliDV'+'<?php echo $gSecuencia ?>'].value  = "<?php echo gendv($xRDC['cliidxxx'])?>";
-                                parent.fmwork.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clinomxx'] ?>";
                                 parent.fmwork.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clisapxx'] ?>";
+                                parent.fmwork.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clinomxx'] ?>";
+                                parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
                                 parent.fmwork.fnLinks('cCliId','EXACT','<?php echo $gSecuencia ?>');
                               </script>
                             <?php }
@@ -134,34 +137,11 @@
                             alert('No hay registros coincidentes');
                             parent.fmwork.document.forms['frgrm']['cCliId'+'<?php echo $gSecuencia ?>'].value  = "";
                             parent.fmwork.document.forms['frgrm']['cCliDV'+'<?php echo $gSecuencia ?>'].value  = "";
+                            parent.fmwork.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value  = "";
                             parent.fmwork.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "";
+                            parent.fmwork.document.forms['frgrm']['cPedComCsc'+'<?php echo $gSecuencia ?>'].value = "";
                           </script>
                           <?php
-                        }
-                      break;
-                      case "EXACT":
-                        $qDatCli  = "SELECT ";
-                        $qDatCli .= "cliidxxx, clisapxx,";
-                        $qDatCli .= "IF(clinomxx != \"\",clinomxx,(TRIM(CONCAT(clinomxx,\" \",clinom1x,\" \",clinom2x,\" \",cliape1x,\" \",cliape2x)))) AS clinomxx ";
-                        $qDatCli .= "FROM $cAlfa.lpar0150 ";
-                        $qDatCli .= "WHERE ";
-                        switch ($gFunction) {
-                          case 'cCliId':
-                            $qDatCli .= "cliidxxx = \"$gCliId\" AND ";
-                          break;
-                        }
-                        $qDatCli .= "cliclixx = \"SI\" AND ";
-                        $qDatCli .= "regestxx = \"ACTIVO\" ";
-                        $qDatCli .= "LIMIT 0,1";
-                        $xDatCli  = f_MySql("SELECT","",$qDatCli,$xConexion01,"");
-                        while ($xRDC = mysql_fetch_array($xDatCli)) { ?>
-                          <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cCliId'+'<?php echo $gSecuencia ?>'].value  = "<?php echo $xRDC['cliidxxx'] ?>";
-                            parent.fmwork.document.forms['frgrm']['cCliSap'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRDC['clisapxx'] ?>";
-                            parent.fmwork.document.forms['frgrm']['cCliDV'+'<?php echo $gSecuencia ?>'].value  = "<?php echo gendv($xRDC['cliidxxx'])?>";
-                            parent.fmwork.document.forms['frgrm']['cCliNom'+'<?php echo $gSecuencia ?>'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$xRDC['clinomxx']) ?>";
-                          </script>
-                          <?php 
                         }
                       break;
                     } ?>

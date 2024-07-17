@@ -15,7 +15,7 @@
     <LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/custom.css'>
     <script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
     <script language="javascript">
-      function f_Retorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
+      function fnRetorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
         document.location="<?php echo $_COOKIE['kIniAnt'] ?>";
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory ?>/frnivel3.php";
       }
@@ -27,7 +27,7 @@
           // Cliente
           case "cCliId":
             if (xSwitch == "VALID") {
-              var cRuta  = "fraec121.php?gWhat=VALID"+
+              var cRuta  = "framc150.php?gWhat=VALID"+
                                         "&gFunction=cCliId"+
                                         "&gSecuencia="+xSecuencia+
                                         "&gCliId="+document.forms['frgrm']['cCliId'+xSecuencia].value;
@@ -36,11 +36,10 @@
               var zNx     = (zX-600)/2;
               var zNy     = (zY-250)/2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var cRuta   = "fraec121.php?gWhat=WINDOW"+
+              var cRuta   = "framc150.php?gWhat=WINDOW"+
                                         "&gFunction=cCliId"+
                                         "&gSecuencia="+xSecuencia+
                                         "&gCliId="+document.forms['frgrm']['cCliId'+xSecuencia].value;
-              // alert(cRuta);
               zWindow = window.open(cRuta,"zWindow",zWinPro);
               zWindow.focus();
             }
@@ -54,20 +53,20 @@
 
             if (nSwitch == 0) {
               if (xSwitch == "VALID") {
-                    var zRuta = "fraecint.php?gModo="+xSwitch+
+                    var zRuta = "framcped.php?gWhat="+xSwitch+
                                             "&gFunction="+xLink+
                                             "&gSecuencia="+xSecuencia+
-                                            "&gComCsc="+document.forms['frgrm']['cPedComCsc'+xSecuencia].value +
+                                            "&gPedComCsc="+document.forms['frgrm']['cPedComCsc'+xSecuencia].value +
                                             "&gCliId=" +document.forms['frgrm']['cCliId'+xSecuencia].value;
                     parent.fmpro.location = zRuta;
               } else if(xSwitch == "WINDOW") {
                 var nNx      = (zX-500)/2;
                 var nNy      = (zY-250)/2;
                 var zWinPro  = "width=500,scrollbars=1,height=250,left="+nNx+",top="+nNy;
-                var zRuta = "fraecint.php?gModo="+xSwitch+
+                var zRuta = "framcped.php?gWhat="+xSwitch+
                                         "&gFunction="+xLink+
                                         "&gSecuencia="+xSecuencia+
-                                        "&gComCsc="+document.forms['frgrm']['cPedComCsc'+xSecuencia].value +
+                                        "&gPedComCsc="+document.forms['frgrm']['cPedComCsc'+xSecuencia].value +
                                         "&gCliId=" +document.forms['frgrm']['cCliId'+xSecuencia].value;
                 zWindow = window.open(zRuta,xLink,zWinPro);
                 zWindow.focus();
@@ -124,41 +123,33 @@
           }
       }
       
-      function f_Add_New_Row_Do() {
-    
-        var cGrid      = document.getElementById("Grid_Do");
+      function fnAddNewRow() {
+        var cGrid      = document.getElementById("Grid");
         var nLastRow   = cGrid.rows.length;
         var nSecuencia = nLastRow+1;
         var cTableRow  = cGrid.insertRow(nLastRow);
-        var cDocSeq  = 'cDocSeq'+ nSecuencia; // Hidden: Sucursal del DO
-        var cSucId   = 'cSucId' + nSecuencia; // Hidden: Sucursal del DO
-        // var cDocId   = 'cDocId' + nSecuencia; // Numero del DO
-        // var cDocSuf  = 'cDocSuf'+ nSecuencia; // Hidden: Sufijo del DO
-        // var cDocTip  = 'cDocTip'+ nSecuencia;
+        var cAutSeq    = 'cAutSeq' + nSecuencia;
+        var cSucId     = 'cSucId'  + nSecuencia;
         // Campos del cliente
-        var cCliId   = 'cCliId'  + nSecuencia;
-        var cCliDV   = 'cCliDV'  + nSecuencia;
-        var cCliSap  = 'cCliSap' + nSecuencia;
-        var cCliNom  = 'cCliNom' + nSecuencia; 
-        var oBtnDel  = 'oBtnDel' + nSecuencia; // Boton de Borrar Row
+        var cCliId     = 'cCliId'  + nSecuencia; // NIT del Cliente
+        var cCliDV     = 'cCliDV'  + nSecuencia; // 
+        var cCliSap    = 'cCliSap' + nSecuencia; // Codigo SAP del Cliente
+        var cCliNom    = 'cCliNom' + nSecuencia; // Nombre o Razón Social del Cliente
+        var oBtnDel    = 'oBtnDel' + nSecuencia; // Boton de Borrar Row
         
         //Campos del No. de Pedido
         var cPedComCsc  = 'cPedComCsc' + nSecuencia;
-        // var cTerDVInt   = 'cTerDVInt' + nSecuencia;
-        // var cTerNomInt  = 'cTerNomInt'+ nSecuencia;
-        // var cCcAplFa    = 'cCcAplFa'  + nSecuencia;
         
         var TD_xAll = cTableRow.insertCell(0);
         TD_xAll.style.width  = "70px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:070px;border:0;text-align:center;padding:2px' name = '"+cDocSeq+"' id = '"+cDocSeq+"' value = '"+f_Str_Pad(nSecuencia,3,"0","STR_PAD_LEFT")+"'readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:070px;border:0;text-align:center;padding:2px' name = '"+cAutSeq+"' id = '"+cAutSeq+"' value = '"+f_Str_Pad(nSecuencia,3,"0","STR_PAD_LEFT")+"'readonly>";
         
         TD_xAll = cTableRow.insertCell(1);
         TD_xAll.style.width  = "190px";
         TD_xAll.style.border = "1px solid #E6E6E6";
         TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cCliId+"' id = '"+cCliId+"' " +
-                                      "onBlur = 'javascript:this.value=this.value.toUpperCase(); " +
-                                      "fnLinks(\"cCliId\",\"VALID\", \""+nSecuencia+"\");' >";
+                                      "onBlur = 'javascript:fnLinks(\"cCliId\",\"VALID\", \""+nSecuencia+"\");' >";
         
         TD_xAll = cTableRow.insertCell(2);
         TD_xAll.style.width  = "40px";
@@ -179,14 +170,12 @@
         TD_xAll.style.width  = "190px";
         TD_xAll.style.border = "1px solid #E6E6E6";
         TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cPedComCsc+"' id = '"+cPedComCsc+"' " +
-                                      "onBlur = 'javascript:this.value=this.value.toUpperCase(); " +
-                                      "fnLinks(\"cPedComCsc\", \"VALID\", \""+nSecuencia+"\");' >";
+                                      "onBlur = 'javascript:fnLinks(\"cPedComCsc\", \"VALID\", \""+nSecuencia+"\");' >";
         
         TD_xAll = cTableRow.insertCell(6);
         TD_xAll.style.width  = "20px";
         TD_xAll.innerHTML    = "<input type = 'button' style = 'width:020px;text-align:center' id = "+nSecuencia+" value = 'X' "+
-                                "onClick = 'javascript:f_Delete_Row(this.value,\""+nSecuencia+"\",\"Grid_Do\", this);'>";
-                                
+                                      "onClick = 'javascript:fnDeleteRow(this.value,\""+nSecuencia+"\",\"Grid\", this);'>";
         document.forms['frgrm']['nSecuencia'].value = nSecuencia;
       }
       
@@ -236,89 +225,35 @@
         document.forms['frgrm']['nSecuencia_Ip'].value = nSecuencia;
       }
       
-      function f_Enter(e,xName,xGrilla) {
-        var nSecuencia = document.forms['frgrm']['nSecuencia'].value;
-        var code;
-        if (!e) {
-          var e = window.event;
-        }
-        if (e.keyCode) {
-          code = e.keyCode;
-        } else {
-          if (e.which) {
-            code = e.which;
-          }
-        }
-        if (code == 13) {
-          switch (xGrilla) {
-            case "Grid_Do":
-              if (xName == 'cTerNomInt'+eval(document.forms['frgrm']['nSecuencia'].value)) {
-                if (document.forms["frgrm"]['cDocId'+eval(document.forms['frgrm']['nSecuencia'].value)].value !== '' ) {
-                  f_Add_New_Row_Do();
-                } else {
-                  alert("Seleccione un DO antes de Adicionar una nueva Fila.");
-                }
+      function fnDeleteRow(xNumRow,xSecuencia,xTabla) {
+        var cGrid = document.getElementById(xTabla);
+        var nLastRow = cGrid.rows.length;
+        if (nLastRow > 1 && xNumRow == "X") {
+          if (confirm("Realmente Desea Eliminar La Secuencia ["+xSecuencia+"]?")){ 
+            if(xSecuencia < nLastRow){
+              var j=0;
+              for(var i=xSecuencia;i<nLastRow;i++){
+                j = parseFloat(i)+1;
+                document.forms['frgrm']['cAutSeq'    + i].value = f_Str_Pad(i,3,"0","STR_PAD_LEFT"); 
+                document.forms['frgrm']['cCliId'     + i].value = document.forms['frgrm']['cCliId'     + j].value; 
+                document.forms['frgrm']['cCliDV'     + i].value = document.forms['frgrm']['cCliDV'     + j].value; 
+                document.forms['frgrm']['cCliSap'    + i].value = document.forms['frgrm']['cCliSap'    + j].value;
+                document.forms['frgrm']['cCliNom'    + i].value = document.forms['frgrm']['cCliNom'    + j].value;
+                document.forms['frgrm']['cPedComCsc' + i].value = document.forms['frgrm']['cPedComCsc' + j].value;
               }
-            break;
-          }
-        }
-      }
-      
-      function f_Delete_Row(xNumRow,xSecuencia,xTabla) {
-        switch (xTabla) {
-          case "Grid_Do": 
-            var cGrid = document.getElementById(xTabla);
-            var nLastRow = cGrid.rows.length;
-            if (nLastRow > 1 && xNumRow == "X") {
-              if (confirm("Realmente Desea Eliminar el DO ["+document.forms["frgrm"]["cSucId"+xSecuencia].value+"-"+document.forms["frgrm"]["cDocId"+xSecuencia].value+"-"+document.forms['frgrm']['cDocSuf'+xSecuencia].value+"]?")){ 
-                if(xSecuencia < nLastRow){
-                  var j=0;
-                  for(var i=xSecuencia;i<nLastRow;i++){
-                    j = parseFloat(i)+1;
-                    document.forms['frgrm']['cDocSeq'   + i].value = f_Str_Pad(i,3,"0","STR_PAD_LEFT"); 
-                    document.forms['frgrm']['cSucId'    + i].value = document.forms['frgrm']['cSucId'    + j].value; 
-                    document.forms['frgrm']['cDocId'    + i].value = document.forms['frgrm']['cDocId'    + j].value; 
-                    document.forms['frgrm']['cDocSuf'   + i].value = document.forms['frgrm']['cDocSuf'   + j].value;
-                    document.forms['frgrm']['cDocTip'   + i].value = document.forms['frgrm']['cDocTip'   + j].value;
-                    document.forms['frgrm']['cCliId'    + i].value = document.forms['frgrm']['cCliId'    + j].value; 
-                    document.forms['frgrm']['cCliDv'    + i].value = document.forms['frgrm']['cCliDv'    + j].value; 
-                    document.forms['frgrm']['cCliNom'   + i].value = document.forms['frgrm']['cCliNom'   + j].value;
-                    document.forms['frgrm']['cTerIdInt' + i].value = document.forms['frgrm']['cTerIdInt' + j].value; 
-                    document.forms['frgrm']['cTerDVInt' + i].value = document.forms['frgrm']['cTerDVInt' + j].value; 
-                    document.forms['frgrm']['cTerNomInt'+ i].value = document.forms['frgrm']['cTerNomInt'+ j].value;
-                  }
-                }
-                cGrid.deleteRow(nLastRow - 1);
-                document.forms['frgrm']['nSecuencia'].value = nLastRow - 1;
-              }
-            } else {
-              alert("No se Pueden Eliminar Todas las Secuencias, Verifique.");
             }
-          break;
-          default: //No hace nada
-          break;
+            cGrid.deleteRow(nLastRow - 1);
+            document.forms['frgrm']['nSecuencia'].value = nLastRow - 1;
+          }
+        } else {
+          alert("No se Pueden Eliminar Todas las Secuencias, Verifique.");
         }
       }
       
-      function fnBorrarDos(){
-        document.getElementById("Grid_Do").innerHTML = "";
+      function fnBorrarTodos(){
+        document.getElementById("Grid").innerHTML = "";
         document.forms['frgrm']['nSecuencia'].value  = 0;
-        f_Add_New_Row_Do();
-      }
-      
-      function fnPegarDo() {
-        var nSecuencia = document.forms['frgrm']['nSecuencia'].value;
-        var nX    = screen.width;
-        var nY    = screen.height;
-        var nAncho = 550;
-        var nAlto  = 250;
-        var nNx      = (nX-nAncho)/2;
-        var nNy      = (nY-nAlto)/2;
-        var cWinOpt  = "width="+nAncho+",scrollbars=1,height="+nAlto+",left="+nNx+",top="+nNy;
-        var cPathUrl = "fraecfrm.php?gFunction=PegarDo&gArchivo=fraeccpd.php"+
-                        "&gSecuencia="+document.forms['frgrm']['nSecuencia'].value;
-        cWindow = window.open(cPathUrl,"PegarDo",cWinOpt);
-        cWindow.focus();
+        fnAddNewRow();
       }
       
       function f_Valida(){//Valida datos de formulario, para poder pintar conceptos de Cobro a excluir
@@ -398,15 +333,15 @@
                           <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="17" align="center">&nbsp;&nbsp;Raz&oacute;n Social</td>
                           <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="12" align="center">&nbsp;&nbsp;&nbsp;No. Pedido</td>
                           <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="right">
-                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:f_Add_New_Row_Do()" style = "cursor:pointer" title="Adicionar">
-                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/b_drop.png" onClick = "javascript:fnBorrarDos()" style = "cursor:pointer" title="Eliminar Todos">
+                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:fnAddNewRow()" style = "cursor:pointer" title="Adicionar">
+                            <img src = "<?php echo $cPlesk_Skin_Directory ?>/b_drop.png" onClick = "javascript:fnBorrarTodos()" style = "cursor:pointer" title="Eliminar Todos">
                           </td>
                         </tr>
                       </table>
-                      <table border = "0" cellpadding = "0" cellspacing = "0" width = "1160" id = "Grid_Do"></table>
+                      <table border = "0" cellpadding = "0" cellspacing = "0" width = "1160" id = "Grid"></table>
                   </center>
                   <script languaje = "javascript">
-                    f_Add_New_Row_Do();
+                    fnAddNewRow();
                   </script>
                 </fieldset>
                 <fieldset>
@@ -452,7 +387,7 @@
               onClick = "javascript:f_Valida();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Siguiente
             </td>
             <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:hand"
-              onClick ="javascript:f_Retorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
+              onClick ="javascript:fnRetorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
             </td>
           </tr>
         </table>
@@ -468,7 +403,7 @@
               <input type="button" name="name" value="Guardar" style = "background:url(<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif);width:91;height:21;border:0px;font-weight:bold;color:#555555;"
                 onclick = "javascript:fnGuardar()"></td>
             <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:hand"
-              onClick ="javascript:f_Retorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
+              onClick ="javascript:fnRetorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
             </td>
           </tr>
         </table>
@@ -536,7 +471,7 @@
                 $nBand = 1;
               } else { ?>
                 <script languaje = "javascript">
-                  f_Add_New_Row_Do();
+                  fnAddNewRow();
                 </script>
               <?php } ?>
               <script languaje = "javascript">
@@ -564,8 +499,8 @@
                   var cColor   = "#000000";
                 }
   
-                document.getElementById('cDocSeq' + "<?php echo ($i+1) ?>").style.background = cBgColor;
-                document.getElementById('cDocSeq' + "<?php echo ($i+1) ?>").style.color = cColor;
+                document.getElementById('cAutSeq' + "<?php echo ($i+1) ?>").style.background = cBgColor;
+                document.getElementById('cAutSeq' + "<?php echo ($i+1) ?>").style.color = cColor;
                 document.getElementById('cSucId' + "<?php echo ($i+1) ?>").style.background = cBgColor;
                 document.getElementById('cSucId' + "<?php echo ($i+1) ?>").style.color = cColor;
                 document.getElementById('cDocId' + "<?php echo ($i+1) ?>").style.background = cBgColor;

@@ -263,25 +263,6 @@
       }
       
       function fnValidaciones(){
-        // var cGrid      = document.getElementById("Grid");
-        // var nLastRow   = cGrid.rows.length;
-        // var nSecuencia = nLastRow+1;
-        // var cMjs = "";
-        // Validaciones al seleccionar los Pedidos
-        // console.log(document.forms['frgrm']['nSecuencia'].value);
-        // if (document.forms['frgrm']['cCliId' + nSecuencia].value == "") {
-          //   cMjs += "Debe seleccionar el NIT del cliente,\n";
-        // }
-          
-        // if (document.forms['frgrm']['cPedComCsc' + nSecuencia].value == "") {
-          //   cMjs += "Debe seleccionar el Pedido,\n";
-        // }
-            
-        // if (cMjs != "") {
-          //   cMjs += "Verifique.";
-          //   alert(cMjs);
-        // }
-              
         document.forms['frgrm'].action = 'fraec20g.php';
         document.forms['frgrm']['cModo'].value = 'VALIDARDO';
         document.forms['frgrm'].target = 'fmpro';
@@ -563,169 +544,48 @@
 
       //Paso 2
       if ($_POST['cStep'] == "2") {
+
         $mTarifas = array();
         $cTraSel = "";
         for ($i=0; $i<$_POST['nSecuencia']; $i++) {
-          if ($_POST['cSucId' .($i+1)] != "" && $_POST['cDocId' .($i+1)] != "" && $_POST['cDocSuf' .($i+1)] != "") {
+          if ($_POST['cCliId' .($i+1)] != "" && $_POST['cPedComCsc' .($i+1)] != "") {
             
             $cTraSel .= "{$_POST['cPedIds'.($i+1)]}~{$_POST['cAnioIds'.($i+1)]}|";
+
+            $cPedIds  = "{$_POST['cPedIds'.($i+1)]}";
+            $cAnioIds = "{$_POST['cAnioIds'.($i+1)]}";
             
-            $qTramite .= "SELECT ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.pedidxxx, ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comidxxx, ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comcodxx, ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comprexx, ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comcscxx, ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.comcsc2x, ";
-            $qTramite .= "$cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.cliidxxx, ";
-            $qTramite .= "$cAlfa.lpar0150.clinomxx, ";
-            $qTramite .= "$cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.*, ";
-            $qTramite .= "$cAlfa.lpar0011.sersapxx, ";
-            $qTramite .= "$cAlfa.lpar0011.serdesxx, ";
-            $qTramite .= "$cAlfa.lpar0012.subidxxx, ";
-            $qTramite .= "$cAlfa.lpar0012.subdesxx ";
-            $qTramite .= "FROM $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]} ";
-            $qTramite .= "LEFT JOIN $cAlfa.lpca{$_POST['cAnioIds'.($i+1)]} ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.pedidxxx = $cAlfa.lpca{$_POST['cAnioIds'.($i+1)]}.pedidxxx ";
-            $qTramite .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.sersapxx = $cAlfa.lpar0011.sersapxx ";
-            $qTramite .= "LEFT JOIN $cAlfa.lpar0012 ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.sersapxx = $cAlfa.lpar0012.sersapxx AND $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.subidxxx = $cAlfa.lpar0012.subidxxx ";
-            $qTramite .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
-            $qTramite .= "WHERE ";
-            $qTramite .= "$cAlfa.lpde{$_POST['cAnioIds'.($i+1)]}.pedidxxx = \"{$_POST['cPedIds'.($i+1)]}\"";
-            // echo $qTramite . " - " . mysql_num_rows($xPedidoDet);
+            $qTarifas .= "SELECT ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.pedidxxx, ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.comidxxx, ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.comcodxx, ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.comprexx, ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.comcscxx, ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.comcsc2x, ";
+            $qTarifas .= "$cAlfa.lpca{$cAnioIds}.cliidxxx, ";
+            $qTarifas .= "$cAlfa.lpar0150.clinomxx, ";
+            $qTarifas .= "$cAlfa.lpde{$cAnioIds}.*, ";
+            $qTarifas .= "$cAlfa.lpar0011.sersapxx, ";
+            $qTarifas .= "$cAlfa.lpar0011.serdesxx, ";
+            $qTarifas .= "$cAlfa.lpar0012.subidxxx, ";
+            $qTarifas .= "$cAlfa.lpar0012.subdesxx ";
+            $qTarifas .= "FROM $cAlfa.lpde{$cAnioIds} ";
+            $qTarifas .= "LEFT JOIN $cAlfa.lpca{$cAnioIds} ON $cAlfa.lpde{$cAnioIds}.pedidxxx = $cAlfa.lpca{$cAnioIds}.pedidxxx ";
+            $qTarifas .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lpde{$cAnioIds}.sersapxx = $cAlfa.lpar0011.sersapxx ";
+            $qTarifas .= "LEFT JOIN $cAlfa.lpar0012 ON $cAlfa.lpde{$cAnioIds}.sersapxx = $cAlfa.lpar0012.sersapxx AND $cAlfa.lpde{$cAnioIds}.subidxxx = $cAlfa.lpar0012.subidxxx ";
+            $qTarifas .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpca{$cAnioIds}.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+            $qTarifas .= "WHERE ";
+            $qTarifas .= "$cAlfa.lpde{$cAnioIds}.pedidxxx = \"{$cPedIds}\"";
           }
-            $xTramite  = f_MySql("SELECT","",$qTramite,$xConexion01,"");
-            // f_Mensaje(__FILE__,__LINE__,$qTramite." ~ ".mysql_num_rows($xTramite));
-            if (mysql_num_rows($xTramite) > 0) {
-              $vTramite = mysql_fetch_array($xTramite);
-              
-              $vTramite['teridint'] = "";
-              $vTramite['ternoint'] = "";
-              
-              $vTramite['tarclixx'] = $vTramite['cliidxxx'];
-              $vTramite['tartipxx'] = "CLIENTE";
-                
-              //Busco la el nombre del cliente
-              $qDatCli  = "SELECT ";
-              $qDatCli .= "$cAlfa.SIAI0150.*, ";
-              $qDatCli .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,CONCAT($cAlfa.SIAI0150.CLINOM1X,\" \",$cAlfa.SIAI0150.CLINOM2X,\" \",$cAlfa.SIAI0150.CLIAPE1X,\" \",$cAlfa.SIAI0150.CLIAPE2X)) AS CLINOMXX ";
-              $qDatCli .= "FROM $cAlfa.SIAI0150 ";
-              $qDatCli .= "WHERE ";
-              $qDatCli .= "$cAlfa.SIAI0150.CLIIDXXX = \"{$vTramite['cliidxxx']}\" LIMIT 0,1";
-              $xDatCli  = f_MySql("SELECT","",$qDatCli,$xConexion01,"");
-              if(mysql_num_rows($xDatCli) > 0) {
-                $xRDC = mysql_fetch_array($xDatCli);
-                $vTramite['clinomxx'] = $xRDC['CLINOMXX'];
-              } else {
-                $vTramite['clinomxx'] = "CLIENTE SIN NOMBRE";
-              }
-              
-              // Verifica si tiene asociacion por grupo
-              $qConCom  = "SELECT $cAlfa.fpar0151.gtaidxxx, $cAlfa.fpar0151.cccaplfa ";
-              $qDatCcc .= "IF($cAlfa.fpar0151.gtaidxxx <> \"\",IF($cAlfa.fpar0111.gtadesxx <> \"\",$cAlfa.fpar0111.gtadesxx,\"GRUPO TARIFAS SIN DESCRIPCION\"),\"\") AS gtadesxx ";
-              $qConCom .= "FROM $cAlfa.fpar0151 ";
-              $qDatCcc .= "LEFT JOIN $cAlfa.fpar0111 ON $cAlfa.fpar0151.gtaidxxx = $cAlfa.fpar0111.gtaidxxx ";
-              $qConCom .= "WHERE ";
-              $qConCom .= "$cAlfa.fpar0151.cliidxxx = \"{$vTramite['cliidxxx']}\" AND  ";
-              $qConCom .= "$cAlfa.fpar0151.regestxx = \"ACTIVO\" LIMIT 0,1";
-              $xConCom  = f_MySql("SELECT","",$qConCom,$xConexion01,"");
-              $cCcAplFa = "";
-              if (mysql_num_rows($xConCom) > 0) {
-                $xRCC = mysql_fetch_array($xConCom);
-                if ($xRCC['gtaidxxx'] <> "") {
-                  $vTramite['tarclixx'] = $xRCC['gtaidxxx'];
-                  $vTramite['tartipxx'] = "GRUPO";
-                } 
-              }
-              
-              if ($_POST['cCcAplFa'.($i+1)] == "SI") {
-                
-                $vTramite['tarclixx'] = $_POST['cTerIdInt'.($i+1)];
-                $vTramite['tartipxx'] = "CLIENTE";
-                
-                $vTramite['teridint'] = $_POST['cTerIdInt'.($i+1)];
-                $vTramite['ccaplfax'] = $_POST['cCcAplFa' .($i+1)];
-                
-                $qDatCli  = "SELECT ";
-                $qDatCli .= "$cAlfa.SIAI0150.*, ";
-                $qDatCli .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,CONCAT($cAlfa.SIAI0150.CLINOM1X,\" \",$cAlfa.SIAI0150.CLINOM2X,\" \",$cAlfa.SIAI0150.CLIAPE1X,\" \",$cAlfa.SIAI0150.CLIAPE2X)) AS CLINOMXX ";
-                $qDatCli .= "FROM $cAlfa.SIAI0150 ";
-                $qDatCli .= "WHERE ";
-                $qDatCli .= "$cAlfa.SIAI0150.CLIIDXXX = \"{$vTramite['teridint']}\" LIMIT 0,1";
-                $xDatCli  = f_MySql("SELECT","",$qDatCli,$xConexion01,"");
-                if(mysql_num_rows($xDatCli) > 0) {
-                  $xRDC = mysql_fetch_array($xDatCli);
-                  $vTramite['ternoint'] = $xRDC['CLINOMXX'];
-                } else {
-                  $vTramite['ternoint'] = "CLIENTE SIN NOMBRE";
-                }
-                    
-                $qConCom  = "SELECT $cAlfa.fpar0151.gtaidxxx, $cAlfa.fpar0151.cccaplfa ";
-                $qDatCcc .= "IF($cAlfa.fpar0151.gtaidxxx <> \"\",IF($cAlfa.fpar0111.gtadesxx <> \"\",$cAlfa.fpar0111.gtadesxx,\"GRUPO TARIFAS SIN DESCRIPCION\"),\"\") AS gtadesxx ";
-                $qConCom .= "FROM $cAlfa.fpar0151 ";
-                $qDatCcc .= "LEFT JOIN $cAlfa.fpar0111 ON $cAlfa.fpar0151.gtaidxxx = $cAlfa.fpar0111.gtaidxxx ";
-                $qConCom .= "WHERE ";
-                $qConCom .= "$cAlfa.fpar0151.cliidxxx = \"{$_POST['cTerIdInt'.($i+1)]}\" AND  ";
-                $qConCom .= "$cAlfa.fpar0151.regestxx = \"ACTIVO\" LIMIT 0,1";
-                $xConCom  = f_MySql("SELECT","",$qConCom,$xConexion01,"");
-                $cCcAplFa = "";
-                if (mysql_num_rows($xConCom) > 0) {
-                  $xRCC = mysql_fetch_array($xConCom);
-                  if ($xRCC['gtaidxxx'] <> "") {
-                    $vTramite['tarclixx'] = $xRCC['gtaidxxx'];
-                    $vTramite['tartipxx'] = "GRUPO";
-                  } 
-                }
-              }
-              
-              ##Fin Traigo Datos Adicionales del Do ##
-              ##Traigo Tarifas parametrizadas al cliente para excluir Conceptos de Cobro al momento de facturar##
-              $qTarifas  = "SELECT ";
-              $qTarifas .= "$cAlfa.fpar0131.seridxxx, ";
-              $qTarifas .= "IF($cAlfa.fpar0129.serdespx != \"\", $cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
-              $qTarifas .= "$cAlfa.fpar0131.fcotptxx, ";
-              $qTarifas .= "$cAlfa.fpar0131.fcotpixx  ";
-              $qTarifas .= "FROM $cAlfa.fpar0131 ";
-              $qTarifas .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0131.seridxxx = $cAlfa.fpar0129.seridxxx ";
-              $qTarifas .= "WHERE ";
-              $qTarifas .= "$cAlfa.fpar0131.cliidxxx = \"{$vTramite['tarclixx']}\" AND ";
-              $qTarifas .= "$cAlfa.fpar0131.fcotptxx = \"{$vTramite['doctepxx']}\" AND ";
-              $qTarifas .= "$cAlfa.fpar0131.fcotpixx = \"{$vTramite['doctepid']}\" AND ";
-              $qTarifas .= "$cAlfa.fpar0131.sucidxxx LIKE \"%{$vTramite['sucidxxx']}%\" AND ";
-              $qTarifas .= "$cAlfa.fpar0131.fcotopxx LIKE \"%{$vTramite['doctipxx']}%\" AND ";
-              $qTarifas .= "$cAlfa.fpar0131.fcomtrxx LIKE \"%{$vTramite['docmtrxx']}%\" AND ";
-              $qTarifas .= "$cAlfa.fpar0131.tartipxx = \"{$vTramite['tartipxx']}\"      AND ";
-              $qTarifas .= "$cAlfa.fpar0131.regestxx = \"ACTIVO\" ";
-              $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
-              // f_Mensaje(__FILE__,__LINE__,$qTarifas." ~ ".mysql_num_rows($xTarifas));
-              while ($xRT = mysql_fetch_array($xTarifas)) {
-                $cExcluida = false;
-                $mTarifaExcluidas = array();
-                $mTarifaExcluidas = f_Explode_Array($vTramite['doctexxx'],"|","~"); 
-                
-                for($nE=0;$nE<count($mTarifaExcluidas);$nE++){//Exploto campo donde se guardan conceptos excluidos para facturacion.
-                  if($mTarifaExcluidas[$nE][0] <> ""){
-                    if($mTarifaExcluidas[$nE][0] == $xRT['fcotptxx'] && $mTarifaExcluidas[$nE][2] == $xRT['seridxxx']){
-                      $cExcluida = true;
-                    }
-                  }
-                }
-                
-                $nInd_mTarifas = count($mTarifas);
-                $mTarifas[$nInd_mTarifas] = $xRT;
-                $mTarifas[$nInd_mTarifas]['comidxxx'] = $vTramite['comidxxx'];
-                $mTarifas[$nInd_mTarifas]['comprexx'] = $vTramite['comprexx'];
-                $mTarifas[$nInd_mTarifas]['comcscxx'] = $vTramite['comcscxx'];
-                $mTarifas[$nInd_mTarifas]['clinomxx'] = $vTramite['clinomxx'];
-                $mTarifas[$nInd_mTarifas]['cliidxxx'] = $vTramite['cliidxxx'];
-                $mTarifas[$nInd_mTarifas]['sersapxx'] = $vTramite['sersapxx'];
-                $mTarifas[$nInd_mTarifas]['serdesxx'] = $vTramite['serdesxx'];
-                $mTarifas[$nInd_mTarifas]['subidxxx'] = $vTramite['subidxxx'];
-                $mTarifas[$nInd_mTarifas]['subdesxx'] = $vTramite['subdesxx'];
-                $mTarifas[$nInd_mTarifas]['excluida'] = $cExcluida;
-              }
-            } 
+          $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
+          // f_Mensaje(__FILE__,__LINE__,$qTramite." ~ ".mysql_num_rows($xTramite));
+          if (mysql_num_rows($xTarifas) > 0) {
+            while ($xRT = mysql_fetch_array($xTarifas)) {
+              $nInd_mTarifas = count($mTarifas);
+              $mTarifas[$nInd_mTarifas] = $xRT;
+            }
           } 
-        ## for ($i=0; $i<$_POST['nSecuencia']; $i++) { ##
+        } 
         
         //Matriz para verificar si ya habia sido marcado
         $vCheckMarcados = array();

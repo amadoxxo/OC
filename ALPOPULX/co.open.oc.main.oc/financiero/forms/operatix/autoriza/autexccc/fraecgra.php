@@ -14,7 +14,7 @@
 	
 	switch ($_COOKIE['kModo']) {
 		case "MASIVA":
-				/*****Validando que aplique al menos un concepto de cobro*****/
+			/*****Validando que aplique al menos un concepto de cobro*****/
 			if($_POST['cComMemo']=="" || strlen($_POST['cComMemo']) == 1 ){
 				$nSwitch = 1;
         $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";

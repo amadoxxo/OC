@@ -5,7 +5,7 @@ set_time_limit(0);
 //ini_set('error_reporting', E_ERROR);
 //ini_set("display_errors","1");
   
-include("../../../../../libs/php/utility.php"); 
+include("../../../../../financiero/libs/php/utility.php"); 
   
 switch ($_POST['cModo']) {
   case "PEGARDO":

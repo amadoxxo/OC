@@ -33,7 +33,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
     <script language="javascript">
 
       function fnVer(xOrvSap) {
-        var cPathUrl = "frttinue.php?cOrvSap="+xOrvSap;
+        var cPathUrl = "fraesnue.php?cOrvSap="+xOrvSap;
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
         document.cookie="kMenDes=Ver Prioridad de Ticket;path="+"/";
         document.cookie="kModo=VER;path="+"/";
@@ -46,9 +46,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "frttinue.php?cOrvSap="+mMatriz[0];
+              var cPathUrl = "fraesnue.php?cOrvSap="+mMatriz[0];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-              document.cookie="kMenDes=Editar Prioridad de Ticket;path="+"/";
+              document.cookie="kMenDes=Editar Autorizacion Exlcluir Servicios;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
               parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
               document.location = cPathUrl; // Invoco el menu.
@@ -61,7 +61,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                 // Solo Deja Legalizar el Primero Seleccionado
                 zSw_Prv = 1;
                 var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                var cPathUrl = "frttinue.php?cOrvSap="+mMatriz[0];
+                var cPathUrl = "fraesnue.php?cOrvSap="+mMatriz[0];
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                 document.cookie="kMenDes=Editar Organizacion de Ventas;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
@@ -307,36 +307,43 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         }
 
         $y=0;
-
+        //lpar0158
         $mOrgVen = array();
         $qOrgVen  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
-        $qOrgVen .= "$cAlfa.lpar0158.tticodxx, ";
-        $qOrgVen .= "$cAlfa.lpar0158.ttidesxx, ";
-        $qOrgVen .= "$cAlfa.lpar0158.regusrxx, "; // Código Usuario
-        $qOrgVen .= "$cAlfa.lpar0158.regfcrex, "; // Fecha de creación
-        $qOrgVen .= "$cAlfa.lpar0158.reghcrex, "; // Hora de creación
-        $qOrgVen .= "$cAlfa.lpar0158.regfmodx, "; // Fecha de modificación
-        $qOrgVen .= "$cAlfa.lpar0158.reghmodx, "; // Hora de modificación
+        $qOrgVen .= "$cAlfa.lpar0160.aesidxxx, "; // id tabla
+        $qOrgVen .= "$cAlfa.lpar0160.cliidxxx, "; // Nit Cliente
+        $qOrgVen .= "$cAlfa.lpar0160.ceridxxx, "; // Certificacion id
+        $qOrgVen .= "$cAlfa.lpar0160.cercscxx, "; // Certificacion consecutivo
+        $qOrgVen .= "$cAlfa.lpar0160.sersapxx, "; // Codigo SAP Servicio
+        $qOrgVen .= "$cAlfa.lpar0150.clisapxx, "; // Cod SAP Cliente
+        $qOrgVen .= "$cAlfa.lpar0150.clinomxx, "; // Cliente Nombre
+        $qOrgVen .= "$cAlfa.lpar0160.regusrxx, "; // Código Usuario
+        $qOrgVen .= "$cAlfa.lpar0160.regfcrex, "; // Fecha de creación
+
         if (substr_count($_POST['cOrderByOrder'],"usrnomxx") > 0) {
           $qOrgVen .= "IF($cAlfa.SIAI0003.USRNOMXX != \"\",$cAlfa.SIAI0003.USRNOMXX,TRIM(CONCAT($cAlfa.SIAI0003.USRPAPEX,\" \",$cAlfa.SIAI0003.USRSAPEX,\" \",$cAlfa.SIAI0003.USRPNOMX,\" \",$cAlfa.SIAI0003.USRSNOMX))) AS usrnomxx, ";
         }
-        $qOrgVen .= "$cAlfa.lpar0158.regestxx ";
-        $qOrgVen .= "FROM $cAlfa.lpar0158 ";
+        $qOrgVen .= "$cAlfa.lpar0160.regestxx ";
+        $qOrgVen .= "FROM $cAlfa.lpar0160 ";
+        $qOrgVen .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpar0160.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+
         if (substr_count($_POST['cOrderByOrder'],"usrnomxx") > 0) {
-          $qOrgVen .= "LEFT JOIN $cAlfa.SIAI0003 ON $cAlfa.lpar0158.regusrxx = $cAlfa.SIAI0003.USRIDXXX ";
+          $qOrgVen .= "LEFT JOIN $cAlfa.SIAI0003 ON $cAlfa.lpar0160.regusrxx = $cAlfa.SIAI0003.USRIDXXX ";
         }
         if ($_POST['vSearch'] != "") {
           $qOrgVen .= "WHERE ";
-          $qOrgVen .= "$cAlfa.lpar0158.tticodxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qOrgVen .= "$cAlfa.lpar0158.ttidesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qOrgVen .= "$cAlfa.lpar0158.regfcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qOrgVen .= "$cAlfa.lpar0158.reghcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qOrgVen .= "$cAlfa.lpar0158.regfmodx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qOrgVen .= "$cAlfa.lpar0160.cliidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qOrgVen .= "$cAlfa.lpar0160.ceridxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qOrgVen .= "$cAlfa.lpar0150.clinomxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qOrgVen .= "$cAlfa.lpar0150.clisapxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qOrgVen .= "$cAlfa.lpar0160.regfcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
           if ($cNombreSearch != "") {
-            $qOrgVen .= "$cAlfa.lpar0158.regusrxx IN ($cNombreSearch) OR ";
+            $qOrgVen .= "$cAlfa.lpar0160.regusrxx IN ($cNombreSearch) OR ";
           }
-          $qOrgVen .= "$cAlfa.lpar0158.regestxx LIKE \"%{$_POST['vSearch']}%\" ";
+          $qOrgVen .= "$cAlfa.lpar0160.regestxx LIKE \"%{$_POST['vSearch']}%\" ";
         }
+        // AGRUPAR POR ID DE CERTIFICACION
+        $qOrgVen .= "GROUP BY $cAlfa.lpar0160.ceridxxx ";
         //// CODIGO NUEVO PARA ORDER BY
         $cOrderBy = "";
         $vOrderByOrder = explode("~",$_POST['cOrderByOrder']);
@@ -351,7 +358,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           $cOrderBy = substr($cOrderBy,0,strlen($cOrderBy)-1);
           $cOrderBy = "ORDER BY ".$cOrderBy;
         } else {
-          $cOrderBy = "ORDER BY regfmodx DESC ";
+          $cOrderBy = "ORDER BY clinomxx DESC ";
         }
         //// FIN CODIGO NUEVO PARA ORDER BY
         $qOrgVen .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
@@ -524,44 +531,44 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                 <center>
                   <table cellspacing="0" width="100%">
                     <tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
-                      <td class="name" width="20%">
-                        <a href = "javascript:fnOrder_By('onclick','ttidesxx');" title="Ordenar">Certificaci&oacute;n</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ttidesxx">
-                        <input type = "hidden" name = "ttidesxx" value = "<?php echo $_POST['ttidesxx'] ?>" id = "ttidesxx">
-                        <script language="javascript">fnOrder_By('','ttidesxx')</script>
+                      <td class="name" width="15%">
+                        <a href = "javascript:fnOrder_By('onclick','cliidxxx');" title="Ordenar">Certificaci&oacute;n</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "cliidxxx">
+                        <input type = "hidden" name = "cliidxxx" value = "<?php echo $_POST['cliidxxx'] ?>" id = "cliidxxx">
+                        <script language="javascript">fnOrder_By('','cliidxxx')</script>
                       </td>
                       
+                      <td class="name" width="13%">
+                        <a href = "javascript:fnOrder_By('onclick','cliidxxx');" title="Ordenar">Nit Cliente</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "cliidxxx">
+                        <input type = "hidden" name = "cliidxxx" value = "<?php echo $_POST['cliidxxx'] ?>" id = "cliidxxx">
+                        <script language="javascript">fnOrder_By('','cliidxxx')</script>
+                      </td>
                       <td class="name" width="20%">
-                        <a href = "javascript:fnOrder_By('onclick','regfcrex');" title="Ordenar">Nit Cliente</a>&nbsp;
+                        <a href = "javascript:fnOrder_By('onclick','clisapxx');" title="Ordenar">Cod SAP Cliente</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clisapxx">
+                        <input type = "hidden" name = "clisapxx" value = "<?php echo $_POST['clisapxx'] ?>" id = "clisapxx">
+                        <script language="javascript">fnOrder_By('','clisapxx')</script>
+                      </td>
+                      <td class="name" width="25%">
+                        <a href = "javascript:fnOrder_By('onclick','clinomxx');" title="Ordenar">Cliente</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clinomxx">
+                        <input type = "hidden" name = "clinomxx" value = "<?php echo $_POST['clinomxx'] ?>" id = "clinomxx">
+                        <script language="javascript">fnOrder_By('','clinomxx')</script>
+                      </td>
+                      <td class="name" width="10%">
+                        <a href = "javascript:fnOrder_By('onclick','usrnomxx');" title="Ordenar">Usuario</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "usrnomxx">
+                        <input type = "hidden" name = "usrnomxx" value = "<?php echo $_POST['usrnomxx'] ?>" id = "usrnomxx">
+                        <script language="javascript">fnOrder_By('','usrnomxx')</script>
+                      </td>
+                      <td class="name" width="10%">
+                        <a href = "javascript:fnOrder_By('onclick','regfcrex');" title="Ordenar">Fecha</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfcrex">
                         <input type = "hidden" name = "regfcrex" value = "<?php echo $_POST['regfcrex'] ?>" id = "regfcrex">
                         <script language="javascript">fnOrder_By('','regfcrex')</script>
                       </td>
-                      <td class="name" width="20%">
-                        <a href = "javascript:fnOrder_By('onclick','reghcrex');" title="Ordenar">Cod SAP Cliente</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "reghcrex">
-                        <input type = "hidden" name = "reghcrex" value = "<?php echo $_POST['reghcrex'] ?>" id = "reghcrex">
-                        <script language="javascript">fnOrder_By('','reghcrex')</script>
-                      </td>
-                      <td class="name" width="25%">
-                        <a href = "javascript:fnOrder_By('onclick','regfmodx');" title="Ordenar">Cliente</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfmodx">
-                        <input type = "hidden" name = "regfmodx" value = "<?php echo $_POST['regfmodx'] ?>" id = "regfmodx">
-                        <script language="javascript">fnOrder_By('','regfmodx')</script>
-                      </td>
-                      <td class="name" width="10%">
-                        <a href = "javascript:fnOrder_By('onclick','reghmodx');" title="Ordenar">Usuario</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "reghmodx">
-                        <input type = "hidden" name = "reghmodx" value = "<?php echo $_POST['reghmodx'] ?>" id = "reghmodx">
-                        <script language="javascript">fnOrder_By('','reghmodx')</script>
-                      </td>
-                      <td class="name" width="20%">
-                        <a href = "javascript:fnOrder_By('onclick','regestxx');" title="Ordenar">Fecha</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regestxx">
-                        <input type = "hidden" name = "regestxx" value = "<?php echo $_POST['regestxx'] ?>" id = "regestxx">
-                        <script language="javascript">fnOrder_By('','regestxx')</script>
-                      </td>
-                      <td class="name" width="10%">
+                      <td class="name" width="05%">
                         <a href = "javascript:fnOrder_By('onclick','regestxx');" title="Ordenar">Estado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regestxx">
                         <input type = "hidden" name = "regestxx" value = "<?php echo $_POST['regestxx'] ?>" id = "regestxx">
@@ -582,19 +589,19 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                         } ?>
                         <!--<tr bgcolor = "<?php echo $cColor ?>">-->
                         <tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
-                          <td class="letra7" width="13%">
-                            <a href = javascript:fnVer('<?php echo $mOrgVen[$i]['tticodxx']?>')>
-                                                        <?php echo $mOrgVen[$i]['tticodxx']?>
+                          <td class="letra7" width="15%">
+                            <a href = javascript:fnVer('<?php echo $mOrgVen[$i]['cercscxx']?>')>
+                                                        <?php echo $mOrgVen[$i]['cercscxx']?>
                             </a>
-                          <td class="letra7" width="20%"><?php echo $mOrgVen[$i]['ttidesxx'] ?></td>
-                          <td class="letra7" width="20%"><?php echo $mOrgVen[$i]['regfcrex'] ?></td>
-                          <td class="letra7" width="20%"><?php echo $mOrgVen[$i]['reghcrex'] ?></td>
-                          <td class="letra7" width="25%"><?php echo $mOrgVen[$i]['regfmodx'] ?></td>
-                          <td class="letra7" width="05%"><?php echo $mOrgVen[$i]['reghmodx'] ?></td>
+                          <td class="letra7" width="20%"><?php echo $mOrgVen[$i]['cliidxxx'] ?></td>
+                          <td class="letra7" width="25%"><?php echo $mOrgVen[$i]['clisapxx'] ?></td>
+                          <td class="letra7" width="10%"><?php echo $mOrgVen[$i]['clinomxx'] ?></td>
+                          <td class="letra7" width="10%"><?php echo $mOrgVen[$i]['usrnomxx'] ?></td>
+                          <td class="letra7" width="10%"><?php echo $mOrgVen[$i]['regfcrex'] ?></td>
                           <td class="letra7" width="05%"><?php echo $mOrgVen[$i]['regestxx'] ?></td>
                           <td Class="letra7" width="02%" align="right">
                             <input type="checkbox" name="oCheck" value = "<?php echo count($mOrgVen) ?>"
-                            id="<?php echo $mOrgVen[$i]['tticodxx'].'~'.
+                            id="<?php echo $mOrgVen[$i]['aesidxxx'].'~'.
                                             $mOrgVen[$i]['regestxx'] ?>"
                             onclick="javascript:document.forms['frnav']['nRecords'].value='<?php echo count($mOrgVen) ?>'">
                           </td>

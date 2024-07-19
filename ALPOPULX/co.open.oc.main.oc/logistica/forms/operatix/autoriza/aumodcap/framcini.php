@@ -32,8 +32,8 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
     <script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
     <script language="javascript">
 
-      function fnVer(xPfaId) {
-        var cPathUrl = "framcnue.php?cAmcId="+xPfaId;
+      function fnVer(xCliId,xCliNom,xPedido) {
+        var cPathUrl = "fraecnue.php?cCliId="+xCliId+"&cCliNom="+xCliNom+"&cPedido="+xPedido;
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
         document.cookie="kMenDes=Ver Autorización Modificar Campos Pedido;path="+"/";
         document.cookie="kModo=VER;path="+"/";
@@ -46,7 +46,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "framcnue.php?cAmcId="+mMatriz[0];
+              var cPathUrl = "fraecnue.php?cAmcId="+mMatriz[0];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
               document.cookie="kMenDes=Editar Autorización Modificar Campos Pedido;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
@@ -579,7 +579,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                         <!--<tr bgcolor = "<?php echo $cColor ?>">-->
                         <tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
                           <td class="letra7" width="15%">
-                            <a href = javascript:fnVer('<?php echo $mAudModCap[$i]['pedcscxx']?>')>
+                            <a href = javascript:fnVer('<?php echo $mAudModCap[$i]['cliidxxx']?>','<?php echo $mAudModCap[$i]['clinomxx']?>','<?php echo $mAudModCap[$i]['pedcscxx']?>')>
                                                         <?php echo $mAudModCap[$i]['pedcscxx']?>
                             </a>
                           <td class="letra7" width="13%"><?php echo $mAudModCap[$i]['cliidxxx'] ?></td>

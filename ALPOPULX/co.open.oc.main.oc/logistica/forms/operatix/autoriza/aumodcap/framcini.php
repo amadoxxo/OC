@@ -356,7 +356,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           $qAudModCap .= "$cAlfa.lpar0161.regestxx LIKE \"%{$_POST['vSearch']}%\" ";
         }
         $qAudModCap .= "GROUP BY $cAlfa.lpar0161.pedidxxx, $cAlfa.lpar0161.pedanoxx ";
-        //// CODIGO NUEVO PARA ORDER BY
+        // CODIGO NUEVO PARA ORDER BY
         $cOrderBy = "";
         $vOrderByOrder = explode("~",$_POST['cOrderByOrder']);
         for ($z=0;$z<count($vOrderByOrder);$z++) {
@@ -372,12 +372,10 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         } else {
           $cOrderBy = "ORDER BY regfcrex DESC ";
         }
-        //// FIN CODIGO NUEVO PARA ORDER BY
+        // FIN CODIGO NUEVO PARA ORDER BY
         $qAudModCap .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
         $xAudModCap  = f_MySql("SELECT","",$qAudModCap,$xConexion01,"");
         // echo $qAudModCap." ~ ".mysql_num_rows($xAudModCap);
-
-        /***** FIN SQL *****/
 
         $xNumRows = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
         $xRNR = mysql_fetch_array($xNumRows);

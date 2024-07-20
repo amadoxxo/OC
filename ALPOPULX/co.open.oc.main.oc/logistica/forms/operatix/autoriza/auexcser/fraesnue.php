@@ -31,7 +31,7 @@ include("../../../../../financiero/libs/php/utility.php");
           var cMsj = "";
           if (document.forms['frgrm']['cCliId' + xSecuencia].value != "") {
             if (xSwitch == "VALID") {
-              var cRuta = "fraec121.php?gWhat=VALID" +
+              var cRuta = "fraes121.php?gWhat=VALID" +
                 "&gFunction=cCliId" +
                 "&gSecuencia=" + xSecuencia +
                 "&gCliId=" + document.forms['frgrm']['cCliId' + xSecuencia].value;
@@ -40,7 +40,7 @@ include("../../../../../financiero/libs/php/utility.php");
               var zNx = (zX - 600) / 2;
               var zNy = (zY - 250) / 2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left=' + zNx + ',top=' + zNy;
-              var cRuta = "fraec121.php?gWhat=WINDOW" +
+              var cRuta = "fraes121.php?gWhat=WINDOW" +
                 "&gFunction=cCliId" +
                 "&gSecuencia=" + xSecuencia +
                 "&gCliId=" + document.forms['frgrm']['cCliId' + xSecuencia].value;
@@ -55,7 +55,7 @@ include("../../../../../financiero/libs/php/utility.php");
           var cMsj = "";
           if (document.forms['frgrm']['cCliId' + xSecuencia].value != "") {
             if (xSwitch == "VALID") {
-              var cRuta = "frlcca00.php?gModo=VALID&gFunction=cCerComCsc" +
+              var cRuta = "fraesa00.php?gModo=VALID&gFunction=cCerComCsc" +
                 "&gCliId=" + document.forms['frgrm']['cCliId' + xSecuencia].value.toUpperCase() +
                 "&gSecuencia=" + xSecuencia +
                 "&gOrigen=NUEVO";
@@ -67,7 +67,7 @@ include("../../../../../financiero/libs/php/utility.php");
               var zNy = (zY - 300) / 2;
               var zWinPro = 'width=800,scrollbars=1,height=350,left=' + zNx + ',top=' + zNy;
 
-              var cRuta = "frlcca00.php?gModo=WINDOW&gFunction=cCerComCsc" +
+              var cRuta = "fraesa00.php?gModo=WINDOW&gFunction=cCerComCsc" +
                 "&gCliId=" + document.forms['frgrm']['cCliId' + xSecuencia].value.toUpperCase() +
                 "&gSecuencia=" + xSecuencia;
               // alert(cRuta);
@@ -102,26 +102,28 @@ include("../../../../../financiero/libs/php/utility.php");
       }
     }
 
-    function f_Carga_Data() { //Arma cadena para guardar en campo matriz de la sys00121
-      document.forms['frgrm']['cComMemo'].value = "|";
-      switch (document.forms['frgrm']['nRecords'].value) {
-        case "1":
-          if (document.forms['frgrm']['cCheck'].checked == true) {
-            document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck'].id + "|";
-          }
-          break;
-        default:
-          if (document.forms['frgrm']['cCheck'] !== undefined) {
-            for (i = 0; i < document.forms['frgrm']['cCheck'].length; i++) {
-              if (document.forms['frgrm']['cCheck'][i].checked == true) {
-                document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck'][i].id + "|";
+    function f_Carga_Data() {
+      for (let i = 0; i < document.forms['frgrm']['nSecuencia_Ip']; i++) {
+        document.forms['frgrm']['cComMemo'].value = "|";
+        switch (document.forms['frgrm']['nRecords'].value) {
+          case "1":
+            if (document.forms['frgrm']['cCheck' + (i + 1)].checked == true) {
+              document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck' + (i + 1)].id + "|";
+            }
+            break;
+          default:
+            if (document.forms['frgrm']['cCheck' + (i + 1)] !== undefined) {
+              for (i = 0; i < document.forms['frgrm']['cCheck' + (i + 1)].length; i++) {
+                if (document.forms['frgrm']['cCheck' + (i + 1)][i].checked == true) {
+                  document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck' + (i + 1)][i].id + "|";
+                }
               }
             }
-          }
-          break;
-      }
-      if (document.forms['frgrm']['cComMemo'].value == "|") {
-        document.forms['frgrm']['cComMemo'].value = "";
+            break;
+        }
+        if (document.forms['frgrm']['cComMemo'].value == "|") {
+          document.forms['frgrm']['cComMemo'].value = "";
+        }
       }
     }
 
@@ -132,7 +134,13 @@ include("../../../../../financiero/libs/php/utility.php");
       var nSecuencia = nLastRow + 1;
       var cTableRow = cGrid.insertRow(nLastRow);
 
-      var cAutSeq  = 'cAutSeq' + nSecuencia; //secuencia
+      <?php 
+        if ($_POST['nSecuencia' == 1]) {
+          $nom = 'cristian';
+        }
+      ?>
+
+      var cAutSeq = 'cAutSeq' + nSecuencia; //secuencia
       var cCliId = 'cCliId' + nSecuencia; // Nit Cliente
       var cCliDv = 'cCliDv' + nSecuencia; // Dv
       var cCliSap = 'cCliSap' + nSecuencia; // Cod SAP 
@@ -148,7 +156,7 @@ include("../../../../../financiero/libs/php/utility.php");
       TD_xAll = cTableRow.insertCell(0);
       TD_xAll.style.width = "40px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:040px;border:0;text-align:center;padding:2px' name = '" + cAutSeq + "' id = '" + cAutSeq + "' value = '"+f_Str_Pad(nSecuencia,3,"0","STR_PAD_LEFT")+"'readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:040px;border:0;text-align:center;padding:2px' name = '" + cAutSeq + "' id = '" + cAutSeq + "' value = '" + f_Str_Pad(nSecuencia, 3, "0", "STR_PAD_LEFT") + "'readonly>";
 
       TD_xAll = cTableRow.insertCell(1);
       TD_xAll.style.width = "200px";
@@ -238,37 +246,9 @@ include("../../../../../financiero/libs/php/utility.php");
       TD_xAll = cTableRow.insertCell(6);
       TD_xAll.style.width = "10px";
       TD_xAll.style.textAlign = "center";
-      TD_xAll.innerHTML = "<input type='checkbox' name='"+cCheck+"'  value = '" + cCheck + "' id='" + xId + "'" + ((xChek) == true ? " checked" : "") + ">";
+      TD_xAll.innerHTML = "<input type='checkbox' name='" + cCheck + "'  value = '" + cCheck + "' id='" + xId + "'" + ((xChek) == true ? " checked" : "") + ">";
 
       document.forms['frgrm']['nSecuencia_Ip'].value = nSecuencia;
-    }
-
-    function f_Enter(e, xName, xGrilla) {
-      var nSecuencia = document.forms['frgrm']['nSecuencia'].value;
-      var code;
-      if (!e) {
-        var e = window.event;
-      }
-      if (e.keyCode) {
-        code = e.keyCode;
-      } else {
-        if (e.which) {
-          code = e.which;
-        }
-      }
-      if (code == 13) {
-        switch (xGrilla) {
-          case "Grid":
-            if (xName == 'cTerNomInt' + eval(document.forms['frgrm']['nSecuencia'].value)) {
-              if (document.forms["frgrm"]['cDocId' + eval(document.forms['frgrm']['nSecuencia'].value)].value !== '') {
-                f_Add_New_Row();
-              } else {
-                alert("LLene los datos antes de Adicionar una nueva Fila.");
-              }
-            }
-            break;
-        }
-      }
     }
 
     function f_Delete_Row(xNumRow, xSecuencia, xTabla) {
@@ -302,36 +282,31 @@ include("../../../../../financiero/libs/php/utility.php");
       f_Add_New_Row();
     }
 
-    function fnPegarDo() {
-      var nSecuencia = document.forms['frgrm']['nSecuencia'].value;
-      var nX = screen.width;
-      var nY = screen.height;
-      var nAncho = 550;
-      var nAlto = 250;
-      var nNx = (nX - nAncho) / 2;
-      var nNy = (nY - nAlto) / 2;
-      var cWinOpt = "width=" + nAncho + ",scrollbars=1,height=" + nAlto + ",left=" + nNx + ",top=" + nNy;
-      var cPathUrl = "fraecfrm.php?gFunction=PegarDo&gArchivo=fraeccpd.php" +
-        "&gSecuencia=" + document.forms['frgrm']['nSecuencia'].value;
-      cWindow = window.open(cPathUrl, "PegarDo", cWinOpt);
-      cWindow.focus();
-    }
+    function f_Valida() { 
+      var formulario = document.forms['frgrm'];
+      var observaciones = formulario['cObvsCer'].value.trim(); // Trim para eliminar espacios en blanco
+      var secuencia = parseInt(formulario['nSecuencia'].value, 10); // Convertir a número entero
+      var condicion = true; // Inicializar condicion en true
 
-    function f_Valida() { //Valida datos de formulario, para poder pintar conceptos de Cobro a excluir
-      /* for ($i=0; $i<$_POST['nSecuencia']; $i++) {
-        
-      } */
-     var formulario = document.forms['frgrm'];
-     var observaciones = formulario['cObvsCer'].value;
-      if (!observaciones) {
-        alert('El campo de observaciones es obligatorio');
-      }else{
-        document.forms['frgrm'].target = 'fmpro';
-        document.forms['frgrm'].action = 'fraec20g.php';
-        document.forms['frgrm']['cModo'].value = 'VALIDARDO';
-        document.forms['frgrm'].submit();
+      for (let i = 0; i < secuencia; i++) {
+          var nit = formulario['cCliId' + (i + 1)].value.trim(); // Usar i + 1 para acceso correcto
+          var certificado = formulario['cCerComCsc' + (i + 1)].value.trim(); // Usar i + 1 para acceso correcto
+
+          // Verificar si nit, certificado u observaciones están vacíos
+          if (!nit || !certificado || !observaciones) {
+              condicion = false; 
+              break; 
+          }
       }
-      
+
+      if (!condicion) {
+          alert('Verifique llenar todos los campos');
+      } else {
+          document.forms['frgrm'].target = 'fmpro';
+          document.forms['frgrm'].action = 'fraes20g.php';
+          document.forms['frgrm']['cModo'].value = 'VALIDARDO';
+          document.forms['frgrm'].submit();
+      }
     }
 
     function f_VolverAtras() {
@@ -349,26 +324,10 @@ include("../../../../../financiero/libs/php/utility.php");
         case "1":
           document.getElementById("Grid_Paso1").style.display = "block";
           document.getElementById("Grid_Paso2").style.display = "none";
-          document.getElementById("Grid_Paso3").style.display = "none";
-          document.getElementById("Grid_Paso4").style.display = "none";
           break;
         case "2":
           document.getElementById("Grid_Paso1").style.display = "none";
           document.getElementById("Grid_Paso2").style.display = "block";
-          document.getElementById("Grid_Paso3").style.display = "none";
-          document.getElementById("Grid_Paso4").style.display = "none";
-          break;
-        case "3"://editar
-          document.getElementById("Grid_Paso1").style.display = "none";
-          document.getElementById("Grid_Paso2").style.display = "none";
-          document.getElementById("Grid_Paso3").style.display = "block";
-          document.getElementById("Grid_Paso4").style.display = "none";
-          break;
-        case "4"://ver
-          document.getElementById("Grid_Paso1").style.display = "none";
-          document.getElementById("Grid_Paso2").style.display = "none";
-          document.getElementById("Grid_Paso3").style.display = "none";
-          document.getElementById("Grid_Paso4").style.display = "block";
           break;
       }
     }
@@ -380,6 +339,7 @@ include("../../../../../financiero/libs/php/utility.php");
       document.forms['frgrm']['nTimesSave'].value++;
       document.forms['frgrm'].submit();
     }
+
   </script>
 </head>
 
@@ -401,7 +361,7 @@ include("../../../../../financiero/libs/php/utility.php");
               <input type="hidden" name="nSecuencia" value="">
               <input type="hidden" name="nSecuencia_Ip" value="">
               <input type="hidden" name="cModo" value="">
-              
+
               <textarea name="cComMemo" id="cComMemo"><?php echo $_POST['cComMemo'] ?></textarea>
               <textarea name="cTramites" id="cTramites"><?php echo $_POST['cTramites'] ?></textarea>
               <center>
@@ -411,11 +371,11 @@ include("../../../../../financiero/libs/php/utility.php");
                 </script>
 
                 <div id="Grid_Paso1">
-                  
-                  <?php 
+
+                  <?php
                   if ($_POST['cStep'] == "") {
-                          $_POST['cStep'] = "1";
-                        } ?>
+                    $_POST['cStep'] = "1";
+                  } ?>
                   <fieldset>
                     <legend><b>Seleccione las Certificaciones</b></legend>
                     <center>
@@ -446,7 +406,7 @@ include("../../../../../financiero/libs/php/utility.php");
                     <textarea name="cObvsCer" id="cObvsCer"></textarea>
                   </fieldset>
 
-                </div>                              
+                </div>
 
                 <fieldset id="Grid_Paso2">
                   <legend><b>Seleccione los Servicios a Excluir</b></legend>
@@ -510,91 +470,91 @@ include("../../../../../financiero/libs/php/utility.php");
     f_Mostrar_u_Ocultar_Objetos("<?php echo $_POST['cStep'] ?>");
   </script>
   <?php
-    if ($_POST['cStep'] == "2") {
+  if ($_POST['cStep'] == "2") {
 
-      $mDataDetalles = array();
-      $cTraSel = "";
-      for ($i=0; $i<$_POST['nSecuencia']; $i++) {
+    $mDataDetalles = array();
+    $cTraSel = "";
+    for ($i = 0; $i < $_POST['nSecuencia']; $i++) {
 
-        if ($_POST['cCerComCsc'.($i+1)] != "") {
-          
-          $cTraSel .= "{$_POST['vCerIds'.($i+1)]}~{$_POST['vAnio'.($i+1)]}|";
-      
-          $vCerIds  = "{$_POST['vCerIds'.($i+1)]}";
-          $cAnio = "{$_POST['vAnio'.($i+1)]}";
-      
-          // Consulta la información de detalle de la certificación
-          $qCertifiDet  = "SELECT ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.comidxxx, ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.comcodxx, ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.comprexx, ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.comcscxx, ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.comcsc2x, ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.cliidxxx, ";
-          $qCertifiDet .= "$cAlfa.lcca$cAnio.comfecxx, ";
-          $qCertifiDet .= "$cAlfa.lpar0150.clinomxx, ";
-          $qCertifiDet .= "$cAlfa.lcde$cAnio.*, ";
-          $qCertifiDet .= "$cAlfa.lpar0011.sersapxx, ";
-          $qCertifiDet .= "$cAlfa.lpar0011.serdesxx ";
-          $qCertifiDet .= "FROM $cAlfa.lcde$cAnio ";
-          $qCertifiDet .= "LEFT JOIN $cAlfa.lcca$cAnio ON $cAlfa.lcde$cAnio.ceridxxx = $cAlfa.lcca$cAnio.ceridxxx ";
-          $qCertifiDet .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lcde$cAnio.sersapxx = $cAlfa.lpar0011.sersapxx ";
-          $qCertifiDet .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lcca$cAnio.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
-          $qCertifiDet .= "WHERE ";
-          $qCertifiDet .= "$cAlfa.lcde$cAnio.ceridxxx = $vCerIds";
-      
-          // Depuración
-          //var_dump($qCertifiDet);
+      //if ($_POST['cCerComCsc' . ($i + 1)] != "") {
+
+        $cTraSel .= "{$_POST['vCerIds' . ($i + 1)]}~{$_POST['vAnio' . ($i + 1)]}|";
+
+        $vCerIds  = "{$_POST['vCerIds' . ($i + 1)]}";
+        $cAnios = "{$_POST['vAnio' . ($i + 1)]}";
+
+        // Consulta la información de detalle de la certificación
+        $qCertifiDet  = "SELECT ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.comidxxx, ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.comcodxx, ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.comprexx, ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.comcscxx, ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.comcsc2x, ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.cliidxxx, ";
+        $qCertifiDet .= "$cAlfa.lcca$cAnios.comfecxx, ";
+        $qCertifiDet .= "$cAlfa.lpar0150.clinomxx, ";
+        $qCertifiDet .= "$cAlfa.lcde$cAnios.*, ";
+        $qCertifiDet .= "$cAlfa.lpar0011.sersapxx, ";
+        $qCertifiDet .= "$cAlfa.lpar0011.serdesxx ";
+        $qCertifiDet .= "FROM $cAlfa.lcde$cAnios ";
+        $qCertifiDet .= "LEFT JOIN $cAlfa.lcca$cAnios ON $cAlfa.lcde$cAnios.ceridxxx = $cAlfa.lcca$cAnios.ceridxxx ";
+        $qCertifiDet .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lcde$cAnios.sersapxx = $cAlfa.lpar0011.sersapxx ";
+        $qCertifiDet .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lcca$cAnios.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+        $qCertifiDet .= "WHERE ";
+        $qCertifiDet .= "$cAlfa.lcde$cAnios.ceridxxx = $vCerIds";
+
+        // Depuración
+        //var_dump($qCertifiDet);
+      //}
+      $xCertifiDet  = f_MySql("SELECT", "", $qCertifiDet, $xConexion01, "");
+      // f_Mensaje(__FILE__,__LINE__,$qTramite." ~ ".mysql_num_rows($xTramite));
+      if (mysql_num_rows($xCertifiDet) > 0) {
+        while ($xRT = mysql_fetch_array($xCertifiDet)) {
+          $nInd_mDataDetalle = count($mDataDetalles);
+          $mDataDetalles[$nInd_mDataDetalle] = $xRT;
+        }
       }
-      $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
-        // f_Mensaje(__FILE__,__LINE__,$qTramite." ~ ".mysql_num_rows($xTramite));
-        if (mysql_num_rows($xCertifiDet) > 0) {
-          while ($xRT = mysql_fetch_array($xCertifiDet)) {
-            $nInd_mDataDetalle = count($mDataDetalles);
-            $mDataDetalles[$nInd_mDataDetalle] = $xRT;
-          }
-        } 
-      } 
-      
-      //Matriz para verificar si ya habia sido marcado
-      $vCheckMarcados = array();
-      $vCheckMarcados = explode("|",$_POST['cComMemo']);
-      
-      for ($i=0; $i<count($mDataDetalles); $i++) {
-          
-        $cId = $mDataDetalles[$i]['comidxxx']."~".$mDataDetalles[$i]['cliidxxx']."~".$mDataDetalles[$i]['subidxxx'];
-        
-        if (count($vCheckMarcados) > 0) {
-          $mDataDetalles[$i]['excluida'] = false;
-          if (in_array($cId, $vCheckMarcados) == true) {
-            $mDataDetalles[$i]['excluida'] = true;
-          }
-        } ?>
-        <script languaje = "javascript">
-          f_Add_New_Row_Ip("<?php echo $cId ?>","<?php echo count($mDataDetalles) ?>","<?php echo $mDataDetalles[$i]['excluida'] ?>");
-          
-          document.forms['frgrm']['cCertificacion'   + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['comidxxx']}-{$mDataDetalles[$i]['comprexx']}-{$mDataDetalles[$i]['comcscxx']}"; ?>";
-          document.forms['frgrm']['cCliente'+ document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['clinomxx']} [{$mDataDetalles[$i]['cliidxxx']}]"; ?>";
-          document.forms['frgrm']['cCodSap' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['sersapxx']}"; ?>";
-          document.forms['frgrm']['cSubCerId'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['subidxxx']}"; ?>";
-          document.forms['frgrm']['cServicio'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['serdesxx']}"; ?>";
-          document.forms['frgrm']['cSubServicio'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['subdesxx']}"; ?>";
-          document.forms['frgrm']['cNit'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['cliidxxx']}"; ?>";
-          document.forms['frgrm']['cObservacion'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$_POST['cObvsCer']}"; ?>";
-          document.forms['frgrm']['cCertiId'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['ceridxxx']}"; ?>";
-          document.forms['frgrm']['cAnioCer'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalles[$i]['comfecxx'], 0, 4); ?>";
-          document.forms['frgrm']['cAnioCer'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalles[$i]['comfecxx'], 0, 4); ?>";
-          
-          document.forms['frgrm']['cBase'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['basexxxx']}"; ?>"; 
-        </script>
-      <?php }  ?>
-      <script languaje="javascript">
-        document.forms['frgrm']['cTramites'].value  = "<?php echo $cTraSel ?>";
-        document.forms['frgrm']['nSecuencia'].value = "<?php echo $_POST['nSecuencia'] ?>";
-        document.forms['frgrm']['nRecords'].value   = "<?php echo count($mDataDetalles) ?>";
-      </script>
-      <?php
     }
+
+    //Matriz para verificar si ya habia sido marcado
+    $vCheckMarcados = array();
+    $vCheckMarcados = explode("|", $_POST['cComMemo']);
+
+    for ($i = 0; $i < count($mDataDetalles); $i++) {
+
+      $cId = $mDataDetalles[$i]['comidxxx'] . "~" . $mDataDetalles[$i]['cliidxxx'] . "~" . $mDataDetalles[$i]['subidxxx'];
+
+      if (count($vCheckMarcados) > 0) {
+        $mDataDetalles[$i]['excluida'] = false;
+        if (in_array($cId, $vCheckMarcados) == true) {
+          $mDataDetalles[$i]['excluida'] = true;
+        }
+      } ?>
+      <script languaje="javascript">
+        f_Add_New_Row_Ip("<?php echo $cId ?>", "<?php echo count($mDataDetalles) ?>", "<?php echo $mDataDetalles[$i]['excluida'] ?>");
+
+        document.forms['frgrm']['cCertificacion' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['comidxxx']}-{$mDataDetalles[$i]['comprexx']}-{$mDataDetalles[$i]['comcscxx']}"; ?>";
+        document.forms['frgrm']['cCliente' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['clinomxx']} [{$mDataDetalles[$i]['cliidxxx']}]"; ?>";
+        document.forms['frgrm']['cCodSap' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['sersapxx']}"; ?>";
+        document.forms['frgrm']['cSubCerId' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['subidxxx']}"; ?>";
+        document.forms['frgrm']['cServicio' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['serdesxx']}"; ?>";
+        document.forms['frgrm']['cSubServicio' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['subdesxx']}"; ?>";
+        document.forms['frgrm']['cNit' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['cliidxxx']}"; ?>";
+        document.forms['frgrm']['cObservacion' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$_POST['cObvsCer']}"; ?>";
+        document.forms['frgrm']['cCertiId' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['ceridxxx']}"; ?>";
+        document.forms['frgrm']['cAnioCer' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalles[$i]['comfecxx'], 0, 4); ?>";
+        document.forms['frgrm']['cAnioCer' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalles[$i]['comfecxx'], 0, 4); ?>";
+
+        document.forms['frgrm']['cBase' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['basexxxx']}"; ?>";
+      </script>
+    <?php }  ?>
+    <script languaje="javascript">
+      document.forms['frgrm']['cTramites'].value = "<?php echo $cTraSel ?>";
+      document.forms['frgrm']['nSecuencia'].value = "<?php echo $_POST['nSecuencia'] ?>";
+      document.forms['frgrm']['nRecords'].value = "<?php echo count($mDataDetalles) ?>";
+    </script>
+  <?php
+  }
   ?>
 </body>
 

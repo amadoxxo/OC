@@ -275,11 +275,26 @@
       }
       
       function fnValidaciones(){
-        if (!document.forms['frgrm']['cObvsPed'].value) {
-          alert('El campo de observaciones es obligatorio');
+        var formulario = document.forms['frgrm'];
+        var observaciones = formulario['cObvsPed'].value.trim(); 
+        var secuencia = parseInt(formulario['nSecuencia'].value, 10); 
+        var condicion = true;
+
+        for (let i = 0; i < secuencia; i++) {
+          var nit = formulario['cCliId' + (i + 1)].value.trim(); 
+          var certificado = formulario['cPedComCsc' + (i + 1)].value.trim(); 
+
+          if (!nit || !certificado || !observaciones) {
+              condicion = false; 
+              break; 
+          }
+        }
+
+        if (!condicion) {
+          alert('Verifique llenar todos los campos');
         } else {
           document.forms['frgrm'].target = 'fmpro';
-          document.forms['frgrm'].action = 'fraec20g.php';
+          document.forms['frgrm'].action = 'framc20g.php';
           document.forms['frgrm']['cModo'].value = 'VALIDARDO';
           document.forms['frgrm'].submit();
         }

@@ -122,7 +122,7 @@ include("../../../../../financiero/libs/php/utility.php");
 							<input type="hidden" name="cStep" value="<?php echo $_POST['cStep'] ?>">
 							<input type="hidden" name="nRecords" value="<?php echo $_POST['nRecords'] ?>">
 							<input type="hidden" name="cCertiId" value="<?php echo $certificadoId ?>">
-							<input type="hidden" name="cCerNomc" value="<?php echo $certiNomb ?>">
+							<input type="hidden" name="cCerNomc" value="<?php echo $_GET['cercscxx'] ?>">
 							<input type="hidden" name="cCerAno" value="<?php echo $cerAno ?>">
 							<input type="hidden" name="cCerObser" value="<?php echo $certiOb ?>">
 							<input type="hidden" name="nTimesSave" value="0">
@@ -143,7 +143,7 @@ include("../../../../../financiero/libs/php/utility.php");
 												<input type="text" class="letra" style="width:300;text-align:left" name="cNomCli" value="<?php echo $nomCliente ?>" readonly>
 											</td>
 											<td class="name" colspan="2">Certificacion<br>
-												<input type="text" class="letra" name="cCerti" style="width:160" value="<?php echo $certificado ?>" readonly>
+												<input type="text" class="letra" name="cCerti" style="width:160" value="<?php echo $certiNomb ?>" readonly>
 											</td>
 										</tr>
 									</table>
@@ -221,7 +221,7 @@ include("../../../../../financiero/libs/php/utility.php");
 								<td bgcolor="<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class="letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6"><?php echo $xRT['serdesxx'] ?></td>
 								<td bgcolor="<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class="letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center"><?php echo $xRT['subdesxx'] ?></td>
 								<td bgcolor="<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class="letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center">
-									<input type="checkbox" name="cCheck" value="<?php echo mysql_num_rows($xTarifas) ?>" id="<?php echo $xRT['subidxxx'] ?>">
+									<input type="checkbox" name="cCheck" value="<?php echo mysql_num_rows($xTarifas) ?>" id="<?php echo $xRT['subidxxx'].'~'.$xRT['sersapxx'] ?>">
 								</td>
 							</tr>
 						<?php $y++;
@@ -278,10 +278,26 @@ include("../../../../../financiero/libs/php/utility.php");
 		case "EDITAR":
 			f_CargaData();
 	?>
+	<script languaje = "javascript">
+          document.forms['frgrm']['cCerti'].readOnly = true;
+          document.forms['frgrm']['cCerti'].onblur = "";
+          document.forms['frgrm']['cCerti'].onfocus = "";
+        </script>
 		<?php break;
 		case "VER":
 			f_CargaData();
 		?>
+		<script languaje = "javascript">
+          document.forms['frgrm']['cCerti'].readOnly = true;
+          document.forms['frgrm']['cCerti'].onblur = "";
+          document.forms['frgrm']['cCerti'].onfocus = "";
+          for (x=0;x<document.forms['frgrm'].elements.length;x++) {
+            document.forms['frgrm'].elements[x].readOnly = true;
+            document.forms['frgrm'].elements[x].onfocus  = "";
+            document.forms['frgrm'].elements[x].onblur   = "";
+            document.forms['frgrm'].elements[x].disabled = true;
+          }
+    </script>
 	<?php break;
 	} ?>
 
@@ -341,7 +357,7 @@ function f_CargaData()
 						
             if ($xRT['subidxxx'] == $lparRow['subidxxx']) {
 	
-                $checkboxIdsToCheck[] = $xRT['subidxxx'];
+                $checkboxIdsToCheck[] = $xRT['subidxxx'].'~'.$xRT['sersapxx'];
             }
         }
     }

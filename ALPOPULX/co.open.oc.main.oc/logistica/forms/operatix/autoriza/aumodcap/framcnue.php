@@ -76,7 +76,7 @@
         }
       }
       
-      function f_Marca() {//Marca y Desmarca los registros seleccionados en la tabla de Conceptos de Cobro
+      function f_Marca() {
         if (document.forms['frgrm']['nCheckAll'].checked == true){
           if (document.forms['frgrm']['nRecords'].value == 1){
             document.forms['frgrm']['cCheck'].checked=true;

@@ -47,7 +47,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2];
+              var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2]+"&amcobsxx="+mMatriz[6];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
               document.cookie="kMenDes=Editar Autorizacion Modificar Campos Pedido;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
@@ -62,7 +62,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                 // Solo Deja Legalizar el Primero Seleccionado
                 zSw_Prv = 1;
                 var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2];
+                var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2]+"&amcobsxx="+mMatriz[6];
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                 document.cookie="kMenDes=Editar Autorizacion Modificar Campos Pedido;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
@@ -74,7 +74,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         }
       }
 
-      function fnCambiaEstado(xModo) {
+      function fnEliminar(xModo) {
         if (document.forms['frnav']['nRecords'].value!="0"){
           switch (document.forms['frnav']['nRecords'].value) {
             case "1":
@@ -328,6 +328,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         $qAudModCap .= "$cAlfa.lpar0161.pedcscxx, "; // Pedido
         $qAudModCap .= "$cAlfa.lpar0161.cliidxxx, "; // Nit Cliente
         $qAudModCap .= "$cAlfa.lpar0161.pedanoxx, "; // Nit Cliente
+        $qAudModCap .= "$cAlfa.lpar0161.amcobsxx, "; // Pedido Observacion
         $qAudModCap .= "$cAlfa.lpar0150.clisapxx, "; // Cod SAP Cliente
         $qAudModCap .= "$cAlfa.lpar0150.clinomxx, "; // Cliente
         $qAudModCap .= "$cAlfa.lpar0161.regusrxx, "; // Usuario
@@ -525,7 +526,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                                 <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_edit.png" onClick = "javascript:fnEditar('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="Editar, Solo Uno">
                               <?php break;
                               case "ELIMINAR": ?>
-                                <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_drop.png" onClick = "javascript:fnCambiaEstado('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="Eliminar, Solo Uno">
+                                <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_drop.png" onClick = "javascript:fnEliminar('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="Eliminar, Solo Uno">
                               <?php break;
                             }
                           }
@@ -602,7 +603,8 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                                                                     $mAudModCap[$i]['pedcscxx'].'~'.
                                                                     $mAudModCap[$i]['pedanoxx'].'~'.
                                                                     $mAudModCap[$i]['cliidxxx'].'~'.
-                                                                    $mAudModCap[$i]['clinomxx']
+                                                                    $mAudModCap[$i]['clinomxx'].'~'.
+                                                                    $mAudModCap[$i]['amcobsxx']
                                                         ?>')")>
                                                         <?php echo $mAudModCap[$i]['pedcscxx']?>
                             </a>
@@ -619,7 +621,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                                             $mAudModCap[$i]['pedcscxx'].'~'.
                                             $mAudModCap[$i]['pedanoxx'].'~'.
                                             $mAudModCap[$i]['cliidxxx'].'~'.
-                                            $mAudModCap[$i]['clinomxx'] ?>"
+                                            $mAudModCap[$i]['clinomxx'].'~'.
+                                            $mAudModCap[$i]['amcobsxx'] 
+                                ?>"
                             onclick="javascript:document.forms['frnav']['nRecords'].value='<?php echo count($mAudModCap) ?>'">
                           </td>
                         </tr>

@@ -20,7 +20,7 @@
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory ?>/frnivel3.php";
       }
     
-      function f_Marca() {//Marca y Desmarca los registros seleccionados en la tabla de Conceptos de Cobro
+      function f_Marca() {
         if (document.forms['frgrm']['nCheckAll'].checked == true){
           if (document.forms['frgrm']['nRecords'].value == 1){
             document.forms['frgrm']['cCheck'].checked=true;
@@ -44,7 +44,7 @@
           }
       }
 
-      function f_Carga_Data() { //Arma cadena para guardar en campo matriz de la sys00121
+      function f_Carga_Data() {
         document.forms['frgrm']['cComMemo'].value="|";
         switch (document.forms['frgrm']['nRecords'].value) {
           case "1":
@@ -65,38 +65,6 @@
         if (document.forms['frgrm']['cComMemo'].value == "|"){
           document.forms['frgrm']['cComMemo'].value = "";
         }
-      }		
-      
-      function f_Links(xLink,xSwitch) {
-        var nX    = screen.width;
-        var nY    = screen.height;
-        switch (xLink) {
-          case "cTerIdInt":
-          case "cTerNomInt":
-            if (xSwitch == "VALID") {
-              var cRuta = "fraecint.php?gModo="+xSwitch+"&gFunction="+xLink+
-                                        "&gTerId="+document.forms['frgrm']['cCliId'].value+
-                                        "&gTerIdInt="+document.forms['frgrm'][xLink].value;
-              // alert(cRuta);
-              parent.fmpro.location = cRuta;
-            } else {
-              var nNx      = (nX-600)/2;
-              var nNy      = (nY-250)/2;
-              var cWinOpt  = "width=600,scrollbars=1,height=250,left="+nNx+",top="+nNy;
-              var cRuta = "fraecint.php?gModo="+xSwitch+"&gFunction="+xLink+
-                                        "&gTerId="+document.forms['frgrm']['cCliId'].value+
-                                        "&gTerIdInt="+document.forms['frgrm'][xLink].value;
-              cWindow = window.open(cRuta,xLink,cWinOpt);
-              cWindow.focus();
-            }
-          break;
-        }
-      }
-      
-      function f_CargarTarifasFacturaA(){
-        document.forms['frgrm'].target = 'fmwork';
-        document.forms['frgrm'].action = 'fraecnue.php';
-        document.forms['frgrm'].submit();
       }
     </script>
   </head>
@@ -107,14 +75,21 @@
           <td>
             <fieldset>
               <legend><?php echo $_COOKIE['kModo']." ".$_COOKIE['kProDes'] ?></legend>
+              <?php
+                $pedidoId    = $_GET['pedidxxx'];
+                $pedidNomb   = $_GET['pedcscxx'];
+                $pedAnio     = $_GET['pedanoxx'];
+                $pedidoOb    = $_GET['amcobsxx'];
+                $nit         = $_GET['cliidxxx'];
+                $nomCliente  = $_GET['clinomxx'];
+              ?>
               <form name = 'frgrm' action = 'framcgra.php' method = 'post' target='fmpro'>
-                <input type = "hidden" name = "cStep"      value = "<?php echo $_POST['cStep'] ?>">
-                <input type = "hidden" name = "cTarExc"    value = "">
-                <input type = "hidden" name = "nRecords"   value = "<?php echo $_POST['nRecords'] ?>">
-                <input type = "hidden" name = "gCliId">
-                <input type = "hidden" name = "gSucId">
-                <input type = "hidden" name = "gDocSuf">
-                <input type = "hidden" name = "cCcAplFa">
+                <input type = "hidden" name = "cStep"     value = "<?php echo $_POST['cStep'] ?>">
+                <input type = "hidden" name = "nRecords"  value = "<?php echo $_POST['nRecords'] ?>">
+                <input type = "hidden" name = "cPedidoId" value = "<?php echo $pedidoId  ?>" readonly>
+                <input type = "hidden" name = "cPedNom"   value = "<?php echo $pedidNomb ?>" readonly>
+                <input type = "hidden" name = "cPedAnio"  value = "<?php echo $pedAnio  ?>" readonly>
+                <input type = "hidden" name = "cPedObser" value = "<?php echo $pedidoOb ?>" readonly>
                 <input type = "hidden" name = "nTimesSave" value = "0">
                 <textarea name = "cComMemo"  id = "cComMemo"><?php  echo $_POST['cComMemo'] ?></textarea>
                 <script languaje = "javascript">
@@ -124,11 +99,7 @@
                 <fieldset id="Grid_Paso1">
                   <legend>Datos Pedido</legend>
                   <table border = '0' cellpadding = '0' cellspacing = '0' width='560'>
-                    <?php $nCol = f_Format_Cols(28);
-                          $nit = $_GET['cliidxxx'];
-                          $nomCliente = $_GET['clinomxx'];
-                          $certificado= $_GET['pedcscxx'];
-                    echo $nCol;?>
+                    <?php $nCol = f_Format_Cols(28); echo $nCol;?>
                     <tr>
                       <td class = "name" colspan = "2">Nit<br>
                         <input type = "text" class = "letra" name = "cNit" style = "width:100" value="<?php echo $nit ?>" readonly>
@@ -137,7 +108,7 @@
                         <input type = "text" class = "letra" style = "width:300;text-align:left" name = "cNomCli" value="<?php echo $nomCliente ?>"  readonly>
                       </td>
                       <td class = "name" colspan = "2">Pedido<br>
-                        <input type = "text" class = "letra" name = "cCerti" style = "width:160" value="<?php echo $certificado ?>" readonly>
+                        <input type = "text" class = "letra" name = "cPedido" style = "width:160" value="<?php echo $pedidNomb ?>" readonly>
                       </td>
                     </tr>
                   </table>
@@ -149,8 +120,6 @@
                     $_POST['cSucId']  = $gSucId;
                     $_POST['cDocId']  = $gDocId;
                     $_POST['cDocSuf'] = $gDocSuf;
-                  break;
-                  default: //No hace nada 
                   break;
                 }
                 $cAnio   = $_GET['pedanoxx'];
@@ -182,9 +151,9 @@
                 $xPedidoDet  = f_MySql("SELECT","",$qPedidoDet,$xConexion01,"");
                 ?>
                 <script type="text/javascript">
-                  document.forms['frgrm']['cDocId'].readOnly = true;
-                  document.forms['frgrm']['cDocId'].onblur = "";
-                  document.forms['frgrm']['cDocId'].onfocus = "";
+                  document.forms['frgrm']['cPedido'].readOnly = true;
+                  document.forms['frgrm']['cPedido'].onblur = "";
+                  document.forms['frgrm']['cPedido'].onfocus = "";
                 </script>
                 <?php 
                 if(mysql_num_rows($xPedidoDet) > 0){
@@ -213,19 +182,18 @@
                                 <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center">
                                   <input type="checkbox" name="cCheck"  
                                         value = "<?php echo mysql_num_rows($xPedidoDet) ?>"
-                                        id="<?php echo $xRT['subidxxx'] ?>">
+                                        id="<?php echo $xRT['subidxxx'].'~'.$xRT['sersapxx']?>">
                                 </td>
                               </tr>
                             <?php $y++;
-                            }//while ($xRT = mysql_fetch_array($xPedidoDet)) { 
+                            }
                           ?>
                       </table>
                     </center>
                   </fieldset>
-                <?php }else{//if(mysql_num_rows($xPedidoDet) > 0){
-                f_Mensaje(__FILE__,__LINE__,"No hay Tarifas Parametrizadas para el Do {$_POST['cSucId']} - {$_POST['cDocId']} - {$_POST['cDocSuf']}");
+                <?php } else {
+                  f_Mensaje(__FILE__,__LINE__,"No hay Subservicios Parametrizados para el Pedido {$_POST['cPedNom']}");
                 }
-                ##Fin Traigo Tarifas parametrizadas al cliente para excluir Conceptos de Cobro al momento de facturar##
                 ?>
                 </center>
               </form>
@@ -265,32 +233,31 @@
       }
       ?>
     </center>
-    <!-- Termine de Pintar el Formulario y lo Mando a la Funcion wModo() con el Modo que Vengo -->
     <?php
     switch ($_COOKIE['kModo']) {
       case "EDITAR":
         f_CargaData(); 
         ?>
-        <!-- <script languaje = "javascript">
-          document.forms['frgrm']['cDocId'].readOnly = true;
-          document.forms['frgrm']['cDocId'].onblur = "";
-          document.forms['frgrm']['cDocId'].onfocus = "";
-        </script> -->
+        <script languaje = "javascript">
+          document.forms['frgrm']['cPedido'].readOnly = true;
+          document.forms['frgrm']['cPedido'].onblur = "";
+          document.forms['frgrm']['cPedido'].onfocus = "";
+        </script>
       <?php break;
       case "VER":
         f_CargaData(); 
         ?>
-        <!-- <script languaje = "javascript">
-          document.forms['frgrm']['cDocId'].readOnly = true;
-          document.forms['frgrm']['cDocId'].onblur = "";
-          document.forms['frgrm']['cDocId'].onfocus = "";
+        <script languaje = "javascript">
+          document.forms['frgrm']['cPedido'].readOnly = true;
+          document.forms['frgrm']['cPedido'].onblur = "";
+          document.forms['frgrm']['cPedido'].onfocus = "";
           for (x=0;x<document.forms['frgrm'].elements.length;x++) {
             document.forms['frgrm'].elements[x].readOnly = true;
             document.forms['frgrm'].elements[x].onfocus  = "";
             document.forms['frgrm'].elements[x].onblur   = "";
             document.forms['frgrm'].elements[x].disabled = true;
           }
-        </script> -->
+        </script>
       <?php break;
     } ?>
 
@@ -298,12 +265,10 @@
     function f_CargaData() {
       global $xConexion01;
       global $cAlfa;
-  
-      // Verifica si tiene asociacion por grupo
       $cAnio   = $_GET['pedanoxx'];
       $vPedIds = $_GET['pedidxxx'];
   
-      // Consulta la información de detalle de la certificación
+      // Consulta la información de detalle de pedido
       $qPedidoDet  = "SELECT ";
       $qPedidoDet .= "$cAlfa.lpca$cAnio.pedidxxx, ";
       $qPedidoDet .= "$cAlfa.lpca$cAnio.comidxxx, ";
@@ -348,7 +313,7 @@
       while ($xRT = mysql_fetch_array($xPedidoDet)) {
         foreach ($lpar0161Data as $lparRow) {
           if ($xRT['subidxxx'] == $lparRow['subidxxx']) {
-            $checkboxIdsToCheck[] = $xRT['subidxxx'];
+            $checkboxIdsToCheck[] = $xRT['subidxxx'].'~'.$xRT['sersapxx'];
           }
         }
       }
@@ -369,7 +334,7 @@
         };
       </script>
       <?php
-    }//fin Funcion f_Carga_Data
+    }
     ?>
   </body>
 </html>

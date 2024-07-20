@@ -2,7 +2,7 @@
 /**
  * Graba Orgainzacion de Ventas.
  * --- Descripcion: Permite Guardar una Nueva Organizacion de Ventas.
- * @author johana.arboleda@openits.co
+ * @author cristian.perdomo@openits.co@openits.co
  * @package openComex
  * @version 001
  */
@@ -54,31 +54,58 @@ if ($nSwitch == 0) {
     break;
     case "EDITAR":
       /***** Fin de Validaciones Particulares *****/
-      $qUpdate	= array(array('NAME'=>'stidesxx','VALUE'=>trim(strtoupper($_POST['cOrvDes'])) ,'CHECK'=>'SI'),
-                        array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($_COOKIE['kUsrId'])),'CHECK'=>'SI'),
-                        array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')												,'CHECK'=>'SI'),
-                        array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')		                    ,'CHECK'=>'SI'),
-                        array('NAME'=>'regestxx','VALUE'=>trim(strtoupper($_POST['cEstado'])) ,'CHECK'=>'SI'),
-                        array('NAME'=>'sticodxx','VALUE'=>trim($_POST['cOrvSap'])             ,'CHECK'=>'WH'));
+      $certificadoId = trim($_POST['cCertiId']);
+      $certificadoNom = trim($_POST['cCerNomc']);
+      $certificadoAno = trim($_POST['cCerAno']);
+      $certificadoObser = trim($_POST['cCerObser']);
+      $cNit = trim($_POST['cNit']);
+      $checks = trim($_POST['cComMemo'], '|');
 
-        if (!f_MySql("UPDATE","lpar0157",$qUpdate,$xConexion01,$cAlfa)) {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error Actualizar Datos.\n";
-        }
-    break;
-    case "CAMBIAESTADO":
-        $qUpdate  = array(array('NAME'=>'regusrxx','VALUE'=>trim(strtoupper($_COOKIE['kUsrId'])),'CHECK'=>'SI'),
-                          array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')												,'CHECK'=>'SI'),
-                          array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')		                    ,'CHECK'=>'SI'),
-                          array('NAME'=>'regestxx','VALUE'=>$cNueEst                            ,'CHECK'=>'SI'),
-                          array('NAME'=>'sticodxx','VALUE'=>trim($_POST['cOrvSap'])             ,'CHECK'=>'WH'));
+      if (!empty($checks)) {
 
-        if (!f_MySql("UPDATE","lpar0157",$qUpdate,$xConexion01,$cAlfa)) {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error Actualizar Estado.\n";
-        }
+          $qDelete = array(
+              array('NAME' => 'ceridxxx', 'VALUE' => $certificadoId, 'CHECK' => 'WH'),
+              array('NAME' => 'ceranoxx', 'VALUE' => $certificadoAno, 'CHECK' => 'WH'),
+          );
+
+          if (!f_MySql("DELETE", "lpar0160", $qDelete, $xConexion01, $cAlfa)) {
+              $nSwitch = 1;
+              $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
+              $cMsj .= "Error al Eliminar los Servicios de Certificación " . $_POST['cercscxx'] . ",\n";
+          }
+
+          $subServicios = explode('|', $checks);
+
+          foreach ($subServicios as $subServicio) {
+
+              $dataSer = explode('~',$subServicio);
+              $sersapxx = $dataSer[1];
+              $subSerId = $dataSer[0];
+
+              $qInsert = array(
+                  array('NAME' => 'cliidxxx', 'VALUE' => $cNit, 'CHECK' => 'NO'),
+                  array('NAME' => 'ceridxxx', 'VALUE' => $certificadoId, 'CHECK' => 'NO'),
+                  array('NAME' => 'ceranoxx', 'VALUE' => $certificadoAno, 'CHECK' => 'NO'),
+                  array('NAME' => 'cercscxx', 'VALUE' => $certificadoNom, 'CHECK' => 'NO'),
+                  array('NAME' => 'sersapxx', 'VALUE' => $sersapxx, 'CHECK' => 'NO'),
+                  array('NAME' => 'subidxxx', 'VALUE' => $subSerId, 'CHECK' => 'NO'),
+                  array('NAME' => 'aesobsxx', 'VALUE' => $certificadoObser, 'CHECK' => 'NO'),
+                  array('NAME' => 'regusrxx', 'VALUE' => trim($_COOKIE['kUsrId']), 'CHECK' => 'SI'),
+                  array('NAME' => 'regfcrex', 'VALUE' => date('Y-m-d'), 'CHECK' => 'SI'),
+                  array('NAME' => 'reghcrex', 'VALUE' => date('H:i:s'), 'CHECK' => 'SI'),
+                  array('NAME' => 'regfmodx', 'VALUE' => date('Y-m-d'), 'CHECK' => 'SI'),
+                  array('NAME' => 'reghmodx', 'VALUE' => date('H:i:s'), 'CHECK' => 'SI'),
+                  array('NAME' => 'regestxx', 'VALUE' => "ACTIVO", 'CHECK' => 'SI'),
+              );
+
+              if (!f_MySql("INSERT", "lpar0160", $qInsert, $xConexion01, $cAlfa)) {
+                  $nSwitch = 1;
+                  $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
+                  $cMsj .= "Error Guardando Datos.\n";
+              }
+          }
+      }
+
     break;
     case "ELIMINAR":
             $qDelete =  array(

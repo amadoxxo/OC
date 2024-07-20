@@ -47,7 +47,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "frmasnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2];
+              var cPathUrl = "frmasnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2]+ "&aesobsxx="+mMatriz[6];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
               document.cookie="kMenDes=Editar Autorizacion Exlcluir Servicios;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
@@ -330,6 +330,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         $qOrgVen .= "$cAlfa.lpar0160.ceridxxx, "; // Certificacion id
         $qOrgVen .= "$cAlfa.lpar0160.cercscxx, "; // Certificacion consecutivo
         $qOrgVen .= "$cAlfa.lpar0160.ceranoxx, "; // Certificacion ano
+        $qOrgVen .= "$cAlfa.lpar0160.aesobsxx, "; // Certificacion observacion
         $qOrgVen .= "$cAlfa.lpar0160.sersapxx, "; // Codigo SAP Servicio
         $qOrgVen .= "$cAlfa.lpar0150.clisapxx, "; // Cod SAP Cliente
         $qOrgVen .= "$cAlfa.lpar0150.clinomxx, "; // Cliente Nombre
@@ -610,7 +611,8 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                                                               $mOrgVen[$i]['cercscxx'].'~'.
                                                               $mOrgVen[$i]['ceranoxx'].'~'.
                                                               $mOrgVen[$i]['cliidxxx'].'~'.
-                                                              $mOrgVen[$i]['clinomxx']
+                                                              $mOrgVen[$i]['clinomxx'].'~'.
+                                                              $mOrgVen[$i]['aesobsxx']
                                                         ?>')">
                                                         <?php echo $mOrgVen[$i]['cercscxx']?>
                             </a>
@@ -627,7 +629,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                                             $mOrgVen[$i]['cercscxx'].'~'.
                                             $mOrgVen[$i]['ceranoxx'].'~'.
                                             $mOrgVen[$i]['cliidxxx'].'~'.
-                                            $mOrgVen[$i]['clinomxx']?>"
+                                            $mOrgVen[$i]['clinomxx'].'~'.
+                                            $mOrgVen[$i]['aesobsxx']
+                                ?>"
                             onclick="javascript:document.forms['frnav']['nRecords'].value='<?php echo count($mOrgVen) ?>'">
                           </td>
                         </tr>

@@ -101,18 +101,19 @@
       }
       
       function f_Carga_Data() {
+        for (let i = 0; i < document.forms['frgrm']['nSecuencia_Ip']; i++) {
           document.forms['frgrm']['cComMemo'].value="|";
           switch (document.forms['frgrm']['nRecords'].value) {
             case "1":
-              if (document.forms['frgrm']['cCheck'].checked == true) {
-                document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck'].id+"|";
+              if (document.forms['frgrm']['cCheck'+(i+1)].checked == true) {
+                document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck'+(i+1)].id+"|";
               }
             break;
             default:
-              if (document.forms['frgrm']['cCheck'] !== undefined) {
-                for (i=0;i<document.forms['frgrm']['cCheck'].length;i++) {
-                  if (document.forms['frgrm']['cCheck'][i].checked == true) {
-                    document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck'][i].id+"|";
+              if (document.forms['frgrm']['cCheck'+(i+1)] !== undefined) {
+                for (i=0;i<document.forms['frgrm']['cCheck'+(i+1)].length;i++) {
+                  if (document.forms['frgrm']['cCheck'+(i+1)][i].checked == true) {
+                    document.forms['frgrm']['cComMemo'].value += document.forms['frgrm']['cCheck'+(i+1)][i].id+"|";
                   }
                 }
               }
@@ -121,6 +122,7 @@
           if (document.forms['frgrm']['cComMemo'].value == "|"){
             document.forms['frgrm']['cComMemo'].value = "";
           }
+        }
       }
       
       function fnAddNewRow() {
@@ -143,14 +145,14 @@
         var cPedComCsc  = 'cPedComCsc' + nSecuencia;
         
         var TD_xAll = cTableRow.insertCell(0);
-        TD_xAll.style.width  = "70px";
+        TD_xAll.style.width  = "75px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:070px;border:0;text-align:center;padding:2px' name = '"+cAutSeq+"' id = '"+cAutSeq+"' value = '"+f_Str_Pad(nSecuencia,3,"0","STR_PAD_LEFT")+"'readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:075px;border:0;text-align:center;padding:2px' name = '"+cAutSeq+"' id = '"+cAutSeq+"' value = '"+f_Str_Pad(nSecuencia,3,"0","STR_PAD_LEFT")+"'readonly>";
         
         TD_xAll = cTableRow.insertCell(1);
-        TD_xAll.style.width  = "190px";
+        TD_xAll.style.width  = "240px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cCliId+"' id = '"+cCliId+"' " +
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:235px;border:0;text-align:center;padding:2px' name = '"+cCliId+"' id = '"+cCliId+"' " +
                                       "onBlur = 'javascript:fnLinks(\"cCliId\",\"VALID\", \""+nSecuencia+"\");' >";
         
         TD_xAll = cTableRow.insertCell(2);
@@ -159,19 +161,19 @@
         TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:040px;border:0;text-align:center;padding:2px' name = '"+cCliDV+"' id = '"+cCliDV+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(3);
-        TD_xAll.style.width  = "210px";
+        TD_xAll.style.width  = "215px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:210px;border:0;text-align:center;padding:2px' name = '"+cCliSap+"' id = '"+cCliSap+"' readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:215px;border:0;text-align:center;padding:2px' name = '"+cCliSap+"' id = '"+cCliSap+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(4);
-        TD_xAll.style.width  = "350px";
+        TD_xAll.style.width  = "355px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:350px;border:0;text-align:center;padding:2px' name = '"+cCliNom+"' id = '"+cCliNom+"' readonly>";
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:355px;border:0;text-align:center;padding:2px' name = '"+cCliNom+"' id = '"+cCliNom+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(5);
-        TD_xAll.style.width  = "190px";
+        TD_xAll.style.width  = "195px";
         TD_xAll.style.border = "1px solid #E6E6E6";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:190px;border:0;text-align:center;padding:2px' name = '"+cPedComCsc+"' id = '"+cPedComCsc+"' " +
+        TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:195px;border:0;text-align:center;padding:2px' name = '"+cPedComCsc+"' id = '"+cPedComCsc+"' " +
                                       "onBlur = 'javascript:fnLinks(\"cPedComCsc\", \"VALID\", \""+nSecuencia+"\");' > " +
                                       "<input type = 'hidden' name = '"+cPedIds+"' id = '"+cPedIds+"' readonly> " +
                                       "<input type = 'hidden' name = '"+cAnio+"' id = '"+cAnio+"' readonly>";
@@ -210,7 +212,7 @@
         TD_xAll.style.width  = "300px";
         TD_xAll.style.border = "1px solid #E6E6E6";
         TD_xAll.innerHTML    = "<input type = 'text' class = 'letra' style = 'width:300;border:0;text-align:left;padding:2px' name = '"+cCliente+"' id = '"+cCliente+"' readonly>" +
-                                "<input type='text' name = '"+cNIT+"' id = '"+cNIT+"' readonly>";
+                                "<input type='hidden' name = '"+cNIT+"' id = '"+cNIT+"' readonly>";
         
         TD_xAll = cTableRow.insertCell(2);
         TD_xAll.style.width  = "160px";
@@ -226,15 +228,15 @@
         TD_xAll.style.width  = "260px";
         TD_xAll.style.border = "1px solid #E6E6E6";
         TD_xAll.innerHTML    = "<input  type = 'text' class = 'letra' style = 'width:260;border:0;text-align:left;padding:2px' name = '"+cSubServicio+"' id = '"+cSubServicio+"' readonly> " +
-                                "<input type = 'text' name = '"+cSubCerId+"'    id = '"+cSubCerId+"'    readonly> " +
-                                "<input type = 'text' name = '"+cObservacion+"' id = '"+cObservacion+"' readonly> " +
-                                "<input type = 'text' name = '"+cAnioIds+"'     id = '"+cAnioIds+"'     readonly> " +
-                                "<input type = 'text' name = '"+cPedId+"'       id = '"+cPedId+"'       readonly>";
+                                "<input type = 'hidden' name = '"+cSubCerId+"'    id = '"+cSubCerId+"'    readonly> " +
+                                "<input type = 'hidden' name = '"+cObservacion+"' id = '"+cObservacion+"' readonly> " +
+                                "<input type = 'hidden' name = '"+cAnioIds+"'     id = '"+cAnioIds+"'     readonly> " +
+                                "<input type = 'hidden' name = '"+cPedId+"'       id = '"+cPedId+"'       readonly>";
         
         TD_xAll = cTableRow.insertCell(5);
         TD_xAll.style.width     = "20px";
         TD_xAll.style.textAlign = "center";
-        TD_xAll.innerHTML       = "<input type='checkbox' name='cCheck'  value = '"+cCheck+"' id='"+xId+"'"+((xChek) == true ? " checked" : "")+">";
+        TD_xAll.innerHTML       = "<input type='checkbox' name='"+cCheck+"'  value = '"+cCheck+"' id='"+xId+"'"+((xChek) == true ? " checked" : "")+">";
         
         document.forms['frgrm']['nSecuencia_Ip'].value = nSecuencia;
       }
@@ -309,7 +311,7 @@
       function fnGuardar() {
         f_Carga_Data();
         document.forms['frgrm'].target='fmpro';
-        document.forms['frgrm'].action='fraecgra.php';
+        document.forms['frgrm'].action='framcgra.php';
         document.forms['frgrm']['nTimesSave'].value++;
         document.forms['frgrm'].submit();
       }
@@ -323,7 +325,7 @@
 					<td>
             <fieldset>
               <legend><font color="red"><?php echo (($_COOKIE['kModo'] == 'MASIVA' ) ? "Nueva": $_COOKIE['kModo'])." ".$_COOKIE['kProDes'] ?></font></legend>
-              <form name = 'frgrm' action = 'fraecgra.php' method = 'post' target='fmpro'>
+              <form name = 'frgrm' action = 'framcgra.php' method = 'post' target='fmpro'>
                 <input type = "hidden" name = "cStep"         value = "<?php echo $_POST['cStep'] ?>">
                 <input type = "hidden" name = "cStep_Ant"     value = "<?php echo $_POST['cStep_Ant'] ?>">
                 <input type = "hidden" name = "cTarExc"       value = "">
@@ -354,7 +356,7 @@
                           <tr height="25px">
                             <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="04" align="left">&nbsp;&nbsp;Suc</td>
                             <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="10" align="center">&nbsp;&nbsp;Nit</td>
-                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="02" align="center">Dv</td>
+                            <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" style="padding-left:50px" colspan="02" align="center">Dv</td>
                             <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="11" align="center">Cod SAP</td>
                             <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="17" align="center">&nbsp;&nbsp;Raz&oacute;n Social</td>
                             <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="12" align="center">&nbsp;&nbsp;&nbsp;No. Pedido</td>
@@ -462,6 +464,7 @@
             $qPedidoDet .= "$cAlfa.lpca$cAnio.comcscxx, ";
             $qPedidoDet .= "$cAlfa.lpca$cAnio.comcsc2x, ";
             $qPedidoDet .= "$cAlfa.lpca$cAnio.cliidxxx, ";
+            $qPedidoDet .= "$cAlfa.lpca$cAnio.comfecxx, ";
             $qPedidoDet .= "$cAlfa.lpar0150.clinomxx, ";
             $qPedidoDet .= "$cAlfa.lpde$cAnio.*, ";
             $qPedidoDet .= "$cAlfa.lpar0011.sersapxx, ";
@@ -511,7 +514,7 @@
             document.forms['frgrm']['cSubCerId'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalle[$i]['subidxxx']}"; ?>";
             document.forms['frgrm']['cNIT'         + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalle[$i]['cliidxxx']}"; ?>";
             document.forms['frgrm']['cPedId'       + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalle[$i]['pedidxxx']}"; ?>";
-            document.forms['frgrm']['cAnioIds'     + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$_POST['cAnio'.($i+1)]}"; ?>";
+            document.forms['frgrm']['cAnioIds'     + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalle[$i]['comfecxx'], 0, 4); ?>";
             document.forms['frgrm']['cObservacion' + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$_POST['cObvsPed']}"; ?>";
           </script>
         <?php }  ?>

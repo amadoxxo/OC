@@ -22,29 +22,35 @@ switch ($_COOKIE['kModo']) {
 if ($nSwitch == 0) {
   switch ($_COOKIE['kModo']) {
     case "NUEVO":
-      $ano ="2024";
-      for ($i=0; $i < $_POST['nSecuencia_Ip'] ; $i++) { 
-        $qInsert	= array(
-                        array('NAME'=>'cliidxxx','VALUE'=>trim($_POST['cNit'.($i+1)])             ,'CHECK'=>'NO'),//id del cliente
-                        array('NAME'=>'ceridxxx','VALUE'=>trim(strtoupper($_POST['cCertiId'.($i+1)])) ,'CHECK'=>'NO'),// id certificacion
-                        array('NAME'=>'ceranoxx','VALUE'=>trim(strtoupper($ano)) ,'CHECK'=>'NO'),// anio certificacion
-                        array('NAME'=>'cercscxx','VALUE'=>trim(strtoupper($_POST['cCertificacion'.($i+1)])) ,'CHECK'=>'NO'),// Consecutivo de la Certificacion
-                        array('NAME'=>'sersapxx','VALUE'=>trim(strtoupper($_POST['cCodSap'.($i+1)])) ,'CHECK'=>'NO'),// Codigo SAP Servicio
-                        array('NAME'=>'subidxxx','VALUE'=>trim(strtoupper($_POST['cSubCerId'.($i+1)])) ,'CHECK'=>'NO'),// Id Subservicio
-                        array('NAME'=>'aesobsxx','VALUE'=>trim(strtoupper($_POST['cObservacion'.($i+1)])) ,'CHECK'=>'NO'),// Observacion Autorizacion
-                        array('NAME'=>'regusrxx','VALUE'=>trim($_COOKIE['kUsrId'])            ,'CHECK'=>'SI'),
-                        array('NAME'=>'regfcrex','VALUE'=>date('Y-m-d')						            ,'CHECK'=>'SI'),
-                        array('NAME'=>'reghcrex','VALUE'=>date('H:i:s')		                    ,'CHECK'=>'SI'),
-                        array('NAME'=>'regfmodx','VALUE'=>date('Y-m-d')						            ,'CHECK'=>'SI'),
-                        array('NAME'=>'reghmodx','VALUE'=>date('H:i:s')		                    ,'CHECK'=>'SI'),
-                        array('NAME'=>'regestxx','VALUE'=>"ACTIVO"                            ,'CHECK'=>'SI'));
-
-        if (!f_MySql("INSERT","lpar0160",$qInsert,$xConexion01,$cAlfa)) {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error Guardando Datos.\n";
+      
+      for ($i = 0; $i < $_POST['nSecuencia_Ip']; $i++) {
+    
+        // Verifica si el nombre del checkbox está en el array $checkValues
+        if ($_POST['cCheck'. ($i+1)]) {
+            $qInsert = array(
+                array('NAME' => 'cliidxxx', 'VALUE' => trim($_POST['cNit' . ($i + 1)]), 'CHECK' => 'NO'),
+                array('NAME' => 'ceridxxx', 'VALUE' => trim(strtoupper($_POST['cCertiId' . ($i + 1)])), 'CHECK' => 'NO'),
+                array('NAME' => 'ceranoxx', 'VALUE' => trim(strtoupper($_POST['cAnioCer' . ($i + 1)])), 'CHECK' => 'NO'),
+                array('NAME' => 'cercscxx', 'VALUE' => trim(strtoupper($_POST['cCertificacion' . ($i + 1)])), 'CHECK' => 'NO'),
+                array('NAME' => 'sersapxx', 'VALUE' => trim(strtoupper($_POST['cCodSap' . ($i + 1)])), 'CHECK' => 'NO'),
+                array('NAME' => 'subidxxx', 'VALUE' => trim(strtoupper($_POST['cSubCerId' . ($i + 1)])), 'CHECK' => 'NO'),
+                array('NAME' => 'aesobsxx', 'VALUE' => trim(strtoupper($_POST['cObservacion' . ($i + 1)])), 'CHECK' => 'NO'),
+                array('NAME' => 'regusrxx', 'VALUE' => trim($_COOKIE['kUsrId']), 'CHECK' => 'SI'),
+                array('NAME' => 'regfcrex', 'VALUE' => date('Y-m-d'), 'CHECK' => 'SI'),
+                array('NAME' => 'reghcrex', 'VALUE' => date('H:i:s'), 'CHECK' => 'SI'),
+                array('NAME' => 'regfmodx', 'VALUE' => date('Y-m-d'), 'CHECK' => 'SI'),
+                array('NAME' => 'reghmodx', 'VALUE' => date('H:i:s'), 'CHECK' => 'SI'),
+                array('NAME' => 'regestxx', 'VALUE' => "ACTIVO", 'CHECK' => 'SI')
+            );
+    
+            // Ejecutar la inserción si la función no falla
+            if (!f_MySql("INSERT", "lpar0160", $qInsert, $xConexion01, $cAlfa)) {
+                $nSwitch = 1;
+                $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
+                $cMsj .= "Error Guardando Datos.\n";
+            }
         }
-      }
+    }
     break;
     case "EDITAR":
       /***** Fin de Validaciones Particulares *****/
@@ -75,21 +81,21 @@ if ($nSwitch == 0) {
         }
     break;
     case "ELIMINAR":
-        $qDelete =  array(array('NAME'=>'sticodxx','VALUE'=>trim($_POST['cOrvSap'])             ,'CHECK'=>'WH'));
+            $qDelete =  array(
+              array('NAME'=>'ceranoxx','VALUE'=>trim($_POST['ceranoxx'])             ,'CHECK'=>'WH'),
+              array('NAME'=>'cercscxx','VALUE'=>trim($_POST['cercscxx'])             ,'CHECK'=>'WH'),
+            );
 
-            if (!f_MySql("DELETE","lpar0157",$qDelete,$xConexion01,$cAlfa)) {
+            if (!f_MySql("DELETE","lpar0160",$qDelete,$xConexion01,$cAlfa)) {
               $nSwitch = 1;
               $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-              $cMsj .= "Error al Eliminar la Prioridad de Ticket ".$_POST['cOrvSap'].",\n";
+              $cMsj .= "Error al Eliminar los Servicos de Certificacion ".$_POST['cercscxx'].",\n";
             }
     break;
   }
 }
 
 if ($nSwitch == 0) {
-  if($_COOKIE['kModo']!="CAMBIAESTADO"){
-    f_Mensaje(__FILE__,__LINE__,"El Registro se cargo con Exito");
-  }
   if($_COOKIE['kModo']=="CAMBIAESTADO"){
     f_Mensaje(__FILE__,__LINE__,"El Registro Cambio de Estado Con Exito");
   }

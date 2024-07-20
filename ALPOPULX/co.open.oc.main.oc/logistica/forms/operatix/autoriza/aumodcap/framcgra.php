@@ -169,50 +169,32 @@
   /***** Pregunto si el SWITCH Viene en 0 para Poder Seguir *****/
   if ($nSwitch == 0) {
     switch ($_COOKIE['kModo']) {
-      // case "MASIVA":
-      //   /*****************************   UPDATE    ***********************************************/
-      //   foreach ($vDos as $vDo) {
-          
-      //     $vDo['comMemox'] = (trim($vDo['comMemox']) != "") ? "|".trim($vDo['comMemox']) : "";
-          
-      //     $qUpdate	 = array(array('NAME'=>'docfaexc','VALUE'=>trim($vDo['teridint'])            ,'CHECK'=>'NO'),
-      //                       array('NAME'=>'doctexxx','VALUE'=>trim($vDo['comMemox'])            ,'CHECK'=>'NO'),
-      //                       array('NAME'=>'sucidxxx','VALUE'=>trim(strtoupper($vDo['sucidxxx'])),'CHECK'=>'WH'),
-      //                       array('NAME'=>'docidxxx','VALUE'=>trim(strtoupper($vDo['docidxxx'])),'CHECK'=>'WH'),
-      //                       array('NAME'=>'docsufxx','VALUE'=>trim(strtoupper($vDo['docsufxx'])),'CHECK'=>'WH'));
-
-      //     if (f_MySql("UPDATE","sys00121",$qUpdate,$xConexion01,$cAlfa)) {
-      //       /***** Grabo Bien *****/
-      //       $cMsj .= "El Registro se Actualizo con Exito para el Do [{$vDo['sucidxxx']}-{$vDo['docidxxx']}-{$vDo['docsufxx']}], \n";
-      //     } else {
-      //       $cMsjAdv .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-      //       $cMsjAdv .= "Error al Actualizar el Registro para el Do [{$vDo['sucidxxx']}-{$vDo['docidxxx']}-{$vDo['docsufxx']}], \n";
-      //     }
-      //   }
-      // break;
       case "NUEVO":
-        $anio ="2024";
-        $qInsert	 = array(array('NAME'=>'cliidxxx','VALUE'=>trim($_POST['cNIT'.($i+1)]),'CHECK'=>'NO'),
-                          array('NAME'=>'pedidxxx' ,'VALUE'=>trim(strtoupper($_POST['cPedId'.($i+1)]))    ,'CHECK'=>'NO'),
-                          array('NAME'=>'pedanoxx' ,'VALUE'=>trim(strtoupper($anio))  ,'CHECK'=>'NO'),
-                          array('NAME'=>'pedcscxx' ,'VALUE'=>trim(strtoupper($_POST['cNumPedido'.($i+1)])),'CHECK'=>'NO'),
-                          array('NAME'=>'sersapxx' ,'VALUE'=>trim(strtoupper($_POST['cCodSap'.($i+1)]))   ,'CHECK'=>'NO'),
-                          array('NAME'=>'subidxxx' ,'VALUE'=>trim(strtoupper($_POST['cSubCerId'.($i+1)])) ,'CHECK'=>'NO'),
-                          array('NAME'=>'amcobsxx' ,'VALUE'=>trim(strtoupper($_POST['cObservacion'.($i+1)])),'CHECK'=>'NO'),
-                          array('NAME'=>'regusrxx' ,'VALUE'=>trim($_COOKIE['kUsrId']),'CHECK'=>'SI'),
-                          array('NAME'=>'regfcrex' ,'VALUE'=>date('Y-m-d') ,'CHECK'=>'SI'),
-                          array('NAME'=>'reghcrex' ,'VALUE'=>date('H:i:s') ,'CHECK'=>'SI'),
-                          array('NAME'=>'regfmodx' ,'VALUE'=>date('Y-m-d') ,'CHECK'=>'SI'),
-                          array('NAME'=>'reghmodx' ,'VALUE'=>date('H:i:s') ,'CHECK'=>'SI'),
-                          array('NAME'=>'regestxx' ,'VALUE'=> "ACTIVO"     ,'CHECK'=>'SI'));
-
-        if (f_MySql("INSERT","lpar0161",$qInsert,$xConexion01,$cAlfa)) {
-          $cMsj .= "El dato se guardo con Exito [{$_POST['cPedComCsc']}]";
-        } else {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error Guardando Datos";
+        for ($i=0; $i < $_POST['nSecuencia_Ip']; $i++) { 
+          if ($_POST['cCheck'.($i+1)]) {
+            $qInsert	 = array(
+                array('NAME'=>'cliidxxx','VALUE'=>trim($_POST['cNIT'.($i+1)]),'CHECK'=>'NO'),
+                array('NAME'=>'pedidxxx' ,'VALUE'=>trim(strtoupper($_POST['cPedId'.($i+1)]))      ,'CHECK'=>'NO'),
+                array('NAME'=>'pedanoxx' ,'VALUE'=>trim(strtoupper($_POST['cAnioIds'.($i + 1)]))  ,'CHECK'=>'NO'),
+                array('NAME'=>'pedcscxx' ,'VALUE'=>trim(strtoupper($_POST['cNumPedido'.($i+1)]))  ,'CHECK'=>'NO'),
+                array('NAME'=>'sersapxx' ,'VALUE'=>trim(strtoupper($_POST['cCodSap'.($i+1)]))     ,'CHECK'=>'NO'),
+                array('NAME'=>'subidxxx' ,'VALUE'=>trim(strtoupper($_POST['cSubCerId'.($i+1)]))   ,'CHECK'=>'NO'),
+                array('NAME'=>'amcobsxx' ,'VALUE'=>trim(strtoupper($_POST['cObservacion'.($i+1)])),'CHECK'=>'NO'),
+                array('NAME'=>'regusrxx' ,'VALUE'=>trim($_COOKIE['kUsrId']),'CHECK'=>'SI'),
+                array('NAME'=>'regfcrex' ,'VALUE'=>date('Y-m-d') ,'CHECK'=>'SI'),
+                array('NAME'=>'reghcrex' ,'VALUE'=>date('H:i:s') ,'CHECK'=>'SI'),
+                array('NAME'=>'regfmodx' ,'VALUE'=>date('Y-m-d') ,'CHECK'=>'SI'),
+                array('NAME'=>'reghmodx' ,'VALUE'=>date('H:i:s') ,'CHECK'=>'SI'),
+                array('NAME'=>'regestxx' ,'VALUE'=> "ACTIVO"     ,'CHECK'=>'SI')
+            );
+            if (!f_MySql("INSERT","lpar0161",$qInsert,$xConexion01,$cAlfa)) {
+              $nSwitch = 1;
+              $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
+              $cMsj .= "Error Guardando Datos.\n";
+            }
+          }
         }
+      break;
       case "EDITAR":
         $qUpdate	 = array(array('NAME'=>'cliidxxx','VALUE'=>trim($_POST['cNIT'.($i+1)])                  ,'CHECK'=>'NO'),
                           array('NAME'=>'pedidxxx' ,'VALUE'=>trim(strtoupper($_POST['cPedId'.($i+1)]))   ,'CHECK'=>'NO'),
@@ -228,43 +210,34 @@
                           array('NAME'=>'reghmodx' ,'VALUE'=>date('H:i:s') ,'CHECK'=>'SI'),
                           array('NAME'=>'regestxx' ,'VALUE'=> "ACTIVO"     ,'CHECK'=>'SI'));
 
-          if (f_MySql("INSERT","lpar0161",$qUpdate,$xConexion01,$cAlfa)) {
+          if (f_MySql("UPDATE","lpar0161",$qUpdate,$xConexion01,$cAlfa)) {
             /***** Grabo Bien *****/
-            $cMsj .= "El Registro se Actualizo con Exito [{$_POST['cPedComCsc']}";
+            $cMsj .= "El Registro se Actualizo con Exito [{$_POST['cNumPedido']}";
           } else {
             $nSwitch = 1;
             $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
             $cMsj .= "Error Guardando Datos";
           }
       break;
-      /*****************************   UPDATE    ***********************************************/
-      case "ANULAR":
-        if($_POST['cEstado']=="ACTIVO"){
-          $cEstado="INACTIVO";
-        }
-          $qUpdate	 = array(array('NAME'=>'docfaexc','VALUE'=>""                                   ,'CHECK'=>'NO'),
-                            array('NAME'=>'doctexxx','VALUE'=>""                                    ,'CHECK'=>'NO'),
-                            array('NAME'=>'docidxxx','VALUE'=>trim(strtoupper($_POST['cDocId']))   ,'CHECK'=>'WH'),
-                            array('NAME'=>'docsufxx','VALUE'=>trim(strtoupper($_POST['cDocSuf']))  ,'CHECK'=>'WH'),
-                            array('NAME'=>'sucidxxx','VALUE'=>trim(strtoupper($_POST['cSucId']))   ,'CHECK'=>'WH'));
+      case "ELIMINAR":
+        $qDelete	 = array(array('NAME' => 'pedanoxx','VALUE' => trim(strtoupper($_POST['pedanoxx'])),'CHECK'=>'WH'),
+                          array('NAME' => 'pedcscxx','VALUE' => trim(strtoupper($_POST['pedcscxx'])) ,'CHECK'=>'WH'));
 
-        if (f_MySql("UPDATE","sys00121",$qUpdate,$xConexion01,$cAlfa)) {
-          /***** Grabo Bien *****/
-        } else {
+        if (!f_MySql("DELETE","lpar0161",$qDelete,$xConexion01,$cAlfa)) {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error al Actualizar el Registro";
+          $cMsj .= "Error al Eliminar el Serivcio de Pedido ".$_POST['pedcscxx'].",\n";
         }
       break;
     }
   } 
 
   if ($nSwitch == 0) {
-    if($_COOKIE['kModo']!="ANULAR"){
+    if($_COOKIE['kModo']!="ELIMINAR"){
       f_Mensaje(__FILE__,__LINE__,$cMsj);
     }
-    if($_COOKIE['kModo']=="ANULAR"){
-      f_Mensaje(__FILE__,__LINE__,"El Registro Actualizado Con Exito");
+    if($_COOKIE['kModo']=="ELIMINAR"){
+      f_Mensaje(__FILE__,__LINE__,"El Registro se Elimino Con Exito");
     }
     
     ?>

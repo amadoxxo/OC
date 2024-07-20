@@ -1,8 +1,8 @@
 <?php
 /**
-   * Proceso Autorizacion Excluir Conceptos de Cobro
-   * --- Descripcion: Permite Crear un Nueva autorizacion para Excluir conceptos de Cobro para Facturacion.
-   * @author Yulieth Campos <ycampos@opentecnologia.com.co>
+   * Proceso Autorización Modificar Campos Pedido.
+   * --- Descripcion: Permite Editar y una Autorización Modificar Campos Pedido para Excluir Subservicios del Pedido.
+   * @author Elian Amado <elian.amado@openits.co>
    * @version 001
    */
   include("../../../../../financiero/libs/php/utility.php");
@@ -107,7 +107,7 @@
           <td>
             <fieldset>
               <legend><?php echo $_COOKIE['kModo']." ".$_COOKIE['kProDes'] ?></legend>
-              <form name = 'frgrm' action = 'fraecgra.php' method = 'post' target='fmpro'>
+              <form name = 'frgrm' action = 'framcgra.php' method = 'post' target='fmpro'>
                 <input type = "hidden" name = "cStep"      value = "<?php echo $_POST['cStep'] ?>">
                 <input type = "hidden" name = "cTarExc"    value = "">
                 <input type = "hidden" name = "nRecords"   value = "<?php echo $_POST['nRecords'] ?>">
@@ -125,38 +125,20 @@
                   <legend>Datos Pedido</legend>
                   <table border = '0' cellpadding = '0' cellspacing = '0' width='560'>
                     <?php $nCol = f_Format_Cols(28);
+                          $nit = $_GET['cliidxxx'];
+                          $nomCliente = $_GET['clinomxx'];
+                          $certificado= $_GET['pedcscxx'];
                     echo $nCol;?>
                     <tr>
                       <td class = "name" colspan = "2">Nit<br>
-                        <input type = "text" class = "letra" name = "" style = "width:40" readonly>
+                        <input type = "text" class = "letra" name = "cNit" style = "width:100" value="<?php echo $nit ?>" readonly>
                       </td>
                       <td class = "name" colspan = "5">Cliente<br>
-                        <input type = "text" class = "letra" style = "width:100;text-align:left" name = ""  readonly>
+                        <input type = "text" class = "letra" style = "width:300;text-align:left" name = "cNomCli" value="<?php echo $nomCliente ?>"  readonly>
                       </td>
                       <td class = "name" colspan = "2">Pedido<br>
-                        <input type = "text" class = "letra" name = "" style = "width:40" readonly>
+                        <input type = "text" class = "letra" name = "cCerti" style = "width:160" value="<?php echo $certificado ?>" readonly>
                       </td>
-                    </tr>
-                  </table>
-                  <table border="0" cellspacing="0" cellpadding="0" width="560" id="tblFacA">
-                    <?php $cCols = f_Format_Cols(28); echo $cCols; ?>
-                    <tr>
-                      <td Class = "name" colspan = "5">Facturar a:<br>
-                        <input type = "text" Class = "letra" style = "width:100" name = "cTerIdInt" 
-                          onFocus="javascript:document.forms['frgrm']['cTerIdInt'].value   = '';
-                                              document.forms['frgrm']['cTerDVInt'].value   = '';
-                                              document.forms['frgrm']['cTerNomInt'].value  = '';"
-                          onBlur = "javascript:f_Links('cTerIdInt','VALID');">
-                      </td>
-                      <td Class = "name" colspan = "1"><br>
-                        <input type = "text" Class = "letra" style = "width:20;text-align:center" name = "cTerDVInt" readonly>
-                      </td>
-                      <td Class = "name" colspan = "22"><br>
-                        <input type = "text" Class = "letra" style = "width:440" name = "cTerNomInt" readonly>
-                      </td>
-                      <tr>
-                        <td colspan="28">Nota: El Cliente tiene parametrizada en su Condici&oacute;n Comercial la opci&oacute;n "Aplicar tarifas del Facturar a".</td>
-                      </tr>
                     </tr>
                   </table>
                 </fieldset>
@@ -171,82 +153,33 @@
                   default: //No hace nada 
                   break;
                 }
-          
-                ##Traigo Datos Adicionales del Do ##
-                $qTramite  = "SELECT * ";
-                $qTramite .= "FROM $cAlfa.sys00121 ";
-                $qTramite .= "WHERE ";
-                $qTramite .= "$cAlfa.sys00121.sucidxxx = \"{$_POST['cSucId']}\" AND ";
-                $qTramite .= "$cAlfa.sys00121.docidxxx = \"{$_POST['cDocId']}\" AND ";
-                $qTramite .= "$cAlfa.sys00121.docsufxx = \"{$_POST['cDocSuf']}\" ";
-                $xTramite  = f_MySql("SELECT","",$qTramite,$xConexion01,"");
-                if (mysql_num_rows($xTramite) == 1) {
-                  $vTramite = mysql_fetch_array($xTramite);
-                }
-                
-                $vTramite['tarclixx'] = $vTramite['cliidxxx'];
-                $vTramite['tartipxx'] = "CLIENTE";
-                    
-                // Verifica si tiene asociacion por grupo
-                $qConCom  = "SELECT gtaidxxx, cccaplfa ";
-                $qConCom .= "FROM $cAlfa.fpar0151 ";
-                $qConCom .= "WHERE ";
-                $qConCom .= "cliidxxx = \"{$vTramite['cliidxxx']}\" AND  ";
-                $qConCom .= "regestxx = \"ACTIVO\" LIMIT 0,1";
-                $xConCom  = f_MySql("SELECT","",$qConCom,$xConexion01,"");
-                      
-                if (mysql_num_rows($xConCom) > 0) {
-                  $xRCC = mysql_fetch_array($xConCom);
-                  $cCcAplFa = $xRCC['cccaplfa'];
-                  if ($xRCC['gtaidxxx'] <> "") {
-                    $vTramite['tarclixx'] = $xRCC['gtaidxxx'];
-                    $vTramite['tartipxx'] = "GRUPO";
-                  }
-                }
-                
-                $_POST['cTerIdInt'] = ($_POST['cTerIdInt'] != "") ? $_POST['cTerIdInt'] : (($vTramite['docfaexc'] != "") ? $vTramite['docfaexc'] : $vTramite['cliidxxx']) ;
-                
-                if ($cCcAplFa == "SI") {
-                  
-                  $vTramite['tarclixx'] = $_POST['cTerIdInt'];
-                  $vTramite['tartipxx'] = "CLIENTE";
-                
-                  $qConCom  = "SELECT gtaidxxx ";
-                  $qConCom .= "FROM $cAlfa.fpar0151 ";
-                  $qConCom .= "WHERE ";
-                  $qConCom .= "cliidxxx = \"{$vTramite['tarclixx']}\" AND  ";
-                  $qConCom .= "regestxx = \"ACTIVO\" LIMIT 0,1";
-                  $xConCom  = f_MySql("SELECT","",$qConCom,$xConexion01,"");
-                        
-                  if (mysql_num_rows($xConCom) > 0) {
-                    $xRCC = mysql_fetch_array($xConCom);
-                    if ($xRCC['gtaidxxx'] <> "") {
-                      $vTramite['tarclixx'] = $xRCC['gtaidxxx'];
-                      $vTramite['tartipxx'] = "GRUPO";
-                    }
-                  }
-                }
-                      
-                ##Fin Traigo Datos Adicionales del Do ##
-                ##Traigo Tarifas parametrizadas al cliente para excluir Conceptos de Cobro al momento de facturar##
-                $qTarifas  = "SELECT ";
-                $qTarifas .= "$cAlfa.fpar0131.seridxxx, ";
-                $qTarifas .= "IF($cAlfa.fpar0129.serdespx != \"\", $cAlfa.fpar0129.serdespx,$cAlfa.fpar0129.serdesxx) AS serdesxx, ";
-                $qTarifas .= "$cAlfa.fpar0131.fcotptxx, ";
-                $qTarifas .= "$cAlfa.fpar0131.fcotpixx  ";
-                $qTarifas .= "FROM $cAlfa.fpar0131 ";
-                $qTarifas .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0131.seridxxx = $cAlfa.fpar0129.seridxxx ";
-                $qTarifas .= "WHERE ";
-                $qTarifas .= "$cAlfa.fpar0131.cliidxxx = \"{$vTramite['tarclixx']}\" AND ";
-                $qTarifas .= "$cAlfa.fpar0131.fcotptxx = \"{$vTramite['doctepxx']}\" AND ";
-                $qTarifas .= "$cAlfa.fpar0131.fcotpixx = \"{$vTramite['doctepid']}\" AND ";
-                $qTarifas .= "$cAlfa.fpar0131.sucidxxx LIKE \"%{$vTramite['sucidxxx']}%\" AND ";
-                $qTarifas .= "$cAlfa.fpar0131.fcotopxx LIKE \"%{$vTramite['doctipxx']}%\" AND ";
-                $qTarifas .= "$cAlfa.fpar0131.fcomtrxx LIKE \"%{$vTramite['docmtrxx']}%\" AND ";
-                $qTarifas .= "$cAlfa.fpar0131.tartipxx = \"{$vTramite['tartipxx']}\"      AND ";
-                $qTarifas .= "$cAlfa.fpar0131.regestxx = \"ACTIVO\" ";
-                $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
-                // f_Mensaje(__FILE__, __LINE__, $qTarifas."~".mysql_num_rows($xTarifas));
+                $cAnio   = $_GET['pedanoxx'];
+                $vPedIds = $_GET['pedidxxx'];
+                # CONSULTA PEDIDOS
+                $qPedidoDet  = "SELECT ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.pedidxxx, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.comidxxx, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.comcodxx, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.comprexx, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.comcscxx, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.comcsc2x, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.cliidxxx, ";
+                $qPedidoDet .= "$cAlfa.lpca$cAnio.comfecxx, ";
+                $qPedidoDet .= "$cAlfa.lpar0150.clinomxx, ";
+                $qPedidoDet .= "$cAlfa.lpde$cAnio.*, ";
+                $qPedidoDet .= "$cAlfa.lpar0011.sersapxx, ";
+                $qPedidoDet .= "$cAlfa.lpar0011.serdesxx, ";
+                $qPedidoDet .= "$cAlfa.lpar0012.subidxxx, ";
+                $qPedidoDet .= "$cAlfa.lpar0012.subdesxx ";
+                $qPedidoDet .= "FROM $cAlfa.lpde$cAnio ";
+                $qPedidoDet .= "LEFT JOIN $cAlfa.lpca$cAnio ON $cAlfa.lpde$cAnio.pedidxxx = $cAlfa.lpca$cAnio.pedidxxx ";
+                $qPedidoDet .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lpde$cAnio.sersapxx = $cAlfa.lpar0011.sersapxx ";
+                $qPedidoDet .= "LEFT JOIN $cAlfa.lpar0012 ON $cAlfa.lpde$cAnio.sersapxx = $cAlfa.lpar0012.sersapxx AND $cAlfa.lpde$cAnio.subidxxx = $cAlfa.lpar0012.subidxxx ";
+                $qPedidoDet .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpca$cAnio.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+                $qPedidoDet .= "WHERE ";
+                $qPedidoDet .= "$cAlfa.lpde$cAnio.pedidxxx = $vPedIds";
+                // f_Mensaje(__FILE__, __LINE__, $qPedidoDet."~".mysql_num_rows($xPedidoDet));
+                $xPedidoDet  = f_MySql("SELECT","",$qPedidoDet,$xConexion01,"");
                 ?>
                 <script type="text/javascript">
                   document.forms['frgrm']['cDocId'].readOnly = true;
@@ -254,42 +187,42 @@
                   document.forms['frgrm']['cDocId'].onfocus = "";
                 </script>
                 <?php 
-                if(mysql_num_rows($xTarifas) > 0){
+                if(mysql_num_rows($xPedidoDet) > 0){
                   ?>
                   <fieldset id="Tarifas">
                     <legend>Servicios a Modificar</legend>
                       <center>
                         <table border = "0" cellpadding = "0" cellspacing = "0" width = "560">
                           <tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
-                            <td class = "clase08" width = "040" style="padding-left:5px;padding-right:5px" align = "center">Cod SAP</td>
-                            <td class = "clase08" width = "400" style="padding-left:5px;padding-right:5px" align = "center">Servicio</td>
-                            <td class = "clase08" width = "100" style="padding-left:5px;padding-right:5px" align = "center">Subservicio</td>
+                            <td class = "clase08" width = "060" style="padding-left:5px;padding-right:5px" align = "center">Cod SAP</td>
+                            <td class = "clase08" width = "320" style="padding-left:5px;padding-right:5px" align = "center">Servicio</td>
+                            <td class = "clase08" width = "160" style="padding-left:5px;padding-right:5px" align = "center">Subservicio</td>
                             <td class = "clase08" width = "020" style="padding-left:5px;padding-right:5px" align = "center"><input type="checkbox" name="nCheckAll" onClick = "javascript:f_Marca()"></td>
                           </tr>
                           <script languaje="javascript">
-                            document.forms['frgrm']['nRecords'].value = "<?php echo mysql_num_rows($xTarifas) ?>";
+                            document.forms['frgrm']['nRecords'].value = "<?php echo mysql_num_rows($xPedidoDet) ?>";
                           </script>
                           <?php 
                             $y=0;
-                            while ($xRT = mysql_fetch_array($xTarifas)) {
+                            while ($xRT = mysql_fetch_array($xPedidoDet)) {
                               ?>
                               <tr>
-                                <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center"><?php echo $xRT['seridxxx'] ?></td>
+                                <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center"><?php echo $xRT['sersapxx'] ?></td>
                                 <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6"><?php echo $xRT['serdesxx'] ?></td>
-                                <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center"><?php echo $xRT['fcotptxx'] ?></td>
+                                <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center"><?php echo $xRT['subdesxx'] ?></td>
                                 <td bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>" class = "letra7" style="padding-left:5px;padding-right:2px;border:1px solid #E6E6E6" align="center">
                                   <input type="checkbox" name="cCheck"  
-                                        value = "<?php echo mysql_num_rows($xTarifas) ?>"
-                                        id="<?php echo $xRT['fcotptxx']."~".$xRT['fcotpixx']."~".$xRT['seridxxx'] ?>">
-                                </td>  
+                                        value = "<?php echo mysql_num_rows($xPedidoDet) ?>"
+                                        id="<?php echo $xRT['subidxxx'] ?>">
+                                </td>
                               </tr>
                             <?php $y++;
-                            }//while ($xRT = mysql_fetch_array($xTarifas)) { 
+                            }//while ($xRT = mysql_fetch_array($xPedidoDet)) { 
                           ?>
                       </table>
                     </center>
                   </fieldset>
-                <?php }else{//if(mysql_num_rows($xTarifas) > 0){
+                <?php }else{//if(mysql_num_rows($xPedidoDet) > 0){
                 f_Mensaje(__FILE__,__LINE__,"No hay Tarifas Parametrizadas para el Do {$_POST['cSucId']} - {$_POST['cDocId']} - {$_POST['cDocSuf']}");
                 }
                 ##Fin Traigo Tarifas parametrizadas al cliente para excluir Conceptos de Cobro al momento de facturar##
@@ -312,7 +245,7 @@
                 <input type="button" class="name" name="Btn_Guardar" value="Guardar" style = "background:url(<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif);width:91;height:21;border:0px;"
                   onclick = "javascript:f_Carga_Data();
                                         document.forms['frgrm'].target='fmpro';
-                                        document.forms['frgrm'].action='fraecgra.php';
+                                        document.forms['frgrm'].action='framcgra.php';
                                         document.forms['frgrm']['nTimesSave'].value++;
                                         document.forms['frgrm'].submit();"></td>
               <td width="91" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:hand"
@@ -336,18 +269,18 @@
     <?php
     switch ($_COOKIE['kModo']) {
       case "EDITAR":
-        f_CargaData($gSucId,$gDocId,$gDocSuf,$_POST['cTerIdInt']); 
+        f_CargaData(); 
         ?>
-        <script languaje = "javascript">
+        <!-- <script languaje = "javascript">
           document.forms['frgrm']['cDocId'].readOnly = true;
           document.forms['frgrm']['cDocId'].onblur = "";
           document.forms['frgrm']['cDocId'].onfocus = "";
-        </script>
+        </script> -->
       <?php break;
       case "VER":
-        f_CargaData($gSucId,$gDocId,$gDocSuf,$_POST['cTerIdInt']); 
+        f_CargaData(); 
         ?>
-        <script languaje = "javascript">
+        <!-- <script languaje = "javascript">
           document.forms['frgrm']['cDocId'].readOnly = true;
           document.forms['frgrm']['cDocId'].onblur = "";
           document.forms['frgrm']['cDocId'].onfocus = "";
@@ -357,155 +290,85 @@
             document.forms['frgrm'].elements[x].onblur   = "";
             document.forms['frgrm'].elements[x].disabled = true;
           }
-        </script>
+        </script> -->
       <?php break;
     } ?>
 
     <?php
-    function f_CargaData($gSucId,$gDocId,$gDocSuf,$xTerIdInt) {
-
-      global $xConexion01; global $cAlfa;
-      ## Traigo Datos Proyecto por Cliente ##
-      $qTarifas  = "SELECT $cAlfa.sys00121.*, ";
-      $qTarifas .= "IF($cAlfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,CONCAT($cAlfa.SIAI0150.CLINOM1X,' ',$cAlfa.SIAI0150.CLINOM2X,' ',$cAlfa.SIAI0150.CLIAPE1X,' ',$cAlfa.SIAI0150.CLIAPE2X)) AS clinomxx ";
-      $qTarifas .= "FROM $cAlfa.sys00121 ";
-      $qTarifas .= "LEFT JOIN $cAlfa.SIAI0150 ON $cAlfa.sys00121.cliidxxx = $cAlfa.SIAI0150.CLIIDXXX ";
-      $qTarifas .= "WHERE ";
-      $qTarifas .= "$cAlfa.sys00121.docidxxx = \"$gDocId\" AND ";
-      $qTarifas .= "$cAlfa.sys00121.docsufxx = \"$gDocSuf\" AND ";
-      $qTarifas .= "$cAlfa.sys00121.sucidxxx = \"$gSucId\" LIMIT 0,1 ";
-      
-      $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
-      $vTarifas = mysql_fetch_array($xTarifas);
-      
-      $qFacA  = "SELECT ";
-      $qFacA .= "$cAlfa.SIAI0150.*, ";
-      $qFacA .= "IF($cAfa.SIAI0150.CLINOMXX <> \"\",$cAlfa.SIAI0150.CLINOMXX,CONCAT($cAlfa.SIAI0150.CLINOM1X,' ',$cAlfa.SIAI0150.CLINOM2X,' ',$cAlfa.SIAI0150.CLIAPE1X,' ',$cAlfa.SIAI0150.CLIAPE2X)) AS CLINOMXX ";
-      $qFacA .= "FROM $cAlfa.SIAI0150 ";
-      $qFacA .= "WHERE ";
-      $qFacA .= "$cAlfa.SIAI0150.CLIIDXXX = \"$xTerIdInt\" AND ";
-      $qFacA .= "$cAlfa.SIAI0150.REGESTXX = \"ACTIVO\" LIMIT 0,1";
-      $xFacA  = f_MySql("SELECT","",$qFacA,$xConexion01,"");
-      // f_Mensaje(__FILE__,__LINE__,$qFacA."~".mysql_num_rows($xFacA));
-      $xRFA = mysql_fetch_array($xFacA);
-      
-      ##Cargo Matriz con Valores de Conceptos Excluidos para Facturacion ##
-      $vTarExc = f_Explode_Array($vTarifas['doctexxx'],"|","~");
-    
-      ##Fin Cargo Matriz con Valores de Conceptos Excluidos para Facturacion ##
-      ?>
-      <script language = "javascript">
-        document.forms['frgrm']['cSucId'].value    = "<?php echo $vTarifas['sucidxxx'] ?>";
-        document.forms['frgrm']['cDocId'].value    = "<?php echo $vTarifas['docidxxx'] ?>";
-        document.forms['frgrm']['cDocSuf'].value   = "<?php echo $vTarifas['docsufxx'] ?>";
-        document.forms['frgrm']['cDocTip'].value   = "<?php echo $vTarifas['doctipxx'] ?>";
-        document.forms['frgrm']['cCliId'].value    = "<?php echo $vTarifas['cliidxxx'] ?>";
-        document.forms['frgrm']['cCliNom'].value   = "<?php echo $vTarifas['clinomxx'] ?>";
-        document.forms['frgrm']['cTarExc'].value   = "<?php echo $vTarifas['doctexxx'] ?>";
-        document.forms['frgrm']['cComMemo'].value  = "<?php echo $vTarifas['doctexxx'] ?>";
-        
-        document.forms['frgrm']['gDocId'].value  = "<?php echo $vTarifas['docidxxx'] ?>";
-        document.forms['frgrm']['gSucId'].value  = "<?php echo $vTarifas['sucidxxx'] ?>";
-        document.forms['frgrm']['gDocSuf'].value = "<?php echo $vTarifas['docsufxx'] ?>";
-        
-        document.getElementById('tblFacA').style.display= "none";
-        document.forms['frgrm']['cTerIdInt'].value   = "<?php echo $xRFA['CLIIDXXX'] ?>";
-        document.forms['frgrm']['cTerDVInt'].value   = "<?php echo f_Digito_Verificacion($xRFA['CLIIDXXX']) ?>";
-        document.forms['frgrm']['cTerNomInt'].value  = "<?php echo $xRFA['CLINOMXX'] ?>";
-        
-      </script>
-      <?php
-      $vTarifas['tarclixx'] = $vTarifas['cliidxxx'];
-      $vTarifas['tartipxx'] = "CLIENTE";
-                
+    function f_CargaData() {
+      global $xConexion01;
+      global $cAlfa;
+  
       // Verifica si tiene asociacion por grupo
-      $qConCom  = "SELECT gtaidxxx, cccaplfa ";
-      $qConCom .= "FROM $cAlfa.fpar0151 ";
-      $qConCom .= "WHERE ";
-      $qConCom .= "cliidxxx = \"{$vTarifas['cliidxxx']}\" AND  ";
-      $qConCom .= "regestxx = \"ACTIVO\" LIMIT 0,1";
-      $xConCom  = f_MySql("SELECT","",$qConCom,$xConexion01,"");
-      if (mysql_num_rows($xConCom) > 0) {
-        $xRCC = mysql_fetch_array($xConCom);
-        $cCcAplFa = $xRCC['cccaplfa'];
-        if ($xRCC['gtaidxxx'] <> "") {
-          $vTarifas['tarclixx'] = $xRCC['gtaidxxx'];
-          $vTarifas['tartipxx'] = "GRUPO";
-        }
+      $cAnio   = $_GET['pedanoxx'];
+      $vPedIds = $_GET['pedidxxx'];
+  
+      // Consulta la información de detalle de la certificación
+      $qPedidoDet  = "SELECT ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.pedidxxx, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.comidxxx, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.comcodxx, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.comprexx, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.comcscxx, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.comcsc2x, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.cliidxxx, ";
+      $qPedidoDet .= "$cAlfa.lpca$cAnio.comfecxx, ";
+      $qPedidoDet .= "$cAlfa.lpar0150.clinomxx, ";
+      $qPedidoDet .= "$cAlfa.lpde$cAnio.*, ";
+      $qPedidoDet .= "$cAlfa.lpar0011.sersapxx, ";
+      $qPedidoDet .= "$cAlfa.lpar0011.serdesxx, ";
+      $qPedidoDet .= "$cAlfa.lpar0012.subidxxx, ";
+      $qPedidoDet .= "$cAlfa.lpar0012.subdesxx ";
+      $qPedidoDet .= "FROM $cAlfa.lpde$cAnio ";
+      $qPedidoDet .= "LEFT JOIN $cAlfa.lpca$cAnio ON $cAlfa.lpde$cAnio.pedidxxx = $cAlfa.lpca$cAnio.pedidxxx ";
+      $qPedidoDet .= "LEFT JOIN $cAlfa.lpar0011 ON $cAlfa.lpde$cAnio.sersapxx = $cAlfa.lpar0011.sersapxx ";
+      $qPedidoDet .= "LEFT JOIN $cAlfa.lpar0012 ON $cAlfa.lpde$cAnio.sersapxx = $cAlfa.lpar0012.sersapxx AND $cAlfa.lpde$cAnio.subidxxx = $cAlfa.lpar0012.subidxxx ";
+      $qPedidoDet .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpca$cAnio.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
+      $qPedidoDet .= "WHERE ";
+      $qPedidoDet .= "$cAlfa.lpde$cAnio.pedidxxx = $vPedIds";
+      $xPedidoDet  = f_MySql("SELECT","",$qPedidoDet,$xConexion01,"");
+  
+      // Consulta para obtener los registros guardados en la tabla lpar0160
+      $qLpar0161  = "SELECT ";
+      $qLpar0161 .= "$cAlfa.lpar0161.sersapxx, ";
+      $qLpar0161 .= "$cAlfa.lpar0161.subidxxx, ";
+      $qLpar0161 .= "$cAlfa.lpar0161.pedidxxx ";
+      $qLpar0161 .= "FROM $cAlfa.lpar0161 ";
+      $qLpar0161 .= "WHERE $cAlfa.lpar0161.pedidxxx = $vPedIds";
+      $xLpar0161  = f_MySql("SELECT","",$qLpar0161,$xConexion01,"");
+  
+      // Crear un array para almacenar los resultados de lpar0161
+      $lpar0161Data = [];
+      while ($row = mysql_fetch_array($xLpar0161)) {
+          $lpar0161Data[] = $row;
       }
-      
-      if ($cCcAplFa == "SI") { ?>
-        <script language = "javascript">
-          document.getElementById('tblFacA').style.display= "block";
-          document.forms['frgrm']['cCcAplFa'].value       = "<?php echo $cCcAplFa ?>";
-        </script>
-        <?php
-        /**
-         * Busco las condiciones comerciales del cliente
-         */
-        $vTarifas['tarclixx'] = $xTerIdInt;
-        $vTarifas['tartipxx'] = "CLIENTE";
-        
-        $qConCom  = "SELECT gtaidxxx, cccaplfa ";
-        $qConCom .= "FROM $cAlfa.fpar0151 ";
-        $qConCom .= "WHERE ";
-        $qConCom .= "cliidxxx = \"$xTerIdInt\" AND  ";
-        $qConCom .= "regestxx = \"ACTIVO\" LIMIT 0,1";
-        $xConCom  = f_MySql("SELECT","",$qConCom,$xConexion01,"");
-        // f_Mensaje(__FILE__,__LINE__,"Factuar a ->".$qConCom." ~ ".mysql_num_rows($xConCom));
-        if (mysql_num_rows($xConCom) > 0) {
-          $xRCC = mysql_fetch_array($xConCom);
-          if ($xRCC['gtaidxxx'] <> "") {
-            $vTarifas['tarclixx'] = $xRCC['gtaidxxx'];
-            $vTarifas['tartipxx'] = "GRUPO";  
+
+      // Almacena los IDs de los checkboxes a marcar en un array
+      $checkboxIdsToCheck = [];
+      while ($xRT = mysql_fetch_array($xPedidoDet)) {
+        foreach ($lpar0161Data as $lparRow) {
+          if ($xRT['subidxxx'] == $lparRow['subidxxx']) {
+            $checkboxIdsToCheck[] = $xRT['subidxxx'];
           }
         }
-      } else { ?>
-        <script language = "javascript">
-          document.forms['frgrm']['cTerIdInt'].value   = "";
-          document.forms['frgrm']['cTerDVInt'].value   = "";
-          document.forms['frgrm']['cTerNomInt'].value  = "";
-          document.forms['frgrm']['cCcAplFa'].value    = "";
-        </script>
-      <?php }
-      
+      }
 
-      $qTarifas  = "SELECT ";
-      $qTarifas .= "$cAlfa.fpar0131.seridxxx, ";
-      $qTarifas .= "$cAlfa.fpar0129.serdesxx, ";
-      $qTarifas .= "$cAlfa.fpar0131.fcotptxx, ";
-      $qTarifas .= "$cAlfa.fpar0131.fcotpixx  ";
-      $qTarifas .= "FROM $cAlfa.fpar0131 ";
-      $qTarifas .= "LEFT JOIN $cAlfa.fpar0129 ON $cAlfa.fpar0131.seridxxx = $cAlfa.fpar0129.seridxxx ";
-      $qTarifas .= "WHERE ";
-      $qTarifas .= "$cAlfa.fpar0131.cliidxxx = \"{$vTarifas['tarclixx']}\" AND ";
-      $qTarifas .= "$cAlfa.fpar0131.fcotptxx = \"{$vTarifas['doctepxx']}\" AND ";
-      $qTarifas .= "$cAlfa.fpar0131.fcotpixx = \"{$vTarifas['doctepid']}\" AND ";
-      $qTarifas .= "$cAlfa.fpar0131.sucidxxx LIKE \"%{$vTarifas['sucidxxx']}%\" AND ";
-      $qTarifas .= "$cAlfa.fpar0131.fcotopxx LIKE \"%{$vTarifas['doctipxx']}%\" AND ";
-      $qTarifas .= "$cAlfa.fpar0131.fcomtrxx LIKE \"%{$vTarifas['docmtrxx']}%\" AND ";
-      $qTarifas .= "$cAlfa.fpar0131.tartipxx = \"{$vTarifas['tartipxx']}\"      AND ";
-      $qTarifas .= "$cAlfa.fpar0131.regestxx = \"ACTIVO\" ";
-      $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
-      while($xRT = mysql_fetch_array($xTarifas)){
-        for($i=0;$i<count($vTarExc);$i++){//Exploto campo donde se guardan conceptos excluidos para facturacion.
-          if($vTarExc[$i][0] <> ""){
-            if($vTarExc[$i][0] == $xRT['fcotptxx'] && $vTarExc[$i][2] == $xRT['seridxxx']){
-              if(mysql_num_rows($xTarifas) == 1){ ?>
-              <script>
-                document.forms['frgrm']['cCheck'].checked=true;
-              </script>
-              <?php } else { ?>
-              <script>
-                if (document.getElementById('<?php echo $xRT['fcotptxx']."~".$xRT['fcotpixx']."~".$xRT['seridxxx'] ?>')) {
-                  document.getElementById('<?php echo $xRT['fcotptxx']."~".$xRT['fcotpixx']."~".$xRT['seridxxx'] ?>').checked = true;
-                }
-              </script>
-              <?php }
-              }//if($vTarExc[$i][0] == $xRT['fcotptxx'] && $vTarExc[$i][2] == $xRT['seridxxx']){
-            }//if($vTarExc[$i][0] <> ""){
-        }//for($i=0;$i<count($vTarExc);$i++){//Exploto campo donde se guardan conceptos excluidos para facturacion.
-      }//while($xRT = mysql_fetch_array($xTarifas)){
+      ?>
+      <script>
+        window.onload = function() {
+          <?php
+          foreach ($checkboxIdsToCheck as $checkboxId) {
+          ?>
+            var checkbox = document.getElementById('<?php echo $checkboxId; ?>');
+            if (checkbox) {
+              checkbox.checked = true;
+            }
+          <?php
+          }
+          ?>
+        };
+      </script>
+      <?php
     }//fin Funcion f_Carga_Data
     ?>
   </body>

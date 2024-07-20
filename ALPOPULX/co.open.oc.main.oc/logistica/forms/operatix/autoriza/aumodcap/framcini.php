@@ -32,10 +32,11 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
     <script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
     <script language="javascript">
 
-      function fnVer(xCliId,xCliNom,xPedido) {
-        var cPathUrl = "fraecnue.php?cCliId="+xCliId+"&cCliNom="+xCliNom+"&cPedido="+xPedido;
+      function fnVer(xOrvSap) {
+        var mMatriz = xOrvSap.split('~');
+        var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2];
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-        document.cookie="kMenDes=Ver Autorización Modificar Campos Pedido;path="+"/";
+        document.cookie="kMenDes=Ver Autorizacion Modificar Campos Pedido;path="+"/";
         document.cookie="kModo=VER;path="+"/";
         parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
         document.location = cPathUrl; // Invoco el menu.
@@ -46,9 +47,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "fraecnue.php?cAmcId="+mMatriz[0];
+              var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-              document.cookie="kMenDes=Editar Autorización Modificar Campos Pedido;path="+"/";
+              document.cookie="kMenDes=Editar Autorizacion Modificar Campos Pedido;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
               parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
               document.location = cPathUrl; // Invoco el menu.
@@ -61,9 +62,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                 // Solo Deja Legalizar el Primero Seleccionado
                 zSw_Prv = 1;
                 var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                var cPathUrl = "framcnue.php?cAmcId="+mMatriz[0];
+                var cPathUrl = "fraecnue.php?pedidxxx="+mMatriz[0]+"&pedanoxx="+mMatriz[3]+"&cliidxxx="+mMatriz[4]+"&clinomxx="+mMatriz[5]+"&pedcscxx="+mMatriz[2];
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                document.cookie="kMenDes=Editar Autorización Modificar Campos Pedido;path="+"/";
+                document.cookie="kMenDes=Editar Autorizacion Modificar Campos Pedido;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
                 parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
                 document.location = cPathUrl; // Invoco el menu.
@@ -79,10 +80,14 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
             case "1":
               if (document.forms['frnav']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-                if (confirm("Esta Seguro de Cambiar el Estado de la Autorización["+mMatriz[0]+"] ?")) {
+                if (confirm("Esta Seguro de Eliminar el Servicio del Pedido ["+mMatriz[2]+"] ?")) {
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                  document.forms['frestado']['cAmcId'].value=mMatriz[0];
-                  document.forms['frestado']['cEstado'].value=mMatriz[1];
+                  document.forms['frestado']['pedidxxx'].value = mMatriz[0];
+                  document.forms['frestado']['cEstado'].value  = mMatriz[1];
+                  document.forms['frestado']['pedcscxx'].value = mMatriz[2];
+                  document.forms['frestado']['pedanoxx'].value = mMatriz[3];
+                  document.forms['frestado']['cliidxxx'].value = mMatriz[4];
+                  document.forms['frestado']['clinomxx'].value = mMatriz[5];
                   document.cookie="kModo="+xModo+";path="+"/";
                   document.forms['frestado'].submit();
                 }
@@ -93,12 +98,16 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
               for (i=0;i<document.forms['frnav']['oCheck'].length;i++) {
                 if (document.forms['frnav']['oCheck'][i].checked == true && zSw_Prv == 0) {
                   var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                  if (confirm("Esta Seguro de Cambiar el Estado de la Autorización["+mMatriz[0]+"] ?")) {
+                  if (confirm("Esta Seguro de Eliminar el Servicio del Pedido ["+mMatriz[2]+"] ?")) {
                     zSw_Prv = 1;
                     var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.forms['frestado']['cAmcId'].value=mMatriz[0];
-                    document.forms['frestado']['cEstado'].value=mMatriz[1];
+                    document.forms['frestado']['pedidxxx'].value =mMatriz[0];
+                    document.forms['frestado']['cEstado'].value  =mMatriz[1];
+                    document.forms['frestado']['pedcscxx'].value =mMatriz[2];
+                    document.forms['frestado']['pedanoxx'].value =mMatriz[3];
+                    document.forms['frestado']['cliidxxx'].value =mMatriz[4];
+                    document.forms['frestado']['clinomxx'].value =mMatriz[5];
                     document.cookie="kModo="+xModo+";path="+"/";
                     document.forms['frestado'].submit();
                   }
@@ -197,8 +206,12 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
   </head>
   <body topmargin = "0" leftmargin = "0" rightmargin = "0" bottommargin = "0" marginheight = "0" marginwidth = "0">
     <form name = "frestado" action = "framcgra.php" method = "post" target="fmpro">
-      <input type = "hidden" name = "cAmcId" value = "">
       <input type = "hidden" name = "cEstado" value = "">
+      <input type = "hidden" name = "pedidxxx" value = "">
+      <input type = "hidden" name = "pedanoxx" value = "">
+      <input type = "hidden" name = "pedcscxx" value = "">
+      <input type = "hidden" name = "cliidxxx" value = "">
+      <input type = "hidden" name = "clinomxx" value = "">
     </form>
 
     <form name = "frnav" action="framcini.php" method="post" target="fmwork">
@@ -310,8 +323,11 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
 
         $mAudModCap  = array();
         $qAudModCap  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
+        $qAudModCap .= "$cAlfa.lpar0161.amcidxxx, "; // ID de la tabla
+        $qAudModCap .= "$cAlfa.lpar0161.pedidxxx, "; // ID Pedido
         $qAudModCap .= "$cAlfa.lpar0161.pedcscxx, "; // Pedido
         $qAudModCap .= "$cAlfa.lpar0161.cliidxxx, "; // Nit Cliente
+        $qAudModCap .= "$cAlfa.lpar0161.pedanoxx, "; // Nit Cliente
         $qAudModCap .= "$cAlfa.lpar0150.clisapxx, "; // Cod SAP Cliente
         $qAudModCap .= "$cAlfa.lpar0150.clinomxx, "; // Cliente
         $qAudModCap .= "$cAlfa.lpar0161.regusrxx, "; // Usuario
@@ -328,6 +344,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         if ($_POST['vSearch'] != "") {
           $qAudModCap .= "WHERE ";
           $qAudModCap .= "$cAlfa.lpar0161.pedcscxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qAudModCap .= "$cAlfa.lpar0161.pedidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
           $qAudModCap .= "$cAlfa.lpar0161.cliidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
           $qAudModCap .= "$cAlfa.lpar0150.clisapxx LIKE \"%{$_POST['vSearch']}%\" OR ";
           $qAudModCap .= "$cAlfa.lpar0150.clinomxx LIKE \"%{$_POST['vSearch']}%\" OR ";
@@ -337,6 +354,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           }
           $qAudModCap .= "$cAlfa.lpar0161.regestxx LIKE \"%{$_POST['vSearch']}%\" ";
         }
+        $qAudModCap .= "GROUP BY $cAlfa.lpar0161.pedidxxx, $cAlfa.lpar0161.pedanoxx ";
         //// CODIGO NUEVO PARA ORDER BY
         $cOrderBy = "";
         $vOrderByOrder = explode("~",$_POST['cOrderByOrder']);
@@ -579,7 +597,13 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                         <!--<tr bgcolor = "<?php echo $cColor ?>">-->
                         <tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
                           <td class="letra7" width="15%">
-                            <a href = javascript:fnVer('<?php echo $mAudModCap[$i]['cliidxxx']?>','<?php echo $mAudModCap[$i]['clinomxx']?>','<?php echo $mAudModCap[$i]['pedcscxx']?>')>
+                            <a href = "javascript:fnVer('<?php echo $mAudModCap[$i]['pedidxxx'].'~'.
+                                                                    $mAudModCap[$i]['regestxx'].'~'.
+                                                                    $mAudModCap[$i]['pedcscxx'].'~'.
+                                                                    $mAudModCap[$i]['pedanoxx'].'~'.
+                                                                    $mAudModCap[$i]['cliidxxx'].'~'.
+                                                                    $mAudModCap[$i]['clinomxx']
+                                                        ?>')")>
                                                         <?php echo $mAudModCap[$i]['pedcscxx']?>
                             </a>
                           <td class="letra7" width="13%"><?php echo $mAudModCap[$i]['cliidxxx'] ?></td>
@@ -590,8 +614,12 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                           <td class="letra7" width="05%"><?php echo $mAudModCap[$i]['regestxx'] ?></td>
                           <td Class="letra7" width="02%" align="right">
                             <input type="checkbox" name="oCheck" value = "<?php echo count($mAudModCap) ?>"
-                            id="<?php echo $mAudModCap[$i]['pedcscxx'].'~'.
-                                            $mAudModCap[$i]['regestxx'] ?>"
+                            id="<?php echo  $mAudModCap[$i]['pedidxxx'].'~'.
+                                            $mAudModCap[$i]['regestxx'].'~'.
+                                            $mAudModCap[$i]['pedcscxx'].'~'.
+                                            $mAudModCap[$i]['pedanoxx'].'~'.
+                                            $mAudModCap[$i]['cliidxxx'].'~'.
+                                            $mAudModCap[$i]['clinomxx'] ?>"
                             onclick="javascript:document.forms['frnav']['nRecords'].value='<?php echo count($mAudModCap) ?>'">
                           </td>
                         </tr>

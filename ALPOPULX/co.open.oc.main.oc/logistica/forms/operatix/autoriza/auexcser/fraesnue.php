@@ -201,6 +201,7 @@ include("../../../../../financiero/libs/php/utility.php");
       var cNit = 'cNit' + nSecuencia;
       var cObservacion = 'cObservacion' + nSecuencia;
       var cCertiId = 'cCertiId' + nSecuencia;
+      var cAnioCer = 'cAnioCer' + nSecuencia;
       var cBase = 'cBase' + nSecuencia;
       var cCheck = 'cCheck' + nSecuencia;
 
@@ -227,7 +228,7 @@ include("../../../../../financiero/libs/php/utility.php");
       TD_xAll = cTableRow.insertCell(4);
       TD_xAll.style.width = "260px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:260;border:0;text-align:center;padding:2px' name = '" + cSubServicio + "' id = '" + cSubServicio + "' readonly>" + "<input type='hidden' name='" + cSubCerId + "' id='" + cSubCerId + "' readonly>" + "<input type='hidden' name='" + cNit + "' id='" + cNit + "' readonly>" + "<input type='hidden' name='" + cObservacion + "' id='" + cObservacion + "' readonly>" + "<input type='hidden' name='" + cCertiId + "' id='" + cCertiId + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:260;border:0;text-align:center;padding:2px' name = '" + cSubServicio + "' id = '" + cSubServicio + "' readonly>" + "<input type='hidden' name='" + cSubCerId + "' id='" + cSubCerId + "' readonly>" + "<input type='hidden' name='" + cNit + "' id='" + cNit + "' readonly>" + "<input type='hidden' name='" + cObservacion + "' id='" + cObservacion + "' readonly>" + "<input type='hidden' name='" + cCertiId + "' id='" + cCertiId + "' readonly>" + "<input type='hidden' name='" + cAnioCer + "' id='" + cAnioCer + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(5);
       TD_xAll.style.width = "100px";
@@ -237,7 +238,7 @@ include("../../../../../financiero/libs/php/utility.php");
       TD_xAll = cTableRow.insertCell(6);
       TD_xAll.style.width = "10px";
       TD_xAll.style.textAlign = "center";
-      TD_xAll.innerHTML = "<input type='checkbox' name='cCheck'  value = '" + cCheck + "' id='" + xId + "'" + ((xChek) == true ? " checked" : "") + ">";
+      TD_xAll.innerHTML = "<input type='checkbox' name='"+cCheck+"'  value = '" + cCheck + "' id='" + xId + "'" + ((xChek) == true ? " checked" : "") + ">";
 
       document.forms['frgrm']['nSecuencia_Ip'].value = nSecuencia;
     }
@@ -348,10 +349,26 @@ include("../../../../../financiero/libs/php/utility.php");
         case "1":
           document.getElementById("Grid_Paso1").style.display = "block";
           document.getElementById("Grid_Paso2").style.display = "none";
+          document.getElementById("Grid_Paso3").style.display = "none";
+          document.getElementById("Grid_Paso4").style.display = "none";
           break;
         case "2":
           document.getElementById("Grid_Paso1").style.display = "none";
           document.getElementById("Grid_Paso2").style.display = "block";
+          document.getElementById("Grid_Paso3").style.display = "none";
+          document.getElementById("Grid_Paso4").style.display = "none";
+          break;
+        case "3"://editar
+          document.getElementById("Grid_Paso1").style.display = "none";
+          document.getElementById("Grid_Paso2").style.display = "none";
+          document.getElementById("Grid_Paso3").style.display = "block";
+          document.getElementById("Grid_Paso4").style.display = "none";
+          break;
+        case "4"://ver
+          document.getElementById("Grid_Paso1").style.display = "none";
+          document.getElementById("Grid_Paso2").style.display = "none";
+          document.getElementById("Grid_Paso3").style.display = "none";
+          document.getElementById("Grid_Paso4").style.display = "block";
           break;
       }
     }
@@ -392,8 +409,11 @@ include("../../../../../financiero/libs/php/utility.php");
                   document.getElementById("cTramites").style.display = "none";
                   document.getElementById("cComMemo").style.display = "none";
                 </script>
+
                 <div id="Grid_Paso1">
-                  <?php if ($_POST['cStep'] == "") {
+                  
+                  <?php 
+                  if ($_POST['cStep'] == "") {
                           $_POST['cStep'] = "1";
                         } ?>
                   <fieldset>
@@ -511,6 +531,7 @@ include("../../../../../financiero/libs/php/utility.php");
           $qCertifiDet .= "$cAlfa.lcca$cAnio.comcscxx, ";
           $qCertifiDet .= "$cAlfa.lcca$cAnio.comcsc2x, ";
           $qCertifiDet .= "$cAlfa.lcca$cAnio.cliidxxx, ";
+          $qCertifiDet .= "$cAlfa.lcca$cAnio.comfecxx, ";
           $qCertifiDet .= "$cAlfa.lpar0150.clinomxx, ";
           $qCertifiDet .= "$cAlfa.lcde$cAnio.*, ";
           $qCertifiDet .= "$cAlfa.lpar0011.sersapxx, ";
@@ -561,6 +582,8 @@ include("../../../../../financiero/libs/php/utility.php");
           document.forms['frgrm']['cNit'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['cliidxxx']}"; ?>";
           document.forms['frgrm']['cObservacion'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$_POST['cObvsCer']}"; ?>";
           document.forms['frgrm']['cCertiId'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['ceridxxx']}"; ?>";
+          document.forms['frgrm']['cAnioCer'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalles[$i]['comfecxx'], 0, 4); ?>";
+          document.forms['frgrm']['cAnioCer'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo substr($mDataDetalles[$i]['comfecxx'], 0, 4); ?>";
           
           document.forms['frgrm']['cBase'    + document.forms['frgrm']['nSecuencia_Ip'].value].value = "<?php echo "{$mDataDetalles[$i]['basexxxx']}"; ?>"; 
         </script>

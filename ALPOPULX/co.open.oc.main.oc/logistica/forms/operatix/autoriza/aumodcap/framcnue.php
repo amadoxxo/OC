@@ -16,6 +16,7 @@
     <script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
     <script language="javascript">
       function fnRetorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
+        localStorage.removeItem('formData');
         document.location="<?php echo $_COOKIE['kIniAnt'] ?>";
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory ?>/frnivel3.php";
       }
@@ -296,6 +297,7 @@
           document.forms['frgrm'].target = 'fmpro';
           document.forms['frgrm'].action = 'framc20g.php';
           document.forms['frgrm']['cModo'].value = 'VALIDARDO';
+          saveFormData();
           document.forms['frgrm'].submit();
         }
       }
@@ -307,6 +309,82 @@
         document.forms['frgrm']['cStep'].value     = '1';
         document.forms['frgrm']['cStep_Ant'].value = '2';
         document.forms['frgrm'].submit();
+      }
+
+      function saveFormData() {
+        var form = document.forms['frgrm']; 
+        var formData = new FormData(form);
+
+        // Convierte FormData a un objeto
+        var dataObj = {};
+        formData.forEach((value, key) => {
+          dataObj[key] = value;
+        });
+
+        // Guarda el número de secuencia en el objeto
+        var grid = document.getElementById('Grid');
+        var rows = grid.rows;
+        var tableData = [];
+
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var rowData = {};
+
+          // Aquí agregamos cada celda de la fila
+          for (var j = 0; j < row.cells.length; j++) {
+            var cell = row.cells[j];
+            var input = cell.querySelector('input');
+            if (input) {
+              rowData[input.name] = input.value;
+            }
+          }
+
+          tableData.push(rowData);
+        }
+
+        dataObj['tableData'] = tableData;
+        localStorage.setItem("formData", JSON.stringify(dataObj));
+      }
+
+      function restoreFormData() {
+        var savedData = localStorage.getItem("formData");
+        if (savedData) {
+          var dataObj = JSON.parse(savedData);
+          var form = document.forms['frgrm']; 
+          
+          // Restaurar los datos de los campos del formulario
+          for (var key in dataObj) {
+            if (dataObj.hasOwnProperty(key) && key !== 'tableData') {
+                var field = form.elements[key];
+              if (field) {
+                field.value = dataObj[key];
+              }
+            }
+          }
+
+          // Restaurar las filas de la tabla
+          var nSecuencia = parseInt(dataObj['nSecuencia'], 10);
+          var grid = document.getElementById('Grid');
+
+          // Limpia las filas actuales
+          grid.innerHTML = '';
+
+        // Crea el número necesario de filas
+        for (var i = 1; i <= nSecuencia; i++) {
+          fnAddNewRow(); // Agrega una nueva fila
+          // Llena la fila recién creada con los datos
+          var row = grid.rows[i - 1];
+          if (row) {
+            var fields = ['cAutSeq', 'cCliId', 'cCliDV', 'cCliSap', 'cCliNom', 'cPedComCsc', 'cPedIds', 'cAnio'];
+              fields.forEach(function(fieldName) {
+                var field = row.querySelector('#' + fieldName + i);
+                if (field) {
+                    field.value = dataObj[fieldName + i];
+                }
+              });
+            }
+          }
+        }
       }
       
       function f_Mostrar_u_Ocultar_Objetos(xStep) {
@@ -328,6 +406,7 @@
         document.forms['frgrm'].target='fmpro';
         document.forms['frgrm'].action='framcgra.php';
         document.forms['frgrm']['nTimesSave'].value++;
+        localStorage.removeItem('formData');
         document.forms['frgrm'].submit();
       }
       
@@ -541,5 +620,14 @@
         <?php
       }
 		?>
+    <script>
+      <?php
+        if (isset($_POST['cStep']) && $_POST['cStep'] == "1") {
+        ?>
+          restoreFormData();
+        <?php
+        }
+        ?>
+    </script>
 	</body>
 </html>

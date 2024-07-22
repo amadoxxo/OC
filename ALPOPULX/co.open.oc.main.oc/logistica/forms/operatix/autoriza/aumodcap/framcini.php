@@ -122,6 +122,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
         document.cookie="kMenDes="+xMenDes+";path="+"/";
         document.cookie="kModo="+xOpcion+";path="+"/";
+        localStorage.removeItem('formData');
         parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
         document.location = xForm; // Invoco el menu.
       }

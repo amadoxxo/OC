@@ -18,6 +18,7 @@ include("../../../../../financiero/libs/php/utility.php");
   <script languaje='javascript' src='<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
   <script language="javascript">
     function f_Retorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
+      localStorage.removeItem('formData');
       document.location = "<?php echo $_COOKIE['kIniAnt'] ?>";
       parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory ?>/frnivel3.php";
     }
@@ -214,34 +215,34 @@ include("../../../../../financiero/libs/php/utility.php");
       var cCheck = 'cCheck' + nSecuencia;
 
       TD_xAll = cTableRow.insertCell(0);
-      TD_xAll.style.width = "140px";
+      TD_xAll.style.width = "160px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:140;border:0;text-align:left;padding:2px' name = '" + cTramite + "' id = '" + cTramite + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:160;border:0;text-align:left' name = '" + cTramite + "' id = '" + cTramite + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(1);
       TD_xAll.style.width = "200px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:200;border:0;text-align:left;padding:2px' name = '" + cImportador + "' id = '" + cImportador + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:200;border:0;text-align:left' name = '" + cImportador + "' id = '" + cImportador + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(2);
       TD_xAll.style.width = "160px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:160;border:0;text-align:left;padding:2px' name = '" + cFacturara + "' id = '" + cFacturara + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:160;border:0;text-align:left' name = '" + cFacturara + "' id = '" + cFacturara + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(3);
-      TD_xAll.style.width = "260px";
+      TD_xAll.style.width = "250px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:260;border:0;text-align:left;padding:2px' name = '" + cServicio + "' id = '" + cServicio + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:250;border:0;text-align:rigth' name = '" + cServicio + "' id = '" + cServicio + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(4);
-      TD_xAll.style.width = "260px";
+      TD_xAll.style.width = "250px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:260;border:0;text-align:center;padding:2px' name = '" + cSubServicio + "' id = '" + cSubServicio + "' readonly>" + "<input type='hidden' name='" + cSubCerId + "' id='" + cSubCerId + "' readonly>" + "<input type='hidden' name='" + cNit + "' id='" + cNit + "' readonly>" + "<input type='hidden' name='" + cObservacion + "' id='" + cObservacion + "' readonly>" + "<input type='hidden' name='" + cCertiId + "' id='" + cCertiId + "' readonly>" + "<input type='hidden' name='" + cAnioCer + "' id='" + cAnioCer + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:250;border:0;text-align:rigth' name = '" + cSubServicio + "' id = '" + cSubServicio + "' readonly>" + "<input type='hidden' name='" + cSubCerId + "' id='" + cSubCerId + "' readonly>" + "<input type='hidden' name='" + cNit + "' id='" + cNit + "' readonly>" + "<input type='hidden' name='" + cObservacion + "' id='" + cObservacion + "' readonly>" + "<input type='hidden' name='" + cCertiId + "' id='" + cCertiId + "' readonly>" + "<input type='hidden' name='" + cAnioCer + "' id='" + cAnioCer + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(5);
       TD_xAll.style.width = "100px";
       TD_xAll.style.border = "1px solid #E6E6E6";
-      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:100;border:0;text-align:center;padding:2px' name = '" + cBase + "' id = '" + cBase + "' readonly>";
+      TD_xAll.innerHTML = "<input type = 'text' class = 'letra' style = 'width:100;border:0;text-align:rigth ' name = '" + cBase + "' id = '" + cBase + "' readonly>";
 
       TD_xAll = cTableRow.insertCell(6);
       TD_xAll.style.width = "10px";
@@ -284,15 +285,14 @@ include("../../../../../financiero/libs/php/utility.php");
 
     function f_Valida() { 
       var formulario = document.forms['frgrm'];
-      var observaciones = formulario['cObvsCer'].value.trim(); // Trim para eliminar espacios en blanco
-      var secuencia = parseInt(formulario['nSecuencia'].value, 10); // Convertir a número entero
-      var condicion = true; // Inicializar condicion en true
+      var observaciones = formulario['cObvsCer'].value.trim(); 
+      var secuencia = formulario['nSecuencia'].value; 
+      var condicion = true; 
 
       for (let i = 0; i < secuencia; i++) {
-          var nit = formulario['cCliId' + (i + 1)].value.trim(); // Usar i + 1 para acceso correcto
-          var certificado = formulario['cCerComCsc' + (i + 1)].value.trim(); // Usar i + 1 para acceso correcto
+          var nit = formulario['cCliId' + (i + 1)].value.trim(); 
+          var certificado = formulario['cCerComCsc' + (i + 1)].value.trim(); 
 
-          // Verificar si nit, certificado u observaciones están vacíos
           if (!nit || !certificado || !observaciones) {
               condicion = false; 
               break; 
@@ -304,7 +304,8 @@ include("../../../../../financiero/libs/php/utility.php");
       } else {
           document.forms['frgrm'].target = 'fmpro';
           document.forms['frgrm'].action = 'fraes20g.php';
-          document.forms['frgrm']['cModo'].value = 'VALIDARDO';
+          document.forms['frgrm']['cModo'].value = 'VALIDARCER';
+          saveFormData();
           document.forms['frgrm'].submit();
       }
     }
@@ -316,6 +317,83 @@ include("../../../../../financiero/libs/php/utility.php");
       document.forms['frgrm']['cStep'].value = '1';
       document.forms['frgrm']['cStep_Ant'].value = '2';
       document.forms['frgrm'].submit();
+    }
+
+    function saveFormData() {
+      var form = document.forms['frgrm']; 
+      var formData = new FormData(form);
+
+      // Convierte FormData a un objeto
+      var dataObj = {};
+      formData.forEach((value, key) => {
+          dataObj[key] = value;
+      });
+
+      // Guarda el número de secuencia en el objeto
+      var grid = document.getElementById('Grid');
+      var rows = grid.rows;
+      var tableData = [];
+
+      for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var rowData = {};
+
+          // Aquí agregamos cada celda de la fila
+          for (var j = 0; j < row.cells.length; j++) {
+              var cell = row.cells[j];
+              var input = cell.querySelector('input');
+              if (input) {
+                  rowData[input.name] = input.value;
+              }
+          }
+
+          tableData.push(rowData);
+      }
+
+      dataObj['tableData'] = tableData;
+      localStorage.setItem("formData", JSON.stringify(dataObj));
+    }
+
+    function restoreFormData() {
+      var savedData = localStorage.getItem("formData");
+      if (savedData) {
+          var dataObj = JSON.parse(savedData);
+          var form = document.forms['frgrm']; 
+          
+          // Restaurar los datos de los campos del formulario
+          for (var key in dataObj) {
+              if (dataObj.hasOwnProperty(key) && key !== 'tableData') {
+                  var field = form.elements[key];
+                  if (field) {
+                      field.value = dataObj[key];
+                  }
+              }
+          }
+
+          // Restaurar las filas de la tabla
+          var nSecuencia = parseInt(dataObj['nSecuencia'], 10);
+          var grid = document.getElementById('Grid');
+
+          // Limpia las filas actuales
+          grid.innerHTML = '';
+
+          // Crea el número necesario de filas
+          for (var i = 1; i <= nSecuencia; i++) {
+              f_Add_New_Row(); // Agrega una nueva fila
+              
+              // Llena la fila recién creada con los datos
+              var row = grid.rows[i - 1];
+              if (row) {
+                  var fields = ['cAutSeq', 'cCliId', 'cCliDv', 'cCliSap', 'cCliNom', 'cCerComCsc', 'vCerIds', 'vAnio'];
+                  fields.forEach(function(fieldName) {
+                      var field = row.querySelector('#' + fieldName + i);
+                      if (field) {
+                          field.value = dataObj[fieldName + i];
+                      }
+                  });
+              }
+          }
+      }
     }
 
     function f_Mostrar_u_Ocultar_Objetos(xStep) {
@@ -337,6 +415,7 @@ include("../../../../../financiero/libs/php/utility.php");
       document.forms['frgrm'].target = 'fmpro';
       document.forms['frgrm'].action = 'fraesgra.php';
       document.forms['frgrm']['nTimesSave'].value++;
+      localStorage.removeItem('formData');
       document.forms['frgrm'].submit();
     }
 
@@ -415,11 +494,11 @@ include("../../../../../financiero/libs/php/utility.php");
                       <?php $nCol = f_Format_Cols(58);
                       echo $nCol; ?>
                       <tr height="25px">
-                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="08" align="left">&nbsp;&nbsp;No. Certificacion</td>
-                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="10" align="left">&nbsp;&nbsp;&nbsp;Cliente</td>
-                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="08" align="left">&nbsp;&nbsp;&nbsp;Cod SAP</td>
-                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="13" align="left">&nbsp;&nbsp;&nbsp;Servicio</td>
-                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="15" align="left">&nbsp;&nbsp;Subservicio</td>
+                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="08" align="center">&nbsp;&nbsp;No. Certificacion</td>
+                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="10" align="center">&nbsp;&nbsp;&nbsp;Cliente</td>
+                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="08" align="center">&nbsp;&nbsp;&nbsp;Cod SAP</td>
+                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="13" align="center">&nbsp;&nbsp;&nbsp;Servicio</td>
+                        <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="15" align="center">&nbsp;&nbsp;Subservicio</td>
                         <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="03" align="left">&nbsp;&nbsp;Base</td>
                         <td bgcolor="<?php echo $vSysStr['system_row_title_color_ini'] ?>" class="clase08" colspan="01" align="left"><input type="checkbox" name="nCheckAll" onClick="javascript:f_Marca()"></td>
                       </tr>
@@ -556,6 +635,15 @@ include("../../../../../financiero/libs/php/utility.php");
   <?php
   }
   ?>
+  <script>
+    <?php
+        if (isset($_POST['cStep']) && $_POST['cStep'] == "1") {
+          ?>
+          restoreFormData();
+          <?php
+        }
+   ?>
+  </script>
 </body>
 
 </html>

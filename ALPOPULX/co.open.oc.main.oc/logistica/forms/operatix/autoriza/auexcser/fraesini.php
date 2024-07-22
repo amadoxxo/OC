@@ -7,8 +7,6 @@
  * @version 001
  */
 
-// ini_set('error_reporting', E_ERROR);
-// ini_set("display_errors","1");
 
 include("../../../../../financiero/libs/php/utility.php");
 
@@ -34,7 +32,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
 
       function fnVer(xOrvSap) {
         var mMatriz = xOrvSap.split('~');
-        var cPathUrl = "frmasnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2];
+        var cPathUrl = "fraemnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2];
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
         document.cookie="kMenDes=Ver Prioridad de Ticket;path="+"/";
         document.cookie="kModo=VER;path="+"/";
@@ -47,7 +45,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "frmasnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2]+ "&aesobsxx="+mMatriz[6];
+              var cPathUrl = "fraemnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2]+ "&aesobsxx="+mMatriz[6];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
               document.cookie="kMenDes=Editar Autorizacion Exlcluir Servicios;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
@@ -62,7 +60,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                 // Solo Deja Legalizar el Primero Seleccionado
                 zSw_Prv = 1;
                 var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                var cPathUrl = "frmasnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2];
+                var cPathUrl = "fraemnue.php?ceridxxx="+mMatriz[0] + "&ceranoxx="+mMatriz[3] + "&cliidxxx="+mMatriz[4] + "&clinomxx="+mMatriz[5]+ "&cercscxx="+mMatriz[2];
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                 document.cookie="kMenDes=Editar Organizacion de Ventas;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
@@ -123,6 +121,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
         document.cookie="kMenDes="+xMenDes+";path="+"/";
         document.cookie="kModo="+xOpcion+";path="+"/";
+        localStorage.removeItem('formData');
         parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
         document.location = xForm; // Invoco el menu.
       }
@@ -216,7 +215,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
       <input type = "hidden" name = "clinomxx"   value = "">
     </form>
 
-    <form name = "frnav" action="frptiini.php" method="post" target="fmwork">
+    <form name = "frnav" action="fraesini.php" method="post" target="fmwork">
       <input type = "hidden" name = "nRecords"   value = "">
       <input type = "hidden" name = "vLimInf"    value = "<?php echo $vLimInf ?>">
       <input type = "hidden" name = "cSortField" value = "<?php echo $cSortField ?>">

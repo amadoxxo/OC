@@ -152,7 +152,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
       }
 
       /************************ FUNCION PARA GUARDAR EL ORDEN DEL ORDER BY DEL SQL ***********************/
-      function fnOrder_By(xEvento, xCampo) {
+      function fnOrderBy(xEvento, xCampo) {
         if (document.forms['frnav'][xCampo].value != '') {
           var vSwitch = document.forms['frnav'][xCampo].value.split(' ');
           var cSwitch = vSwitch[1];
@@ -540,46 +540,46 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                   <table cellspacing="0" width="100%">
                     <tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
                       <td class="name" width="15%">
-                        <a href = "javascript:fnOrder_By('onclick','pedcscxx');" title="Ordenar">Pedido</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','pedcscxx');" title="Ordenar">Pedido</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "pedcscxx">
                         <input type = "hidden" name = "pedcscxx" value = "<?php echo $_POST['pedcscxx'] ?>" id = "pedcscxx">
-                        <script language="javascript">fnOrder_By('','pedcscxx')</script>
+                        <script language="javascript">fnOrderBy('','pedcscxx')</script>
                       </td>
                       <td class="name" width="13%">
-                        <a href = "javascript:fnOrder_By('onclick','cliidxxx');" title="Ordenar">Nit Cliente</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','cliidxxx');" title="Ordenar">Nit Cliente</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "cliidxxx">
                         <input type = "hidden" name = "cliidxxx" value = "<?php echo $_POST['cliidxxx'] ?>" id = "cliidxxx">
-                        <script language="javascript">fnOrder_By('','cliidxxx')</script>
+                        <script language="javascript">fnOrderBy('','cliidxxx')</script>
                       </td>
                       <td class="name" width="20%">
-                        <a href = "javascript:fnOrder_By('onclick','clisapxx');" title="Ordenar">Cod SAP Cliente</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','clisapxx');" title="Ordenar">Cod SAP Cliente</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clisapxx">
                         <input type = "hidden" name = "clisapxx" value = "<?php echo $_POST['clisapxx'] ?>" id = "clisapxx">
-                        <script language="javascript">fnOrder_By('','clisapxx')</script>
+                        <script language="javascript">fnOrderBy('','clisapxx')</script>
                       </td>
                       <td class="name" width="25%">
-                        <a href = "javascript:fnOrder_By('onclick','clinomxx');" title="Ordenar">Cliente</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','clinomxx');" title="Ordenar">Cliente</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clinomxx">
                         <input type = "hidden" name = "clinomxx" value = "<?php echo $_POST['clinomxx'] ?>" id = "clinomxx">
-                        <script language="javascript">fnOrder_By('','clinomxx')</script>
+                        <script language="javascript">fnOrderBy('','clinomxx')</script>
                       </td>
                       <td class="name" width="10%">
-                        <a href = "javascript:fnOrder_By('onclick','usrnomxx');" title="Ordenar">Usuario</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','usrnomxx');" title="Ordenar">Usuario</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "usrnomxx">
                         <input type = "hidden" name = "usrnomxx" value = "<?php echo $_POST['usrnomxx'] ?>" id = "usrnomxx">
-                        <script language="javascript">fnOrder_By('','usrnomxx')</script>
+                        <script language="javascript">fnOrderBy('','usrnomxx')</script>
                       </td>
                       <td class="name" width="10%">
-                        <a href = "javascript:fnOrder_By('onclick','regfcrex');" title="Ordenar">Fecha</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','regfcrex');" title="Ordenar">Fecha</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfcrex">
                         <input type = "hidden" name = "regfcrex" value = "<?php echo $_POST['regfcrex'] ?>" id = "regfcrex">
-                        <script language="javascript">fnOrder_By('','regfcrex')</script>
+                        <script language="javascript">fnOrderBy('','regfcrex')</script>
                       </td>
                       <td class="name" width="05%">
-                        <a href = "javascript:fnOrder_By('onclick','regestxx');" title="Ordenar">Estado</a>&nbsp;
+                        <a href = "javascript:fnOrderBy('onclick','regestxx');" title="Ordenar">Estado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regestxx">
                         <input type = "hidden" name = "regestxx" value = "<?php echo $_POST['regestxx'] ?>" id = "regestxx">
-                        <script language="javascript">fnOrder_By('','regestxx')</script>
+                        <script language="javascript">fnOrderBy('','regestxx')</script>
                       </td>
                       <td Class='name' width="02%" align="right">
                         <input type="checkbox" name="oCheckAll" onClick = 'javascript:fnMarca()'>

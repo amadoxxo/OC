@@ -15,12 +15,12 @@
     <LINK rel = 'stylesheet' href = '<?php echo $cSystem_Libs_JS_Directory ?>/custom.css'>
     <script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
     <script language="javascript">
-      function f_Retorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
+      function fnRetorna() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
         document.location="<?php echo $_COOKIE['kIniAnt'] ?>";
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory ?>/frnivel3.php";
       }
     
-      function f_Marca() {
+      function fnMarca() {
         if (document.forms['frgrm']['nCheckAll'].checked == true){
           if (document.forms['frgrm']['nRecords'].value == 1){
             document.forms['frgrm']['cCheck'].checked=true;
@@ -44,7 +44,7 @@
           }
       }
 
-      function f_Carga_Data() {
+      function fnCargaData() {
         document.forms['frgrm']['cComMemo'].value="|";
         switch (document.forms['frgrm']['nRecords'].value) {
           case "1":
@@ -166,7 +166,7 @@
                             <td class = "clase08" width = "060" style="padding-left:5px;padding-right:5px" align = "center">Cod SAP</td>
                             <td class = "clase08" width = "320" style="padding-left:5px;padding-right:5px" align = "center">Servicio</td>
                             <td class = "clase08" width = "160" style="padding-left:5px;padding-right:5px" align = "center">Subservicio</td>
-                            <td class = "clase08" width = "020" style="padding-left:5px;padding-right:5px" align = "center"><input type="checkbox" name="nCheckAll" onClick = "javascript:f_Marca()"></td>
+                            <td class = "clase08" width = "020" style="padding-left:5px;padding-right:5px" align = "center"><input type="checkbox" name="nCheckAll" onClick = "javascript:fnMarca()"></td>
                           </tr>
                           <script languaje="javascript">
                             document.forms['frgrm']['nRecords'].value = "<?php echo mysql_num_rows($xPedidoDet) ?>";
@@ -211,13 +211,13 @@
               <td width="378" height="21"></td>
               <td width="91" height="21" class="name">
                 <input type="button" class="name" name="Btn_Guardar" value="Guardar" style = "background:url(<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif);width:91;height:21;border:0px;"
-                  onclick = "javascript:f_Carga_Data();
+                  onclick = "javascript:fnCargaData();
                                         document.forms['frgrm'].target='fmpro';
                                         document.forms['frgrm'].action='framcgra.php';
                                         document.forms['frgrm']['nTimesSave'].value++;
                                         document.forms['frgrm'].submit();"></td>
               <td width="91" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:hand"
-                onClick ="javascript:f_Retorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
+                onClick ="javascript:fnRetorna();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir
               </td>
             </tr>
           </table>
@@ -226,7 +226,7 @@
           <table border="0" cellpadding="0" cellspacing="0" id='bnt_Paso2' width="560">
             <tr>
               <td width="469" height="21"></td>
-              <td width="91" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:f_Retorna()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
+              <td width="91" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:fnRetorna()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
             </tr>
           </table>
       <?php break;
@@ -236,7 +236,7 @@
     <?php
     switch ($_COOKIE['kModo']) {
       case "EDITAR":
-        f_CargaData(); 
+        fnCheckBox(); 
         ?>
         <script languaje = "javascript">
           document.forms['frgrm']['cPedido'].readOnly = true;
@@ -245,7 +245,7 @@
         </script>
       <?php break;
       case "VER":
-        f_CargaData(); 
+        fnCheckBox(); 
         ?>
         <script languaje = "javascript">
           document.forms['frgrm']['cPedido'].readOnly = true;
@@ -262,7 +262,7 @@
     } ?>
 
     <?php
-    function f_CargaData() {
+    function fnCheckBox() {
       global $xConexion01;
       global $cAlfa;
       $cAnio   = $_GET['pedanoxx'];

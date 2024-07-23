@@ -77,7 +77,7 @@
         }
       }
       
-      function f_Marca() {
+      function fnMarca() {
         if (document.forms['frgrm']['nCheckAll'].checked == true){
           if (document.forms['frgrm']['nRecords'].value == 1){
             document.forms['frgrm']['cCheck'].checked=true;
@@ -101,7 +101,7 @@
         }
       }
       
-      function f_Carga_Data() {
+      function fnCargaData() {
         for (let i = 0; i < document.forms['frgrm']['nSecuencia_Ip']; i++) {
           document.forms['frgrm']['cComMemo'].value="|";
           switch (document.forms['frgrm']['nRecords'].value) {
@@ -296,14 +296,14 @@
         } else {
           document.forms['frgrm'].target = 'fmpro';
           document.forms['frgrm'].action = 'framc20g.php';
-          document.forms['frgrm']['cModo'].value = 'VALIDARDO';
+          document.forms['frgrm']['cModo'].value = 'VALIDPED';
           saveFormData();
           document.forms['frgrm'].submit();
         }
       }
       
-      function f_VolverAtras () {
-        f_Carga_Data();
+      function fnVolverAtras () {
+        fnCargaData();
         document.forms['frgrm'].target             = 'fmwork';
         document.forms['frgrm'].action             = 'framcnue.php';
         document.forms['frgrm']['cStep'].value     = '1';
@@ -387,7 +387,7 @@
         }
       }
       
-      function f_Mostrar_u_Ocultar_Objetos(xStep) {
+      function fnMostrarOcultarObjetos(xStep) {
         // Oculto campos de valor FOB y cantidad de formularios que solo aplican para EXPORTACIONES y DTA's.
         switch (xStep) {
           case "1":
@@ -402,7 +402,7 @@
       }
     
       function fnGuardar() {
-        f_Carga_Data();
+        fnCargaData();
         document.forms['frgrm'].target='fmpro';
         document.forms['frgrm'].action='framcgra.php';
         document.forms['frgrm']['nTimesSave'].value++;
@@ -485,7 +485,7 @@
                         <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="08" align="center">&nbsp;&nbsp;&nbsp;Cod SAP</td>
                         <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="13" align="center">&nbsp;&nbsp;&nbsp;Servicio</td>
                         <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="13" align="center">&nbsp;&nbsp;Subservicio</td>
-                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="01" align = "center"><input type="checkbox" name="nCheckAll" onClick = "javascript:f_Marca()"></td>
+                        <td bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>" class = "clase08" colspan="01" align = "center"><input type="checkbox" name="nCheckAll" onClick = "javascript:fnMarca()"></td>
                       </tr>
                     </table>
                     <table border = "0" cellpadding = "0" cellspacing = "0" width = "1160" id = "Grid_Ip"></table>
@@ -520,7 +520,7 @@
           <tr>
             <td width="887" height="21"></td>
             <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/anterior.gif" style="cursor:pointer"
-              onClick = "javascript:f_VolverAtras();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anterior</td>
+              onClick = "javascript:fnVolverAtras();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anterior</td>
             <td width="91" height="21" Class="name">
               <input type="button" name="name" value="Guardar" style = "background:url(<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif);width:91;height:21;border:0px;font-weight:bold;color:#555555;"
                 onclick = "javascript:fnGuardar()"></td>
@@ -535,7 +535,7 @@
     </center>
 		<!-- Termine de Pintar el Formulario y lo Mando a la Funcion wModo() con el Modo que Vengo -->
 		<script languaje = "javascript">
-      f_Mostrar_u_Ocultar_Objetos("<?php echo $_POST['cStep'] ?>");
+      fnMostrarOcultarObjetos("<?php echo $_POST['cStep'] ?>");
     </script>
 		<?php
       if ($_POST['cStep'] == "2") {

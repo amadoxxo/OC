@@ -1643,6 +1643,55 @@
           }
         }
       }
+      
+      function fnBorrarDisconformidad() {
+        if (document.forms['frgrm']['vRecords'].value == 1) {
+          if (document.forms['frgrm']['oChkCom'].checked == true) {
+            var docun     = document.forms['frgrm']['oChkCom'].id.split('~');
+            // Datos de la tabla fcoc
+            var cComId    = docun[0];
+            var cComCod   = docun[1];
+            var cComCsc   = docun[2];
+            var cComCsc2  = docun[3];
+            var dRegFCre  = docun[4];
+            var cDisId    = docun[12];
+            var cPathUrl  = "frbodgra.php";
+            var cPrints   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
+            var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
+
+            if(confirm(cPregunta)) {
+              cPathUrl = "frbodgra.php?gPrints="+cPrints;
+              parent.fmpro.location = cPathUrl; // Invoco el menu.
+              document.forms['frgrm'].submit();
+            }
+          }
+        } else {
+          var nSw_Prv = 0;
+          for (i = 0;i<document.forms['frgrm']['oChkCom'].length;i++) {
+            if (document.forms['frgrm']['oChkCom'][i].checked == true && nSw_Prv == 0) {
+              // Solo Deja Legalizar el Primero Seleccionado
+              var nSw_Prv = 1;
+              // Datos de la tabla fcoc
+              var docun     = document.forms['frgrm']['oChkCom'][i].id.split('~');
+              var cComId    = docun[0];
+              var cComCod   = docun[1];
+              var cComCsc   = docun[2];
+              var cComCsc2  = docun[3];
+              var dRegFCre  = docun[4];
+              var cDisId    = docun[12];
+              var cRuta     = "frbodgra.php";
+              var cPrints   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
+              var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
+              
+              if(confirm(cPregunta)) {
+                cRuta = "frbodgra.php?gPrints="+cPrints;
+                parent.fmpro.location = cRuta;
+                document.forms['frgrm'].submit();
+              }
+            }
+          }
+        }
+      }
 
       function f_Ver_Factura() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
         var nSwitch = 0;
@@ -3532,6 +3581,11 @@
                                   <img src = "<?php echo $cPlesk_Skin_Directory ?>/upload_file01.png" onClick = "javascript:fnEnviarFacturaTbFacturaxnconsdo('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
                                 <?php }
                               break;
+                              case "BORRARDISCONFORMIDAD":
+                                if (f_InList($kDf[3],"GRUMALCO","TEGRUMALCO","DEGRUMALCO")) { ?>
+                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/s_error.png" onClick = "javascript:fnBorrarDisconformidad()" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                                <?php }
+                              break;
                             }
                           }
                           /***** Fin Botones de Acceso Rapido *****/
@@ -3791,18 +3845,19 @@
                             <?php } ?>
                             <td Class="letra7" align="right">
                               <input type="checkbox" name="oChkCom" value = "<?php echo mysql_num_rows($xCabMov) ?>"
-                              id="<?php echo $mCabMov[$i]['comidxxx'].'~'. //[0]
-                                             $mCabMov[$i]['comcodxx'].'~'. //[1]
-                                             $mCabMov[$i]['comcscxx'].'~'. //[2]
-                                             $mCabMov[$i]['comcsc2x'].'~'. //[3]
-                                             $mCabMov[$i]['comfecxx'].'~'. //[4]
-                                             $mCabMov[$i]['regestxx'].'~'. //[5]
-                                             $mCabMov[$i]['teridixx'].'~'. //[6]
-                                             $mCabMov[$i]['comipfxx'].'~'. //[7]
-                                             $mCabMov[$i]['comealpo'].'~'. //[8]
-                                             $mCabMov[$i]['perestxx'].'~'. //[9]
-                                             $mCabMov[$i]['comfecxx'].'~'. //[10]
-                                             $cTipoFac  //[11] ?>"
+                              id="<?php echo  $mCabMov[$i]['comidxxx'].'~'. //[0]
+                                              $mCabMov[$i]['comcodxx'].'~'. //[1]
+                                              $mCabMov[$i]['comcscxx'].'~'. //[2]
+                                              $mCabMov[$i]['comcsc2x'].'~'. //[3]
+                                              $mCabMov[$i]['comfecxx'].'~'. //[4]
+                                              $mCabMov[$i]['regestxx'].'~'. //[5]
+                                              $mCabMov[$i]['teridixx'].'~'. //[6]
+                                              $mCabMov[$i]['comipfxx'].'~'. //[7]
+                                              $mCabMov[$i]['comealpo'].'~'. //[8]
+                                              $mCabMov[$i]['perestxx'].'~'. //[9]
+                                              $mCabMov[$i]['comfecxx'].'~'. //[10]
+                                              $cTipoFac .'~'. //[11]
+                                              $mCabMov[$i]['disidxxx'] //[12] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mCabMov) ?>'">
                             </td>
                           </tr>

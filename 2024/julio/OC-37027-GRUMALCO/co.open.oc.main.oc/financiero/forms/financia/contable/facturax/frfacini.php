@@ -1432,7 +1432,7 @@
         }
       }
 
-      function fnAsignarDisconformidad() { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
+      function fnAsignarDisconformidad(xModo) { // Devuelvo al Formulario que Me Llama los Datos de la Aplicacion
         var zX  = screen.width;
         var zY  = screen.height;
         if (document.forms['frgrm']['vRecords'].value == 1){
@@ -1448,7 +1448,7 @@
             var zNx     = (zX-500)/2;
             var zNy     = (zY-250)/2;
             var zWinPro = 'width=500,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-            var cRuta = 'frdisfrm.php?prints='+prints;
+            var cRuta = 'frdisfrm.php?modo='+xModo+'&prints='+prints;
             zWindow2    = window.open(cRuta,'zWindow2',zWinPro);
             zWindow2.focus();
           }
@@ -1466,14 +1466,15 @@
                 var cComCsc2= docun[3];
                 var dRegFCre= docun[4];
                 prints += '|'+cComId+'~'+cComCod+'~'+cComCsc+'~'+cComCsc2+'~'+dRegFCre+'|';
+
+                var zNx     = (zX-500)/2;
+                var zNy     = (zY-250)/2;
+                var zWinPro = 'width=500,scrollbars=1,height=250,left='+zNx+',top='+zNy;
+                var cRuta = 'frdisfrm.php?modo='+xModo+'&prints='+prints;
+                zWindow2    = window.open(cRuta,'zWindow2',zWinPro);
+                zWindow2.focus();
               }
             }
-            var zNx     = (zX-500)/2;
-            var zNy     = (zY-250)/2;
-            var zWinPro = 'width=500,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-            var cRuta = 'frdisfrm.php?prints='+prints;
-            zWindow2    = window.open(cRuta,'zWindow2',zWinPro);
-            zWindow2.focus();
           }
         }
       }
@@ -1644,7 +1645,7 @@
         }
       }
       
-      function fnBorrarDisconformidad() {
+      function fnBorrarDisconformidad(xModo) {
         if (document.forms['frgrm']['vRecords'].value == 1) {
           if (document.forms['frgrm']['oChkCom'].checked == true) {
             var docun     = document.forms['frgrm']['oChkCom'].id.split('~');
@@ -1655,13 +1656,17 @@
             var cComCsc2  = docun[3];
             var dRegFCre  = docun[4];
             var cDisId    = docun[12];
-            var cPathUrl  = "frbodgra.php";
-            var cPrints   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
+            var cComIds   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
             var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
-
             if(confirm(cPregunta)) {
-              cPathUrl = "frbodgra.php?gPrints="+cPrints;
-              parent.fmpro.location = cPathUrl; // Invoco el menu.
+              if (cDisId == "") {
+                alert("El comprobante ya tiene la disconformidad vacia");
+                return;
+              }
+              document.forms['frhidbod']['cComIds'].value = cComIds;
+              document.forms['frhidbod']['cModo'].value   = xModo;
+              document.forms['frhidbod'].action = "frdisgra.php";
+              document.forms['frhidbod'].submit();
               document.forms['frgrm'].submit();
             }
           }
@@ -1679,13 +1684,18 @@
               var cComCsc2  = docun[3];
               var dRegFCre  = docun[4];
               var cDisId    = docun[12];
-              var cRuta     = "frbodgra.php";
-              var cPrints   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
+              var cComIds   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
               var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
               
               if(confirm(cPregunta)) {
-                cRuta = "frbodgra.php?gPrints="+cPrints;
-                parent.fmpro.location = cRuta;
+                if (cDisId == "") {
+                  alert("El comprobante ya tiene la disconformidad vacia");
+                  return;
+                }
+                document.forms['frhidbod']['cComIds'].value = cComIds;
+                document.forms['frhidbod']['cModo'].value   = xModo;
+                document.forms['frhidbod'].action = "frdisgra.php";
+                document.forms['frhidbod'].submit();
                 document.forms['frgrm'].submit();
               }
             }
@@ -2647,6 +2657,11 @@
       </script>
     </form>
 
+    <form name = "frhidbod" action = "frdisgra.php" method = "post" target = "fmpro">
+      <input type="hidden" name="cComIds" value="">
+      <input type="hidden" name="cModo"   value="">
+    </form>
+
     <form name = "frtraop" action = "frreopce.php" method = "post" target="fmpro">
       <input type="hidden" name="cComId"   value="">
       <input type="hidden" name="cComCod"  value="">
@@ -3573,7 +3588,7 @@
                               break;
                               case "DISCONFORMIDAD":
                                 if (f_InList($kDf[3],"GRUMALCO","TEGRUMALCO","DEGRUMALCO")) { ?>
-                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-file_bg.gif" onClick = "javascript:fnAsignarDisconformidad()" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-file_bg.gif" onClick = "javascript:fnAsignarDisconformidad('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
                                 <?php }
                               break;
                               case "TBFACTURAXNCONSDO":
@@ -3583,7 +3598,7 @@
                               break;
                               case "BORRARDISCONFORMIDAD":
                                 if (f_InList($kDf[3],"GRUMALCO","TEGRUMALCO","DEGRUMALCO")) { ?>
-                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/s_error.png" onClick = "javascript:fnBorrarDisconformidad()" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/s_error.png" onClick = "javascript:fnBorrarDisconformidad('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
                                 <?php }
                               break;
                             }

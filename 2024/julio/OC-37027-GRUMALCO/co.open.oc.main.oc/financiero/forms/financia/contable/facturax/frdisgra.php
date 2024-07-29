@@ -1,10 +1,12 @@
 <?php
   /**
-   * Graba Disconformidad de los comprobantes.
-   * Este programa permite Grabar la Disconformidad de los comprobantes.
+   * Graba Disconformidad de los comprobantes y Borra la Disconformidad de los comprobantes.
+   * Este programa permite Grabar la Disconformidad de los comprobantes y Borrar la Disconformidad de los comprobantes.
    * @author Camilo Dulce. <camilo.dulce@open-eb.co>
+   * @author Elian Amado. <elian.amado@openits.co>
    * @package openComex
    */
+
   include("../../../../libs/php/utility.php");
 
   /**
@@ -15,6 +17,7 @@
 
   /**
    * Varible para almacenar errores de validacion
+   * @var string
    */
   $cMsj = "";
 
@@ -27,29 +30,31 @@
     $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
     $cMsj .= "Error grave de Seguridad otro usuario ingreso con su clave\n";
   }
-  
-  /*** Validaciones ***/
-  if($_POST['cDisId'] == ""){
-    $nSwitch = 1;
-    $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-    $cMsj .= "La Disconformidad No Puede Ser Vacia.\n";
-  }else{
-    $qDisconformidad  = "SELECT ";
-    $qDisconformidad .= "regestxx ";
-    $qDisconformidad .= "FROM $cAlfa.fpar0160 ";
-    $qDisconformidad .= "WHERE ";
-    $qDisconformidad .= "disidxxx = \"{$_POST['cDisId']}\" LIMIT 0,1";
-    $xDisconformidad  = f_MySql("SELECT", "", $qDisconformidad, $xConexion01, "");
-    if(mysql_num_rows($xDisconformidad) == 0){
+
+  if ($_POST['cModo'] != 'BORRARDISCONFORMIDAD') {
+    /*** Validaciones ***/
+    if($_POST['cDisId'] == ""){
       $nSwitch = 1;
       $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-      $cMsj .= "La Disconformidad[{$_POST['cDisId']}] No Existe En La Base de Datos.\n";
+      $cMsj .= "La Disconformidad No Puede Ser Vacia.\n";
     }else{
-      $vDisconformidad = mysql_fetch_array($xDisconformidad);
-      if($vDisconformidad['regestxx'] != "ACTIVO"){
+      $qDisconformidad  = "SELECT ";
+      $qDisconformidad .= "regestxx ";
+      $qDisconformidad .= "FROM $cAlfa.fpar0160 ";
+      $qDisconformidad .= "WHERE ";
+      $qDisconformidad .= "disidxxx = \"{$_POST['cDisId']}\" LIMIT 0,1";
+      $xDisconformidad  = f_MySql("SELECT", "", $qDisconformidad, $xConexion01, "");
+      if(mysql_num_rows($xDisconformidad) == 0){
         $nSwitch = 1;
         $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "La Disconformidad[{$_POST['cDisId']}] Se Encuentra INACTIVA.\n";
+        $cMsj .= "La Disconformidad[{$_POST['cDisId']}] No Existe En La Base de Datos.\n";
+      }else{
+        $vDisconformidad = mysql_fetch_array($xDisconformidad);
+        if($vDisconformidad['regestxx'] != "ACTIVO"){
+          $nSwitch = 1;
+          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+          $cMsj .= "La Disconformidad[{$_POST['cDisId']}] Se Encuentra INACTIVA.\n";
+        }
       }
     }
   }
@@ -83,26 +88,28 @@
         $mDatos[$nInd_mDatos]['anofacxx'] = $nAno;
       }
     }
+    /*** Fin de validaciones. ***/
   }
-  /*** Fin de validaciones. ***/
 
-  /** 
-   * Valida que el Facturar a no tenga asignado una disconformidad.
-   */
-  for ($i=0;$i<count($mDatos);$i++) {
-    $qTercero  = "SELECT CLIDISID ";
-    $qTercero .= "FROM $cAlfa.SIAI0150 ";
-    $qTercero .= "WHERE ";
-    $qTercero .= "CLIIDXXX = \"{$mDatos[$i]['terid2xx']}\" LIMIT 0,1 ";
-    $xTercero  = f_MySql("SELECT","",$qTercero,$xConexion01,"");
-    // echo $qTercero." - ".mysql_num_rows($xTercero);
-    if(mysql_num_rows($xTercero) > 0){
-      $vTercero = mysql_fetch_array($xTercero);
-
-      if($vTercero['CLIDISID'] != ""){
-        $nSwitch = 1;
-        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "El Cliente[{$mDatos[$i]['terid2xx']}], Ya tiene asignada la disconformidad [{$vTercero['CLIDISID']}].\n";
+  if ($_POST['cModo'] != 'BORRARDISCONFORMIDAD') {
+    /** 
+     * Valida que el Facturar a no tenga asignado una disconformidad.
+     */
+    for ($i=0;$i<count($mDatos);$i++) {
+      $qTercero  = "SELECT CLIDISID ";
+      $qTercero .= "FROM $cAlfa.SIAI0150 ";
+      $qTercero .= "WHERE ";
+      $qTercero .= "CLIIDXXX = \"{$mDatos[$i]['terid2xx']}\" LIMIT 0,1 ";
+      $xTercero  = f_MySql("SELECT","",$qTercero,$xConexion01,"");
+      // echo $qTercero." - ".mysql_num_rows($xTercero);
+      if(mysql_num_rows($xTercero) > 0){
+        $vTercero = mysql_fetch_array($xTercero);
+  
+        if($vTercero['CLIDISID'] != ""){
+          $nSwitch = 1;
+          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+          $cMsj .= "El Cliente[{$mDatos[$i]['terid2xx']}], Ya tiene asignada la disconformidad [{$vTercero['CLIDISID']}].\n";
+        }
       }
     }
   }
@@ -112,10 +119,13 @@
    */
   if ($nSwitch == 0) {
     $cComAct = ""; //Comprobantes actualizados
+    $cDisId = ($_POST['cModo'] != 'BORRARDISCONFORMIDAD') ? 
+              array('NAME'=>'disidxxx','VALUE'=>trim($_POST['cDisId']),'CHECK'=>'NO'):
+              array('NAME'=>'disidxxx','VALUE'=>trim(""),'CHECK'=>'NO');
     for ($j=0;$j<count($mDatos);$j++) {
       //Actualizando fecha en la cabecera de facturacion
       $nAno = $mDatos[$j]['anofacxx'];
-      $qUpdate = array( array('NAME'=>'disidxxx','VALUE'=>trim($_POST['cDisId'])  ,'CHECK'=>'NO'),
+      $qUpdate = array( $cDisId,
                         array('NAME'=>'comidxxx','VALUE'=>$mDatos[$j]['comidxxx']	,'CHECK'=>'WH'),
                         array('NAME'=>'comcodxx','VALUE'=>$mDatos[$j]['comcodxx']	,'CHECK'=>'WH'),
                         array('NAME'=>'comcscxx','VALUE'=>$mDatos[$j]['comcscxx']	,'CHECK'=>'WH'),
@@ -134,15 +144,15 @@
   if ($nSwitch == 0){
     $cComAct = substr($cComAct, 0, strlen($cComAct)-2);
     f_Mensaje(__FILE__,__LINE__,"Se Actualizaron con Exito las Siguientes Facturas:\n$cComAct.");
+    if ($_POST['cModo'] != 'BORRARDISCONFORMIDAD') {
     ?>
-    <script languaje = "javascript">
-      parent.window.opener.document.forms['frgrm'].submit();
-      parent.window.close();
-    </script>
+      <script languaje = "javascript">
+        parent.window.opener.document.forms['frgrm'].submit();
+        parent.window.close();
+      </script>
     <?php
+    }
   }else{
     f_Mensaje(__FILE__,__LINE__,"Se Presentaron Errores en el Proceso:\n".$cMsj."Verifique");
   }
-  
-  
 ?>

@@ -70,7 +70,8 @@ if (!empty($gPrints)) { ?>
               <fieldset>
                 <legend id="idComprobantes">Asignar Disconformidad</legend>
                 <form name = 'frnav' action = 'frdisgra.php' method = 'post' target="fmpro">
-                  <input type="hidden" name="cComIds"   value=<?php echo $gPrints ?>>
+                  <input type="hidden" name="cComIds" value=<?php echo $gPrints ?> >
+                  <input type="hidden" name="cModo"   value=<?php echo $gModo ?> >
                   <center>
                     <table border = "0" cellpadding = "0" cellspacing = "0" width = "400">
                       <?php echo columnas(20, 20); ?>

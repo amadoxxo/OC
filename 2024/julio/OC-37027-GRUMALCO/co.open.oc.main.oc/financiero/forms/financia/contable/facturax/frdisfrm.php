@@ -5,7 +5,7 @@
    * @author Camilo Dulce
    * @package openComex
    */
-  $cUrl  =  "frdisnue.php?gPrints=$prints";
+  $cUrl  =  "frdisnue.php?gModo=$modo&gPrints=$prints";
 ?>
 <html>
   <head>

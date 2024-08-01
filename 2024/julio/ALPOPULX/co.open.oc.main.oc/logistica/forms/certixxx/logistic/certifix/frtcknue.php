@@ -31,6 +31,44 @@
         var nX = screen.width;
         var nY = screen.height;
         switch (xLink) {
+          case "cTtiCod":
+            if (xSwitch == "VALID") {
+              var zRuta = "frtck158.php?gWhat=VALID"+
+                                        "&gFunction=cTtiCod"+
+                                        "&gTtiCod="+document.forms['frgrm']['cTtiCod'].value.toUpperCase();
+
+              parent.fmpro.location = zRuta;
+            } else {
+              var zNx     = (nX-600)/2;
+              var zNy     = (nY-250)/2;
+              var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
+              var zRuta   = "frtck158.php?gWhat=WINDOW"+
+                                          "&gFunction=cTtiCod"+
+                                          "&gTtiCod="+document.forms['frgrm']['cTtiCod'].value.toUpperCase();
+
+              zWindow = window.open(zRuta,"zWindow",zWinPro);
+              zWindow.focus();
+            }
+          break;
+          case "cTtiDes":
+            if (xSwitch == "VALID") {
+              var zRuta  = "frtck158.php?gWhat=VALID"+
+                                        "&gFunction=cTtiDes"+
+                                        "&gTtiDes="+document.forms['frgrm']['cTtiDes'].value.toUpperCase();
+
+              parent.fmpro.location = zRuta;
+            } else {
+              var zNx     = (nX-600)/2;
+              var zNy     = (nY-250)/2;
+              var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
+              var zRuta   = "frtck158.php?gWhat=WINDOW"+
+                                    "&gFunction=cTtiDes"+
+                                    "&gTtiDes="+document.forms['frgrm']['cTtiDes'].value.toUpperCase();
+
+              zWindow = window.open(zRuta,"zWindow",zWinPro);
+              zWindow.focus();
+            }
+          break;
           // Comprobante
           case "cComPre":
             if (xSwitch == "VALID") {
@@ -810,8 +848,6 @@
           document.forms['frgrm']['oBtnDel_Certi' + xIndice].disabled = false;
         }
       }
-
-
     </script>
   </head>
   <body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
@@ -831,7 +867,44 @@
                 <input type = "hidden" name = "cRegEst"      value = "">
                 <input type = "hidden" name = "nSecuencia_Servicio" value = "">
                 <input type = "hidden" name = "nSecuencia_Certificacion" value = "">
-
+                <?php
+                    // Obtengo los datos del usuario
+                    $qUsrNom  = "SELECT USRIDXXX, USRNOMXX, USREMAXX ";
+                    $qUsrNom .= "FROM $cAlfa.SIAI0003 ";
+                    $qUsrNom .= "WHERE ";
+                    $qUsrNom .= "USRIDXXX = \"{$_COOKIE['kUsrId']}\"";
+                    $xUsrNom  = f_MySql("SELECT","",$qUsrNom,$xConexion01,"");
+                    if (mysql_num_rows($xUsrNom) > 0) {
+                      $vUsrNom = mysql_fetch_array($xUsrNom);
+                      $usrId   = $vUsrNom['USRIDXXX']; // Cod Usuario
+                      $usrNom  = $vUsrNom['USRNOMXX']; // Nombre
+                      $usrEma  = $vUsrNom['USREMAXX']; // Email
+                    }
+                    // Obtengo los datos de Prioridad Ticket
+                    $mMatrizPti = array();
+                    $qPtiCox  = "SELECT pticodxx ";
+                    $qPtiCox .= "FROM $cAlfa.lpar0156 ";
+                    $qPtiCox .= "WHERE ";
+                    $qPtiCox .= "regestxx = \"ACTIVO\"";
+                    $xPtiCox  = f_MySql("SELECT","",$qPtiCox,$xConexion01,"");
+                    if (mysql_num_rows($xPtiCox) > 0) {
+                      while ($vPtiCox = mysql_fetch_array($xPtiCox)) {
+                        $mMatrizPti[] = $vPtiCox['pticodxx'];
+                      }
+                    }
+                    // Obtengo los datos de Status Ticket
+                    $mMatrizSti = array();
+                    $qStiCod  = "SELECT sticodxx ";
+                    $qStiCod .= "FROM $cAlfa.lpar0157 ";
+                    $qStiCod .= "WHERE ";
+                    $qStiCod .= "stitipxx = \"APERTURA\"";
+                    $xStiCod  = f_MySql("SELECT","",$qStiCod,$xConexion01,"");
+                    if (mysql_num_rows($xStiCod) > 0) {
+                      while ($vStiCod = mysql_fetch_array($xStiCod)) {
+                        $mMatrizSti[] = $vStiCod['sticodxx'];
+                      }
+                    }
+                ?>
                 <center>
                   <table border="0" cellpadding="0" cellspacing="0" width="700">
                     <?php $nCol = f_Format_Cols(35); echo $nCol; ?>
@@ -871,13 +944,13 @@
                     <!-- Fila 2 -->
                     <tr>
                       <td class = "clase08" colspan="5">Creado por<br>
-                        <input type="text" Class = "letra" name="" style = "width:100" value = "" readonly>
+                        <input type = "text" Class = "letra" style = "width:100" name = "" value = "<?php echo $usrId ?>" readonly>
                       </td>
                       <td Class="clase08" colspan="15"><br>
-                        <input type = "text" Class = "letra" style = "width:300" name = "" value = "" readonly>
+                        <input type = "text" Class = "letra" style = "width:300" name = "" value = "<?php echo $usrNom ?>" readonly>
                       </td>
                       <td Class="clase08" colspan="15"><br>
-                        <input type = "text" Class = "letra" style = "width:300" name = "" value = "" readonly>
+                        <input type = "text" Class = "letra" style = "width:300" name = "" value = "<?php echo $usrEma ?>" readonly>
                       </td>
                     </tr>
 
@@ -890,32 +963,42 @@
 
                     <!-- Fila 4 -->
                     <tr>
-                      <td class="clase08" colspan="5">Tipo<br>
-                        <input type = "text" Class = "letra" style = "width:100" name = "cSecSap" readonly>
+                      <td class="clase08" colspan="5">
+                        <a href="javascript:document.forms['frgrm']['cTtiCod'].value = '';
+                                            document.forms['frgrm']['cTtiDes'].value = '';
+                                            fnLinks('cTtiCod','WINDOW')">Tipo</a><br>
+                        <input type = "text" Class = "letra" style = "width:100" name = "cTtiCod"
+                          onBlur = "javascript:fnLinks('cTtiCod','WINDOW');
+                                              this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
+                          onFocus = "javascript:document.forms['frgrm']['cTtiCod'].value = '';
+                                                document.forms['frgrm']['cTtiDes'].value = '';
+                                                this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                       </td>
                       <td class="clase08" colspan="1"><br>
                         <input type = "text" Class = "letra" style = "width:20;" readonly>
                       </td>
                       <td class="clase08" colspan="15"><br>
-                        <input type = 'text' Class = 'letra' style = 'width:300' name = 'cCdiSap' maxlength="2"
-                          onBlur = "javascript:fnLinks('cCdiSap','VALID');
+                        <input type = "text" Class = "letra" style = "width:300" name = "cTtiDes"
+                          onBlur = "javascript:this.value=this.value.toUpperCase();
+                                              fnLinks('cTtiDes','WINDOW');
                                               this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
-                          onFocus = "javascript:document.forms['frgrm']['cCdiSap'].value  = '';
-                                                document.forms['frgrm']['cCdiDes'].value = '';
+                          onFocus = "javascript:document.forms['frgrm']['cTtiCod'].value = '';
+                                                document.forms['frgrm']['cTtiDes'].value = '';
                                                 this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                       </td>
                       <td class = "clase08" colspan="7">Prioridad<br>
                         <select name = "cPerAno" style = "width:140">
-                          <?php for($i=$vSysStr['logistica_ano_instalacion_modulo'];$i<=date('Y');$i++){ ?>
-                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                          <?php  } ?>
+                          <option>[SELECCIONE]</option>
+                          <?php for($i=0;$i<count($mMatrizPti);$i++){ ?>
+                            <option value="<?php echo $i ?>"><?php echo $mMatrizPti[$i] ?></option>
+                          <?php } ?>
                         </select>
                       </td>
                       <td class = "clase08" colspan="7">Estado<br>
                         <select name = "cPerAno" style = "width:140">
-                          <?php for($i=$vSysStr['logistica_ano_instalacion_modulo'];$i<=date('Y');$i++){ ?>
-                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                          <?php  } ?>
+                          <?php for($i=0;$i<count($mMatrizSti);$i++){ ?>
+                            <option value="<?php echo $i ?>"><?php echo $mMatrizSti[$i] ?></option>
+                          <?php } ?>
                         </select>
                       </td>
                     </tr>

@@ -88,6 +88,7 @@
           $qCreate  = "CREATE TABLE lpar0156 ( ";
           $qCreate .= "pticodxx varchar(3) NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
           $qCreate .= "ptidesxx varchar(255) NOT NULL COMMENT \"Descripcion Prioridad Ticket\",";
+          $qCreate .= "pticolxx varchar(20) NULL COMMENT \"Color\",";
           $qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
           $qCreate .= "regfcrex date NOT NULL COMMENT \"Fecha de Creacion del Registro\",";
           $qCreate .= "reghcrex time NOT NULL COMMENT \"Hora de Creacion del Registro\",";
@@ -96,7 +97,7 @@
           $qCreate .= "regestxx varchar(10) NOT NULL COMMENT \"Estado del Registro\",";
           $qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
           $qCreate .= "PRIMARY KEY (pticodxx)";
-          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Prioridad Ticket\" ";
+          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Prioridad Ticket\"; ";
           $xCreate  = mysql_query($qCreate,_CONEXION_);   
           if ($xCreate) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla lpar0156 en: ".$pdb;
@@ -113,6 +114,7 @@
           $qCreate  = "CREATE TABLE lpar0157 ( ";
           $qCreate .= "sticodxx varchar(3) NOT NULL COMMENT \"Codigo Status Ticket\",";
           $qCreate .= "stidesxx varchar(255) NOT NULL COMMENT \"Descripcion Status Ticket\",";
+          $qCreate .= "stitipxx varchar(20) NULL COMMENT \"Tipo Status Ticket\",";
           $qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
           $qCreate .= "regfcrex date NOT NULL COMMENT \"Fecha de Creacion del Registro\",";
           $qCreate .= "reghcrex time NOT NULL COMMENT \"Hora de Creacion del Registro\",";
@@ -121,7 +123,7 @@
           $qCreate .= "regestxx varchar(10) NOT NULL COMMENT \"Estado del Registro\",";
           $qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
           $qCreate .= "PRIMARY KEY (sticodxx)";
-          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Status Ticket\" ";
+          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Status Ticket\"; ";
           $xCreate  = mysql_query($qCreate,_CONEXION_);   
           if ($xCreate) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla lpar0157 en: ".$pdb;
@@ -146,7 +148,7 @@
           $qCreate .= "regestxx varchar(10) NOT NULL COMMENT \"Estado del Registro\",";
           $qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
           $qCreate .= "PRIMARY KEY (tticodxx)";
-          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Tipo de Ticket\" ";
+          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Tipo de Ticket\"; ";
           $xCreate  = mysql_query($qCreate,_CONEXION_);   
           if ($xCreate) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla lpar0158 en: ".$pdb;
@@ -171,7 +173,7 @@
           $qCreate .= "KEY tticodxx (tticodxx),";
           $qCreate .= "KEY ttiusrxx (ttiusrxx),";
           $qCreate .= "FOREIGN KEY (tticodxx) REFERENCES lpar0158(tticodxx)";
-          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Responsable Asignado a Ticket\" ";
+          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Responsable Asignado a Ticket\"; ";
           $xCreate  = mysql_query($qCreate,_CONEXION_);   
           if ($xCreate) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla lpar0159 en: ".$pdb;
@@ -179,6 +181,96 @@
           } else {
             $nSwitch = 1;
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qCreate." ~ ".mysql_error(_CONEXION_)."\tError Al Crear la Tabla lpar0159 en: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
+          ###################################
+          // Creacion Tabla Tickets Cabecera
+          ###################################
+          $qCreate  = "CREATE TABLE ltic2024 (";
+          $qCreate .= "ticidxxx int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT \"Id Ticket\",";
+          $qCreate .= "ceridxxx int(10) UNSIGNED NOT NULL COMMENT \"Id Certificacion\",";
+          $qCreate .= "comidxxx varchar(1) NOT NULL COMMENT \"Id del Comprobante\",";
+          $qCreate .= "comcodxx varchar(3) NOT NULL COMMENT \"Codigo del Comprobante\",";
+          $qCreate .= "comprexx varchar(3) NOT NULL COMMENT \"Prefijo\",";
+          $qCreate .= "comcscxx varchar(20) NOT NULL COMMENT \"Consecutivo Uno\",";
+          $qCreate .= "comcsc2x varchar(20) NOT NULL COMMENT \"Consecutivo Dos\",";
+          $qCreate .= "comfecxx date NOT NULL COMMENT \"Fecha Comprobante\",";
+          $qCreate .= "cliidxxx varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT \"Id Cliente\",";
+          $qCreate .= "tticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Tipo de Ticket\",";
+          $qCreate .= "pticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
+          $qCreate .= "sticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Status Ticket\",";
+          $qCreate .= "ticasuxx varchar(255) NOT NULL COMMENT \"Asunto\",";
+          $qCreate .= "ticcierx date NOT NULL COMMENT \"Fecha de Cierre\",";
+          $qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
+          $qCreate .= "regfcrex date NOT NULL COMMENT \"Fecha de Creacion del Registro\",";
+          $qCreate .= "reghcrex time NOT NULL COMMENT \"Hora de Creacion del Registro\",";
+          $qCreate .= "regfmodx date NOT NULL COMMENT \"Fecha de Modificacion del Registro\",";
+          $qCreate .= "reghmodx time NOT NULL COMMENT \"Hora de Modificacion del Registro\",";
+          $qCreate .= "regestxx varchar(50) NOT NULL COMMENT \"Estado del Registro\",";
+          $qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
+          $qCreate .= "PRIMARY KEY (ticidxxx),";
+          $qCreate .= "KEY ceridxxx (ceridxxx),";
+          $qCreate .= "KEY comidxxx (comidxxx,comcodxx,comcscxx,comcsc2x),";
+          $qCreate .= "KEY cliidxxx (cliidxxx),";
+          $qCreate .= "KEY tticodxx (tticodxx),";
+          $qCreate .= "KEY pticodxx (pticodxx),";
+          $qCreate .= "KEY sticodxx (sticodxx),";
+          $qCreate .= "KEY regusrxx (regusrxx),";
+          $qCreate .= "FOREIGN KEY (tticodxx) REFERENCES lpar0158(tticodxx),";
+          $qCreate .= "FOREIGN KEY (pticodxx) REFERENCES lpar0156(pticodxx),";
+          $qCreate .= "FOREIGN KEY (sticodxx) REFERENCES lpar0157(sticodxx),";
+          $qCreate .= "FOREIGN KEY (cliidxxx) REFERENCES lpar0150(cliidxxx)";
+          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Tickets - Cabecera\"; ";
+          $xCreate  = mysql_query($qCreate,_CONEXION_);
+          if ($xCreate) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla ltic2024 en: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qCreate." ~ ".mysql_error(_CONEXION_)."\tError Al Crear la Tabla ltic2024 en: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
+          ###################################
+          // Creacion Tabla Tickets Replies
+          ###################################
+          $qCreate  = "CREATE TABLE ltid2024 (";
+          $qCreate .= "repidxxx int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT \"Id Reply\",";
+          $qCreate .= "ticidxxx int(10) NOT NULL COMMENT \"Id Ticket\",";
+          $qCreate .= "repcscxx varchar(5) NOT NULL COMMENT \"Consecutivo Reply\",";
+          $qCreate .= "tticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Tipo de Ticket\",";
+          $qCreate .= "pticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
+          $qCreate .= "sticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Status Ticket\",";
+          $qCreate .= "ticccopx TEXT NULL COMMENT \"Correos en copia\",";
+          $qCreate .= "repreply TEXT NOT NULL COMMENT \"Reply\",";
+          $qCreate .= "reprepor varchar(20) NOT NULL COMMENT \"Realizado por (RESPONSABLE/TERCERO)\",";
+          $qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
+          $qCreate .= "regusrem varchar(255) NOT NULL COMMENT \"Correo Usuario que Creo el Registro\",";
+          $qCreate .= "regfcrex date NOT NULL COMMENT \"Fecha de Creacion del Registro\",";
+          $qCreate .= "reghcrex time NOT NULL COMMENT \"Hora de Creacion del Registro\",";
+          $qCreate .= "regfmodx date NOT NULL COMMENT \"Fecha de Modificacion del Registro\",";
+          $qCreate .= "reghmodx time NOT NULL COMMENT \"Hora de Modificacion del Registro\",";
+          $qCreate .= "regestxx varchar(50) NOT NULL COMMENT \"Estado del Registro\",";
+          $qCreate .= "regstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT \"Modificado\",";
+          $qCreate .= "PRIMARY KEY (repidxxx),";
+          $qCreate .= "UNIQUE KEY ticidxxx_repcscxx (ticidxxx, repcscxx),";
+          $qCreate .= "KEY ticidxxx (ticidxxx),";
+          $qCreate .= "KEY tticodxx (tticodxx),";
+          $qCreate .= "KEY pticodxx (pticodxx),";
+          $qCreate .= "KEY sticodxx (sticodxx),";
+          $qCreate .= "FOREIGN KEY (ticidxxx) REFERENCES ltic2024(ticidxxx),";
+          $qCreate .= "FOREIGN KEY (tticodxx) REFERENCES lpar0158(tticodxx),";
+          $qCreate .= "FOREIGN KEY (pticodxx) REFERENCES lpar0156(pticodxx),";
+          $qCreate .= "FOREIGN KEY (sticodxx) REFERENCES lpar0157(sticodxx)";
+          $qCreate .= ") ENGINE="._ENGINE_." COMMENT=\"Tickets - Replies\"; ";
+          $xCreate  = mysql_query($qCreate,_CONEXION_);   
+          if ($xCreate) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe Creo la Tabla ltid2024 en: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qCreate." ~ ".mysql_error(_CONEXION_)."\tError Al Crear la Tabla ltid2024 en: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 

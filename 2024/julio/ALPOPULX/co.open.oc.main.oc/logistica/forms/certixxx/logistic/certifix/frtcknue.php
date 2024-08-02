@@ -882,26 +882,40 @@
                     }
                     // Obtengo los datos de Prioridad Ticket
                     $mMatrizPti = array();
-                    $qPtiCox  = "SELECT pticodxx ";
+                    $qPtiCox  = "SELECT ptidesxx ";
                     $qPtiCox .= "FROM $cAlfa.lpar0156 ";
                     $qPtiCox .= "WHERE ";
                     $qPtiCox .= "regestxx = \"ACTIVO\"";
                     $xPtiCox  = f_MySql("SELECT","",$qPtiCox,$xConexion01,"");
                     if (mysql_num_rows($xPtiCox) > 0) {
                       while ($vPtiCox = mysql_fetch_array($xPtiCox)) {
-                        $mMatrizPti[] = $vPtiCox['pticodxx'];
+                        $mMatrizPti[] = $vPtiCox['ptidesxx'];
                       }
                     }
                     // Obtengo los datos de Status Ticket
                     $mMatrizSti = array();
-                    $qStiCod  = "SELECT sticodxx ";
+                    $qStiCod  = "SELECT stidesxx ";
                     $qStiCod .= "FROM $cAlfa.lpar0157 ";
                     $qStiCod .= "WHERE ";
                     $qStiCod .= "stitipxx = \"APERTURA\"";
                     $xStiCod  = f_MySql("SELECT","",$qStiCod,$xConexion01,"");
                     if (mysql_num_rows($xStiCod) > 0) {
                       while ($vStiCod = mysql_fetch_array($xStiCod)) {
-                        $mMatrizSti[] = $vStiCod['sticodxx'];
+                        $mMatrizSti[] = $vStiCod['stidesxx'];
+                      }
+                    }
+                    // Obtengo los datos de Responsable Asignado Ticket
+                    $mMatrizRes = array();
+                    $qResTi  = "SELECT ";
+                    $qResTi .= "tticodxx, ";
+                    $qResTi .= "ttiusrxx ";
+                    $qResTi .= "FROM $cAlfa.lpar0159 ";
+                    $xResTi = f_MySql("SELECT","",$qResTi,$xConexion01,"");
+                    if (mysql_num_rows($xResTi) > 0) {
+                      while ($vResTi = mysql_fetch_array($xResTi)) {
+                        $nInd_mMatrizRes = count($mMatrizRes);
+                        $mMatrizRes[$nInd_mMatrizRes]['tticodxx'] = $vResTi['tticodxx'];
+                        $mMatrizRes[$nInd_mMatrizRes]['ttiusrxx'] = $vResTi['ttiusrxx'];
                       }
                     }
                 ?>
@@ -967,7 +981,7 @@
                         <a href="javascript:document.forms['frgrm']['cTtiCod'].value = '';
                                             document.forms['frgrm']['cTtiDes'].value = '';
                                             fnLinks('cTtiCod','WINDOW')">Tipo</a><br>
-                        <input type = "text" Class = "letra" style = "width:100" name = "cTtiCod"
+                        <input type = "text" Class = "letra" style = "width:100" name = "cTtiCod" id = "cTtiCod"
                           onBlur = "javascript:fnLinks('cTtiCod','WINDOW');
                                               this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
                           onFocus = "javascript:document.forms['frgrm']['cTtiCod'].value = '';
@@ -1034,13 +1048,37 @@
                         <fieldset id = "serviciosAutomaticos">
                           <legend>Responsables Asignados al Tipo de Ticket</legend>
 
-                          <input type = 'hidden' name = 'cSubservicios'>
+                          <!-- <input type = 'hidden' name = 'cSubservicios'>
                           <input type = 'hidden' name = 'cSubserNoMarcados'>
                           <input type = 'hidden' name = 'nIndexSubser'>
-                          <div id = 'overDivSubServicios'></div>
+                          <div id = 'overDivSubServicios'></div> -->
+                          <table border="1" cellpadding="0" cellspacing="0" width="670">
+                            <tr bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>">
+                              <td Class = "clase08" width = "230" style="padding-left: 5px;">Identificaci&oacute;n</td>
+                              <td Class = "clase08" width = "440" style="padding-left: 5px;">Nombre</td>
+                            </tr>
+                            <?php
+                              for ($i=0; $i<count($mMatrizRes);$i++) { ?> 
+                                <tr bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>">
+                                  <td Class="clase08" style="padding-left: 5px;"><?php echo $mMatrizRes[$i]['tticodxx'] ?></td>
+                                  <td Class="clase08" style="padding-left: 5px;"><?php echo $mMatrizRes[$i]['ttiusrxx'] ?></td>
+                                </tr>
+                              <?php
+                              } ?>
+                          </table>
                         </fieldset>
                       </td>
                     </tr>
+
+                    <script languaje = "javascript"> 
+                      var inputElement = document.getElementById('cTtiCod');
+                      inputElement.addEventListener('input', function() {
+                        var valor = inputElement.value;
+                        document.forms['frgrm']['cTtiCod'].value = valor;
+                      });
+
+                      console.log(document.forms['frgrm']['cTtiCod'].value);
+                    </script>
 
                     <!-- Certificacion -->
                     <!-- <tr>

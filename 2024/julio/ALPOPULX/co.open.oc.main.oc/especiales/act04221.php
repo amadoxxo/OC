@@ -196,10 +196,10 @@
           $qCreate .= "comcscxx varchar(20) NOT NULL COMMENT \"Consecutivo Uno\",";
           $qCreate .= "comcsc2x varchar(20) NOT NULL COMMENT \"Consecutivo Dos\",";
           $qCreate .= "comfecxx date NOT NULL COMMENT \"Fecha Comprobante\",";
-          $qCreate .= "cliidxxx varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT \"Id Cliente\",";
-          $qCreate .= "tticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Tipo de Ticket\",";
-          $qCreate .= "pticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
-          $qCreate .= "sticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Status Ticket\",";
+          $qCreate .= "cliidxxx varchar(20) NOT NULL COMMENT \"Id Cliente\",";
+          $qCreate .= "tticodxx varchar(3) NOT NULL COMMENT \"Codigo Tipo de Ticket\",";
+          $qCreate .= "pticodxx varchar(3) NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
+          $qCreate .= "sticodxx varchar(3) NOT NULL COMMENT \"Codigo Status Ticket\",";
           $qCreate .= "ticasuxx varchar(255) NOT NULL COMMENT \"Asunto\",";
           $qCreate .= "ticcierx date NOT NULL COMMENT \"Fecha de Cierre\",";
           $qCreate .= "regusrxx varchar(20) NOT NULL COMMENT \"Usuario que Creo el Registro\",";
@@ -237,11 +237,11 @@
           ###################################
           $qCreate  = "CREATE TABLE ltid2024 (";
           $qCreate .= "repidxxx int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT \"Id Reply\",";
-          $qCreate .= "ticidxxx int(10) NOT NULL COMMENT \"Id Ticket\",";
+          $qCreate .= "ticidxxx int(10) UNSIGNED NOT NULL COMMENT \"Id Ticket\",";
           $qCreate .= "repcscxx varchar(5) NOT NULL COMMENT \"Consecutivo Reply\",";
-          $qCreate .= "tticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Tipo de Ticket\",";
-          $qCreate .= "pticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
-          $qCreate .= "sticodxx varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \"Codigo Status Ticket\",";
+          $qCreate .= "tticodxx varchar(3) NOT NULL COMMENT \"Codigo Tipo de Ticket\",";
+          $qCreate .= "pticodxx varchar(3) NOT NULL COMMENT \"Codigo Prioridad Ticket\",";
+          $qCreate .= "sticodxx varchar(3) NOT NULL COMMENT \"Codigo Status Ticket\",";
           $qCreate .= "ticccopx TEXT NULL COMMENT \"Correos en copia\",";
           $qCreate .= "repreply TEXT NOT NULL COMMENT \"Reply\",";
           $qCreate .= "reprepor varchar(20) NOT NULL COMMENT \"Realizado por (RESPONSABLE/TERCERO)\",";

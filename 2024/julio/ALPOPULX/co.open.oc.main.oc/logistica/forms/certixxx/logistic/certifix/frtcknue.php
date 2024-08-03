@@ -1074,10 +1074,10 @@
                       var inputElement = document.getElementById('cTtiCod');
                       inputElement.addEventListener('input', function() {
                         var valor = inputElement.value;
-                        document.forms['frgrm']['cTtiCod'].value = valor;
+                        console.log(valor);
                       });
 
-                      console.log(document.forms['frgrm']['cTtiCod'].value);
+                      // console.log(document.forms['frgrm']['cTtiCod'].value);
                     </script>
 
                     <!-- Certificacion -->

@@ -30,25 +30,25 @@
                     <?php
                     switch ($gWhat) {
                       case "WINDOW":
-                        $qCliente  = "SELECT ";
-                        $qCliente .= "tticodxx, ";
-                        $qCliente .= "ttidesxx, ";
-                        $qCliente .= "regestxx ";
-                        $qCliente .= "FROM $cAlfa.lpar0158 ";
-                        $qCliente .= "WHERE ";
+                        $qTipoTicket  = "SELECT ";
+                        $qTipoTicket .= "tticodxx, ";
+                        $qTipoTicket .= "ttidesxx, ";
+                        $qTipoTicket .= "regestxx ";
+                        $qTipoTicket .= "FROM $cAlfa.lpar0158 ";
+                        $qTipoTicket .= "WHERE ";
                         switch ($gFunction) {
                           case 'cTtiCod':
-                            $qCliente .= "tticodxx LIKE \"%$gTtiCod%\" AND ";
+                            $qTipoTicket .= "tticodxx LIKE \"%$gTtiCod%\" AND ";
                           break;
                           case 'cTtiDes':
-                            $qCliente .= "ttidesxx LIKE \"%$gTtiDes%\" AND ";
+                            $qTipoTicket .= "ttidesxx LIKE \"%$gTtiDes%\" AND ";
                           break;
                         }
-                        $qCliente .= "regestxx = \"ACTIVO\" ";
-                        $qCliente .= "ORDER BY tticodxx ";
-                        $xCliente  = f_MySql("SELECT","",$qCliente,$xConexion01,"");
-                        // f_Mensaje(__FILE__, __LINE__,$qCliente."~".mysql_num_rows($xCliente));
-                        if (mysql_num_rows($xCliente) > 0) { ?>
+                        $qTipoTicket .= "regestxx = \"ACTIVO\" ";
+                        $qTipoTicket .= "ORDER BY tticodxx ";
+                        $xTipoTicket  = f_MySql("SELECT","",$qTipoTicket,$xConexion01,"");
+                        // f_Mensaje(__FILE__, __LINE__,$qTipoTicket."~".mysql_num_rows($xTipoTicket));
+                        if (mysql_num_rows($xTipoTicket) > 0) { ?>
                           <center>
                             <table cellspacing = "0" cellpadding = "1" border = "1" width = "500">
                               <tr bgcolor = '#D6DFF7'>
@@ -57,23 +57,23 @@
                                 <td width = "050" Class = "name"><center>Estado</center></td>
                               </tr>
                                 <?php
-                                while ($xRCL = mysql_fetch_array($xCliente)){
-                                  if (mysql_num_rows($xCliente) > 1) { ?>
+                                while ($xRTT = mysql_fetch_array($xTipoTicket)){
+                                  if (mysql_num_rows($xTipoTicket) > 1) { ?>
                                     <tr>
                                       <td width = "050" class= "name">
-                                          <a href = "javascript:window.opener.document.forms['frgrm'].cTtiCod.value = '<?php echo $xRCL['tticodxx']?>';
-                                                                window.opener.document.forms['frgrm'].cTtiDes.value = '<?php echo $xRCL['ttidesxx']?>';
+                                          <a href = "javascript:window.opener.document.forms['frgrm'].cTtiCod.value = '<?php echo $xRTT['tticodxx']?>';
+                                                                window.opener.document.forms['frgrm'].cTtiDes.value = '<?php echo $xRTT['ttidesxx']?>';
                                                                 window.opener.fnLinks('cTtiCod','EXACT',0);
-                                                                window.close();"><?php echo $xRCL['tticodxx'] ?></a>
+                                                                window.close();"><?php echo $xRTT['tticodxx'] ?></a>
                                       </td>
-                                      <td width = "400" class= "name"><?php echo $xRCL['ttidesxx'] ?></td>
-                                      <td width = "050" class= "name"><?php echo $xRCL['regestxx'] ?></td>
+                                      <td width = "400" class= "name"><?php echo $xRTT['ttidesxx'] ?></td>
+                                      <td width = "050" class= "name"><?php echo $xRTT['regestxx'] ?></td>
                                     </tr>
                                     <?php
                                   }else { ?>
                                     <script languaje="javascript">
-                                      window.opener.document.forms['frgrm'].cTtiCod.value  = "<?php echo $xRCL['tticodxx'] ?>";
-                                      window.opener.document.forms['frgrm'].cTtiDes.value = "<?php echo $xRCL['ttidesxx'] ?>";
+                                      window.opener.document.forms['frgrm'].cTtiCod.value  = "<?php echo $xRTT['tticodxx'] ?>";
+                                      window.opener.document.forms['frgrm'].cTtiDes.value = "<?php echo $xRTT['ttidesxx'] ?>";
                                       window.opener.fnLinks('cTtiCod', 'EXACT', 0);
                                       window.close();
                                     </script>
@@ -92,31 +92,31 @@
                         }
                       break;
                       case "VALID":
-                        $qCliente  = "SELECT ";
-                        $qCliente .= "tticodxx, ";
-                        $qCliente .= "FROM $cAlfa.lpar0158 ";
-                        $qCliente .= "WHERE ";
+                        $qTipoTicket  = "SELECT ";
+                        $qTipoTicket .= "tticodxx, ";
+                        $qTipoTicket .= "FROM $cAlfa.lpar0158 ";
+                        $qTipoTicket .= "WHERE ";
                         switch ($gFunction) {
                           case 'cTtiCod':
-                            $qCliente .= "tticodxx LIKE \"%$gTtiCod%\" AND ";
+                            $qTipoTicket .= "tticodxx LIKE \"%$gTtiCod%\" AND ";
                           break;
                           case 'cTtiDes':
-                            $qCliente .= "ttidesxx LIKE \"%$gTtiDes%\" AND ";
+                            $qTipoTicket .= "ttidesxx LIKE \"%$gTtiDes%\" AND ";
                           break;
                         }
-                        $qCliente .= "regestxx = \"ACTIVO\" ";
-                        $qCliente .= "ORDER BY tticodxx";
-                        $xCliente  = f_MySql("SELECT","",$qCliente,$xConexion01,"");
-                        // f_Mensaje(__FILE__, __LINE__,$qCliente."~".mysql_num_rows($xCliente));
+                        $qTipoTicket .= "regestxx = \"ACTIVO\" ";
+                        $qTipoTicket .= "ORDER BY tticodxx";
+                        $xTipoTicket  = f_MySql("SELECT","",$qTipoTicket,$xConexion01,"");
+                        // f_Mensaje(__FILE__, __LINE__,$qTipoTicket."~".mysql_num_rows($xTipoTicket));
 
-                        if (mysql_num_rows($xCliente) > 0){
-                          if (mysql_num_rows($xCliente) == 1){
-                            while ($xRCL = mysql_fetch_array($xCliente)) { 
-                              $gCliId = $xRCL['tticodxx'];
+                        if (mysql_num_rows($xTipoTicket) > 0){
+                          if (mysql_num_rows($xTipoTicket) == 1){
+                            while ($xRTT = mysql_fetch_array($xTipoTicket)) { 
+                              $gTtiCod = $xRTT['tticodxx'];
                               ?>
                               <script language = "javascript">
-                                parent.fmwork.document.forms['frgrm'].cTtiCod.value = "<?php echo $xRCL['tticodxx'] ?>";
-                                parent.fmwork.document.forms['frgrm'].cTtiDes.value = "<?php echo $xRCL['ttidesxx'] ?>";
+                                parent.fmwork.document.forms['frgrm'].cTtiCod.value = "<?php echo $xRTT['tticodxx'] ?>";
+                                parent.fmwork.document.forms['frgrm'].cTtiDes.value = "<?php echo $xRTT['ttidesxx'] ?>";
                                 parent.fmwork.fnLinks('cTtiCod','EXACT',0);
                               </script>
                             <?php }
@@ -137,27 +137,27 @@
                         }
                       break;
                       case "EXACT":
-                        $qCliente  = "SELECT ";
-                        $qCliente .= "tticodxx, ";
-                        $qCliente .= "FROM $cAlfa.lpar0158 ";
-                        $qCliente .= "WHERE ";
+                        $qTipoTicket  = "SELECT ";
+                        $qTipoTicket .= "tticodxx, ";
+                        $qTipoTicket .= "FROM $cAlfa.lpar0158 ";
+                        $qTipoTicket .= "WHERE ";
                         switch ($gFunction) {
                           case 'cTtiCod':
-                            $qCliente .= "tticodxx = \"$gTtiCod\" AND ";
+                            $qTipoTicket .= "tticodxx = \"$gTtiCod\" AND ";
                           break;
                           case 'cTtiDes':
-                            $qCliente .= "ttidesxx = \"$gTtiDes\" AND ";
+                            $qTipoTicket .= "ttidesxx = \"$gTtiDes\" AND ";
                           break;
                         }
-                        $qCliente .= "regestxx = \"ACTIVO\" ";
-                        $qCliente .= "LIMIT 0,1";
-                        $xCliente  = f_MySql("SELECT","",$qCliente,$xConexion01,"");
+                        $qTipoTicket .= "regestxx = \"ACTIVO\" ";
+                        $qTipoTicket .= "LIMIT 0,1";
+                        $xTipoTicket  = f_MySql("SELECT","",$qTipoTicket,$xConexion01,"");
                         if (mysql_num_rows($xDatDex) == 1) {
-                          $vCliente = mysql_fetch_array($xCliente);
+                          $vTipoTicket = mysql_fetch_array($xTipoTicket);
                           ?>
                           <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cTtiCod'].value  = "<?php echo $vCliente['tticodxx'] ?>";
-                            parent.fmwork.document.forms['frgrm']['cTtiDes'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$vCliente['ttidesxx']) ?>";
+                            parent.fmwork.document.forms['frgrm']['cTtiCod'].value  = "<?php echo $vTipoTicket['tticodxx'] ?>";
+                            parent.fmwork.document.forms['frgrm']['cTtiDes'].value = "<?php echo str_replace(array('"',"'"),array('\"',"\'"),$vTipoTicket['ttidesxx']) ?>";
                           </script>
                           <?php 
                         } else { ?>

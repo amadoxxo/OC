@@ -69,352 +69,6 @@
               zWindow.focus();
             }
           break;
-          // Comprobante
-          case "cComPre":
-            if (xSwitch == "VALID") {
-              var zRuta  = "frcer117.php?gWhat=VALID" +
-                                        "&gFunction=cComPre" +
-                                        "&gComPre="+document.forms['frgrm']['cComPre'].value.toUpperCase();
-              parent.fmpro.location = zRuta;
-            } else {
-              var nNx     = (nX-600)/2;
-              var nNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+nNx+',top='+nNy;
-              var zRuta   = "frcer117.php?gWhat=WINDOW" +
-                                        "&gFunction=cComPre" +
-                                        "&gComPre="+document.forms['frgrm']['cComPre'].value.toUpperCase();
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          // Cliente
-          case "cCliId":
-            fnLimpiarCamposCabecera();
-
-            if (xSwitch == "VALID") {
-              var zRuta  = "frcer150.php?gWhat=VALID" +
-                                        "&gFunction=cCliId" +
-                                        "&gCliId="+document.forms['frgrm']['cCliId'].value;
-              parent.fmpro.location = zRuta;
-            } else {
-              var nNx     = (nX-600)/2;
-              var nNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+nNx+',top='+nNy;
-              var zRuta   = "frcer150.php?gWhat=WINDOW" +
-                                        "&gFunction=cCliId" +
-                                        "&gCliId="+document.forms['frgrm']['cCliId'].value;
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          case "cCliNom":
-            if (xSwitch == "VALID") {
-              var zRuta  = "frcer150.php?gWhat=VALID"+
-                                        "&gFunction=cCliNom"+
-                                        "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase();
-              parent.fmpro.location = zRuta;
-            } else {
-              var nNx     = (nX-600)/2;
-              var nNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+nNx+',top='+nNy;
-              var zRuta   = "frcer150.php?gWhat=WINDOW"+
-                                        "&gFunction=cCliNom"+
-                                        "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase();
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          // MIF
-          case "cMifComCsc":
-            var nSwitch = 0;
-            if(document.forms['frgrm']['cMifComCsc'].value != ""){
-              if(document.forms['frgrm']['cMifComCsc'].value.length < 1){
-                nSwitch = 1;
-                alert('Debe Digitar al Menos Un Digito de la M.I.F,\nVerifique.');
-              }
-
-              var cMsj = "";
-              if(document.forms['frgrm']['cCliId'].value == ""){
-                nSwitch = 1;
-                cMsj += 'Debe Seleccionar un Cliente para Consultar la M.I.F,\n';
-              }
-
-              if(document.forms['frgrm']['cComPre'].value == ""){
-                nSwitch = 1;
-                cMsj += 'Debe Seleccionar el Prefijo de la Certificacion,\n';
-              }
-
-              if (nSwitch == 0) {
-                if (xSwitch == "VALID") {
-                  var zRuta = "frlmca00.php?gModo="   +xSwitch+"&gFunction="+xLink+
-                                          "&cPerAno=" +document.forms['frgrm']['cPerAno'].value +
-                                          "&gComCsc=" +document.forms['frgrm']['cMifComCsc'].value +
-                                          "&gCliId="  +document.forms['frgrm']['cCliId'].value +
-                                          "&gComPre=" +document.forms['frgrm']['cComPre'].value +
-                                          "&gOrigen=NUEVO";
-                  parent.fmpro.location = zRuta;
-                } else if(xSwitch == "WINDOW") {
-                  var nNx      = (nX-500)/2;
-                  var nNy      = (nY-250)/2;
-                  var zWinPro  = "width=500,scrollbars=1,height=250,left="+nNx+",top="+nNy;
-                  var zRuta = "frlmca00.php?gModo="   +xSwitch+"&gFunction="+xLink+
-                                          "&cPerAno=" +document.forms['frgrm']['cPerAno'].value +
-                                          "&gComCsc=" +document.forms['frgrm']['cMifComCsc'].value + 
-                                          "&gCliId="  +document.forms['frgrm']['cCliId'].value + 
-                                          "&gComPre=" +document.forms['frgrm']['cComPre'].value +
-                                          "&gOrigen=NUEVO";
-                  zWindow = window.open(zRuta,xLink,zWinPro);
-                  zWindow.focus();
-                } else if (xSwitch == "EXACT") {
-                  var zRuta = "frlmca00.php?gModo=EXACT&gFunction=" + xLink +
-                                          "&cPerAno=" +document.forms['frgrm']['cPerAno'].value +
-                                          "&gComCod=" +document.frgrm['cMifComCod'].value +
-                                          "&gComCsc=" +document.frgrm['cMifComCsc'].value +
-                                          "&gComCsc2="+document.frgrm['cMifComCsc2'].value +
-                                          "&gCliId="  +document.frgrm['cCliId'].value +
-                                          "&gComPre=" +document.forms['frgrm']['cComPre'].value +
-                                          "&gOrigen=NUEVO";
-                  parent.fmpro.location = zRuta;
-                }
-              } else {
-                document.forms['frgrm']['cMifComCsc'].value = "";
-                alert(cMsj + 'Verifique.');
-              }
-            }
-          break;
-          // Deposito
-          case "cDepNum":
-            if (document.forms['frgrm']['cCliId'].value == '') {
-              alert("Debe Seleccionar el Cliente para Consultar los Depositos,\nVerifique.");
-              document.forms['frgrm']['cDepNum'].value = '';
-            } else {
-              if (xSwitch == "VALID") {
-                var zRuta = "frcer155.php?gWhat=VALID" +
-                                          "&gFunction=cDepNum" +
-                                          "&gDepNum="+document.forms['frgrm']['cDepNum'].value +
-                                          "&gCliId="+document.forms['frgrm']['cCliId'].value +
-                                          "&gOrigen=NUEVO";
-                parent.fmpro.location = zRuta;
-              } else {
-                var nNx     = (nX-600)/2;
-                var nNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+nNx+',top='+nNy;
-                var zRuta   = "frcer155.php?gWhat=WINDOW" +
-                                            "&gFunction=cDepNum" +
-                                            "&gDepNum="+document.forms['frgrm']['cDepNum'].value +
-                                            "&gCliId="+document.forms['frgrm']['cCliId'].value +
-                                            "&gOrigen=NUEVO";
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            }
-          break;
-          // Canal Distribucion
-          case "cCdiSap":
-            if (xSwitch == "VALID") {
-              var zRuta  = "frcer008.php?gWhat=VALID" +
-                                        "&gFunction=cCdiSap" +
-                                        "&gCdiSap="+document.forms['frgrm']['cCdiSap'].value.toUpperCase();
-              parent.fmpro.location = zRuta;
-            } else {
-              var zNx     = (nX-600)/2;
-              var zNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = "frcer008.php?gWhat=WINDOW" +
-                                        "&gFunction=cCdiSap" +
-                                        "&gCdiSap="+document.forms['frgrm']['cCdiSap'].value.toUpperCase();
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          case "cCdiDes":
-            if (xSwitch == "VALID") {
-              var zRuta  = "frcer008.php?gWhat=VALID" +
-                                        "&gFunction=cCdiDes" +
-                                        "&gCdiDes="+document.forms['frgrm']['cCdiDes'].value.toUpperCase();
-              parent.fmpro.location = zRuta;
-            } else {
-              var zNx     = (nX-600)/2;
-              var zNy     = (nY-250)/2;
-              var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = "frcer008.php?gWhat=WINDOW" +
-                                        "&gFunction=cCdiDes" +
-                                        "&gCdiDes="+document.forms['frgrm']['cCdiDes'].value.toUpperCase();
-              zWindow = window.open(zRuta,"zWindow",zWinPro);
-              zWindow.focus();
-            }
-          break;
-          // Servicios
-          case "cSerSap":
-            if (nSecuencia != "") {
-              document.forms['frgrm']['cSubId'+nSecuencia].value = "";
-              document.forms['frgrm']['cSubDes'+nSecuencia].value = "";
-
-              if (xSwitch == "VALID") {
-                var zRuta  = "frcer011.php?gWhat=VALID" +
-                                          "&gFunction=cSerSap" +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gSerSap="+document.forms['frgrm']['cSerDes'+nSecuencia].value;
-                parent.fmpro.location = zRuta;
-              } else {
-                var zNx     = (nX-600)/2;
-                var zNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frcer011.php?gWhat=WINDOW" +
-                                          "&gFunction=cSerSap" +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gSerSap="+document.forms['frgrm']['cSerDes'+nSecuencia].value;
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            }
-          break;
-          // Subservicios
-          case "cSubId":
-            if (nSecuencia != "") {
-              if (document.forms['frgrm']['cSerSap'+nSecuencia].value != "") {
-                if (xSwitch == "VALID") {
-                  var zRuta  = "frcer012.php?gWhat=VALID" +
-                                            "&gFunction=cSubId" +
-                                            "&gSecuencia="+nSecuencia +
-                                            "&gSerSap="+document.forms['frgrm']['cSerSap'+nSecuencia].value +
-                                            "&gSubId="+document.forms['frgrm']['cSubDes'+nSecuencia].value;
-                  parent.fmpro.location = zRuta;
-                } else {
-                  var zNx     = (nX-600)/2;
-                  var zNy     = (nY-250)/2;
-                  var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                  var zRuta   = "frcer012.php?gWhat=WINDOW" +
-                                            "&gFunction=cSubId" +
-                                            "&gSecuencia="+nSecuencia +
-                                            "&gSerSap="+document.forms['frgrm']['cSerSap'+nSecuencia].value +
-                                            "&gSubId="+document.forms['frgrm']['cSubDes'+nSecuencia].value;
-                  zWindow = window.open(zRuta,"zWindow",zWinPro);
-                  zWindow.focus();
-                }
-              } else {
-                alert("Debe Seleccionar un Servicio,\nVerifique.");
-              }
-            }
-          break;
-          // Unidad Facturable
-          case "cUfaId":
-            var nSwitch = 0;
-            if (nSecuencia != "") {
-              if (xGrid == "" && document.forms['frgrm']['cSerSap'+nSecuencia].value == "") {
-                nSwitch = 1;
-              }
-
-              if (nSwitch == 0) {
-                if (xSwitch == "VALID") {
-                  var zRuta  = "frcer006.php?gWhat=VALID" +
-                                            "&gFunction=cUfaId" +
-                                            "&gGrid="+xGrid +
-                                            "&gSecuencia="+nSecuencia +
-                                            "&gUfaId="+document.forms['frgrm']['cUfaDes'+xGrid+nSecuencia].value;
-                  parent.fmpro.location = zRuta;
-                } else {
-                  var zNx     = (nX-600)/2;
-                  var zNy     = (nY-250)/2;
-                  var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                  var zRuta   = "frcer006.php?gWhat=WINDOW" +
-                                            "&gFunction=cUfaId" +
-                                            "&gGrid="+xGrid +
-                                            "&gSecuencia="+nSecuencia +
-                                            "&gUfaId="+document.forms['frgrm']['cUfaDes'+xGrid+nSecuencia].value;
-                  zWindow = window.open(zRuta,"zWindow",zWinPro);
-                  zWindow.focus();
-                }
-              } else {
-                alert("Debe Seleccionar un Servicio,\nVerifique.");
-              }
-            }
-          break;
-          // Codigo CEBE
-          case "cCebCod":
-            if (nSecuencia != "") {
-              if (xSwitch == "VALID") {
-                var zRuta  = "frcer010.php?gWhat=VALID" +
-                                          "&gFunction=cCebCod" +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gCebCod="+document.forms['frgrm']['cCebCod'+nSecuencia].value;
-                parent.fmpro.location = zRuta;
-              } else {
-                var zNx     = (nX-600)/2;
-                var zNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frcer010.php?gWhat=WINDOW" +
-                                          "&gFunction=cCebCod" +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gCebCod="+document.forms['frgrm']['cCebCod'+nSecuencia].value;
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            }
-          break;
-          // Codigo CEBE Descripcion
-          case "cCebDes":
-            if (nSecuencia != "") {
-              if (xSwitch == "VALID") {
-                var zRuta  = "frcer010.php?gWhat=VALID" +
-                                          "&gFunction=cCebDes" +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gCebDes="+document.forms['frgrm']['cCebDes'+nSecuencia].value;
-                parent.fmpro.location = zRuta;
-              } else {
-                var zNx     = (nX-600)/2;
-                var zNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frcer010.php?gWhat=WINDOW" +
-                                          "&gFunction=cCebDes" +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gCebDes="+document.forms['frgrm']['cCebDes'+nSecuencia].value;
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            }
-          break;
-          // Objeto Facturable
-          case "cObfId":
-            if (nSecuencia != "") {
-              if (xSwitch == "VALID") {
-                var zRuta  = "frcer004.php?gWhat=VALID" +
-                                          "&gFunction=cObfId" +
-                                          "&gGrid="+xGrid +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gObfId="+document.forms['frgrm']['cObfDes'+xGrid+nSecuencia].value;
-                parent.fmpro.location = zRuta;
-              } else {
-                var zNx     = (nX-600)/2;
-                var zNy     = (nY-250)/2;
-                var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-                var zRuta   = "frcer004.php?gWhat=WINDOW" +
-                                          "&gFunction=cObfId" +
-                                          "&gGrid="+xGrid +
-                                          "&gSecuencia="+nSecuencia +
-                                          "&gObfId="+document.forms['frgrm']['cObfDes'+xGrid+nSecuencia].value;
-                zWindow = window.open(zRuta,"zWindow",zWinPro);
-                zWindow.focus();
-              }
-            }
-          break;
-        }
-      }
-
-      /**
-       * Permite habilitar o deshabilitar el campo de Consecutivo dependiendo del tipo de comprobante MANUAL/AUTOMATICO.
-       */
-      function fnHabilitaConsecutivo(xComTCo) {
-        if (document.forms['frgrm']['cComPre'].value == "") {
-          alert("Debe Seleccionar el Prefijo,\nVerifique.")
-          document.forms['frgrm']['cComCsc'].blur();
-        } else {
-          if (document.forms['frgrm']['cComTCo'].value == "AUTOMATICO") {
-            document.forms['frgrm']['cComCsc'].value    = "";
-            document.forms['frgrm']['cComCsc'].readOnly = true;
-          } else {
-            document.forms['frgrm']['cComCsc'].readOnly = false;
-          }
         }
       }
 
@@ -457,118 +111,6 @@
           document.getElementById('Grid_Certificacion').innerHTML = "";
           document.forms['frgrm']['nSecuencia_Certificacion'].value = 0;
         }
-
-        fnLimpiarCamposCabecera();
-      }
-
-      /**
-       * Limpia los campos de cabecera.
-       */
-      function fnLimpiarCamposCabecera() {
-        document.forms['frgrm']['cMifId'].value      = "";
-        document.forms['frgrm']['cMifComId'].value   = "";
-        document.forms['frgrm']['cMifComCod'].value  = "";
-        document.forms['frgrm']['cMifComCsc'].value  = "";
-        document.forms['frgrm']['cMifComCsc2'].value = "";
-        document.forms['frgrm']['dVigDesde'].value   = "";
-        document.forms['frgrm']['dVigHasta'].value   = "";
-        document.forms['frgrm']['cDepNum'].value     = "";
-        document.forms['frgrm']['cTipoDep'].value    = "";
-        document.forms['frgrm']['cCcoIdOc'].value    = "";
-        document.forms['frgrm']['cOrvSap'].value     = "";
-        document.forms['frgrm']['cOrvDes'].value     = "";
-        document.forms['frgrm']['cOfvSap'].value     = "";
-        document.forms['frgrm']['cOfvDes'].value     = "";
-        document.forms['frgrm']['cCloSap'].value     = "";
-        document.forms['frgrm']['cCloDes'].value     = "";
-        document.forms['frgrm']['cSecSap'].value     = "";
-        document.forms['frgrm']['cSecDes'].value     = "";
-      }
-
-      /**
-       * Permite adicionar una nueva grilla en la seccion de servicios.
-       */
-      function fnAddNewRowServicio(xTabla) {
-        var cGrid      = document.getElementById(xTabla);
-        var nLastRow   = cGrid.rows.length;
-        var nSecuencia = nLastRow+1;
-        var cTableRow  = cGrid.insertRow(nLastRow);
-        var cSerCodigo = 'cSerSap' + nSecuencia; // Codigo del Servicio
-        var cSerDescri = 'cSerDes' + nSecuencia; // Descripcion del Servicio
-        var cSubCodigo = 'cSubId'  + nSecuencia; // Codigo del Subservicio
-        var cSubDescri = 'cSubDes' + nSecuencia; // Descripcion del Subservicio
-        var cUnidadId  = 'cUfaId'  + nSecuencia; // Codigo del Subservicio
-        var cUnidadDes = 'cUfaDes' + nSecuencia; // Descripcion del Subservicio
-        var oBtnDel    = 'oBtnDel' + nSecuencia; // Boton de Borrar Row
-        
-        TD_xAll = cTableRow.insertCell(0);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:20;text-align:left' name = 'cSec"+nSecuencia+"' id = 'cSec"+nSecuencia+"' value = '"+nSecuencia+"' readonly >";
-
-        TD_xAll = cTableRow.insertCell(1);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:020;text-align:left' name = '"+cSerDescri+"' id = '"+cSerDescri+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cSerSap\",\"VALID\",\""+nSecuencia+"\") }' >";
-        
-        TD_xAll = cTableRow.insertCell(2);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cSerCodigo+"'>";
-
-        TD_xAll = cTableRow.insertCell(3);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:020;text-align:left' name = '"+cSubDescri+"' id = '"+cSubDescri+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cSubId\",\"VALID\",\""+nSecuencia+"\") }'>";
-
-        TD_xAll = cTableRow.insertCell(4);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cSubCodigo+"'>";
-
-        TD_xAll = cTableRow.insertCell(5);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:020;text-align:left' name = '"+cUnidadDes+"' id = '"+cUnidadDes+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cUfaId\",\"VALID\",\""+nSecuencia+"\") }'>";
-
-        TD_xAll = cTableRow.insertCell(6);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cUnidadId+"'>";
-
-        TD_xAll = cTableRow.insertCell(7);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'button' style = 'width:020;text-align:center' name = "+oBtnDel+" id = "+oBtnDel+" value = 'X' "+
-                                "onClick = 'javascript:fnDeleteRowServicio(this.value,\""+nSecuencia+"\",\""+xTabla+"\");'>";
-                                
-        document.forms['frgrm']['nSecuencia_Servicio'].value = nSecuencia;
-      }
-
-      /**
-       * Permite eliminar una grilla de la seccion de servicios.
-       */
-      function fnDeleteRowServicio(xNumRow,xSecuencia,xTabla) {
-        var cGrid = document.getElementById(xTabla);
-        var nLastRow = cGrid.rows.length;
-        if (xNumRow == "X") {
-          if (confirm("Realmente Desea Eliminar La Secuencia ["+ xSecuencia +"]?")){ 
-            if(xSecuencia < nLastRow){
-              var j=0;
-              for(var i=xSecuencia;i<nLastRow;i++){
-                j = parseFloat(i)+1;
-
-                document.forms['frgrm']['cSec'    + i].value = i;
-                document.forms['frgrm']['cSerSap' + i].value = document.forms['frgrm']['cSerSap' + j].value;
-                document.forms['frgrm']['cSerDes' + i].value = document.forms['frgrm']['cSerDes' + j].value;
-                document.forms['frgrm']['cSubId'  + i].value = document.forms['frgrm']['cSubId' + j].value;
-                document.forms['frgrm']['cSubDes' + i].value = document.forms['frgrm']['cSubDes' + j].value;
-                document.forms['frgrm']['cUfaId'  + i].value = document.forms['frgrm']['cUfaId' + j].value;
-                document.forms['frgrm']['cUfaDes' + i].value = document.forms['frgrm']['cUfaDes' + j].value;
-              }
-            }
-            cGrid.deleteRow(nLastRow - 1);
-            document.forms['frgrm']['nSecuencia_Servicio'].value = nLastRow - 1;
-
-            // Se valida cual es la grid de certificacion asociada al servicio que se debe eliminar
-            var nSecuencia = document.forms['frgrm']['nSecuencia_Certificacion'].value;
-            for(var i=1; i<=nSecuencia;i++){
-              if (document.forms['frgrm']['cIndexServ' + i].value == xSecuencia) {
-                fnDeleteRowCertificacion('X', i, 'Grid_Certificacion');
-                break;
-              }
-            }
-          }
-        }
       }
 
       /**
@@ -578,164 +120,6 @@
         fnCargarGrillaSubServicio(xValidaExisteSubservicio);
         document.getElementById('serviciosAutomaticos').style.display = "block";
         document.getElementById('Grid_Certificacion').innerHTML = "";
-      }
-
-      /**
-       * Permite adicionar una nueva grilla en la seccion de certificacion.
-       */
-      function fnAddNewRowCertificacion(xTabla, xIndiceServ = '', xTipoCertificacion = '') {
-        var cGrid      = document.getElementById(xTabla);
-        var nLastRow   = cGrid.rows.length;
-        var nSecuencia = nLastRow+1;
-        var cTableRow  = cGrid.insertRow(nLastRow);
-        var cCerdId      = 'cCerdId'       + nSecuencia; // Id del Detalle
-        var cDesMaterial = 'cDesMaterial'  + nSecuencia; // Descripcion del Material
-        var cCodSap      = 'cCodSapSer'    + nSecuencia; // Codigo SAP Servicio
-        var cSubId       = 'cSubId_Certi'  + nSecuencia; // Id Subservicio
-        var cObfId       = 'cObfId_Certi'  + nSecuencia; // Objeto Facturable ID
-        var cObfDes      = 'cObfDes_Certi' + nSecuencia; // Objeto Facturable Descripcion
-        var cUfaId       = 'cUfaId_Certi'  + nSecuencia; // Unidad Facturable ID
-        var cUfaDes      = 'cUfaDes_Certi' + nSecuencia; // Unidad Facturable Descripcion
-        var cCebId       = 'cCebId'        + nSecuencia; // Cebe ID
-        var cCebCod      = 'cCebCod'       + nSecuencia; // Cebe Codigo
-        var cCebDes      = 'cCebDes'       + nSecuencia; // Cebe Descripcion
-        var cBase        = 'cBase'         + nSecuencia; // Base
-        var cCondicion   = 'cCondicion'    + nSecuencia; // Condicion
-        var cStatus      = 'cStatus'       + nSecuencia; // Status
-        var oBtnDel      = 'oBtnDel_Certi' + nSecuencia; // Boton de Borrar Row
-
-        var cEstado = (xTipoCertificacion == '') ? 'AUTOMATICO' : 'TRANSACCIONAL';
-
-        TD_xAll = cTableRow.insertCell(0);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cCerdId+"'>";
-
-        TD_xAll = cTableRow.insertCell(1);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:20;text-align:left' name = 'cSec_Certi"+nSecuencia+"' id = 'cSec_Certi"+nSecuencia+"' value = '"+nSecuencia+"' readonly >";
-
-        TD_xAll = cTableRow.insertCell(2);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = 'cIndexServ"+nSecuencia+"' value = '"+xIndiceServ+"'>";
-
-        TD_xAll = cTableRow.insertCell(3);
-        TD_xAll.style.width  = "140px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:140;text-align:left' name = '"+cDesMaterial+"' id = '"+cDesMaterial+"' >";
-
-        TD_xAll = cTableRow.insertCell(4);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = 'cTipoCerti"+nSecuencia+"' value = '"+xTipoCertificacion+"'>";
-
-        TD_xAll = cTableRow.insertCell(5);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cSubId+"'>";
-
-        TD_xAll = cTableRow.insertCell(6);
-        TD_xAll.style.width  = "60px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:60;text-align:left' name = '"+cCodSap+"' id = '"+cCodSap+"' >";
-
-        TD_xAll = cTableRow.insertCell(7);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cObfId+"'>";
-    
-        TD_xAll = cTableRow.insertCell(8);
-        TD_xAll.style.width  = "120px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:120;text-align:left' name = '"+cObfDes+"' id = '"+cObfDes+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cObfId\",\"VALID\",\""+nSecuencia+"\",\"_Certi\") }' >";
-
-        TD_xAll = cTableRow.insertCell(9);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cUfaId+"'>";
-
-        TD_xAll = cTableRow.insertCell(10);
-        TD_xAll.style.width  = "120px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:120;text-align:left' name = '"+cUfaDes+"' id = '"+cUfaDes+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cUfaId\",\"VALID\",\""+nSecuencia+"\",\"_Certi\") }' >";
-      
-        TD_xAll = cTableRow.insertCell(11);
-        TD_xAll.innerHTML    = "<input type = 'hidden' name = '"+cCebId+"'>";
-
-        TD_xAll = cTableRow.insertCell(12);
-        TD_xAll.style.width  = "60px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:60;text-align:left' name = '"+cCebCod+"' id = '"+cCebCod+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cCebCod\",\"VALID\",\""+nSecuencia+"\") }' >";
-
-        TD_xAll = cTableRow.insertCell(13);
-        TD_xAll.style.width  = "140px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:140;text-align:left' name = '"+cCebDes+"' id = '"+cCebDes+"' onKeydown = 'javascript:if(event.keyCode == 13){ fnLinks(\"cCebDes\",\"VALID\",\""+nSecuencia+"\") }' >";
-
-        TD_xAll = cTableRow.insertCell(14);
-        TD_xAll.style.width  = "80px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:80;text-align:right' name = '"+cBase+"' id = '"+cBase+"' >";
-
-        TD_xAll = cTableRow.insertCell(15);
-        TD_xAll.style.width  = "100px";
-
-        var selectCondicion = "<select Class = 'letrase' name = '"+cCondicion+"' style = 'width:100'>";
-              selectCondicion += "<option value = 'HABILITADO'>HABILITADO</option>";
-              selectCondicion += "<option value = 'DESHABILITADO'>DESHABILITADO</option>";
-            selectCondicion += "</select>";
-
-        TD_xAll.innerHTML    = selectCondicion;
-
-        TD_xAll = cTableRow.insertCell(16);
-        TD_xAll.style.width  = "80px";
-        TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:80;text-align:left' name = '"+cStatus+"' id = '"+cStatus+"' value = '"+cEstado+"' onKeyUp = 'javascript:if(event.keyCode == 13){ fnAddNewRowCertificacion(\"Grid_Certificacion\",\"\",\"MANUAL\") }' >";
-      
-        TD_xAll = cTableRow.insertCell(17);
-        TD_xAll.style.width  = "20px";
-        TD_xAll.innerHTML    = "<input type = 'button' style = 'width:020;text-align:center' name = "+oBtnDel+" id = "+oBtnDel+" value = 'X' "+
-                                "onClick = 'javascript:fnDeleteRowCertificacion(this.value,\""+nSecuencia+"\",\""+xTabla+"\");'>";
-
-        document.forms['frgrm']['nSecuencia_Certificacion'].value = nSecuencia;
-
-        if(xTipoCertificacion == "MANUAL") {
-          document.forms['frgrm']['cCodSapSer' + nSecuencia].readOnly = true;
-        }
-      }
-
-      /**
-       * Elimina todos los registros de certificacion de la grilla.
-       */
-      function fnBorrarCertificacion(xTabla){
-        document.getElementById(xTabla).innerHTML = "";
-      }
-
-      /**
-       * Permite eliminar una grilla de la seccion de certificacion.
-       */
-      function fnDeleteRowCertificacion(xNumRow,xSecuencia,xTabla) {
-        var cGrid = document.getElementById(xTabla);
-        var nLastRow = cGrid.rows.length;
-        if (xNumRow == "X") {
-          if(xSecuencia < nLastRow){
-            var j=0;
-            for(var i=xSecuencia;i<nLastRow;i++){
-              j = parseFloat(i)+1;
-
-              document.forms['frgrm']['cSec_Certi'    + i].value = i;
-              document.forms['frgrm']['cCerdId'       + i].value = document.forms['frgrm']['cCerdId'  + j].value;
-              document.forms['frgrm']['cIndexServ'    + i].value = document.forms['frgrm']['cIndexServ'    + j].value;
-              document.forms['frgrm']['cDesMaterial'  + i].value = document.forms['frgrm']['cDesMaterial'  + j].value;
-              document.forms['frgrm']['cCodSapSer'    + i].value = document.forms['frgrm']['cCodSapSer'    + j].value;
-              document.forms['frgrm']['cSubId_Certi'  + i].value = document.forms['frgrm']['cSubId_Certi'  + j].value;
-              document.forms['frgrm']['cObfId_Certi'  + i].value = document.forms['frgrm']['cObfId_Certi'  + j].value;
-              document.forms['frgrm']['cObfDes_Certi' + i].value = document.forms['frgrm']['cObfDes_Certi' + j].value;
-              document.forms['frgrm']['cUfaId_Certi'  + i].value = document.forms['frgrm']['cUfaId_Certi'  + j].value;
-              document.forms['frgrm']['cUfaDes_Certi' + i].value = document.forms['frgrm']['cUfaDes_Certi' + j].value;
-              document.forms['frgrm']['cCebId'        + i].value = document.forms['frgrm']['cCebId'        + j].value;
-              document.forms['frgrm']['cCebCod'       + i].value = document.forms['frgrm']['cCebCod'       + j].value;
-              document.forms['frgrm']['cCebDes'       + i].value = document.forms['frgrm']['cCebDes'       + j].value;
-              document.forms['frgrm']['cBase'         + i].value = document.forms['frgrm']['cBase'         + j].value;
-              document.forms['frgrm']['cCondicion'    + i].value = document.forms['frgrm']['cCondicion'    + j].value;
-              document.forms['frgrm']['cStatus'       + i].value = document.forms['frgrm']['cStatus'       + j].value;
-              document.forms['frgrm']['cTipoCerti'    + i].value = document.forms['frgrm']['cTipoCerti'    + j].value;
-            }
-          }
-
-          cGrid.deleteRow(nLastRow - 1);
-          document.forms['frgrm']['nSecuencia_Certificacion'].value = nLastRow - 1;
-
-          // Habilita o deshabilita los campos de la grilla dependiendo del tipo de certificacion
-          for (var j = 1; j <= (nLastRow - 1); j++) {
-            if (document.forms['frgrm']['cStatus' + j].value == "AUTOMATICO" || document.forms['frgrm']['cTipoCerti' + j].value == "TRANSACCIONAL") {
-              fnActivarDesactivarCamposCertificacion(j, true);
-            } else {
-              fnActivarDesactivarCamposCertificacion(j, false);
-            }
-          }
-        }
       }
 
       /**
@@ -752,78 +136,6 @@
                                 "&gValidaExisteSubservicio="+xValidaExisteSubservicio;
 
         parent.fmpro.location = cRuta;
-      }
-
-      /**
-       * Carga una nueva grilla en la seccion de certificacion cuando se selecciona un servicio.
-       * 
-       * Cuando el parametro xTipoCertificacion es igual a vacio el servicio viene de la MIF
-       */
-      function fnAgregarServicio(oCheck, xIndice, xTipoCertificacion = '') {
-
-        if (oCheck == true) {
-          var nSecuenciaActual = document.forms['frgrm']['nSecuencia_Certificacion'].value;
-
-          if (xTipoCertificacion == "TRANSACCIONAL") {
-            // Valida si se esta cambiando el servicio de la grid para no crearlo nuevamente
-            var nExisteGrid = 0;
-            for(var i=1; i<=nSecuenciaActual;i++){
-              if (document.forms['frgrm']['cIndexServ' + i].value == xIndice) {
-                nExisteGrid = 1
-                break;
-              }
-            }
-
-            if (nExisteGrid == 0) {
-              fnAddNewRowCertificacion('Grid_Certificacion', xIndice, 'TRANSACCIONAL');
-              var nSecuencia = document.forms['frgrm']['nSecuencia_Certificacion'].value;
-            } else {
-              var nSecuencia = document.forms['frgrm']['nSecuencia_Certificacion'].value;
-              // Se valida cual es la grid de certificacion asociada al servicio para obtener el indice y asignar los valores
-              for(var i=1; i<=nSecuencia;i++){
-                if (document.forms['frgrm']['cIndexServ' + i].value == xIndice) {
-                  nSecuencia = i;
-                  break;
-                }
-              }
-            }
-          } else {
-            fnAddNewRowCertificacion('Grid_Certificacion', xIndice, 'MIF');
-            var nSecuencia = document.forms['frgrm']['nSecuencia_Certificacion'].value;
-          }
-        
-          // Asigna los valores de la grilla de servicios a la grilla de certificacion
-          document.forms['frgrm']['cDesMaterial'  + nSecuencia].value = document.forms['frgrm']['cSubDes'   + xIndice].value;
-          document.forms['frgrm']['cCodSapSer'    + nSecuencia].value = document.forms['frgrm']['cSerSap'   + xIndice].value;
-          document.forms['frgrm']['cSubId_Certi'  + nSecuencia].value = document.forms['frgrm']['cSubId'    + xIndice].value;
-          document.forms['frgrm']['cUfaId_Certi'  + nSecuencia].value = document.forms['frgrm']['cUfaId'    + xIndice].value;
-          document.forms['frgrm']['cUfaDes_Certi' + nSecuencia].value = document.forms['frgrm']['cUfaDes'   + xIndice].value;
-          document.forms['frgrm']['cTipoCerti'    + nSecuencia].value = (xTipoCertificacion == "") ? "MIF" : xTipoCertificacion;
-          document.forms['frgrm']['cStatus'       + nSecuencia].value = (xTipoCertificacion == "TRANSACCIONAL") ? "TRANSACCIONAL" : "AUTOMATICO";
-
-          if (xTipoCertificacion == "") {
-            document.forms['frgrm']['cObfId_Certi'  + nSecuencia].value = document.forms['frgrm']['cObfId'    + xIndice].value;
-            document.forms['frgrm']['cObfDes_Certi' + nSecuencia].value = document.forms['frgrm']['cObfDes'   + xIndice].value;
-            document.forms['frgrm']['cBase'         + nSecuencia].value = document.forms['frgrm']['cBaseServ' + xIndice].value;
-          }
-          
-          fnActivarDesactivarCamposCertificacion(nSecuencia, true);
-          if (xTipoCertificacion != "") {
-            document.forms['frgrm']['cObfDes_Certi' + nSecuencia].readOnly = false;
-            document.forms['frgrm']['cBase' + nSecuencia].readOnly = false;
-          }
-
-        } else {
-          var nSecuencia = document.forms['frgrm']['nSecuencia_Certificacion'].value;
-
-          // Se valida cual es la grid de certificacion asociada al servicio que se debe eliminar
-          for(var i=1; i<=nSecuencia;i++){
-            if (document.forms['frgrm']['cIndexServ' + i].value == xIndice) {
-              fnDeleteRowCertificacion('X', i, 'Grid_Certificacion');
-              break;
-            }
-          }
-        }
       }
 
       /**
@@ -857,16 +169,14 @@
           <td>
             <fieldset>
               <legend><?php echo $_COOKIE['kMenDes'] ?></legend>
-              <form name = "frestado" action = "frcergra.php" method = "post" target="fmpro">
+              <form name = "frestado" action = "frtckgra.php" method = "post" target="fmpro">
                 <input type = "hidden" name = "cCerId"       value = "">
                 <input type = "hidden" name = "cAnio"        value = "">
               </form>
-              <form name = "frgrm" action = "frcergra.php" method = "post" target="fmpro">
+              <form name = "frgrm" action = "frtckgra.php" method = "post" target="fmpro">
                 <input type = "hidden" name = "cCerId"       value = "<?php echo $cCerId ?>">
                 <input type = "hidden" name = "cAnio"        value = "<?php echo $cAnio ?>">
                 <input type = "hidden" name = "cRegEst"      value = "">
-                <input type = "hidden" name = "nSecuencia_Servicio" value = "">
-                <input type = "hidden" name = "nSecuencia_Certificacion" value = "">
                 <?php
                     // Obtengo los datos del usuario
                     $qUsrNom  = "SELECT USRIDXXX, USRNOMXX, USREMAXX ";
@@ -930,9 +240,6 @@
                       </td>
                       <td Class="clase08" colspan="3">Prefijo<br>
                         <input type = 'text' Class = 'letra' style = 'width:60' name = 'cComPre' value="<?php echo $cComPre ?>" readonly>
-                        <input type="hidden" name="cComCod">
-                        <input type="hidden" name="cComTCo">
-                        <input type="hidden" name="cComCco">
                       </td>
                       <td class="clase08" colspan="7">Consecutivo<br>
                         <input type = "text" Class = "letra" style = "width:140" name = "cComCsc" value="<?php echo $cComCsc ?>" readonly>
@@ -958,20 +265,20 @@
                     <!-- Fila 2 -->
                     <tr>
                       <td class = "clase08" colspan="5">Creado por<br>
-                        <input type = "text" Class = "letra" style = "width:100" name = "" value = "<?php echo $usrId ?>" readonly>
+                        <input type = "text" Class = "letra" style = "width:100" value = "<?php echo $usrId ?>" readonly>
                       </td>
                       <td Class="clase08" colspan="15"><br>
-                        <input type = "text" Class = "letra" style = "width:300" name = "" value = "<?php echo $usrNom ?>" readonly>
+                        <input type = "text" Class = "letra" style = "width:300" value = "<?php echo $usrNom ?>" readonly>
                       </td>
                       <td Class="clase08" colspan="15"><br>
-                        <input type = "text" Class = "letra" style = "width:300" name = "" value = "<?php echo $usrEma ?>" readonly>
+                        <input type = "text" Class = "letra" style = "width:300" value = "<?php echo $usrEma ?>" readonly>
                       </td>
                     </tr>
 
                     <!-- Fila 3 -->
                     <tr>
                       <td class="clase08" colspan="35">Asunto<br>
-                        <input type = "text" Class = "letra" style = "width:700" name = "" value = "">
+                        <input type = "text" Class = "letra" style = "width:700" name = "cAsuTck" value = "">
                       </td>
                     </tr>
 
@@ -1001,7 +308,7 @@
                                                 this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                       </td>
                       <td class = "clase08" colspan="7">Prioridad<br>
-                        <select name = "cPerAno" style = "width:140">
+                        <select name = "cPriori" style = "width:140">
                           <option>[SELECCIONE]</option>
                           <?php for($i=0;$i<count($mMatrizPti);$i++){ ?>
                             <option value="<?php echo $i ?>"><?php echo $mMatrizPti[$i] ?></option>
@@ -1009,7 +316,7 @@
                         </select>
                       </td>
                       <td class = "clase08" colspan="7">Estado<br>
-                        <select name = "cPerAno" style = "width:140">
+                        <select name = "cEstado" style = "width:140">
                           <?php for($i=0;$i<count($mMatrizSti);$i++){ ?>
                             <option value="<?php echo $i ?>"><?php echo $mMatrizSti[$i] ?></option>
                           <?php } ?>
@@ -1076,8 +383,6 @@
                         var valor = inputElement.value;
                         console.log(valor);
                       });
-
-                      // console.log(document.forms['frgrm']['cTtiCod'].value);
                     </script>
 
                     <!-- Certificacion -->
@@ -1143,9 +448,9 @@
               <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:fnRetorna()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
             <?php break;
             default: ?>
-              <td width="798" height="21"></td>
-              <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_ok_bg.gif" style="cursor:pointer" onClick = "javascript:document.forms['frgrm'].submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guardar</td>
-              <td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:fnRetorna()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
+              <td width="700" height="21"></td>
+              <td width="98" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_ok_bg.gif" style="cursor:pointer" onClick = "javascript:document.forms['frgrm'].submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guardar</td>
+              <td width="105" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:fnRetorna()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
             <?php break;
           } ?>
         </tr>

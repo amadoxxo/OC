@@ -58,10 +58,10 @@
     }
   }
 
-  $cPerAno = ($_COOKIE['kModo'] == "NUEVO") ? $cPerAno : $_POST['cAnio'];
+  $cPerAno = ($_COOKIE['kModo'] == "NUEVOTICKET") ? $cPerAno : $_POST['cAnio'];
   // Inicio de la Validacion
   switch ($_COOKIE['kModo']) {
-    case "NUEVO":
+    case "NUEVOTICKET":
     case "EDITAR":
       // Validando que el Prefijo no sea vacio.
       if ($_POST['cComPre'] == "") {
@@ -70,7 +70,7 @@
         $cMsj .= "Prefijo no puede ser vacio.\n";
       } else {
         // Validando que el prefijo exista.
-        if ($_COOKIE['kModo'] == "NUEVO") {
+        if ($_COOKIE['kModo'] == "NUEVOTICKET") {
           $qComprobante  = "SELECT ";
           $qComprobante .= "comidxxx, ";
           $qComprobante .= "comtcoxx ";
@@ -88,7 +88,7 @@
       }
 
       // Validando el Consecutivo
-      if ($_COOKIE['kModo'] == "NUEVO") {
+      if ($_COOKIE['kModo'] == "NUEVOTICKET") {
         if ($_POST['cComCsc'] != "") {
           if (!preg_match('/^[0-9]+$/', $_POST['cComCsc'])) {
             $nSwitch = 1;
@@ -115,7 +115,7 @@
         $cMsj .= "El Nit no puede ser vacio.\n";
       } else {
         // Validando que el Nit exista.
-        if ($_COOKIE['kModo'] == "NUEVO") {
+        if ($_COOKIE['kModo'] == "NUEVOTICKET") {
           $qCliDat  = "SELECT * ";
           $qCliDat .= "FROM $cAlfa.lpar0150 ";
           $qCliDat .= "WHERE ";
@@ -144,13 +144,25 @@
         $cMsj .= "El asunto no puede ser vacio.\n";
       }
 
-      // Valida que el tipo no sea vacia
+      // Valida que el Tipo Ticket no sea vacio
       if ($_POST['cTtiCod'] == "" || $_POST['cTtiDes'] == "") {
         $nSwitch = 1;
         $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
         $cMsj .= "El tipo no puede ser vacio.\n";
       } else {
-
+        // Validando que el Tipo Ticket exista
+        if ($_COOKIE['kModo'] == "NUEVOTICKET") {
+          $qCliDat  = "SELECT tticodxx, ttidesxx ";
+          $qCliDat .= "FROM $cAlfa.lpar0158 ";
+          $qCliDat .= "WHERE ";
+          $qCliDat .= "$cAlfa.lpar0158.tticodxx = \"{$_POST['cTtiCod']}\" LIMIT 0,1 ";
+          $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
+          if(mysql_num_rows($xCliDat) == 0){
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= "El Tipo Ticket [{$_POST['cTtiCod']}] no existe.\n";
+          }
+        }
       }
 
       // Valida que la prioridad no sea vacia
@@ -159,18 +171,41 @@
         $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
         $cMsj .= "La prioridad no puede ser vacia.\n";
       } else {
-
+        // Validando que el Tipo Ticket exista
+        if ($_COOKIE['kModo'] == "NUEVOTICKET") {
+          $qCliDat  = "SELECT pticodxx, ptidesxx ";
+          $qCliDat .= "FROM $cAlfa.lpar0156 ";
+          $qCliDat .= "WHERE ";
+          $qCliDat .= "$cAlfa.lpar0156.ptidesxx = \"{$_POST['cPriori']}\" LIMIT 0,1 ";
+          $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
+          if(mysql_num_rows($xCliDat) == 0){
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= "El Tipo Ticket [{$_POST['cPriori']}] no existe.\n";
+          }
+        }
       }
     
-      // Valida que el estado no sea vacia
+      // Valida que el estado no sea vacio
       if ($_POST['cEstado'] == "") {
         $nSwitch = 1;
         $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
         $cMsj .= "El estado no puede ser vacio.\n";
       } else {
-
+        // Validando que el Tipo Ticket exista
+        if ($_COOKIE['kModo'] == "NUEVOTICKET") {
+          $qCliDat  = "SELECT sticodxx, stidesxx ";
+          $qCliDat .= "FROM $cAlfa.lpar0157 ";
+          $qCliDat .= "WHERE ";
+          $qCliDat .= "$cAlfa.lpar0157.sticodxx = \"{$_POST['cEstado']}\" LIMIT 0,1 ";
+          $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
+          if(mysql_num_rows($xCliDat) == 0){
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= "El Tipo Ticket [{$_POST['cEstado']}] no existe.\n";
+          }
+        }
       }
-
     break;
   }
   // Fin de la Validacion
@@ -183,23 +218,23 @@
 
   if ($nSwitch == 0) {
     switch ($_COOKIE['kModo']) {
-      case "NUEVO":
+      case "NUEVOTICKET":
         $cAnioMif = $_POST['cPerAno'];
 
         // Insertando en la Tabla lccaYYYY (Cabecera)
-        $qInsert  = array(array('NAME' => 'ceridxxx','VALUE' => trim(strtoupper($_POST['cComId']))          ,'CHECK' => 'SI'),  //Id del comprobante
-                          array('NAME' => 'comidxxx','VALUE' => trim(strtoupper($_POST['cComCod']))         ,'CHECK' => 'SI'),  //Codigo del comprobante
+        $qInsert  = array(array('NAME' => 'ceridxxx','VALUE' => trim(strtoupper($_POST['cCerId']))          ,'CHECK' => 'SI'),  //Id del comprobante
+                          array('NAME' => 'comidxxx','VALUE' => trim(strtoupper($_POST['cComId']))         ,'CHECK' => 'SI'),  //Codigo del comprobante
                           array('NAME' => 'comcodxx','VALUE' => trim(strtoupper($_POST['cComCod']))         ,'CHECK' => 'SI'),  //Codigo del comprobante
                           array('NAME' => 'comprexx','VALUE' => trim(strtoupper($_POST['cComPre']))         ,'CHECK' => 'SI'),  //Prefijo
                           array('NAME' => 'comcscxx','VALUE' => trim($_POST['cComCsc'])                     ,'CHECK' => 'SI'),  //Consecutivo uno
                           array('NAME' => 'comcsc2x','VALUE' => trim($_POST['cComCsc2'])                    ,'CHECK' => 'SI'),  //Consecutivo dos
-                          array('NAME' => 'comfecxx','VALUE' => trim($_POST['dComFec'])                     ,'CHECK' => 'SI'),  //Fecha del comprobante
+                          array('NAME' => 'comfecxx','VALUE' => trim($_POST['cComFec'])                     ,'CHECK' => 'SI'),  //Fecha del comprobante
                           array('NAME' => 'cliidxxx','VALUE' => trim($_POST['cCliId'])                      ,'CHECK' => 'SI'),  //Id Cliente
                           array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])                     ,'CHECK' => 'SI'),  //Codigo Tipo de Ticket
                           array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])                     ,'CHECK' => 'SI'),  //Codigo Prioridad Ticket
                           array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])                     ,'CHECK' => 'SI'),  //Codigo Status Ticket
                           array('NAME' => 'ticasuxx','VALUE' => trim($_POST['cAsuTck'])                     ,'CHECK' => 'SI'),  //Asunto
-                          array('NAME' => 'ticcierx','VALUE' => trim($_POST['cCerTipMe'])                   ,'CHECK' => 'SI'),  //Fecha de cierre
+                          array('NAME' => 'ticcierx','VALUE' => trim($_POST['cComFec'])                   ,'CHECK' => 'SI'),  //Fecha de cierre
                           array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))        ,'CHECK' => 'SI'),  //Usuario que creo el registro
                           array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                               ,'CHECK' => 'SI'),  //Fecha de creacion
                           array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                               ,'CHECK' => 'SI'),  //Hora de creacion
@@ -239,7 +274,7 @@
                           array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de modificacion
                           array('NAME' => 'regestxx','VALUE' => "ENPROCESO"                           ,'CHECK' => 'SI'));  //Estado
 
-          if (!f_MySql("INSERT","lcde$cPerAno",$qInsert,$xConexion01,$cAlfa)) {
+          if (!f_MySql("INSERT","ltid$cPerAno",$qInsert,$xConexion01,$cAlfa)) {
             $nErrorDetalle = 1;
           }
 
@@ -469,7 +504,7 @@
 
   if ($nSwitch == 0) {
     switch ($_COOKIE['kModo']) {
-      case "NUEVO":
+      case "NUEVOTICKET":
         f_Mensaje(__FILE__,__LINE__,"Se creo la Certificacion con exito.");
       break;
       case "EDITAR":
@@ -483,7 +518,7 @@
       break;
     }
 
-    if ($_COOKIE['kModo'] == "NUEVO" || $_COOKIE['kModo'] == "EDITAR") {
+    if ($_COOKIE['kModo'] == "NUEVOTICKET" || $_COOKIE['kModo'] == "EDITAR") {
       ?>
       <form name = "frgrm" action = "<?php echo $_COOKIE['kIniAnt'] ?>" method = "post" target = "fmwork"></form>
       <script languaje = "javascript">

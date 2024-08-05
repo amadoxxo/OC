@@ -171,12 +171,14 @@
               <legend><?php echo $_COOKIE['kMenDes'] ?></legend>
               <form name = "frestado" action = "frtckgra.php" method = "post" target="fmpro">
                 <input type = "hidden" name = "cCerId"       value = "">
+                <input type = "hidden" name = "cComCsc2"     value = "">
                 <input type = "hidden" name = "cAnio"        value = "">
               </form>
               <form name = "frgrm" action = "frtckgra.php" method = "post" target="fmpro">
-                <input type = "hidden" name = "cCerId"       value = "<?php echo $cCerId ?>">
-                <input type = "hidden" name = "cAnio"        value = "<?php echo $cAnio ?>">
-                <input type = "hidden" name = "cRegEst"      value = "">
+                <input type = "hidden" name = "cCerId"    value = "<?php echo $cCerId ?>">
+                <input type = "hidden" name = "cComCsc2"  value = "<?php echo $cComCsc2 ?>">
+                <input type = "hidden" name = "cAnio"     value = "<?php echo $cAnio ?>">
+                <input type = "hidden" name = "cRegEst"   value = "">
                 <?php
                     // Obtengo los datos del usuario
                     $qUsrNom  = "SELECT USRIDXXX, USRNOMXX, USREMAXX ";
@@ -192,26 +194,30 @@
                     }
                     // Obtengo los datos de Prioridad Ticket
                     $mMatrizPti = array();
-                    $qPtiCox  = "SELECT ptidesxx ";
+                    $qPtiCox  = "SELECT pticodxx, ptidesxx ";
                     $qPtiCox .= "FROM $cAlfa.lpar0156 ";
                     $qPtiCox .= "WHERE ";
                     $qPtiCox .= "regestxx = \"ACTIVO\"";
                     $xPtiCox  = f_MySql("SELECT","",$qPtiCox,$xConexion01,"");
                     if (mysql_num_rows($xPtiCox) > 0) {
                       while ($vPtiCox = mysql_fetch_array($xPtiCox)) {
-                        $mMatrizPti[] = $vPtiCox['ptidesxx'];
+                        $nInd_mMatrizPti = count($mMatrizPti);
+                        $mMatrizPti[$nInd_mMatrizPti]['pticodxx'] = $vPtiCox['pticodxx'];
+                        $mMatrizPti[$nInd_mMatrizPti]['ptidesxx'] = $vPtiCox['ptidesxx'];
                       }
                     }
                     // Obtengo los datos de Status Ticket
                     $mMatrizSti = array();
-                    $qStiCod  = "SELECT stidesxx ";
+                    $qStiCod  = "SELECT sticodxx, stidesxx ";
                     $qStiCod .= "FROM $cAlfa.lpar0157 ";
                     $qStiCod .= "WHERE ";
                     $qStiCod .= "stitipxx = \"APERTURA\"";
                     $xStiCod  = f_MySql("SELECT","",$qStiCod,$xConexion01,"");
                     if (mysql_num_rows($xStiCod) > 0) {
                       while ($vStiCod = mysql_fetch_array($xStiCod)) {
-                        $mMatrizSti[] = $vStiCod['stidesxx'];
+                        $nInd_mMatrizSti = count($mMatrizSti);
+                        $mMatrizSti[$nInd_mMatrizSti]['sticodxx'] = $vStiCod['sticodxx'];
+                        $mMatrizSti[$nInd_mMatrizSti]['stidesxx'] = $vStiCod['stidesxx'];
                       }
                     }
                     // Obtengo los datos de Responsable Asignado Ticket
@@ -258,7 +264,7 @@
                         <input type = "text" Class = "letra" style = "width:240" name = "cCliNom" value="<?php echo $cCliNom ?>" readonly>
                       </td>
                       <td class="clase08" colspan="5">Fecha<br>
-                        <input type="text" Class = "letra" name="dComFec" style = "width:100;text-align:center" value = "<?php echo date('Y-m-d') ?>" readonly>
+                        <input type="text" Class = "letra" name="cComFec" style = "width:100;text-align:center" value = "<?php echo $cComFec ?>" readonly>
                       </td>
                     </tr>
 
@@ -311,14 +317,14 @@
                         <select name = "cPriori" style = "width:140">
                           <option>[SELECCIONE]</option>
                           <?php for($i=0;$i<count($mMatrizPti);$i++){ ?>
-                            <option value="<?php echo $i ?>"><?php echo $mMatrizPti[$i] ?></option>
+                            <option value="<?php echo $mMatrizPti[$i]['pticodxx'] ?>"><?php echo $mMatrizPti[$i]['ptidesxx'] ?></option>
                           <?php } ?>
                         </select>
                       </td>
                       <td class = "clase08" colspan="7">Estado<br>
                         <select name = "cEstado" style = "width:140">
                           <?php for($i=0;$i<count($mMatrizSti);$i++){ ?>
-                            <option value="<?php echo $i ?>"><?php echo $mMatrizSti[$i] ?></option>
+                            <option value="<?php echo $mMatrizSti[$i]['sticodxx'] ?>"><?php echo $mMatrizSti[$i]['stidesxx'] ?></option>
                           <?php } ?>
                         </select>
                       </td>
@@ -507,9 +513,9 @@
           document.getElementById('id_href_dVigHasta').removeAttribute('href');
           document.getElementById('id_href_CdiSap').removeAttribute('href');
         </script>
-      <?php      
+      <?php
       break;
-      case "VER": 
+      case "VER":
         fnCargaData($cCerId,$cAnio);
         ?>
         <script languaje = "javascript">

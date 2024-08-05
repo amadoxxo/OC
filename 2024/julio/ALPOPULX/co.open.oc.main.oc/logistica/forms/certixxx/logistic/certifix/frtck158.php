@@ -64,6 +64,7 @@
                                           <a href = "javascript:window.opener.document.forms['frgrm'].cTtiCod.value = '<?php echo $xRTT['tticodxx']?>';
                                                                 window.opener.document.forms['frgrm'].cTtiDes.value = '<?php echo $xRTT['ttidesxx']?>';
                                                                 window.opener.fnLinks('cTtiCod','EXACT',0);
+                                                                window.opener.fnLinks('cResTck','EXACT',0);
                                                                 window.close();"><?php echo $xRTT['tticodxx'] ?></a>
                                       </td>
                                       <td width = "400" class= "name"><?php echo $xRTT['ttidesxx'] ?></td>
@@ -75,6 +76,7 @@
                                       window.opener.document.forms['frgrm'].cTtiCod.value  = "<?php echo $xRTT['tticodxx'] ?>";
                                       window.opener.document.forms['frgrm'].cTtiDes.value = "<?php echo $xRTT['ttidesxx'] ?>";
                                       window.opener.fnLinks('cTtiCod', 'EXACT', 0);
+                                      window.opener.fnLinks('cResTck', 'EXACT', 0);
                                       window.close();
                                     </script>
                                     <?php
@@ -130,7 +132,7 @@
                         }else{ ?>
                           <script language = "javascript">
                             alert('No hay registros coincidentes');
-                            parent.fmwork.document.forms['frgrm'].cTtiCod.value  = "";
+                            parent.fmwork.document.forms['frgrm'].cTtiCod.value = "";
                             parent.fmwork.document.forms['frgrm'].cTtiDes.value = "";
                           </script>
                           <?php

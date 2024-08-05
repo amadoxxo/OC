@@ -72,12 +72,12 @@
         // Validando que el prefijo exista.
         if ($_COOKIE['kModo'] == "NUEVOTICKET") {
           $qComprobante  = "SELECT ";
-          $qComprobante .= "comidxxx, ";
-          $qComprobante .= "comtcoxx ";
+          $qComprobante .= "comidxxx ";
           $qComprobante .= "FROM $cAlfa.lpar0117 ";
           $qComprobante .= "WHERE ";
           $qComprobante .= "$cAlfa.lpar0117.comidxxx = \"{$_POST['cComId']}\" AND ";
-          $qComprobante .= "$cAlfa.lpar0117.comprexx = \"{$_POST['cComPre']}\" LIMIT 0,1 ";
+          $qComprobante .= "$cAlfa.lpar0117.comprexx = \"{$_POST['cComPre']}\" AND ";
+          $qComprobante .= "regestxx = \"ACTIVO\" LIMIT 0,1 ";
           $xComprobante  = f_MySql("SELECT","",$qComprobante,$xConexion01,"");
           if(mysql_num_rows($xComprobante) == 0){
             $nSwitch = 1;
@@ -94,12 +94,6 @@
             $nSwitch = 1;
             $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
             $cMsj .= "El Consecutivo [{$_POST['cComCsc']}] debe ser numerico.\n";
-          } else {
-            if (strlen($_POST['cComCsc']) > 6) {
-              $nSwitch = 1;
-              $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-              $cMsj .= "El Consecutivo [{$_POST['cComCsc']}] no puede ser mayor a 6 caracteres.\n";
-            }
           }
         } elseif ($_POST['cComCsc'] == "" && $_POST['cComTCo'] == "MANUAL") {
           $nSwitch = 1;
@@ -119,7 +113,8 @@
           $qCliDat  = "SELECT * ";
           $qCliDat .= "FROM $cAlfa.lpar0150 ";
           $qCliDat .= "WHERE ";
-          $qCliDat .= "$cAlfa.lpar0150.cliidxxx = \"{$_POST['cCliId']}\" LIMIT 0,1 ";
+          $qCliDat .= "$cAlfa.lpar0150.cliidxxx = \"{$_POST['cCliId']}\" AND ";
+          $qCliDat .= "regestxx = \"ACTIVO\" LIMIT 0,1 ";
           $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
           if(mysql_num_rows($xCliDat) == 0){
             $nSwitch = 1;
@@ -131,7 +126,7 @@
 
         // Validando Fechas
         // Validando que la Fecha Desde no sea vacia.
-        if ($_POST['dComFec'] == "" || $_POST['dComFec'] == "0000-00-00") {
+        if ($_POST['cComFec'] == "" || $_POST['cComFec'] == "0000-00-00") {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
           $cMsj .= "Se debe seleccionar una Fecha.\n";
@@ -155,7 +150,8 @@
           $qCliDat  = "SELECT tticodxx, ttidesxx ";
           $qCliDat .= "FROM $cAlfa.lpar0158 ";
           $qCliDat .= "WHERE ";
-          $qCliDat .= "$cAlfa.lpar0158.tticodxx = \"{$_POST['cTtiCod']}\" LIMIT 0,1 ";
+          $qCliDat .= "$cAlfa.lpar0158.tticodxx = \"{$_POST['cTtiCod']}\" AND ";
+          $qCliDat .= "regestxx = \"ACTIVO\" LIMIT 0,1 ";
           $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
           if(mysql_num_rows($xCliDat) == 0){
             $nSwitch = 1;
@@ -176,12 +172,13 @@
           $qCliDat  = "SELECT pticodxx, ptidesxx ";
           $qCliDat .= "FROM $cAlfa.lpar0156 ";
           $qCliDat .= "WHERE ";
-          $qCliDat .= "$cAlfa.lpar0156.ptidesxx = \"{$_POST['cPriori']}\" LIMIT 0,1 ";
+          $qCliDat .= "$cAlfa.lpar0156.pticodxx = \"{$_POST['cPriori']}\" AND ";
+          $qCliDat .= "regestxx = \"ACTIVO\" LIMIT 0,1 ";
           $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
           if(mysql_num_rows($xCliDat) == 0){
             $nSwitch = 1;
             $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-            $cMsj .= "El Tipo Ticket [{$_POST['cPriori']}] no existe.\n";
+            $cMsj .= "El Tipo Ticket {$_POST['cPriori']} no existe.\n";
           }
         }
       }
@@ -197,7 +194,8 @@
           $qCliDat  = "SELECT sticodxx, stidesxx ";
           $qCliDat .= "FROM $cAlfa.lpar0157 ";
           $qCliDat .= "WHERE ";
-          $qCliDat .= "$cAlfa.lpar0157.sticodxx = \"{$_POST['cEstado']}\" LIMIT 0,1 ";
+          $qCliDat .= "$cAlfa.lpar0157.sticodxx = \"{$_POST['cEstado']}\" AND ";
+          $qCliDat .= "regestxx = \"ACTIVO\" LIMIT 0,1 ";
           $xCliDat  = f_MySql("SELECT","",$qCliDat,$xConexion01,"");
           if(mysql_num_rows($xCliDat) == 0){
             $nSwitch = 1;
@@ -206,6 +204,29 @@
           }
         }
       }
+
+      // Valida que el email no sea vacio
+      if(trim($_POST['cCliPCECn']) != "") {
+        $vCorreos = explode(",", $_POST['cCliPCECn']);
+        for ($i=0; $i < count($vCorreos); $i++) { 
+          $vCorreos[$i] = trim($vCorreos[$i]);
+          if($vCorreos[$i] != ""){
+            if (!filter_var($vCorreos[$i], FILTER_VALIDATE_EMAIL)) {
+              $nSwitch = 1;
+              $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+              $cMsj .= " El Correo [".$vCorreos[$i]."], No es Valido.\n";
+            }
+          }
+        }
+      }
+
+      // Valida que el contenido no sea vacio
+      if ($_POST['cConten'] == "") {
+        $nSwitch = 1;
+        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+        $cMsj .= "El contenido no puede ser vacio.\n";
+      }
+
     break;
   }
   // Fin de la Validacion
@@ -220,59 +241,57 @@
     switch ($_COOKIE['kModo']) {
       case "NUEVOTICKET":
         $cAnioMif = $_POST['cPerAno'];
-
         // Insertando en la Tabla lccaYYYY (Cabecera)
-        $qInsert  = array(array('NAME' => 'ceridxxx','VALUE' => trim(strtoupper($_POST['cCerId']))          ,'CHECK' => 'SI'),  //Id del comprobante
-                          array('NAME' => 'comidxxx','VALUE' => trim(strtoupper($_POST['cComId']))         ,'CHECK' => 'SI'),  //Codigo del comprobante
-                          array('NAME' => 'comcodxx','VALUE' => trim(strtoupper($_POST['cComCod']))         ,'CHECK' => 'SI'),  //Codigo del comprobante
-                          array('NAME' => 'comprexx','VALUE' => trim(strtoupper($_POST['cComPre']))         ,'CHECK' => 'SI'),  //Prefijo
-                          array('NAME' => 'comcscxx','VALUE' => trim($_POST['cComCsc'])                     ,'CHECK' => 'SI'),  //Consecutivo uno
-                          array('NAME' => 'comcsc2x','VALUE' => trim($_POST['cComCsc2'])                    ,'CHECK' => 'SI'),  //Consecutivo dos
-                          array('NAME' => 'comfecxx','VALUE' => trim($_POST['cComFec'])                     ,'CHECK' => 'SI'),  //Fecha del comprobante
-                          array('NAME' => 'cliidxxx','VALUE' => trim($_POST['cCliId'])                      ,'CHECK' => 'SI'),  //Id Cliente
-                          array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])                     ,'CHECK' => 'SI'),  //Codigo Tipo de Ticket
-                          array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])                     ,'CHECK' => 'SI'),  //Codigo Prioridad Ticket
-                          array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])                     ,'CHECK' => 'SI'),  //Codigo Status Ticket
-                          array('NAME' => 'ticasuxx','VALUE' => trim($_POST['cAsuTck'])                     ,'CHECK' => 'SI'),  //Asunto
-                          array('NAME' => 'ticcierx','VALUE' => trim($_POST['cComFec'])                   ,'CHECK' => 'SI'),  //Fecha de cierre
-                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))        ,'CHECK' => 'SI'),  //Usuario que creo el registro
-                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                               ,'CHECK' => 'SI'),  //Fecha de creacion
-                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                               ,'CHECK' => 'SI'),  //Hora de creacion
-                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                               ,'CHECK' => 'SI'),  //Fecha de modificacion
-                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                               ,'CHECK' => 'SI'),  //Hora de modificacion
-                          array('NAME' => 'regestxx','VALUE' => trim("ACTIVO")                              ,'CHECK' => 'SI'),  //Estado
-                          array('NAME' => 'regstamp','VALUE' => trim("Y-m-d")                               ,'CHECK' => 'SI')); //Fecha de modificacion
+        $qInsert  = array(array('NAME' => 'ceridxxx','VALUE' => trim($_POST['cCerId'])               ,'CHECK' => 'SI'),  //Id del comprobante
+                          array('NAME' => 'comidxxx','VALUE' => trim($_POST['cComId'])               ,'CHECK' => 'SI'),  //Codigo del comprobante
+                          array('NAME' => 'comcodxx','VALUE' => trim($_POST['cComCod'])              ,'CHECK' => 'SI'),  //Codigo del comprobante
+                          array('NAME' => 'comprexx','VALUE' => trim(strtoupper($_POST['cComPre']))  ,'CHECK' => 'SI'),  //Prefijo
+                          array('NAME' => 'comcscxx','VALUE' => trim($_POST['cComCsc'])              ,'CHECK' => 'SI'),  //Consecutivo uno
+                          array('NAME' => 'comcsc2x','VALUE' => trim($_POST['cComCsc2'])             ,'CHECK' => 'SI'),  //Consecutivo dos
+                          array('NAME' => 'comfecxx','VALUE' => trim($_POST['cComFec'])              ,'CHECK' => 'SI'),  //Fecha del comprobante
+                          array('NAME' => 'cliidxxx','VALUE' => trim($_POST['cCliId'])               ,'CHECK' => 'SI'),  //Id Cliente
+                          array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])              ,'CHECK' => 'SI'),  //Codigo Tipo de Ticket
+                          array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])              ,'CHECK' => 'SI'),  //Codigo Prioridad Ticket
+                          array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])              ,'CHECK' => 'SI'),  //Codigo Status Ticket
+                          array('NAME' => 'ticasuxx','VALUE' => trim($_POST['cAsuTck'])              ,'CHECK' => 'SI'),  //Asunto
+                          array('NAME' => 'ticcierx','VALUE' => trim('')                             ,'CHECK' => 'NO'),  //Fecha de cierre
+                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_POST['cUsrId']))   ,'CHECK' => 'SI'),  //Usuario que creo el registro
+                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                        ,'CHECK' => 'SI'),  //Fecha de creacion
+                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                        ,'CHECK' => 'SI'),  //Hora de creacion
+                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                        ,'CHECK' => 'SI'),  //Fecha de modificacion
+                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                        ,'CHECK' => 'SI'),  //Hora de modificacion
+                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')                       ,'CHECK' => 'SI'),  //Estado
+                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')                  ,'CHECK' => 'SI')); //Fecha de modificacion
 
         if (!f_MySql("INSERT","ltic$cPerAno",$qInsert,$xConexion01,$cAlfa)) {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error guardando datos de la Certificacion.\n";
+          $cMsj .= "Error guardando datos de la Tickets - Cabecera \n";
         } else {
-          // Insertando en la tabla lcdeYYYY (Detalle)
+          // Insertando en la tabla ltidYYYY (Detalle)
           $qCertifiCab  = "SELECT ";
-          $qCertifiCab .= "MAX(ceridxxx) AS ultimoId ";
-          $qCertifiCab .= "FROM $cAlfa.lcca$cPerAno";
+          $qCertifiCab .= "MAX(ticidxxx) AS ultimoId ";
+          $qCertifiCab .= "FROM $cAlfa.ltic$cPerAno";
           $xCertifiCab  = f_MySql("SELECT","",$qCertifiCab,$xConexion01,"");
           $vCertifiCab  = mysql_fetch_array($xCertifiCab);
 
           $nErrorDetalle = 0;
-          $qInsert = array(array('NAME' => 'ceridxxx','VALUE' => $vCertifiCab['ultimoId']             ,'CHECK' => 'SI'),  //Id Certificacion Cabecera
-                          array('NAME' => 'sersapxx','VALUE' => trim($_POST['cCodSapSer' . $i])       ,'CHECK' => 'NO'),  //Codigo SAP Servicio
-                          array('NAME' => 'subidxxx','VALUE' => trim($_POST['cSubId_Certi' . $i])     ,'CHECK' => 'NO'),  //Id Subservicio
-                          array('NAME' => 'subdesxx','VALUE' => trim($_POST['cDesMaterial' . $i])     ,'CHECK' => 'SI'),  //Descripcion Subservicio
-                          array('NAME' => 'obfidxxx','VALUE' => trim($_POST['cObfId_Certi' . $i])     ,'CHECK' => 'SI'),  //Id Objeto Facturable
-                          array('NAME' => 'ufaidxxx','VALUE' => trim($_POST['cUfaId_Certi' . $i])     ,'CHECK' => 'SI'),  //Id Unidad Facturable
-                          array('NAME' => 'cebidxxx','VALUE' => trim($_POST['cCebId' . $i])           ,'CHECK' => 'SI'),  //Id Codigo Cebe
-                          array('NAME' => 'basexxxx','VALUE' => trim($_POST['cBase' . $i])            ,'CHECK' => 'SI'),  //Base
-                          array('NAME' => 'cerdconx','VALUE' => trim($_POST['cCondicion' . $i])       ,'CHECK' => 'SI'),  //Condicion
-                          array('NAME' => 'cerdestx','VALUE' => trim($_POST['cStatus' . $i])          ,'CHECK' => 'SI'),  //Status
-                          array('NAME' => 'cerdorix','VALUE' => trim($_POST['cTipoCerti' . $i])       ,'CHECK' => 'SI'),  //Origen
-                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el registro
-                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                         ,'CHECK' => 'SI'),  //Fecha de creacion
-                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de creacion 
-                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                         ,'CHECK' => 'SI'),  //Fecha de modificacion
-                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de modificacion
-                          array('NAME' => 'regestxx','VALUE' => "ENPROCESO"                           ,'CHECK' => 'SI'));  //Estado
+          $qInsert = array(array('NAME' => 'ticidxxx','VALUE' => $vCertifiCab['ultimoId']           ,'CHECK' => 'SI'),  //Id Tickets Cabecera
+                          array('NAME' => 'repcscxx','VALUE' => trim('1')                           ,'CHECK' => 'SI'),  //Consecutivo Reply
+                          array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])             ,'CHECK' => 'SI'),  //Codigo Tipo de Ticket
+                          array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])             ,'CHECK' => 'SI'),  //Codigo Prioridad Ticket
+                          array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])             ,'CHECK' => 'SI'),  //Codigo Status Ticket
+                          array('NAME' => 'ticccopx','VALUE' => trim($_POST['cCliPCECn'])           ,'CHECK' => 'NO'),  //Correos en copia
+                          array('NAME' => 'repreply','VALUE' => trim($_POST['cConten'])             ,'CHECK' => 'SI'),  //Reply
+                          array('NAME' => 'reprepor','VALUE' => trim($_POST['cRePre'])              ,'CHECK' => 'SI'),  //Realizado por (RESPONSABLE/TERCERO)
+                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_POST['cUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el Registro
+                          array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])             ,'CHECK' => 'SI'),  //Correo Usuario que Creo el Registro
+                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                       ,'CHECK' => 'SI'),  //Fecha de Creacion del Registro
+                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                       ,'CHECK' => 'SI'),  //Hora de Creacion del Registro
+                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                       ,'CHECK' => 'SI'),  //Fecha de Modificacion del Registro
+                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                       ,'CHECK' => 'SI'),  //Hora de Modificacion del Registro
+                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')                      ,'CHECK' => 'SI'),  //Estado del Registro
+                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')                 ,'CHECK' => 'SI')); //Modificado
 
           if (!f_MySql("INSERT","ltid$cPerAno",$qInsert,$xConexion01,$cAlfa)) {
             $nErrorDetalle = 1;
@@ -281,7 +300,7 @@
           if ($nErrorDetalle == 1) {
             $nSwitch = 1;
             $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-            $cMsj .= "Error guardando datos de la Certificacion en el detalle.\n";
+            $cMsj .= "Error guardando datos de la Tickets - Replies en el detalle.\n";
           }
         }
       break;

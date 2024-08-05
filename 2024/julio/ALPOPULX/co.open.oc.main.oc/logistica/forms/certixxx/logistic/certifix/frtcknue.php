@@ -69,6 +69,10 @@
               zWindow.focus();
             }
           break;
+          case "cResTck":
+            var zRuta = "frtckgri.php?gTtiCod="+document.forms['frgrm']['cTtiCod'].value.toUpperCase();
+            parent.fmpro.location = zRuta;
+          break;
         }
       }
 
@@ -160,6 +164,7 @@
           document.forms['frgrm']['oBtnDel_Certi' + xIndice].disabled = false;
         }
       }
+
     </script>
   </head>
   <body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
@@ -171,11 +176,11 @@
               <legend><?php echo $_COOKIE['kMenDes'] ?></legend>
               <form name = "frestado" action = "frtckgra.php" method = "post" target="fmpro">
                 <input type = "hidden" name = "cCerId"       value = "">
-                <input type = "hidden" name = "cComCsc2"     value = "">
                 <input type = "hidden" name = "cAnio"        value = "">
               </form>
               <form name = "frgrm" action = "frtckgra.php" method = "post" target="fmpro">
                 <input type = "hidden" name = "cCerId"    value = "<?php echo $cCerId ?>">
+                <input type = "hidden" name = "cComCod"   value = "<?php echo $cComCod ?>">
                 <input type = "hidden" name = "cComCsc2"  value = "<?php echo $cComCsc2 ?>">
                 <input type = "hidden" name = "cAnio"     value = "<?php echo $cAnio ?>">
                 <input type = "hidden" name = "cRegEst"   value = "">
@@ -184,7 +189,8 @@
                     $qUsrNom  = "SELECT USRIDXXX, USRNOMXX, USREMAXX ";
                     $qUsrNom .= "FROM $cAlfa.SIAI0003 ";
                     $qUsrNom .= "WHERE ";
-                    $qUsrNom .= "USRIDXXX = \"{$_COOKIE['kUsrId']}\"";
+                    $qUsrNom .= "USRIDXXX = \"{$_COOKIE['kUsrId']}\" AND ";
+                    $qUsrNom .= "REGESTXX = \"ACTIVO\"";
                     $xUsrNom  = f_MySql("SELECT","",$qUsrNom,$xConexion01,"");
                     if (mysql_num_rows($xUsrNom) > 0) {
                       $vUsrNom = mysql_fetch_array($xUsrNom);
@@ -211,27 +217,14 @@
                     $qStiCod  = "SELECT sticodxx, stidesxx ";
                     $qStiCod .= "FROM $cAlfa.lpar0157 ";
                     $qStiCod .= "WHERE ";
-                    $qStiCod .= "stitipxx = \"APERTURA\"";
+                    $qStiCod .= "stitipxx = \"APERTURA\" AND ";
+                    $qStiCod .= "regestxx = \"ACTIVO\"";
                     $xStiCod  = f_MySql("SELECT","",$qStiCod,$xConexion01,"");
                     if (mysql_num_rows($xStiCod) > 0) {
                       while ($vStiCod = mysql_fetch_array($xStiCod)) {
                         $nInd_mMatrizSti = count($mMatrizSti);
                         $mMatrizSti[$nInd_mMatrizSti]['sticodxx'] = $vStiCod['sticodxx'];
                         $mMatrizSti[$nInd_mMatrizSti]['stidesxx'] = $vStiCod['stidesxx'];
-                      }
-                    }
-                    // Obtengo los datos de Responsable Asignado Ticket
-                    $mMatrizRes = array();
-                    $qResTi  = "SELECT ";
-                    $qResTi .= "tticodxx, ";
-                    $qResTi .= "ttiusrxx ";
-                    $qResTi .= "FROM $cAlfa.lpar0159 ";
-                    $xResTi = f_MySql("SELECT","",$qResTi,$xConexion01,"");
-                    if (mysql_num_rows($xResTi) > 0) {
-                      while ($vResTi = mysql_fetch_array($xResTi)) {
-                        $nInd_mMatrizRes = count($mMatrizRes);
-                        $mMatrizRes[$nInd_mMatrizRes]['tticodxx'] = $vResTi['tticodxx'];
-                        $mMatrizRes[$nInd_mMatrizRes]['ttiusrxx'] = $vResTi['ttiusrxx'];
                       }
                     }
                 ?>
@@ -249,7 +242,6 @@
                       </td>
                       <td class="clase08" colspan="7">Consecutivo<br>
                         <input type = "text" Class = "letra" style = "width:140" name = "cComCsc" value="<?php echo $cComCsc ?>" readonly>
-                        <input type = "hidden" name = "cComCsc2" readonly>
                       </td>
                       <td class="clase08" colspan="1"><br>
                         <input type = "text" Class = "letra" style = "width:20;" readonly>
@@ -267,27 +259,24 @@
                         <input type="text" Class = "letra" name="cComFec" style = "width:100;text-align:center" value = "<?php echo $cComFec ?>" readonly>
                       </td>
                     </tr>
-
                     <!-- Fila 2 -->
                     <tr>
                       <td class = "clase08" colspan="5">Creado por<br>
-                        <input type = "text" Class = "letra" style = "width:100" value = "<?php echo $usrId ?>" readonly>
+                        <input type = "text" Class = "letra" style = "width:100" name = "cUsrId" value = "<?php echo $usrId ?>" readonly>
                       </td>
                       <td Class="clase08" colspan="15"><br>
                         <input type = "text" Class = "letra" style = "width:300" value = "<?php echo $usrNom ?>" readonly>
                       </td>
                       <td Class="clase08" colspan="15"><br>
-                        <input type = "text" Class = "letra" style = "width:300" value = "<?php echo $usrEma ?>" readonly>
+                        <input type = "text" Class = "letra" style = "width:300" name = "cUsrEma" value = "<?php echo $usrEma ?>" readonly>
                       </td>
                     </tr>
-
                     <!-- Fila 3 -->
                     <tr>
                       <td class="clase08" colspan="35">Asunto<br>
                         <input type = "text" Class = "letra" style = "width:700" name = "cAsuTck" value = "">
                       </td>
                     </tr>
-
                     <!-- Fila 4 -->
                     <tr>
                       <td class="clase08" colspan="5">
@@ -329,112 +318,25 @@
                         </select>
                       </td>
                     </tr>
-
-                    <!-- Servicios - MANUAL -->
-                    <!-- <tr>
-                      <td Class = "clase08" colspan="34">
-                        <fieldset id = "serviciosManual">
-                          <legend>Responsables Asignados al Tipo de Ticket</legend>
-                          <table border = '0' cellpadding = '0' cellspacing = '0' width='680'>
-                            <?php $nCol = f_Format_Cols(34); echo $nCol;?>
-                            <tr>
-                              <td colspan="34" class= "clase08" align="right">
-                                <?php if ($_COOKIE['kModo'] != "VER") { ?>
-                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:fnAddNewRowServicio('Grid_Servicios')" style = "cursor:pointer" title="Adicionar">
-                                <?php } ?>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class = "clase08" colspan="15" align="center">Identificaci&oacute;n</td>
-                              <td class = "clase08" colspan="17" align="center">nombre</td>
-                              <td class = "clase08" colspan="01" align="right">&nbsp;</td>
-                            </tr>
-                          </table>
-                          <table border = "0" cellpadding = "0" cellspacing = "0" width = "680" id = "Grid_Servicios"></table>
-                        </fieldset>
-                      </td>
-                    </tr> -->
-
                     <!-- Responsables Asignados al Tipo de Ticket -->
                     <tr>
                       <td Class = "clase08" colspan="35">
                         <fieldset id = "serviciosAutomaticos">
                           <legend>Responsables Asignados al Tipo de Ticket</legend>
-
-                          <!-- <input type = 'hidden' name = 'cSubservicios'>
-                          <input type = 'hidden' name = 'cSubserNoMarcados'>
-                          <input type = 'hidden' name = 'nIndexSubser'>
-                          <div id = 'overDivSubServicios'></div> -->
-                          <table border="1" cellpadding="0" cellspacing="0" width="670">
-                            <tr bgcolor = "<?php echo $vSysStr['system_row_title_color_ini'] ?>">
-                              <td Class = "clase08" width = "230" style="padding-left: 5px;">Identificaci&oacute;n</td>
-                              <td Class = "clase08" width = "440" style="padding-left: 5px;">Nombre</td>
-                            </tr>
-                            <?php
-                              for ($i=0; $i<count($mMatrizRes);$i++) { ?> 
-                                <tr bgcolor = "<?php echo $vSysStr['system_row_impar_color_ini'] ?>">
-                                  <td Class="clase08" style="padding-left: 5px;"><?php echo $mMatrizRes[$i]['tticodxx'] ?></td>
-                                  <td Class="clase08" style="padding-left: 5px;"><?php echo $mMatrizRes[$i]['ttiusrxx'] ?></td>
-                                </tr>
-                              <?php
-                              } ?>
-                          </table>
+                          <div id = "overDivResponsable"></div>
                         </fieldset>
                       </td>
                     </tr>
-
-                    <script languaje = "javascript"> 
-                      var inputElement = document.getElementById('cTtiCod');
-                      inputElement.addEventListener('input', function() {
-                        var valor = inputElement.value;
-                        console.log(valor);
-                      });
-                    </script>
-
-                    <!-- Certificacion -->
-                    <!-- <tr>
-                      <td Class = "clase08" colspan="49">
-                        <fieldset id = "certificacionManual">
-                          <legend>Certificaci&oacute;n</legend>
-                          <table border = '0' cellpadding = '0' cellspacing = '0' width='940'>
-                            <?php $nCol = f_Format_Cols(35); echo $nCol;?>
-                            <tr>
-                              <td colspan="47" class= "clase08" align="right">
-                                <?php if ($_COOKIE['kModo'] != "VER") { ?>
-                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-dir_bg.gif" onClick = "javascript:fnAddNewRowCertificacion('Grid_Certificacion','','MANUAL')" style = "cursor:pointer" title="Adicionar">
-                                <?php } ?>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class = "clase08" colspan="01" align="center">Item</td>
-                              <td class = "clase08" colspan="07" align="center">Descripci&oacute;n Material</td>
-                              <td class = "clase08" colspan="03" align="center">Cod Sap</td>
-                              <td class = "clase08" colspan="06" align="center">Objeto Facturable</td>
-                              <td class = "clase08" colspan="06" align="center">Unidad Facturable</td>
-                              <td class = "clase08" colspan="03" align="center">Cod Cebe</td>
-                              <td class = "clase08" colspan="07" align="center">Descripci&oacute;n Corta</td>
-                              <td class = "clase08" colspan="04" align="center">Base</td>
-                              <td class = "clase08" colspan="05" align="center">Condici&oacute;n</td>
-                              <td class = "clase08" colspan="04" align="center">Status</td>
-                              <td class = "clase08" colspan="01" align="right">&nbsp;</td>
-                            </tr>
-                          </table>
-                          <table border = "0" cellpadding = "0" cellspacing = "0" width = "900" id = "Grid_Certificacion"></table>
-                        </fieldset>
-                      </td>
-                    </tr> -->
-
                     <!-- Correos en Copia -->
                     <tr>
                       <td Class = "clase08" colspan = "35">Correos en Copia (separados por coma)<br>
-                        <input type="text" Class = "letra" name = "" id = "" style = 'width:700'>
+                        <input type="text" Class = "letra" name = "cCliPCECn" id = "" style = 'width:700'>
                       </td>
                     </tr>
-                    
                     <!-- Contenido -->
                     <tr>
                       <td Class = "clase08" colspan = "35">Contenido<br>
-                          <textarea Class="letra" name="cCerObs" style="width:700;height:100;" onblur="javascript:this.value=this.value.toUpperCase();"></textarea>
+                          <textarea Class="letra" name="cConten" style="width:700;height:100;" onblur="javascript:this.value=this.value.toUpperCase();"></textarea>
                       </td>
                     </tr>
                   </table>

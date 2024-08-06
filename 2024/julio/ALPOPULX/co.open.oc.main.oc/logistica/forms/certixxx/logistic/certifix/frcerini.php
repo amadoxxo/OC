@@ -1,7 +1,7 @@
 <?php
   /**
    * Tracking Certificacion.
-   * --- Descripcion: Este programa permite litsar y consultar los registros de Certificacion que se encuentran en la Base de Datos
+   * --- Descripcion: Este programa permite listar y consultar los registros de Certificacion que se encuentran en la Base de Datos
    * @author Juan Jose Trujillo Ch. <juan.trujillo@openits.co>
    * @package opencomex
    * @version 001

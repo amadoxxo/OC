@@ -1,12 +1,18 @@
 <?php
 /**
  * Orgainzacion de Ventas.
- * --- Descripcion: Permite Crear un nuevo estado de ticket.
- * @author cristian.perdomo@openits.co
+ * --- Descripcion: Permite Ver la información del ticket.
+ * @author elian.amado@openits.co
  * @package openComex
  * @version 001
  */
-include("../../../../../financiero/libs/php/utility.php");
+  include("../../../../../financiero/libs/php/utility.php");
+  include("../../../../../logistica/libs/php/utiworkf.php");
+
+  $verTickets = new cTickets();
+  $cabecera = $verTickets->fnCabeceraTickets($cCerId);
+  $detalle  = $verTickets->fnDetalleTickets($cCerId);
+
 ?>
 <html>
 <head>
@@ -53,50 +59,50 @@ include("../../../../../financiero/libs/php/utility.php");
       <table border="0" cellpadding="0" cellspacing="0" width="1050">
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>TICKET</b></td>
-          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"></td>
+          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"><?php echo $cabecera['ticidxxx'];?></td>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>POST ID</b></td>
-          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"></td>
+          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"><?php echo $cabecera['ticidxxx'];?></td>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>PRIORIDAD</b></td>
-          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"></td>
+          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"><?php echo $cabecera['ptidesxx']; ?></td>
           <td style="width: 5%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>STATUS</b></td>
-          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"></td>
+          <td style="width: 15%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;"><?php echo $cabecera['stidesxx']; ?></td>
         </tr>
         <tr>
           <td style="width: 20%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>APERTURA TICKET</b></td>
-          <td style="width: 45%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="3"></td>
+          <td style="width: 45%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="3"><?php echo $cabecera['regfcrex']; ?></td>
           <td style="width: 20%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;" colspan="2"><b>CIERRE TICKET</b></td>
-          <td style="width: 25%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="2"></td>
+          <td style="width: 25%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="2"><?php echo $cabecera['']; ?></td>
         </tr>
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>TIPO DE TICKET</b></td>
-          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"></td>
+          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"><?php echo $cabecera['ttidesxx']; ?></td>
         </tr>
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>TICKET ENVIADO A</b></td>
-          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"></td>
+          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"><?php echo $cabecera['ticidxxx']; ?></td>
         </tr>
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>TICKET CC A</b></td>
-          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"></td>
+          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"><?php echo $detalle[0]['ticccopx']; ?></td>
         </tr>
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>CERTIFICACION</b></td>
-          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"></td>
+          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"><?php echo $detalle[0]['ticidxxx']; ?></td>
         </tr>
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>CLIENTE</b></td>
-          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"></td>
+          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"><?php echo $cabecera['clinomxx']; ?></td>
         </tr>
         <tr>
           <td style="width: 10%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #E5E5E5; padding-left: 2px; font-size: 9px;"><b>ASUNTO</b></td>
-          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"></td>
+          <td style="width: 95%; height: 20px; border: 0.5px solid #CCCCCC; background-color: #fff; padding-left: 2px;" colspan="7"><?php echo $cabecera['ticasuxx']; ?></td>
         </tr>
       </table>
-      <table border="0" cellpadding="0" cellspacing="0" width="850">
+      <table border="0" cellpadding="0" cellspacing="0" width="1050">
         <tr>
           <td>
             <fieldset>
-              <legend><?php echo ($_COOKIE['kModo'] == "NUEVO") ?  "Nuevo " . $_COOKIE['kProDes'] : $_COOKIE['kMenDes']  ?></legend>
+              <legend>HISTORICO TICKETS</legend>
             </fieldset>
           </td>
         </tr>

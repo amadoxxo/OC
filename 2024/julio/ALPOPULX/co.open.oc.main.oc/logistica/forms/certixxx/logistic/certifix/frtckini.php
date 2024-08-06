@@ -29,37 +29,84 @@
       }
 
       function fnEditar(xModo, otherData) {
-        var countChecked = 0; // Variable para contar los checkboxes marcados
-
-        // Recorre todos los checkboxes y cuenta cuántos están marcados
-        for (var i = 0; i < document.forms['frgrm']['oCheck'].length; i++) {
-            if (document.forms['frgrm']['oCheck'][i].checked == true) {
-                countChecked++;
-            }
+        var nCheck = 0;
+        for (i=0; i<document.forms['frgrm']['oCheck'].length;i++) {
+          if (document.forms['frgrm']['oCheck'][i].checked == true) {
+            nCheck++;
+          }
         }
 
-        // Comprueba si hay más de un checkbox marcado
-        if (countChecked > 1) {
-            alert('Hay más de uno marcado');
-        } else if (condition){
-            alert('Hay uno o ninguno marcado');
-        }
+        if (nCheck == 1 || document.forms['frgrm']['oCheck'].checked == true) {
+          switch (document.forms['frgrm']['vRecords'].value) {
+            case "1":
+              if (document.forms['frgrm']['oCheck'].checked == true) {
+                var mComDat  = document.forms['frgrm']['oCheck'].id.split('~');
+                var mCerId   = mComDat[0]; // Id de la certificacion
+                var mComFec  = mComDat[1]; // Fecha de creacion del registro
+                var mComId   = mComDat[2]; // Id del comprobante
+                var mComCod  = mComDat[3]; // Codigo del comprobante
+                var mComCsc  = mComDat[4]; // Consecutivo uno
+                var mComCsc2 = mComDat[5]; // Consecutivo dos
+                var mComPre  = mComDat[7]; // Prefijo
+                var mCliId   = mComDat[8]; // Id del cliente
+                var mCliNom  = mComDat[9]; // Nombre del cliente
 
-        // Configuración de la ventana emergente
-        var nWidth  = 900;
-        var nHeight = 500;
-        var nX      = screen.width;
-        var nY      = screen.height;
-        var nNx     = (nX - nWidth) / 2;
-        var nNy     = (nY - nHeight) / 2;
-        var cWinOpt = "width=" + nWidth + ",scrollbars=1,height=" + nHeight + ",left=" + nNx + ",top=" + nNy;
-        
-        // Construye la URL con los parámetros de consulta
-        var url = 'frmtiovn.php?xModo=' + encodeURIComponent(xModo) + '&otherData=' + encodeURIComponent(otherData);
-        
-        // Abre una nueva ventana con la URL generada
-        var cWindow = window.open(url, 'cConInd', cWinOpt);
-        cWindow.focus();
+                var ruta = "frtcknue.php?cCerId="   +mCerId+
+                                        "&cComFec=" +mComFec+
+                                        "&cComId="  +mComId+
+                                        "&cComCod=" +mComCod+
+                                        "&cComCsc=" +mComCsc+
+                                        "&cComCsc2="+mComCsc2+
+                                        "&cComPre=" +mComPre+
+                                        "&cCliId="  +mCliId+
+                                        "&cCliNom=" +mCliNom+
+                                        "&cAnio="   +mComFec.substr(0,4);
+                document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
+                document.cookie="kMenDes=Editar Ticket;path="+"/";
+                document.cookie="kModo="+xModo+";path="+"/";
+                parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
+                document.location.ruta; // Invoco el menu.
+              }
+            break;
+            default:
+              var zSw_Prv = 0;
+              for (i=0;i<document.forms['frgrm']['oCheck'].length;i++) {
+                if (document.forms['frgrm']['oCheck'][i].checked == true && zSw_Prv == 0) {
+                  // Solo Deja Legalizar el Primero Seleccionado
+                  zSw_Prv = 1;
+                  var mComDat  = document.forms['frgrm']['oCheck'][i].id.split('~');
+                  var mCerId   = mComDat[0]; // Id de la certificacion
+                  var mComFec  = mComDat[1]; // Fecha de creacion del registro
+                  var mComId   = mComDat[2]; // Id del comprobante
+                  var mComCod  = mComDat[3]; // Codigo del comprobante
+                  var mComCsc  = mComDat[4]; // Consecutivo uno
+                  var mComCsc2 = mComDat[5]; // Consecutivo dos
+                  var mComPre  = mComDat[7]; // Prefijo
+                  var mCliId   = mComDat[8]; // Id del cliente
+                  var mCliNom  = mComDat[9]; // Nombre del cliente
+
+                  var ruta = "frtcknue.php?cCerId=" +mCerId+
+                                        "&cComFec=" +mComFec+
+                                        "&cComId="  +mComId+
+                                        "&cComCod=" +mComCod+
+                                        "&cComCsc=" +mComCsc+
+                                        "&cComCsc2="+mComCsc2+
+                                        "&cComPre=" +mComPre+
+                                        "&cCliId="  +mCliId+
+                                        "&cCliNom=" +mCliNom+
+                                        "&cAnio="   +mComFec.substr(0,4);
+                  document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
+                  document.cookie="kMenDes=Editar Ticket;path="+"/";
+                  document.cookie="kModo="+xModo+";path="+"/";
+                  parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
+                  document.location = ruta; // Invoco el menu.
+                }
+              }
+            break;
+          }
+        } else {
+          alert("Solo se permite seleccionar un registro.");
+        }
       }
 
       function fnLink(xModId,xProId,xMenId,xForm,xOpcion,xMenDes) {
@@ -169,7 +216,7 @@
       <input type = "hidden" name = "vTimes"     value = "<?php echo $vTimes ?>">
       <input type = "hidden" name = "vBuscar"    value = "<?php echo $_POST['vBuscar'] ?>">
       <input type = "hidden" name = "cOrderByOrder"  value = "<?php echo $_POST['cOrderByOrder'] ?>" style = "width:1000">
-      <input type = "text" name = "cCerId"        value = "<?php echo $cCerId ?>">
+      <input type = "hidden" name = "cCerId"        value = "<?php echo $cCerId ?>">
 
       <?php
         if ($vLimInf == "" && $vLimSup == "") {
@@ -244,7 +291,7 @@
           $qMiTicket .= "$cAlfa.ltic$iAno.regfmodx, ";  // Fecha de modificación
           $qMiTicket .= "$cAlfa.ltic$iAno.reghmodx, ";  // Hora de modificación
           $qMiTicket .= "$cAlfa.ltic$iAno.regestxx, ";  // Estado
-          $qMiTicket .= "$cAlfa.lpar0150.clinomxx, ";   // Razon social
+          $qMiTicket .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) AS clinomxx, ";   // Razon social
           $qMiTicket .= "$cAlfa.lpar0158.ttidesxx, ";   // Descripcion Ticket
           $qMiTicket .= "$cAlfa.lpar0156.pticolxx, ";   // Color
           $qMiTicket .= "$cAlfa.lpar0156.ptidesxx, ";   // Proiridad descripcion
@@ -603,7 +650,7 @@
                           } ?>
                           <tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')"
                             onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
-                            <td class="letra7"><a href = javascript:fnVer('<?php echo $mMiTicket[$i]['ceridxxx']?>','<?php echo $mMiTicket[$i]['regfcrex']?>')>
+                            <td class="letra7"><a href = javascript:fnVer('<?php echo $mMiTicket[$i]['ticidxxx']?>','<?php echo $mMiTicket[$i]['regfcrex']?>')>
                                                         <?php echo $mMiTicket[$i]['ticidxxx'] ?> </a></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['ttidesxx'] ?></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['ticasuxx'] ?></td>
@@ -615,14 +662,16 @@
                             
                             <td Class="letra7" align="right">
                               <input type="checkbox" name="oCheck" value = "<?php echo  mysql_num_rows($xMiTicket) ?>"
-                              id="<?php echo $mMiTicket[$i]['ticidxxx'].'~'. //[0] Id Ticket
-                                            $mMiTicket[$i]['stidesxx'].'~'.  //[1] Status Ticket
+                              id="<?php echo $mMiTicket[$i]['ceridxxx'].'~'. //[0] Id Ticket
+                                            $mMiTicket[$i]['regfcrex'].'~'.  //[1] Status Ticket
                                             $mMiTicket[$i]['comidxxx'].'~'.  //[2]
                                             $mMiTicket[$i]['comcodxx'].'~'.  //[3]
                                             $mMiTicket[$i]['comcscxx'].'~'.  //[4]
                                             $mMiTicket[$i]['comcsc2x'].'~'.  //[5]
                                             $mMiTicket[$i]['regestxx'].'~'.  //[6]
-                                            $mMiTicket[$i]['comprexx']       //[7] ?>"
+                                            $mMiTicket[$i]['comprexx'].'~'.  //[7]
+                                            $mMiTicket[$i]['cliidxxx'].'~'.  //[8] 
+                                            $mMiTicket[$i]['clinomxx']   //[9] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mMiTicket) ?>'">
                             </td>
                           </tr>

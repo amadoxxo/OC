@@ -8,6 +8,7 @@
    */
 
   include("../../../../../financiero/libs/php/utility.php");
+  include("../../../../../logistica/libs/php/utiworkf.php");
 ?>
 <html>
   <head>
@@ -375,10 +376,13 @@
         <?php
       break;
       case "EDITAR":
-        fnCargaData($cCerId,$cAnio);
+        // fnCargaData($cCerId,$cAnio);
+        // $verTickets = new cTickets();
+        // $verTickets->fnCabeceraTickets($cCerId);
+        // $verTickets->fnDetalleTickets($cCerId);
 
         ?>
-        <script languaje = "javascript">
+        <!-- <script languaje = "javascript">
           // Deshabilito los campos de cabecera
           document.forms['frgrm']['cComPre'].readOnly   = true;
           document.forms['frgrm']['cComPre'].onfocus    = "";
@@ -414,7 +418,7 @@
           document.getElementById('id_href_dVigDesde').removeAttribute('href');
           document.getElementById('id_href_dVigHasta').removeAttribute('href');
           document.getElementById('id_href_CdiSap').removeAttribute('href');
-        </script>
+        </script> -->
       <?php
       break;
       case "VER":

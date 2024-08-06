@@ -633,6 +633,87 @@
           alert("Solo se permite seleccionar un registro.");
         }
       }
+
+      function fnVerTickets(xModo) {
+        var nCheck = 0;
+        for (i=0; i<document.forms['frgrm']['oCheck'].length;i++) {
+          if (document.forms['frgrm']['oCheck'][i].checked == true) {
+            nCheck++;
+          }
+        }
+
+        if (nCheck == 1 || document.forms['frgrm']['oCheck'].checked == true) {
+          switch (document.forms['frgrm']['vRecords'].value) {
+            case "1":
+              if (document.forms['frgrm']['oCheck'].checked == true) {
+                var mComDat  = document.forms['frgrm']['oCheck'].id.split('~');
+                var mCerId   = mComDat[0]; // Id de la certificacion
+                var mComFec  = mComDat[1]; // Fecha de creacion del registro
+                var mComId   = mComDat[2]; // Id del comprobante
+                var mComCod  = mComDat[3]; // Codigo del comprobante
+                var mComCsc  = mComDat[4]; // Consecutivo uno
+                var mComCsc2 = mComDat[5]; // Consecutivo dos
+                var mComPre  = mComDat[7]; // Prefijo
+                var mCliId   = mComDat[8]; // Id del cliente
+                var mCliNom  = mComDat[9]; // Nombre del cliente
+
+                var ruta = "frtckini.php?cCerId="   +mCerId+
+                                        "&cComFec=" +mComFec+
+                                        "&cComId="  +mComId+
+                                        "&cComCod=" +mComCod+
+                                        "&cComCsc=" +mComCsc+
+                                        "&cComCsc2="+mComCsc2+
+                                        "&cComPre=" +mComPre+
+                                        "&cCliId="  +mCliId+
+                                        "&cCliNom=" +mCliNom+
+                                        "&cAnio="   +mComFec.substr(0,4);
+                document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
+                document.cookie="kMenDes=Crear Ticket;path="+"/";
+                document.cookie="kModo="+xModo+";path="+"/";
+                parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
+                document.location.ruta; // Invoco el menu.
+              }
+            break;
+            default:
+              var zSw_Prv = 0;
+              for (i=0;i<document.forms['frgrm']['oCheck'].length;i++) {
+                if (document.forms['frgrm']['oCheck'][i].checked == true && zSw_Prv == 0) {
+                  // Solo Deja Legalizar el Primero Seleccionado
+                  zSw_Prv = 1;
+                  var mComDat  = document.forms['frgrm']['oCheck'][i].id.split('~');
+                  var mCerId   = mComDat[0]; // Id de la certificacion
+                  var mComFec  = mComDat[1]; // Fecha de creacion del registro
+                  var mComId   = mComDat[2]; // Id del comprobante
+                  var mComCod  = mComDat[3]; // Codigo del comprobante
+                  var mComCsc  = mComDat[4]; // Consecutivo uno
+                  var mComCsc2 = mComDat[5]; // Consecutivo dos
+                  var mComPre  = mComDat[7]; // Prefijo
+                  var mCliId   = mComDat[8]; // Id del cliente
+                  var mCliNom  = mComDat[9]; // Nombre del cliente
+
+                  var ruta = "frtckini.php?cCerId=" +mCerId+
+                                        "&cComFec=" +mComFec+
+                                        "&cComId="  +mComId+
+                                        "&cComCod=" +mComCod+
+                                        "&cComCsc=" +mComCsc+
+                                        "&cComCsc2="+mComCsc2+
+                                        "&cComPre=" +mComPre+
+                                        "&cCliId="  +mCliId+
+                                        "&cCliNom=" +mCliNom+
+                                        "&cAnio="   +mComFec.substr(0,4);
+                  document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
+                  document.cookie="kMenDes=Crear Ticket;path="+"/";
+                  document.cookie="kModo="+xModo+";path="+"/";
+                  parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
+                  document.location = ruta; // Invoco el menu.
+                }
+              }
+            break;
+          }
+        } else {
+          alert("Solo se permite seleccionar un registro.");
+        }
+      }
     
     </script>
   </head>
@@ -1190,6 +1271,9 @@
                               <?php break;
                               case "NUEVOTICKET": ?>
                                 <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_global-changes_bg1.gif" onClick = "javascript:fnCrearTicket('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                              <?php break;
+                              case "VERTICKETS": ?>
+                                <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/wysiwyg.gif" onClick = "javascript:fnVerTickets('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
                               <?php break;
                             }
                           }

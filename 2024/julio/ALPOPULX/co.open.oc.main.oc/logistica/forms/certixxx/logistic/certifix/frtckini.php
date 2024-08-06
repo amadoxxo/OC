@@ -1,25 +1,13 @@
 <?php
   /**
-   * Tracking Mis Tickets.
-   * --- Descripcion: Este programa permite listar y consultar los registros de Mis Tickets asignados que se encuentran en la Base de Datos
-   * @author Cristian Perdomo. <cristian.perdomo@openits.co>
+   * Tracking Ver Tickets.
+   * --- Descripcion: Este programa permite listar y consultar los registros de Ver Tickets.
+   * @author Elian Amado. <elian.amado@openits.co>
    * @package opencomex
    * @version 001
    */
   include("../../../../../financiero/libs/php/utility.php");
 
-  $kDf = explode("~",$_COOKIE["kDatosFijos"]);
-  $kMysqlDb = $kDf[3];
-
-  /* Busco en la 05 que Tiene Permiso el Usuario*/
-  $qUsrMen  = "SELECT * ";
-  $qUsrMen .= "FROM $cAlfa.sys00039 ";
-  $qUsrMen .= "WHERE ";
-  $qUsrMen .= "sys00039.modidxxx = \"{$_COOKIE['kModId']}\" AND ";
-  $qUsrMen .= "sys00039.proidxxx = \"{$_COOKIE['kProId']}\" AND ";
-  $qUsrMen .= "sys00039.menimgon != \"\" ";
-  $qUsrMen .= "ORDER BY sys00039.menordxx";
-  $xUsrMen  = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
 ?>
 <html>
   <head>
@@ -32,53 +20,13 @@
     <script language = "javascript">
 
       function fnVer(xCerId,xRegfcre) {
-        var cPathUrl = "frmitovn.php?cCerId="+xCerId+"&cAnio="+xRegfcre.substr(0,4);
+        var cPathUrl = "frtckovn.php?cCerId="+xCerId+"&cAnio="+xRegfcre.substr(0,4);
         document.cookie = "kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-        document.cookie = "kMenDes=Historico Ticket;path="+"/";
+        document.cookie = "kMenDes=Ver Tickets;path="+"/";
         document.cookie = "kModo=VER;path="+"/";
         parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
         document.location = cPathUrl; // Invoco el menu.
       }
-
-      /* function fnEditar(xModo) {
-        
-        switch (document.forms['frgrm']['vRecords'].value) {
-          case "1":
-            if (document.forms['frgrm']['oCheck'].checked == true) {
-                var mComDat = document.forms['frgrm']['oCheck'].id.split('~');
-                alert(mComDat[0]);
-                if (mComDat[1] == 'CIERRE') {
-                  alert('ok');
-                }
-                var ruta = "frcernue.php?cCerId="+mComDat[0]+"&cAnio="+mComDat[1].substr(0,4);
-                document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                document.cookie="kMenDes=Editar Reply;path="+"/";
-                document.cookie="kModo="+xModo+";path="+"/";
-                parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                document.location = ruta; // Invoco el menu.
-            }
-          break;
-          default:
-            var zSw_Prv = 0;
-            for (i=0;i<document.forms['frgrm']['oCheck'].length;i++) {
-              if (document.forms['frgrm']['oCheck'][i].checked == true && zSw_Prv == 0) {
-                // Solo Deja Legalizar el Primero Seleccionado
-                zSw_Prv = 1;
-                var mComDat = document.forms['frgrm']['oCheck'][i].id.split('~');
-                if (mComDat[1] == 'CIERRE') {
-                  alert('ok');
-                }
-                  var ruta = "frcernue.php?cCerId="+mComDat[0]+"&cAnio="+mComDat[1].substr(0,4);
-                  document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                  document.cookie="kMenDes=Editar Reply;path="+"/";
-                  document.cookie="kModo="+xModo+";path="+"/";
-                  parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                  document.location = ruta; // Invoco el menu.
-              }
-            }
-          break;
-        }
-      } */
 
       function fnEditar(xModo, otherData) {
         var countChecked = 0; // Variable para contar los checkboxes marcados
@@ -198,47 +146,6 @@
           }
         }
       }
-
-      function fnConsultaInducida(){
-        var nWidth  = 600;
-        var nHeight = 450;
-        var nX      = screen.width;
-        var nY      = screen.height;
-        var nNx     = (nX-nWidth)/2;
-        var nNy     = (nY-nHeight)/2;
-        var cWinOpt = "width="+nWidth+",scrollbars=1,height="+nHeight+",left="+nNx+",top="+nNy;
-        cWindow = window.open('', 'cConInd', cWinOpt);
-        document.forms['frgrm'].action = 'frmtimex.php';
-        document.forms['frgrm'].target = 'cConInd';
-        document.forms['frgrm'].submit();
-        document.forms['frgrm'].target = 'fmwork';
-        document.forms['frgrm'].action = 'frmtiini.php';
-        cWindow.focus();
-      }
-
-      function fnEnviarConsultaInducida(xDatos){
-        document.forms['frgrm']['cPeriodos'].value     = xDatos['cPeriodos'];
-        document.forms['frgrm']['dDesde'].value        = xDatos['dDesde'];
-        document.forms['frgrm']['dHasta'].value        = xDatos['dHasta'];
-        document.forms['frgrm']['cOfvSap'].value       = xDatos['cOfvSap'];
-        document.forms['frgrm']['cUsrId'].value        = xDatos['cUsrId'];
-        document.forms['frgrm']['cEstado'].value       = xDatos['cEstado'];
-        document.forms['frgrm']['cConsecutivo'].value  = xDatos['cConsecutivo'];
-        document.forms['frgrm']['cMifId'].value        = xDatos['cMifId'];
-        document.forms['frgrm']['cCliId'].value        = xDatos['cCliId'];
-        document.forms['frgrm']['cDepNum'].value       = xDatos['cDepNum'];
-        document.forms['frgrm'].submit();
-      }
-
-      function fnImprimir() {
-        var form = document.getElementById('frgrm');
-        var formData = new FormData(form);
-        var queryString = new URLSearchParams(formData).toString();
-
-        // Redirigir a la URL con los datos del formulario
-        parent.fmpro.location = 'frmitprn.php?' + queryString;
-      }
-
     </script>
   </head>
   <body topmargin = "0" leftmargin = "0" rightmargin = "0" bottommargin = "0" marginheight = "0" marginwidth = "0">
@@ -254,7 +161,7 @@
       <input type = "hidden" name = "gObservacion" id="gObservacion">
     </form>
 
-    <form name = "frgrm" id="frgrm" action = "frmtiini.php" method = "post" target="fmwork">
+    <form name = "frgrm" id="frgrm" action = "frtckini.php" method = "post" target="fmwork">
       <input type = "hidden" name = "vRecords"   value = "">
       <input type = "hidden" name = "vLimInf"    value = "<?php echo $vLimInf ?>">
       <input type = "hidden" name = "vSortField" value = "<?php echo $vSortField ?>">
@@ -262,72 +169,8 @@
       <input type = "hidden" name = "vTimes"     value = "<?php echo $vTimes ?>">
       <input type = "hidden" name = "vBuscar"    value = "<?php echo $_POST['vBuscar'] ?>">
       <input type = "hidden" name = "cOrderByOrder"  value = "<?php echo $_POST['cOrderByOrder'] ?>" style = "width:1000">
-      <!--Campos ocultos de la consulta inducida-->
-      <input type = "hidden" name = "cConsecutivo"  value = "<?php echo $cConsecutivo ?>">
-      <input type = "hidden" name = "cMifId"        value = "<?php echo $cMifId ?>">
-      <input type = "hidden" name = "cCliId"        value = "<?php echo $cCliId ?>">
-      <input type = "hidden" name = "cDepNum"       value = "<?php echo $cDepNum ?>">
+      <input type = "text" name = "cCerId"        value = "<?php echo $cCerId ?>">
 
-      <!-- Inicia Nivel de Procesos -->
-      <?php if (mysql_num_rows($xUsrMen) > 0) { ?>
-        <center>
-          <table width="95%" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-              <td>
-                <fieldset>
-                  <legend>Proceso <?php echo $_COOKIE['kProDes'] ?></legend>
-                  <center>
-                    <table cellspacing="0" width="100%">
-                      <?php
-                        $y = 0;
-                        // Empiezo a Leer la sys00039
-                        while($mUsrMen = mysql_fetch_array($xUsrMen)) {
-                          if($y == 0 || $y % 5 == 0) {
-                            if ($y == 0) {?>
-                              <tr>
-                            <?php } else { ?>
-                              </tr><tr>
-                            <?php }
-                          }
-                          // Busco de la sys00039 en la sys00040
-                          $qUsrPer  = "SELECT * ";
-                          $qUsrPer .= "FROM $cAlfa.sys00040 ";
-                          $qUsrPer .= "WHERE ";
-                          $qUsrPer .= "usridxxx = \"{$_COOKIE['kUsrId']}\" AND ";
-                          $qUsrPer .= "modidxxx = \"{$mUsrMen['modidxxx']}\"  AND ";
-                          $qUsrPer .= "proidxxx = \"{$mUsrMen['proidxxx']}\"  AND ";
-                          $qUsrPer .= "menidxxx = \"{$mUsrMen['menidxxx']}\"  LIMIT 0,1";
-                          $xUsrPer = f_MySql("SELECT","",$qUsrPer,$xConexion01,"");
-                          if (mysql_num_rows($xUsrPer) > 0) { ?>
-                            <td Class="clase08" width="20%"><center><img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/<?php echo $mUsrMen['menimgon'] ?>" style = "cursor:pointer" onClick ="javascript:fnLink('<?php echo $mUsrMen['modidxxx'] ?>','<?php echo $mUsrMen['proidxxx'] ?>','<?php echo $mUsrMen['menidxxx'] ?>','<?php echo $mUsrMen['menformx']?>','<?php echo $mUsrMen['menopcxx']?>','<?php echo $mUsrMen['mendesxx']?>')"><br>
-                            <a href = "javascript:fnLink('<?php echo $mUsrMen['modidxxx'] ?>','<?php echo $mUsrMen['proidxxx'] ?>','<?php echo $mUsrMen['menidxxx'] ?>','<?php echo $mUsrMen['menformx']?>','<?php echo $mUsrMen['menopcxx']?>','<?php echo $mUsrMen['mendesxx']?>')"
-                              style="color:<?php echo $vSysStr['system_link_menu_color'] ?>"><?php echo $mUsrMen['mendesxx'] ?></a></center></td>
-                          <?php } else { ?>
-                            <td Class="clase08" width="20%"><center><img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/<?php echo $mUsrMen['menimgof']?>"><br>
-                            <?php echo $mUsrMen['mendesxx'] ?></center></td>
-                          <?php }
-                          $y++;
-                        }
-                        $celdas = "";
-                        $nf = intval($y/5);
-                        $resto = $y-$nf;
-                        $restan = 5-$resto;
-                        if ($restan > 0) {
-                          for ($i=0;$i<$restan;$i++) {
-                            $celdas.="<td width='20%'></td>";
-                          }
-                          echo $celdas;
-                        } ?>
-                        </tr>
-                    </table>
-                  </center>
-                </fieldset>
-              </td>
-            </tr>
-          </table>
-        </center>
-      <?php } ?>
-      <!-- Fin Nivel de Procesos -->
       <?php
         if ($vLimInf == "" && $vLimSup == "") {
           $vLimInf = "00";
@@ -344,18 +187,6 @@
           $vPaginas = "1";
         }
 
-        // Si viene vacio el $cOfvSap lo cargo con la Cookie de la Oficina de Venta
-        // Si no hago el SELECT con el Oficina de Venta que me entrega el combo del INI
-        if (empty($cOfvSap)) {
-          $cOfvSap  = "";
-        } else {
-          // Si el $cOfvSap viene cargado del combo con "ALL" es porque Debo mostrar todos las Oficina de Venta
-          // Si no dejo la Oficina de Venta que viene cargada
-          if ($cOfvSap == "ALL") {
-            $cOfvSap = "";
-          }
-        }
-
         /**INICIO SQL**/
         if ($_POST['cPeriodos'] == "") {
           $_POST['cPeriodos'] == "20";
@@ -369,7 +200,7 @@
         $mMiTicket = array();
         for ($iAno = $nAnioDesde; $iAno <= substr($_POST['dHasta'],0,4); $iAno++) { // Recorro desde el anio de inicio hasta el anio de fin de la consulta
 
-           /* CONSULTA TIPOS TICKETS */
+          /* CONSULTA TIPOS TICKETS */
           $qTipoTicket .= "SELECT ";
           $qTipoTicket .= "$cAlfa.lpar0159.tticodxx ";
           $qTipoTicket .= "FROM $cAlfa.lpar0159 ";
@@ -393,30 +224,30 @@
             $qMiTicket  .= "SELECT DISTINCT ";
           }
 
-          $qMiTicket .= "$cAlfa.ltic$iAno.ticidxxx, ";   // Id Ticket
-          $qMiTicket .= "$cAlfa.ltic$iAno.ceridxxx, ";   // Id certificacion
-          $qMiTicket .= "$cAlfa.ltic$iAno.comidxxx, ";   // Id del Comprobante
-          $qMiTicket .= "$cAlfa.ltic$iAno.comcodxx, ";   // Codigo del Comprobante
-          $qMiTicket .= "$cAlfa.ltic$iAno.comprexx, ";   // Prefijo
-          $qMiTicket .= "$cAlfa.ltic$iAno.comcscxx, ";   // Consecutivo Uno
-          $qMiTicket .= "$cAlfa.ltic$iAno.comcsc2x, ";   // Consecutivo Dos
-          $qMiTicket .= "$cAlfa.ltic$iAno.comfecxx, ";   // Fecha Comprobante
-          $qMiTicket .= "$cAlfa.ltic$iAno.cliidxxx,";    // Id cliente
-          $qMiTicket .= "$cAlfa.ltic$iAno.tticodxx, ";   // Codigo Tipo Ticket
-          $qMiTicket .= "$cAlfa.ltic$iAno.pticodxx, ";   // Codigo Prioridad Ticket
-          $qMiTicket .= "$cAlfa.ltic$iAno.sticodxx, ";   // Codigo Status Ticket
-          $qMiTicket .= "$cAlfa.ltic$iAno.ticasuxx, ";   // Asunto
-          $qMiTicket .= "$cAlfa.ltic$iAno.ticcierx, ";   // Fecha de cierre
-          $qMiTicket .= "$cAlfa.ltic$iAno.regusrxx, ";   // Usuario que creo el registro
-          $qMiTicket .= "$cAlfa.ltic$iAno.regfcrex, ";   // Fecha de creación
-          $qMiTicket .= "$cAlfa.ltic$iAno.reghcrex, ";   // Hora de creación
-          $qMiTicket .= "$cAlfa.ltic$iAno.regfmodx, ";   // Fecha de modificación
-          $qMiTicket .= "$cAlfa.ltic$iAno.reghmodx, ";   // Hora de modificación
-          $qMiTicket .= "$cAlfa.ltic$iAno.regestxx, ";   // Estado
+          $qMiTicket .= "$cAlfa.ltic$iAno.ticidxxx, ";  // Id Ticket
+          $qMiTicket .= "$cAlfa.ltic$iAno.ceridxxx, ";  // Id certificacion
+          $qMiTicket .= "$cAlfa.ltic$iAno.comidxxx, ";  // Id del Comprobante
+          $qMiTicket .= "$cAlfa.ltic$iAno.comcodxx, ";  // Codigo del Comprobante
+          $qMiTicket .= "$cAlfa.ltic$iAno.comprexx, ";  // Prefijo
+          $qMiTicket .= "$cAlfa.ltic$iAno.comcscxx, ";  // Consecutivo Uno
+          $qMiTicket .= "$cAlfa.ltic$iAno.comcsc2x, ";  // Consecutivo Dos
+          $qMiTicket .= "$cAlfa.ltic$iAno.comfecxx, ";  // Fecha Comprobante
+          $qMiTicket .= "$cAlfa.ltic$iAno.cliidxxx,";   // Id cliente
+          $qMiTicket .= "$cAlfa.ltic$iAno.tticodxx, ";  // Codigo Tipo Ticket
+          $qMiTicket .= "$cAlfa.ltic$iAno.pticodxx, ";  // Codigo Prioridad Ticket
+          $qMiTicket .= "$cAlfa.ltic$iAno.sticodxx, ";  // Codigo Status Ticket
+          $qMiTicket .= "$cAlfa.ltic$iAno.ticasuxx, ";  // Asunto
+          $qMiTicket .= "$cAlfa.ltic$iAno.ticcierx, ";  // Fecha de cierre
+          $qMiTicket .= "$cAlfa.ltic$iAno.regusrxx, ";  // Usuario que creo el registro
+          $qMiTicket .= "$cAlfa.ltic$iAno.regfcrex, ";  // Fecha de creación
+          $qMiTicket .= "$cAlfa.ltic$iAno.reghcrex, ";  // Hora de creación
+          $qMiTicket .= "$cAlfa.ltic$iAno.regfmodx, ";  // Fecha de modificación
+          $qMiTicket .= "$cAlfa.ltic$iAno.reghmodx, ";  // Hora de modificación
+          $qMiTicket .= "$cAlfa.ltic$iAno.regestxx, ";  // Estado
           $qMiTicket .= "$cAlfa.lpar0150.clinomxx, ";   // Razon social
           $qMiTicket .= "$cAlfa.lpar0158.ttidesxx, ";   // Descripcion Ticket
           $qMiTicket .= "$cAlfa.lpar0156.pticolxx, ";   // Color
-          $qMiTicket .= "$cAlfa.lpar0156.ptidesxx, ";   // Prioridad descripcion
+          $qMiTicket .= "$cAlfa.lpar0156.ptidesxx, ";   // Proiridad descripcion
           $qMiTicket .= "$cAlfa.lpar0157.stidesxx, ";   // Status
           $qMiTicket .= "$cAlfa.SIAI0003.USRNOMXX AS usrnomxx, ";   // Creado por
           $qMiTicket .= "GROUP_CONCAT(SIAI0003_2.USRNOMXX SEPARATOR ', ') AS responsables ";   // Responsables
@@ -426,50 +257,18 @@
           $qMiTicket .= "LEFT JOIN $cAlfa.lpar0156 ON $cAlfa.ltic$iAno.pticodxx = $cAlfa.lpar0156.pticodxx ";
           $qMiTicket .= "LEFT JOIN $cAlfa.lpar0157 ON $cAlfa.ltic$iAno.sticodxx = $cAlfa.lpar0157.sticodxx ";
           $qMiTicket .= "LEFT JOIN $cAlfa.SIAI0003 ON $cAlfa.ltic$iAno.regusrxx = $cAlfa.SIAI0003.USRIDXXX ";
-          $qMiTicket .= "LEFT JOIN $cAlfa.lpar0159 ON $cAlfa.ltic2024.tticodxx = $cAlfa.lpar0159.tticodxx "; 
+          $qMiTicket .= "LEFT JOIN $cAlfa.lpar0159 ON $cAlfa.ltic$iAno.tticodxx = $cAlfa.lpar0159.tticodxx "; 
           $qMiTicket .= "LEFT JOIN $cAlfa.SIAI0003 AS SIAI0003_2 ON $cAlfa.lpar0159.ttiusrxx = SIAI0003_2.USRIDXXX ";
           $qMiTicket .= "WHERE ";
           if ($_POST['vSearch'] != "") {
-            if ($_POST['cBusExc'] == "SI") {
-              $prefijo     = substr($_POST['vSearch'], 0, 3);
-              $consecutivo = substr($_POST['vSearch'], 3);
-
-              $qMiTicket .= "$cAlfa.ltic$iAno.comprexx = \"$prefijo\" AND ";
-              $qMiTicket .= "$cAlfa.ltic$iAno.comcscxx = \"$consecutivo\" AND ";
-            } else {
-              $qMiTicket .= "(";
-              $qMiTicket .= "CONCAT($cAlfa.ltic$iAno.comprexx ,\"\",$cAlfa.ltic$iAno.comcscxx ) LIKE \"%{$_POST['vSearch']}%\" OR ";
-              $qMiTicket .= "$cAlfa.ltic$iAno.cliidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-              $qMiTicket .= "$cAlfa.lpar0150.clisapxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-              $qMiTicket .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) LIKE \"%{$_POST['vSearch']}%\" OR ";
-              $qMiTicket .= "$cAlfa.ltic$iAno.depnumxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-              $qMiTicket .= "$cAlfa.ltic$iAno.regestxx LIKE \"%{$_POST['vSearch']}%\") AND ";
-            }
+            $qMiTicket .= "$cAlfa.ltic$iAno.ticidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+            $qMiTicket .= "$cAlfa.lpar0158.ttidesxx  LIKE \"%{$_POST['vSearch']}%\" OR ";
+            $qMiTicket .= "$cAlfa.ltic$iAno.ticasuxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+            $qMiTicket .= "$cAlfa.SIAI0003.usrnomxx  LIKE \"%{$_POST['vSearch']}%\" OR ";
+            $qMiTicket .= "$cAlfa.lpar0156.ptidesxx  LIKE \"%{$_POST['vSearch']}%\" OR ";
+            $qMiTicket .= "$cAlfa.lpar0157.stidesxx  LIKE \"%{$_POST['vSearch']}%\" OR ";
           }
 
-          // Campos de la Consulta inducida
-          // Buscando por consecutivo exacto o contenido
-          if ($_POST['cConsecutivo'] != "") {
-            $qMiTicket .= "$cAlfa.ltic$iAno.comcscxx = \"{$_POST['cConsecutivo']}\" AND ";
-          }
-          // Buscando por la MIF
-          if ($_POST['cMifId'] != "") {
-            $qMiTicket .= "$cAlfa.ltic$iAno.mifidxxx = \"{$_POST['cMifId']}\" AND ";
-          }
-          // Buscando por Cliente
-          if ($_POST['cCliId'] != "") {
-            $qMiTicket .= "$cAlfa.ltic$iAno.cliidxxx = \"{$_POST['cCliId']}\" AND ";
-          }
-          // Buscando por Deposito
-          if ($_POST['cDepNum'] != "") {
-            $qMiTicket .= "$cAlfa.ltic$iAno.depnumxx = \"{$_POST['cDepNum']}\" AND ";
-          }
-          // Fin Campos de la Consulta inducida
-
-          // Consulta por la oficina de venta
-          if ($cOfvSap != "") {
-            $qMiTicket .= "$cAlfa.lpar0155.ofvsapxx = \"$cOfvSap\" AND ";
-          }
           // Consulta por el usuario
           if ($cUsrId != "" && $cUsrId != "ALL") {
             $qMiTicket .= "$cAlfa.ltic$iAno.regusrxx = \"$cUsrId\" AND ";
@@ -478,16 +277,19 @@
           if ($cEstado != "") {
             $qMiTicket .= "$cAlfa.ltic$iAno.regestxx = \"$cEstado\" AND ";
           }
+          // Consulta por Id del certificado
+          if ($cCerId != "" ) {
+            $qMiTicket .= "$cAlfa.ltic$iAno.ceridxxx = \"$cCerId\" AND ";
+          }
           $qMiTicket .= "$cAlfa.ltic$iAno.regfcrex BETWEEN \"{$_POST['dDesde']}\" AND \"{$_POST['dHasta']}\" AND ";
-          $qMiTicket .= "$cAlfa.ltic2024.tticodxx IN ($tticodxxList) ";
+          $qMiTicket .= "$cAlfa.ltic$iAno.tticodxx IN ($tticodxxList) ";
           /***** FIN SQL *****/
 
           if ($iAno >= $nAnioDesde && $iAno < substr($_POST['dHasta'],0,4)) {
             $qMiTicket .= " UNION ";
           }
         } ## for ($iAno=$nAnioDesde;$iAno<=substr($_POST['dHasta'],0,4);$iAno++) { ##
-
-        //// CODIGO NUEVO PARA ORDER BY
+        // CODIGO NUEVO PARA ORDER BY
         $cOrderBy = "";
         $vOrderByOrder = explode("~", $_POST['cOrderByOrder']);
         for ($z = 0; $z < count($vOrderByOrder); $z++) {
@@ -505,7 +307,7 @@
         }
 
         $qMiTicket .= "GROUP BY ticidxxx ";
-        //// FIN CODIGO NUEVO PARA ORDER BY
+        // FIN CODIGO NUEVO PARA ORDER BY
         $qMiTicket .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
         $xMiTicket  = f_MySql("SELECT","",$qMiTicket,$xConexion01,"");
         //f_Mensaje(__FILE__,__LINE__,$qMiTicket."~".mysql_num_rows($xMiTicket));
@@ -566,17 +368,6 @@
                                                   document.forms['frgrm']['vLimInf'].value='00';
                                                   document.forms['frgrm'].submit();
                                                 }">
-                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/cert_ca_cert_on.gif" style = "cursor:pointer" title="Consulta inducida"
-                          onClick = "javascript:fnConsultaInducida()">
-                        <script language = "javascript">
-                          if ("<?php echo $_POST['cBusExc'] ?>" == "SI") {
-                            document.forms['frgrm']['cBusExc'].value   = "SI";
-                            document.forms['frgrm']['cBusExc'].checked = true;
-                          } else {
-                            document.forms['frgrm']['cBusExc'].value   = "NO";
-                            document.forms['frgrm']['cBusExc'].checked = false;
-                          }
-                        </script>
                       </td>
                       <td class="name" width="03%" align="left">Filas&nbsp;
                         <input type="text" class="letra" name = "vLimSup" value = "<?php echo $vLimSup ?>" style="width:30;text-align:right"
@@ -731,9 +522,6 @@
                           // f_Mensaje(__FILE__, __LINE__, $qBotAcc."~".mysql_num_rows($xBotAcc));
                           while ($mBotAcc = mysql_fetch_array($xBotAcc)) {
                             switch ($mBotAcc['menopcxx']) {
-                              case "REPORTE": ?>
-                                <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/excel_icon.gif" onClick = "javascript:fnImprimir('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
-                              <?php break;
                               case "EDITAR": ?>
                                 <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_edit.png" onClick = "javascript:fnEditar('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="Editar Reply">
                               <?php break;
@@ -749,65 +537,53 @@
                 <center>
                   <table cellspacing="0" width="100%">
                     <tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
-                      <td class="name" width="09%">
-                        <a href = "javascript:fnOrderBy('onclick','ceridxxx');" title="Ordenar">Ticket</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ceridxxx">
-                        <input type = "hidden" name = "ceridxxx" value = "<?php echo $_POST['ceridxxx'] ?>" id = "ceridxxx">
-                        <script language="javascript">fnOrderBy('','ceridxxx')</script>
-                      </td>
-                      <td class="name" width="11%">
-                        <a href = "javascript:fnOrderBy('onclick','cliidxxx');" title="Ordenar">Cliente</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "cliidxxx">
-                        <input type = "hidden" name = "cliidxxx" value = "<?php echo $_POST['cliidxxx'] ?>" id = "cliidxxx">
-                        <script language="javascript">fnOrderBy('','cliidxxx')</script>
-                      </td>
-                      <td class="name" width="11%">
-                        <a href = "javascript:fnOrderBy('onclick','clisapxx');" title="Ordenar">Certificaci&oacute;n</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clisapxx">
-                        <input type = "hidden" name = "clisapxx" value = "<?php echo $_POST['clisapxx'] ?>" id = "clisapxx">
-                        <script language="javascript">fnOrderBy('','clisapxx')</script>
+                      <td class="name" width="05%">
+                        <a href = "javascript:fnOrderBy('onclick','ticidxxx');" title="Ordenar">Ticket</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ticidxxx">
+                        <input type = "hidden" name = "ticidxxx" value = "<?php echo $_POST['ticidxxx'] ?>" id = "ticidxxx">
+                        <script language="javascript">fnOrderBy('','ticidxxx')</script>
                       </td>
                       <td class="name" width="12%">
-                        <a href = "javascript:fnOrderBy('onclick','clinomxx');" title="Ordenar">Tipo</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clinomxx">
-                        <input type = "hidden" name = "clinomxx" value = "<?php echo $_POST['clinomxx'] ?>" id = "clinomxx">
-                        <script language="javascript">fnOrderBy('','clinomxx')</script>
+                        <a href = "javascript:fnOrderBy('onclick','ttidesxx');" title="Ordenar">Tipo</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ttidesxx">
+                        <input type = "hidden" name = "ttidesxx" value = "<?php echo $_POST['ttidesxx'] ?>" id = "ttidesxx">
+                        <script language="javascript">fnOrderBy('','ttidesxx')</script>
                       </td>
-                      <td class="name" width="15%">
-                        <a href = "javascript:fnOrderBy('onclick','depnumxx');" title="Ordenar">Creado por</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "depnumxx">
-                        <input type = "hidden" name = "depnumxx" value = "<?php echo $_POST['depnumxx'] ?>" id = "depnumxx">
-                        <script language="javascript">fnOrderBy('','depnumxx')</script>
+                      <td class="name" width="20%">
+                        <a href = "javascript:fnOrderBy('onclick','ticasuxx');" title="Ordenar">Asunto</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ticasuxx">
+                        <input type = "hidden" name = "ticasuxx" value = "<?php echo $_POST['ticasuxx'] ?>" id = "ticasuxx">
+                        <script language="javascript">fnOrderBy('','ticasuxx')</script>
                       </td>
-                      <td class="name" width="11%">
-                        <a href = "javascript:fnOrderBy('onclick','cerfdexx');" title="Ordenar">Asunto</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "cerfdexx">
-                        <input type = "hidden" name = "cerfdexx" value = "<?php echo $_POST['cerfdexx'] ?>" id = "cerfdexx">
-                        <script language="javascript">fnOrderBy('','cerfdexx')</script>
+                      <td class="name" width="16%">
+                        <a href = "javascript:fnOrderBy('onclick','usrnomxx');" title="Ordenar">Creado por</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "usrnomxx">
+                        <input type = "hidden" name = "usrnomxx" value = "<?php echo $_POST['usrnomxx'] ?>" id = "usrnomxx">
+                        <script language="javascript">fnOrderBy('','usrnomxx')</script>
                       </td>
-                      <td class="name" width="11%">
-                        <a href = "javascript:fnOrderBy('onclick','cerfhaxx');" title="Ordenar">Responsable</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "cerfhaxx">
-                        <input type = "hidden" name = "cerfhaxx" value = "<?php echo $_POST['cerfhaxx'] ?>" id = "cerfhaxx">
-                        <script language="javascript">fnOrderBy('','cerfhaxx')</script>
+                      <td class="name" width="20%">
+                        <a href = "javascript:fnOrderBy('onclick','responsables');" title="Ordenar">Responsable</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "responsables">
+                        <input type = "hidden" name = "responsables" value = "<?php echo $_POST['responsables'] ?>" id = "responsables">
+                        <script language="javascript">fnOrderBy('','responsables')</script>
                       </td>
-                      <td class="name" width="06%">
+                      <td class="name" width="10%">
                         <a href = "javascript:fnOrderBy('onclick','regfcrex');" title="Ordenar">Creado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfcrex">
                         <input type = "hidden" name = "regfcrex" value = "<?php echo $_POST['regfcrex'] ?>" id = "regfcrex">
                         <script language="javascript">fnOrderBy('','regfcrex')</script>
                       </td>
-                      <td class="name" width="08%">
-                        <a href = "javascript:fnOrderBy('onclick','regfmodx');" title="Ordenar">Prioridad</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfmodx">
-                        <input type = "hidden" name = "regfmodx" value = "<?php echo $_POST['regfmodx'] ?>" id = "regfmodx">
-                        <script language="javascript">fnOrderBy('','regfmodx')</script>
+                      <td class="name" width="10%">
+                        <a href = "javascript:fnOrderBy('onclick','ptidesxx');" title="Ordenar">Prioridad</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ptidesxx">
+                        <input type = "hidden" name = "ptidesxx" value = "<?php echo $_POST['ptidesxx'] ?>" id = "ptidesxx">
+                        <script language="javascript">fnOrderBy('','ptidesxx')</script>
                       </td>
-                      <td class="name" width="08%">
-                        <a href = "javascript:fnOrderBy('onclick','regfmodx');" title="Ordenar">Status</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfmodx">
-                        <input type = "hidden" name = "regfmodx" value = "<?php echo $_POST['regfmodx'] ?>" id = "regfmodx">
-                        <script language="javascript">fnOrderBy('','regfmodx')</script>
+                      <td class="name" width="05%">
+                        <a href = "javascript:fnOrderBy('onclick','stidesxx');" title="Ordenar">Status</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "stidesxx">
+                        <input type = "hidden" name = "stidesxx" value = "<?php echo $_POST['stidesxx'] ?>" id = "stidesxx">
+                        <script language="javascript">fnOrderBy('','stidesxx')</script>
                       </td>
                       
                       <td Class='name' width="02%" align="right">
@@ -829,26 +605,24 @@
                             onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
                             <td class="letra7"><a href = javascript:fnVer('<?php echo $mMiTicket[$i]['ceridxxx']?>','<?php echo $mMiTicket[$i]['regfcrex']?>')>
                                                         <?php echo $mMiTicket[$i]['ticidxxx'] ?> </a></td>
-                            <td class="letra7"><?php echo $mMiTicket[$i]['clinomxx'] ?></td>
-                            <td class="letra7"><?php echo $mMiTicket[$i]['comidxxx']."-".$mMiTicket[$i]['comprexx'].$mMiTicket[$i]['comcscxx'] ?></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['ttidesxx'] ?></td>
-                            <td class="letra7"><?php echo $mMiTicket[$i]['usrnomxx'] ?></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['ticasuxx'] ?></td>
+                            <td class="letra7"><?php echo $mMiTicket[$i]['usrnomxx'] ?></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['responsables'] ?></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['regfcrex'] ?></td>
-                            <td class="letra7" style="color: <?php echo $mMiTicket[$i]['pticolxx']; ?>;"><b><?php echo $mMiTicket[$i]['ptidesxx'] ?></b></td>
+                            <td class="letra7"><?php echo $mMiTicket[$i]['ptidesxx'] ?></td>
                             <td class="letra7"><?php echo $mMiTicket[$i]['stidesxx'] ?></td>
                             
                             <td Class="letra7" align="right">
                               <input type="checkbox" name="oCheck" value = "<?php echo  mysql_num_rows($xMiTicket) ?>"
                               id="<?php echo $mMiTicket[$i]['ticidxxx'].'~'. //[0] Id Ticket
-                                             $mMiTicket[$i]['stidesxx'] //[1] Status Ticket
-                                             /* $mMiTicket[$i]['comidxxx'].'~'. //[2]
-                                             $mMiTicket[$i]['comcodxx'].'~'. //[3]
-                                             $mMiTicket[$i]['comcscxx'].'~'. //[4]
-                                             $mMiTicket[$i]['comcsc2x'].'~'. //[5]
-                                             $mMiTicket[$i]['regestxx'].'~'. //[6]
-                                             $mMiTicket[$i]['comprexx'] //[7] */ ?>"
+                                            $mMiTicket[$i]['stidesxx'].'~'.  //[1] Status Ticket
+                                            $mMiTicket[$i]['comidxxx'].'~'.  //[2]
+                                            $mMiTicket[$i]['comcodxx'].'~'.  //[3]
+                                            $mMiTicket[$i]['comcscxx'].'~'.  //[4]
+                                            $mMiTicket[$i]['comcsc2x'].'~'.  //[5]
+                                            $mMiTicket[$i]['regestxx'].'~'.  //[6]
+                                            $mMiTicket[$i]['comprexx']       //[7] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mMiTicket) ?>'">
                             </td>
                           </tr>

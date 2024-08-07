@@ -12,6 +12,7 @@
  * @version 1.0
  */
 include("utimifxx.php");
+include("uticemax.php");
 
 class cTickets
 {
@@ -30,34 +31,34 @@ class cTickets
     for ($cAnio; $cAnio <= date('Y'); $cAnio++) {
 
       $qMiTicket  = "SELECT ";
-      $qMiTicket .= "$cAlfa.ltic$cAnio.ticidxxx, ";   // Id Ticket
-      $qMiTicket .= "$cAlfa.ltic$cAnio.ceridxxx, ";   // Id certificacion
-      $qMiTicket .= "$cAlfa.ltic$cAnio.comidxxx, ";   // Id del Comprobante
-      $qMiTicket .= "$cAlfa.ltic$cAnio.comcodxx, ";   // Codigo del Comprobante
-      $qMiTicket .= "$cAlfa.ltic$cAnio.comprexx, ";   // Prefijo
-      $qMiTicket .= "$cAlfa.ltic$cAnio.comcscxx, ";   // Consecutivo Uno
-      $qMiTicket .= "$cAlfa.ltic$cAnio.comcsc2x, ";   // Consecutivo Dos
-      $qMiTicket .= "$cAlfa.ltic$cAnio.comfecxx, ";   // Fecha Comprobante
-      $qMiTicket .= "$cAlfa.ltic$cAnio.cliidxxx, ";    // Id cliente
-      $qMiTicket .= "$cAlfa.ltic$cAnio.tticodxx, ";   // Codigo Tipo Ticket
-      $qMiTicket .= "$cAlfa.ltic$cAnio.pticodxx, ";   // Codigo Prioridad Ticket
-      $qMiTicket .= "$cAlfa.ltic$cAnio.sticodxx, ";   // Codigo Status Ticket
-      $qMiTicket .= "$cAlfa.ltic$cAnio.ticasuxx, ";   // Asunto
-      $qMiTicket .= "$cAlfa.ltic$cAnio.ticcierx, ";   // Fecha de cierre
-      $qMiTicket .= "$cAlfa.ltic$cAnio.regusrxx, ";   // Usuario que creo el registro
-      $qMiTicket .= "$cAlfa.ltic$cAnio.regfcrex, ";   // Fecha de creación
-      $qMiTicket .= "$cAlfa.ltic$cAnio.reghcrex, ";   // Hora de creación
-      $qMiTicket .= "$cAlfa.ltic$cAnio.regfmodx, ";   // Fecha de modificación
-      $qMiTicket .= "$cAlfa.ltic$cAnio.reghmodx, ";   // Hora de modificación
-      $qMiTicket .= "$cAlfa.ltic$cAnio.regestxx, ";   // Estado
-      $qMiTicket .= "$cAlfa.lpar0150.clinomxx, ";   // Razon social
-      $qMiTicket .= "$cAlfa.lpar0158.ttidesxx, ";   // Descripcion Ticket
-      $qMiTicket .= "$cAlfa.lpar0156.pticolxx, ";   // Color
-      $qMiTicket .= "$cAlfa.lpar0156.ptidesxx, ";   // Proiridad descripcion
-      $qMiTicket .= "$cAlfa.lpar0157.stidesxx, ";   // Status
-      $qMiTicket .= "$cAlfa.SIAI0003.USRNOMXX AS usrnomxx, ";   // Creado por
-      $qMiTicket .= "GROUP_CONCAT(SIAI0003_2.USRNOMXX SEPARATOR ', ') AS responsables, ";   // Responsables
-      $qMiTicket .= "GROUP_CONCAT(SIAI0003_3.USREMAXX SEPARATOR ', ') AS emails ";   // Emails
+      $qMiTicket .= "$cAlfa.ltic$cAnio.ticidxxx, ";  // Id Ticket
+      $qMiTicket .= "$cAlfa.ltic$cAnio.ceridxxx, ";  // Id certificacion
+      $qMiTicket .= "$cAlfa.ltic$cAnio.comidxxx, ";  // Id del Comprobante
+      $qMiTicket .= "$cAlfa.ltic$cAnio.comcodxx, ";  // Codigo del Comprobante
+      $qMiTicket .= "$cAlfa.ltic$cAnio.comprexx, ";  // Prefijo
+      $qMiTicket .= "$cAlfa.ltic$cAnio.comcscxx, ";  // Consecutivo Uno
+      $qMiTicket .= "$cAlfa.ltic$cAnio.comcsc2x, ";  // Consecutivo Dos
+      $qMiTicket .= "$cAlfa.ltic$cAnio.comfecxx, ";  // Fecha Comprobante
+      $qMiTicket .= "$cAlfa.ltic$cAnio.cliidxxx, ";  // Id cliente
+      $qMiTicket .= "$cAlfa.ltic$cAnio.tticodxx, ";  // Codigo Tipo Ticket
+      $qMiTicket .= "$cAlfa.ltic$cAnio.pticodxx, ";  // Codigo Prioridad Ticket
+      $qMiTicket .= "$cAlfa.ltic$cAnio.sticodxx, ";  // Codigo Status Ticket
+      $qMiTicket .= "$cAlfa.ltic$cAnio.ticasuxx, ";  // Asunto
+      $qMiTicket .= "$cAlfa.ltic$cAnio.ticcierx, ";  // Fecha de cierre
+      $qMiTicket .= "$cAlfa.ltic$cAnio.regusrxx, ";  // Usuario que creo el registro
+      $qMiTicket .= "$cAlfa.ltic$cAnio.regfcrex, ";  // Fecha de creación
+      $qMiTicket .= "$cAlfa.ltic$cAnio.reghcrex, ";  // Hora de creación
+      $qMiTicket .= "$cAlfa.ltic$cAnio.regfmodx, ";  // Fecha de modificación
+      $qMiTicket .= "$cAlfa.ltic$cAnio.reghmodx, ";  // Hora de modificación
+      $qMiTicket .= "$cAlfa.ltic$cAnio.regestxx, ";  // Estado
+      $qMiTicket .= "$cAlfa.lpar0150.clinomxx, ";  // Razon social
+      $qMiTicket .= "$cAlfa.lpar0158.ttidesxx, ";  // Descripcion Ticket
+      $qMiTicket .= "$cAlfa.lpar0156.pticolxx, ";  // Color
+      $qMiTicket .= "$cAlfa.lpar0156.ptidesxx, ";  // Prioridad descripcion
+      $qMiTicket .= "$cAlfa.lpar0157.stidesxx, ";  // Status
+      $qMiTicket .= "$cAlfa.SIAI0003.USRNOMXX AS usrnomxx, ";  // Creado por
+      $qMiTicket .= "GROUP_CONCAT(SIAI0003_2.USRNOMXX SEPARATOR ', ') AS responsables, ";  // Responsables
+      $qMiTicket .= "GROUP_CONCAT(SIAI0003_3.USREMAXX SEPARATOR ', ') AS emails ";  // Emails
       $qMiTicket .= "FROM $cAlfa.ltic$cAnio ";
       $qMiTicket .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.ltic$cAnio.cliidxxx = $cAlfa.lpar0150.cliidxxx ";
       $qMiTicket .= "LEFT JOIN $cAlfa.lpar0158 ON $cAlfa.ltic$cAnio.tticodxx = $cAlfa.lpar0158.tticodxx ";
@@ -67,7 +68,8 @@ class cTickets
       $qMiTicket .= "LEFT JOIN $cAlfa.lpar0159 ON $cAlfa.ltic$cAnio.tticodxx = $cAlfa.lpar0159.tticodxx ";
       $qMiTicket .= "LEFT JOIN $cAlfa.SIAI0003 AS SIAI0003_2 ON $cAlfa.lpar0159.ttiusrxx = SIAI0003_2.USRIDXXX ";
       $qMiTicket .= "LEFT JOIN $cAlfa.SIAI0003 AS SIAI0003_3 ON $cAlfa.lpar0159.ttiusrxx = SIAI0003_3.USRIDXXX ";
-      $qMiTicket .= "WHERE ticidxxx = \"$cTicket\"";
+      $qMiTicket .= "WHERE ticidxxx = \"$cTicket\" OR ";
+      $qMiTicket .= "ceridxxx = \"$cTicket\" ";
       $xTickets  = f_MySql("SELECT", "", $qMiTicket, $xConexion01, "");
 
       if (mysql_num_rows($xTickets) > 0) {

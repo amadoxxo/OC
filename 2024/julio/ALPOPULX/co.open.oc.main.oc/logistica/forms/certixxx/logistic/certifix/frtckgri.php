@@ -37,16 +37,31 @@ if ($gTtiCod != "") {
     }
   }
 
-  for ($i=0;$i<count($mMatrizRes);$i++) { 
+  for ($i=0;$i<count($mMatrizRes);$i++) {
+    $mMatrizUsr = array();
+
+    $qUser  = "SELECT USRNOMXX, USREMAXX, USRIDXXX ";
+    $qUser .= "FROM $cAlfa.SIAI0003 ";
+    $qUser .= "WHERE ";
+    $qUser .= "USRIDXXX = \"".$mMatrizRes[$i]['ttiusrxx']."\" AND ";
+    // $qUser .= "USREMAXX IS NOT NULL AND USREMAXX <> \"\"  ";
+    $qUser .= "REGESTXX = \"ACTIVO\"; ";
+    $xUser  = f_MySql("SELECT","",$qUser,$xConexion01,"");
+    if (mysql_num_rows($xUser) > 0) {
+      $mMatrizUsr = mysql_fetch_assoc($xUser);
+    }
+
     $cTexto .= "<tr bgcolor=\"". $vSysStr['system_row_impar_color_ini'] ."\">";
-    $cTexto .= "<td Class = \"clase08\" style = \"padding-left:5px;\">". $mMatrizRes[$i]['tticodxx'] ."</td>";
-    $cTexto .= "<td Class = \"clase08\" style = \"padding-left:5px;\">". $mMatrizRes[$i]['ttiusrxx'] ."</td>";
+    $cTexto .= "<td Class = \"clase08\" style = \"padding-left:5px;\">". $mMatrizUsr['USRIDXXX'] ."</td>";
+    $cTexto .= "<td Class = \"clase08\" style = \"padding-left:5px;\">". $mMatrizUsr['USRNOMXX'] ."</td>";
     $cTexto .= "</tr>";
+    $cRePre = in_array($_COOKIE['kUsrId'], $mMatrizRes[$i]['ttiusrxx']) ? "TERCERO" : "RESPONSABLE";
+    $cTexto .= "<input type = \"hidden\" name = \"cEmaUsr$i\" value = {$mMatrizUsr['USREMAXX']}>";
   }
-  $cRePre = in_array($_COOKIE['kUsrId'], $mMatrizRes) ? "TERCERO" : "RESPONSABLE";
 }
+$cTexto .= "<input type = \"hidden\" name = \"cRePre\"  value = \"$cRePre\">";
 $cTexto .= "</table>"; 
-$cTexto .= "<input type = \"hidden\" name = \"cRePre\" value = \"$cRePre\">"; ?>
+?>
 <script languaje="javascript">
     parent.fmwork.document.getElementById('overDivResponsable').innerHTML = '<?php echo $cTexto ?>';
 </script>

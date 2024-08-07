@@ -7,6 +7,7 @@
    * @version 001
    */
   include('../../../../../financiero/libs/php/utility.php');
+  include('../../../../../logistica/libs/php/utiworkf.php');
 
   /**
    * Switch para Vericar la Validacion de Datos.
@@ -218,6 +219,38 @@
             }
           }
         }
+      }
+
+      $ticket = new cTickets();
+      $datosCabecera = $ticket->fnCabeceraTickets($_POST['cCerId']);
+
+      $cTiCcErx = ($datosCabecera['ticcierx'] != "0000-00-00") ? $datosCabecera['ticcierx'] : "";
+
+      if (count($vCorreos) > 0) {
+        $cSubject = "Solicitud: \"1\" / \"".$datosCabecera['ttidesxx']."\" / \"".$datosCabecera['clinomxx']."\" / \"".$datosCabecera['stidesxx']."\" / \"".$datosCabecera['comprexx'].$datosCabecera['comcscxx']."\" ";
+        
+        $cMessage  = "<b>Ticket:</b> 1<br>";
+        $cMessage .= "<b>Post ID:</b> 1<br>";
+        $cMessage .= "<b>Asunto:</b> {$_POST['cAsuTck']}<br>";
+        $cMessage .= "<b>Prioridad:</b> {$datosCabecera['ptidesxx']}<br>";
+        $cMessage .= "<b>Status:</b> {$datosCabecera['stidesxx']}<br>";
+        $cMessage .= "<b>Apertura Ticket:</b> {$datosCabecera['regfcrex']}<br>";
+        $cMessage .= "<b>Cierre Ticket:</b> {$cTiCcErx}<br>";
+        $cMessage .= "<b>Tipo de Ticket:</b> {$datosCabecera['ttidesxx']}<br>";
+        // Obtener valores dinámicos de cEmaUsr
+        $i = 0;
+        $ticketEnviado = [];
+        while (isset($_POST["cEmaUsr$i"])) {
+          $ticketEnviado[] = $_POST["cEmaUsr$i"];
+          $i++;
+        }
+        $cMessage .= "<b>Ticket enviado a:</b> ".implode(', ', $ticketEnviado)."<br>";
+        $cMessage .= "<b>Ticket CC a:</b> {$_POST['cCliPCECn']}<br>";
+        $cMessage .= "<b>Certificaci&oacute;n:</b> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}<br>";
+        $cMessage .= "<b>Cliente:</b> {$datosCabecera['cliidxxx']}<br><br>";
+        $cMessage .= "Contenido:<br>{$_POST['cConten']}";
+
+        echo $cMessage;
       }
 
       // Valida que el contenido no sea vacio

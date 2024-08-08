@@ -274,8 +274,13 @@
                     </tr>
                     <!-- Fila 3 -->
                     <tr>
-                      <td class="clase08" colspan="35">Asunto<br>
-                        <input type = "text" Class = "letra" style = "width:700" name = "cAsuTck" value = "">
+                      <?php if($_COOKIE['kModo'] == "EDITAR"){ ?>
+                        <td class="clase08" colspan="5">Ticket<br>
+                          <input type="text" class="letra" style="width:100;" name="cTicket" value="<?php echo $cTicId ?>" readonly>
+                        </td>
+                      <?php } ?>
+                      <td class="clase08" colspan="<?php echo ($_COOKIE['kModo'] != 'EDITAR') ? '35' : '30' ?>">Asunto<br>
+                        <input type = "text" Class = "letra" style = "width:<?php echo ($_COOKIE['kModo'] != 'EDITAR') ? '700' : '600' ?>" name = "cAsuTck" value = "">
                       </td>
                     </tr>
                     <!-- Fila 4 -->
@@ -377,48 +382,51 @@
       break;
       case "EDITAR":
         // fnCargaData($cCerId,$cAnio);
-        // $verTickets = new cTickets();
-        // $verTickets->fnCabeceraTickets($cCerId);
-        // $verTickets->fnDetalleTickets($cCerId);
+        $verTickets = new cTickets();
+        $cabecera = $verTickets->fnCabeceraTickets($cTicId);
+        $detalle  = $verTickets->fnDetalleTickets($cTicId);
 
         ?>
-        <!-- <script languaje = "javascript">
+        <script languaje = "javascript">
           // Deshabilito los campos de cabecera
-          document.forms['frgrm']['cComPre'].readOnly   = true;
-          document.forms['frgrm']['cComPre'].onfocus    = "";
-          document.forms['frgrm']['cComPre'].onblur     = "";
-          document.forms['frgrm']['cComCsc'].readOnly   = true;
-          document.forms['frgrm']['cComCsc'].onfocus    = "";
-          document.forms['frgrm']['cComCsc'].onblur     = "";
-          document.forms['frgrm']['cCliId'].readOnly    = true;
-          document.forms['frgrm']['cCliId'].onfocus     = "";
-          document.forms['frgrm']['cCliId'].onblur      = "";
-          document.forms['frgrm']['cCliNom'].readOnly   = true;
-          document.forms['frgrm']['cCliNom'].onfocus    = "";
-          document.forms['frgrm']['cCliNom'].onblur     = "";
-          document.forms['frgrm']['cCerTip'].disabled   = true;
-          document.forms['frgrm']['dVigDesde'].readOnly = true;
-          document.forms['frgrm']['dVigHasta'].readOnly = true;
-          document.forms['frgrm']['cDepNum'].readOnly   = true;
-          document.forms['frgrm']['cDepNum'].onfocus    = "";
-          document.forms['frgrm']['cDepNum'].onblur     = "";
-          document.forms['frgrm']['cTipoDep'].readOnly  = true;
-          document.forms['frgrm']['cCdiSap'].readOnly   = true;
-          document.forms['frgrm']['cCdiSap'].onfocus    = "";
-          document.forms['frgrm']['cCdiSap'].onblur     = "";
-          document.forms['frgrm']['cCdiDes'].readOnly   = true;
-          document.forms['frgrm']['cCdiDes'].onfocus    = "";
-          document.forms['frgrm']['cCdiDes'].onblur     = "";
-          document.forms['frgrm']['cCerTipMe'].readOnly = true;
+          document.forms['frgrm']['cAsuTck'].value   = '<?php echo $cabecera['ticasuxx'] ?>';
+          document.forms['frgrm']['cTtiCod'].value   = '<?php echo $cabecera['tticodxx'] ?>';
+          document.forms['frgrm']['cTtiDes'].value   = '<?php echo $cabecera['ttidesxx'] ?>';
+          document.forms['frgrm']['cPriori'].value   = '<?php echo $cabecera['pticodxx']?>';
+          document.forms['frgrm']['cEstado'].value   = '<?php echo $cabecera['sticodxx']?>';
+          document.forms['frgrm']['cEstado'].value   = '<?php echo $cabecera['sticodxx']?>';
+          document.forms['frgrm']['cCliPCECn'].value = '<?php echo $detalle[0]['ticccopx']?>';
 
-          // Deshabilito los link de los Valid/Windows
-          document.getElementById('id_href_cCompre').removeAttribute('href');
-          document.getElementById('id_href_CliId').removeAttribute('href');
-          document.getElementById('id_href_DepNum').removeAttribute('href');
-          document.getElementById('id_href_dVigDesde').removeAttribute('href');
-          document.getElementById('id_href_dVigHasta').removeAttribute('href');
-          document.getElementById('id_href_CdiSap').removeAttribute('href');
-        </script> -->
+          document.forms['frgrm']['cAsuTck'].readOnly = true;
+          document.forms['frgrm']['cTtiCod'].readOnly = true;
+          document.forms['frgrm']['cTtiDes'].readOnly = true;
+          document.forms['frgrm']['cPriori'].readOnly = true;
+          document.forms['frgrm']['cEstado'].readOnly = true;
+          // document.forms['frgrm']['cComCsc'].onblur     = "";
+          // document.forms['frgrm']['cCliId'].onfocus     = "";
+          // document.forms['frgrm']['cCliId'].onblur      = "";
+          // document.forms['frgrm']['cCliNom'].onfocus    = "";
+          // document.forms['frgrm']['cCliNom'].onblur     = "";
+          // document.forms['frgrm']['cDepNum'].readOnly   = true;
+          // document.forms['frgrm']['cDepNum'].onfocus    = "";
+          // document.forms['frgrm']['cDepNum'].onblur     = "";
+          // document.forms['frgrm']['cTipoDep'].readOnly  = true;
+          // document.forms['frgrm']['cCdiSap'].readOnly   = true;
+          // document.forms['frgrm']['cCdiSap'].onfocus    = "";
+          // document.forms['frgrm']['cCdiSap'].onblur     = "";
+          // document.forms['frgrm']['cCdiDes'].readOnly   = true;
+          // document.forms['frgrm']['cCdiDes'].onfocus    = "";
+          // document.forms['frgrm']['cCdiDes'].onblur     = "";
+          // document.forms['frgrm']['cCerTipMe'].readOnly = true;
+
+          // // Deshabilito los link de los Valid/Windows
+          // document.getElementById('id_href_cCompre').removeAttribute('href');
+          // document.getElementById('id_href_CliId').removeAttribute('href');
+          // document.getElementById('id_href_DepNum').removeAttribute('href');
+          // document.getElementById('id_href_dVigDesde').removeAttribute('href');
+          // document.getElementById('id_href_dVigHasta').removeAttribute('href');
+          // document.getElementById('id_href_CdiSap').removeAttribute('href');
+        </script>
       <?php
       break;
       case "VER":

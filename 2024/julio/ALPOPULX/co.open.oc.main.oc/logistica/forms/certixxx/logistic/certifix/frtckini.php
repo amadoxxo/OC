@@ -41,15 +41,16 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mComDat  = document.forms['frgrm']['oCheck'].id.split('~');
-                var mCerId   = mComDat[0]; // Id de la certificacion
-                var mComFec  = mComDat[1]; // Fecha de creacion del registro
-                var mComId   = mComDat[2]; // Id del comprobante
-                var mComCod  = mComDat[3]; // Codigo del comprobante
-                var mComCsc  = mComDat[4]; // Consecutivo uno
-                var mComCsc2 = mComDat[5]; // Consecutivo dos
-                var mComPre  = mComDat[7]; // Prefijo
-                var mCliId   = mComDat[8]; // Id del cliente
-                var mCliNom  = mComDat[9]; // Nombre del cliente
+                var mCerId   = mComDat[0];  // Id de la certificacion
+                var mComFec  = mComDat[1];  // Fecha de creacion del registro
+                var mComId   = mComDat[2];  // Id del comprobante
+                var mComCod  = mComDat[3];  // Codigo del comprobante
+                var mComCsc  = mComDat[4];  // Consecutivo uno
+                var mComCsc2 = mComDat[5];  // Consecutivo dos
+                var mComPre  = mComDat[7];  // Prefijo
+                var mCliId   = mComDat[8];  // Id del cliente
+                var mCliNom  = mComDat[9];  // Nombre del cliente
+                var mTicId   = mComDat[10]; // Id de Cabecera
 
                 var ruta = "frtcknue.php?cCerId="   +mCerId+
                                         "&cComFec=" +mComFec+
@@ -60,6 +61,7 @@
                                         "&cComPre=" +mComPre+
                                         "&cCliId="  +mCliId+
                                         "&cCliNom=" +mCliNom+
+                                        "&cTicId="  +mTicId+
                                         "&cAnio="   +mComFec.substr(0,4);
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                 document.cookie="kMenDes=Editar Ticket;path="+"/";
@@ -84,6 +86,7 @@
                   var mComPre  = mComDat[7]; // Prefijo
                   var mCliId   = mComDat[8]; // Id del cliente
                   var mCliNom  = mComDat[9]; // Nombre del cliente
+                  var mTicId   = mComDat[10]; // Id de Cabecera
 
                   var ruta = "frtcknue.php?cCerId=" +mCerId+
                                         "&cComFec=" +mComFec+
@@ -94,6 +97,7 @@
                                         "&cComPre=" +mComPre+
                                         "&cCliId="  +mCliId+
                                         "&cCliNom=" +mCliNom+
+                                        "&cTicId="  +mTicId+
                                         "&cAnio="   +mComFec.substr(0,4);
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                   document.cookie="kMenDes=Editar Ticket;path="+"/";
@@ -396,7 +400,7 @@
                 <center>
                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                     <tr>
-                      <td class="clase08" width="40%" align="left">
+                      <td class="clase08" width="10%" align="left">
                         <input type="text" class="letra" name = "vSearch" maxlength="20" value = "<?php echo $vSearch ?>" style= "width:80"
                           onblur="javascript:this.value=this.value.toUpperCase();
                                             document.frgrm.vLimInf.value='00'; ">
@@ -416,6 +420,7 @@
                                                   document.forms['frgrm'].submit();
                                                 }">
                       </td>
+                      <td class="clase08" width="30%" align="left"><b>Certificacion: </b><?php echo $cCerId ?> | <b>Cliente: </b><?php echo $cCliNom ?></td>
                       <td class="name" width="03%" align="left">Filas&nbsp;
                         <input type="text" class="letra" name = "vLimSup" value = "<?php echo $vLimSup ?>" style="width:30;text-align:right"
                           onfocus = "javascript:document.forms['frgrm']['vPaginas'].value='1'"
@@ -428,7 +433,7 @@
                           <?php if ($vPaginas == "1") { ?>
                             <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/bd_firstpage.png" style = "cursor:pointer" title="Primera Pagina">
                             <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/bd_prevpage.png"  style = "cursor:pointer" title="Pagina Anterior">
-                            <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_nextpage.png"    style = "cursor:pointer" title="Pagina Siguiente"
+                            <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_nextpage.png"   style = "cursor:pointer" title="Pagina Siguiente"
                               onClick = "javascript:document.frgrm.vPaginas.value++;
                                                     document.frgrm.vLimInf.value=('<?php echo $vLimSup ?>'*(document.frgrm.vPaginas.value-1));
                                                     document.frgrm.submit()">
@@ -671,7 +676,8 @@
                                             $mMiTicket[$i]['regestxx'].'~'.  //[6]
                                             $mMiTicket[$i]['comprexx'].'~'.  //[7]
                                             $mMiTicket[$i]['cliidxxx'].'~'.  //[8] 
-                                            $mMiTicket[$i]['clinomxx']   //[9] ?>"
+                                            $mMiTicket[$i]['clinomxx'].'~'.  //[9] 
+                                            $mMiTicket[$i]['ticidxxx']  //[10] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mMiTicket) ?>'">
                             </td>
                           </tr>

@@ -44,7 +44,6 @@ if ($gTtiCod != "") {
     $qUser .= "FROM $cAlfa.SIAI0003 ";
     $qUser .= "WHERE ";
     $qUser .= "USRIDXXX = \"".$mMatrizRes[$i]['ttiusrxx']."\" AND ";
-    // $qUser .= "USREMAXX IS NOT NULL AND USREMAXX <> \"\"  ";
     $qUser .= "REGESTXX = \"ACTIVO\"; ";
     $xUser  = f_MySql("SELECT","",$qUser,$xConexion01,"");
     if (mysql_num_rows($xUser) > 0) {

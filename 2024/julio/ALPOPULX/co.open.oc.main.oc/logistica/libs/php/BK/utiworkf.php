@@ -69,7 +69,7 @@ class cTickets
       $qMiTicket .= "LEFT JOIN $cAlfa.SIAI0003 AS SIAI0003_2 ON $cAlfa.lpar0159.ttiusrxx = SIAI0003_2.USRIDXXX ";
       $qMiTicket .= "LEFT JOIN $cAlfa.SIAI0003 AS SIAI0003_3 ON $cAlfa.lpar0159.ttiusrxx = SIAI0003_3.USRIDXXX ";
       $qMiTicket .= "WHERE ticidxxx = \"$cTicket\" OR ";
-      $qMiTicket .= "ceridxxx = \"$cTicket\"; ";
+      $qMiTicket .= "ceridxxx = \"$cTicket\" ";
       $xTickets  = f_MySql("SELECT", "", $qMiTicket, $xConexion01, "");
 
       if (mysql_num_rows($xTickets) > 0) {
@@ -114,7 +114,8 @@ class cTickets
       $qTickets .= "FROM $cAlfa.ltid$cAnio ";
       $qTickets .= "LEFT JOIN $cAlfa.SIAI0003 ON $cAlfa.ltid$cAnio.regusrxx = $cAlfa.SIAI0003.USRIDXXX ";
       $qTickets .= "WHERE $cAlfa.ltid$cAnio.ticidxxx = $cTicket ";
-      $qTickets .= "ORDER BY $cAlfa.ltid$cAnio.repidxxx ASC; ";
+      $qTickets .= "ORDER BY $cAlfa.ltid$cAnio.repidxxx ASC";
+
       $xTickets = f_MySql("SELECT", "", $qTickets, $xConexion01, "");
 
       if (mysql_num_rows($xTickets) > 0) {

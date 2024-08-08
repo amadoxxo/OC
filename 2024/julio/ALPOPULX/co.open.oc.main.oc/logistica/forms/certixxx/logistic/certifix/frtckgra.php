@@ -8,6 +8,7 @@
    */
   include('../../../../../financiero/libs/php/utility.php');
   include('../../../../../logistica/libs/php/utiworkf.php');
+  include('../../../../../libs/php/uticemax.php');
 
   /**
    * Switch para Vericar la Validacion de Datos.
@@ -22,7 +23,6 @@
    * @var string
    */
   $cMsj = "\n";
-
   /**
    * Año actual del sistema.
    * 
@@ -226,7 +226,15 @@
 
       $cTiCcErx = ($datosCabecera['ticcierx'] != "0000-00-00") ? $datosCabecera['ticcierx'] : "";
 
-      if (count($vCorreos) > 0) {
+      // Obtener valores dinámicos de cEmaUsr
+      $i = 0;
+      $ticketEnviado = [];
+      while (isset($_POST["cEmaUsr$i"])) {
+        $ticketEnviado[] = $_POST["cEmaUsr$i"];
+        $i++;
+      }
+
+      if (count($ticketEnviado) > 0) {
         $cSubject = "Solicitud: \"1\" / \"".$datosCabecera['ttidesxx']."\" / \"".$datosCabecera['clinomxx']."\" / \"".$datosCabecera['stidesxx']."\" / \"".$datosCabecera['comprexx'].$datosCabecera['comcscxx']."\" ";
         
         $cMessage  = "<b>Ticket:</b> 1<br>";
@@ -237,20 +245,45 @@
         $cMessage .= "<b>Apertura Ticket:</b> {$datosCabecera['regfcrex']}<br>";
         $cMessage .= "<b>Cierre Ticket:</b> {$cTiCcErx}<br>";
         $cMessage .= "<b>Tipo de Ticket:</b> {$datosCabecera['ttidesxx']}<br>";
-        // Obtener valores dinámicos de cEmaUsr
-        $i = 0;
-        $ticketEnviado = [];
-        while (isset($_POST["cEmaUsr$i"])) {
-          $ticketEnviado[] = $_POST["cEmaUsr$i"];
-          $i++;
-        }
         $cMessage .= "<b>Ticket enviado a:</b> ".implode(', ', $ticketEnviado)."<br>";
         $cMessage .= "<b>Ticket CC a:</b> {$_POST['cCliPCECn']}<br>";
         $cMessage .= "<b>Certificaci&oacute;n:</b> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}<br>";
         $cMessage .= "<b>Cliente:</b> {$datosCabecera['cliidxxx']}<br><br>";
         $cMessage .= "Contenido:<br>{$_POST['cConten']}";
 
-        echo $cMessage;
+        if ($nSwitch == 0) {
+          // Send
+          $vDatos['basedato'] = $cAlfa;
+          $vDatos['asuntoxx'] = $cSubject;
+          $vDatos['mensajex'] = $cMessage;
+          $vDatos['adjuntos'] = [];
+          $vDatos['replytox'] = [$_POST['cUsrEma']]; // un array con el correo del usuario que creó el ticket
+          
+          $ObjEnvioEmail = new cEnvioEmail();
+          
+          $cCorreos = "";
+          for ($nC=0;$nC<count($ticketEnviado);$nC++) { 
+            if ($ticketEnviado[$nC] != "") {
+              $vDatos['destinos'] = [$ticketEnviado[$nC]]; // Array con los correos de destino
+              // Enviando correos a los contactos que se notifica
+              $vReturn = $ObjEnvioEmail->fnEviarEmailSMTP($vDatos);
+              if ($vReturn[0] == "false") {
+                $cMsjError = "";
+                for ($nR=1;$nR<count($vReturn);$nR++) { 
+                  $cMsjError .= $vReturn[$nR]."\n"; 
+                }
+                $nSwitch = 1;
+                $cMsj .= "\nError al Enviar Correo al destinatario [{$ticketEnviado[$nC]}].\n".$cMsjError."\n";
+              }
+              $cCorreos .= "{$ticketEnviado[$nC]}, ";
+            }
+          }
+          $cCorreos = substr($cCorreos, 0, strlen($cCorreos)-2);
+        }
+        
+        if ($nSwitch == 0) {
+          $cMsj .= "Se Envio el ticket con Exito a los Siguientes Correos:\n$cCorreos.\n";
+        }
       }
 
       // Valida que el contenido no sea vacio
@@ -557,10 +590,10 @@
   if ($nSwitch == 0) {
     switch ($_COOKIE['kModo']) {
       case "NUEVOTICKET":
-        f_Mensaje(__FILE__,__LINE__,"Se creo la Certificacion con exito.");
+        f_Mensaje(__FILE__,__LINE__,"El Ticket se creo con exito.");
       break;
       case "EDITAR":
-        f_Mensaje(__FILE__,__LINE__,"Se actualizo la Certificacion con exito.");
+        f_Mensaje(__FILE__,__LINE__,"Se actualizo el Ticket con exito.");
       break;
       case "ANULAR":
         f_Mensaje(__FILE__,__LINE__,"Se Anulo la Certificacion con exito.");

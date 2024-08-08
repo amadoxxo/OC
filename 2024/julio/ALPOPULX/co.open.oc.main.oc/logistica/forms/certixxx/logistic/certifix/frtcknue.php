@@ -390,11 +390,10 @@
         <script languaje = "javascript">
           // Deshabilito los campos de cabecera
           document.forms['frgrm']['cAsuTck'].value   = '<?php echo $cabecera['ticasuxx'] ?>';
-          document.forms['frgrm']['cTtiCod'].value   = '<?php echo $cabecera['tticodxx'] ?>';
+          document.forms['frgrm']['cTtiCod'].value   = '<?php echo $detalle[0]['tticodxx'] ?>';
           document.forms['frgrm']['cTtiDes'].value   = '<?php echo $cabecera['ttidesxx'] ?>';
-          document.forms['frgrm']['cPriori'].value   = '<?php echo $cabecera['pticodxx']?>';
-          document.forms['frgrm']['cEstado'].value   = '<?php echo $cabecera['sticodxx']?>';
-          document.forms['frgrm']['cEstado'].value   = '<?php echo $cabecera['sticodxx']?>';
+          document.forms['frgrm']['cPriori'].value   = '<?php echo $detalle[0]['pticodxx']?>';
+          document.forms['frgrm']['cEstado'].value   = '<?php echo $detalle[0]['sticodxx']?>';
           document.forms['frgrm']['cCliPCECn'].value = '<?php echo $detalle[0]['ticccopx']?>';
 
           document.forms['frgrm']['cAsuTck'].readOnly = true;
@@ -419,7 +418,7 @@
           // document.forms['frgrm']['cCdiDes'].onblur     = "";
           // document.forms['frgrm']['cCerTipMe'].readOnly = true;
 
-          // // Deshabilito los link de los Valid/Windows
+          // Deshabilito los link de los Valid/Windows
           // document.getElementById('id_href_cCompre').removeAttribute('href');
           // document.getElementById('id_href_CliId').removeAttribute('href');
           // document.getElementById('id_href_DepNum').removeAttribute('href');
@@ -506,7 +505,7 @@
         $qDeposito .= "lpar0009.secsapxx, ";
         $qDeposito .= "lpar0009.secdesxx, ";
         $qDeposito .= "lpar0155.regestxx ";
-        $qDeposito .= "FROM $cAlfa.lpar0155 ";                        
+        $qDeposito .= "FROM $cAlfa.lpar0155 ";
         $qDeposito .= "LEFT JOIN $cAlfa.lpar0007 ON $cAlfa.lpar0155.tdeidxxx = $cAlfa.lpar0007.tdeidxxx ";
         $qDeposito .= "LEFT JOIN $cAlfa.lpar0001 ON $cAlfa.lpar0155.orvsapxx = $cAlfa.lpar0001.orvsapxx ";
         $qDeposito .= "LEFT JOIN $cAlfa.lpar0002 ON $cAlfa.lpar0155.orvsapxx = $cAlfa.lpar0002.orvsapxx AND $cAlfa.lpar0155.ofvsapxx = $cAlfa.lpar0002.ofvsapxx ";

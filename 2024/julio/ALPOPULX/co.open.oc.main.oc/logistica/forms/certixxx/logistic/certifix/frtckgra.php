@@ -223,6 +223,7 @@
 
       $ticket = new cTickets();
       $datosCabecera = $ticket->fnCabeceraTickets($_POST['cCerId']);
+      $datosDetalle  = $ticket->fnDetalleTickets($_POST['cTicket']);
 
       $cTiCcErx = ($datosCabecera['ticcierx'] != "0000-00-00") ? $datosCabecera['ticcierx'] : "";
 
@@ -235,21 +236,78 @@
       }
 
       if (count($ticketEnviado) > 0) {
-        $cSubject = "Solicitud: \"1\" / \"".$datosCabecera['ttidesxx']."\" / \"".$datosCabecera['clinomxx']."\" / \"".$datosCabecera['stidesxx']."\" / \"".$datosCabecera['comprexx'].$datosCabecera['comcscxx']."\" ";
+        $cSubject = "Solicitud: 1 / {$datosCabecera['ttidesxx']} / {$datosCabecera['clinomxx']} / {$datosCabecera['stidesxx']} / {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']} ";
         
-        $cMessage  = "<b>Ticket:</b> 1<br>";
-        $cMessage .= "<b>Post ID:</b> 1<br>";
-        $cMessage .= "<b>Asunto:</b> {$_POST['cAsuTck']}<br>";
-        $cMessage .= "<b>Prioridad:</b> {$datosCabecera['ptidesxx']}<br>";
-        $cMessage .= "<b>Status:</b> {$datosCabecera['stidesxx']}<br>";
-        $cMessage .= "<b>Apertura Ticket:</b> {$datosCabecera['regfcrex']}<br>";
-        $cMessage .= "<b>Cierre Ticket:</b> {$cTiCcErx}<br>";
-        $cMessage .= "<b>Tipo de Ticket:</b> {$datosCabecera['ttidesxx']}<br>";
-        $cMessage .= "<b>Ticket enviado a:</b> ".implode(', ', $ticketEnviado)."<br>";
-        $cMessage .= "<b>Ticket CC a:</b> {$_POST['cCliPCECn']}<br>";
-        $cMessage .= "<b>Certificaci&oacute;n:</b> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}<br>";
-        $cMessage .= "<b>Cliente:</b> {$datosCabecera['cliidxxx']}<br><br>";
-        $cMessage .= "Contenido:<br>{$_POST['cConten']}";
+        $cMessage = "<body style='font-family: Arial, sans-serif'>";
+        $cMessage .= "<table width='100%' border-collapse:'collapse' margin:'20px 0'>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Ticket</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px' >1</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Post ID</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px' >1</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Asunto</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$_POST['cAsuTck']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Prioridad</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px' >{$datosCabecera['ptidesxx']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Estado</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['stidesxx']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Apertura Ticket</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['regfcrex']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Cierre Ticket</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$cTiCcErx}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Tipo de Ticket</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['ttidesxx']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Ticket enviado a</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'>" .implode(', ', $ticketEnviado). "</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Ticket CC a</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$_POST['cCliPCECn']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Certificacion</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Cliente</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['cliidxxx']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Contenido</th>";
+        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$_POST['cConten']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .="</table>";
+        $cMessage .="</body>";
+        
+        // $cMessage  = "<b>Ticket:</b> 1<br>";
+        // $cMessage .= "<b>Post ID:</b> 1<br>";
+        // $cMessage .= "<b>Asunto:</b> {$_POST['cAsuTck']}<br>";
+        // $cMessage .= "<b>Prioridad:</b> {$datosCabecera['ptidesxx']}<br>";
+        // $cMessage .= "<b>Status:</b> {$datosCabecera['stidesxx']}<br>";
+        // $cMessage .= "<b>Apertura Ticket:</b> {$datosCabecera['regfcrex']}<br>";
+        // $cMessage .= "<b>Cierre Ticket:</b> {$cTiCcErx}<br>";
+        // $cMessage .= "<b>Tipo de Ticket:</b> {$datosCabecera['ttidesxx']}<br>";
+        // $cMessage .= "<b>Ticket enviado a:</b> ".implode(', ', $ticketEnviado)."<br>";
+        // $cMessage .= "<b>Ticket CC a:</b> {$_POST['cCliPCECn']}<br>";
+        // $cMessage .= "<b>Certificaci&oacute;n:</b> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}<br>";
+        // $cMessage .= "<b>Cliente:</b> {$datosCabecera['cliidxxx']}<br><br>";
+        // $cMessage .= "Contenido:<br>{$_POST['cConten']}";
 
         if ($nSwitch == 0) {
           // Send
@@ -374,208 +432,54 @@
         $cAnioMif = $_POST['cPerAno'];
 
         // Actualiza la observacion de cabecera
-        $qUpdate = array(array('NAME' => 'cerobsxx', 'VALUE' => $_POST['cCerObs']    ,'CHECK'=>'NO'),
-                        array('NAME' => 'ceridxxx', 'VALUE' => $_POST['cCerId']     ,'CHECK'=>'WH'));
-                        
-        if (!f_MySql("UPDATE","lcca$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {
+        $qUpdate = array(array('NAME' => 'tticodxx', 'VALUE' => trim($_POST['cTtiCod']) ,'CHECK'=>'NO'),
+                        array('NAME' => 'pticodxx', 'VALUE' => trim($_POST['cPriori'])  ,'CHECK'=>'NO'),
+                        array('NAME' => 'sticodxx', 'VALUE' => trim($_POST['cEstado'])  ,'CHECK'=>'NO'),
+                        array('NAME' => 'ticidxxx', 'VALUE' => trim($_POST['cTicket'])  ,'CHECK'=>'WH'));
+
+        if (!f_MySql("UPDATE","ltic$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error actualizando la observacion de la Certificacion.\n";
-        }
-
-        // Válida si los subservicios guardados en el sistema son los mismos que se están editando, sino se eliminan de la Base de Datos
-        $qCertifiDet  = "SELECT ";
-        $qCertifiDet .= "$cAlfa.lcde$cPerAno.* ";
-        $qCertifiDet .= "FROM $cAlfa.lcde$cPerAno ";
-        $qCertifiDet .= "WHERE ";
-        $qCertifiDet .= "$cAlfa.lcde$cPerAno.ceridxxx = \"{$_POST['cCerId']}\" ";
-        $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
-        if (mysql_num_rows($xCertifiDet) > 0) {
-          while ($xRCD = mysql_fetch_array($xCertifiDet)) {
-            $nExiste = 0;
-            // Recorre la grilla de certificacion
-            for ($i=1; $i <= $_POST['nSecuencia_Certificacion']; $i++) { 
-              if ($xRCD['cerdidxx'] == $_POST['cCerdId' . $i ]) {
-                $nExiste = 1;
-              }
-            }
-
-            // Si no existe el subservicio se elimina de la Base de Datos
-            if ($nExiste == 0) {
-              $qDelete = array(array('NAME' => 'cerdidxx','VALUE' => trim(strtoupper($xRCD['cerdidxx']))   ,'CHECK'=>'WH'));
-              if (f_MySql("DELETE","lcde$cPerAno",$qDelete,$xConexion01,$cAlfa) && $_POST['cMifId'] != "") {
-                // Se libera el consecutivo de la certificacion en la MIF
-                $qMifSubservi  = "SELECT ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.mifdidxx ";
-                $qMifSubservi .= "FROM $cAlfa.lmsu$cAnioMif ";
-                $qMifSubservi .= "WHERE ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.mifidxxx = \"{$_POST['cMifId']}\" AND ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.sersapxx = \"{$xRCD['sersapxx']}\" AND ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.subidxxx = \"{$xRCD['subidxxx']}\"";
-                $xMifSubservi  = f_MySql("SELECT","",$qMifSubservi,$xConexion01,"");
-                $nError = 0;
-                if (mysql_num_rows($xMifSubservi) > 0) {
-                  while ($xRMS = mysql_fetch_array($xMifSubservi)) {
-                    $qUpdateMif = array(array('NAME'=>'cercscxx','VALUE' => ""                 ,'CHECK'=>'NO'),
-                                        array('NAME'=>'regestxx','VALUE' => "ACTIVO"           ,'CHECK'=>'SI'),
-                                        array('NAME'=>'mifdidxx','VALUE' => $xRMS['mifdidxx']  ,'CHECK'=>'WH'));
-                    
-                    if (!f_MySql("UPDATE","lmsu$cAnioMif",$qUpdateMif,$xConexion01,$cAlfa)) {
-                      $nError = 1;
-                    }
-                  }
-
-                  if ($nError == 1) {
-                    $nSwitch = 1;
-                    $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-                    $cMsj .= "No se pudo actualizar el consecutivo de Certificacion en el detalle de la MIF.\n";
-                  }
-                }
-              }
-            }
-          }
+          $cMsj .= "Error actualizando la cabecera del Ticket.\n";
         }
 
         $nErrorDetalle = 0;
         // Actualiza o crea los nuevos subservicios de la grilla de certificacion
-        for ($i=1; $i <= $_POST['nSecuencia_Certificacion']; $i++) {
-          $qCertifiDet  = "SELECT ";
-          $qCertifiDet .= "$cAlfa.lcde$cPerAno.* ";
-          $qCertifiDet .= "FROM $cAlfa.lcde$cPerAno ";
-          $qCertifiDet .= "WHERE ";
-          $qCertifiDet .= "$cAlfa.lcde$cPerAno.cerdidxx = \"{$_POST['cCerdId' . $i]}\" ";
-          $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
-          if (mysql_num_rows($xCertifiDet) > 0) {
-            $qUpdate = array(array('NAME' => 'sersapxx','VALUE' => trim($_POST['cCodSapSer' . $i])       ,'CHECK' => 'NO'),  //Codigo SAP Servicio
-                            array('NAME' => 'subidxxx','VALUE' => trim($_POST['cSubId_Certi' . $i])     ,'CHECK' => 'NO'),  //Id Subservicio
-                            array('NAME' => 'subdesxx','VALUE' => trim($_POST['cDesMaterial' . $i])     ,'CHECK' => 'SI'),  //Descripcion Subservicio
-                            array('NAME' => 'obfidxxx','VALUE' => trim($_POST['cObfId_Certi' . $i])     ,'CHECK' => 'SI'),  //Id Objeto Facturable
-                            array('NAME' => 'ufaidxxx','VALUE' => trim($_POST['cUfaId_Certi' . $i])     ,'CHECK' => 'SI'),  //Id Unidad Facturable
-                            array('NAME' => 'cebidxxx','VALUE' => trim($_POST['cCebId' . $i])           ,'CHECK' => 'SI'),  //Id Codigo Cebe
-                            array('NAME' => 'basexxxx','VALUE' => trim($_POST['cBase' . $i])            ,'CHECK' => 'SI'),  //Base
-                            array('NAME' => 'cerdconx','VALUE' => trim($_POST['cCondicion' . $i])       ,'CHECK' => 'SI'),  //Condicion
-                            array('NAME' => 'cerdestx','VALUE' => trim($_POST['cStatus' . $i])          ,'CHECK' => 'SI'),  //Status
-                            array('NAME' => 'cerdorix','VALUE' => trim($_POST['cTipoCerti' . $i])       ,'CHECK' => 'SI'),  //Origen
-                            array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el registro
-                            array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                         ,'CHECK' => 'SI'),  //Fecha de creacion
-                            array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de creacion 
-                            array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                         ,'CHECK' => 'SI'),  //Fecha de modificacion
-                            array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de modificacion
-                            array('NAME' => 'cerdidxx','VALUE' => $_POST['cCerdId' . $i]                ,'CHECK' => 'WH'));
+        $qCertifiDet  = "SELECT ";
+        $qCertifiDet .= "$cAlfa.ltid$cPerAno.* ";
+        $qCertifiDet .= "FROM $cAlfa.ltid$cPerAno ";
+        $qCertifiDet .= "WHERE ";
+        $qCertifiDet .= "$cAlfa.ltid$cPerAno.ticidxxx = \"{$_POST['cTicket']}\" ";
+        $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
+        if (mysql_num_rows($xCertifiDet) > 0) {
+          $qUpdate = array(array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])   ,'CHECK' => 'SI'),  //Codigo SAP Servicio
+                          array('NAME' => 'repcscxx','VALUE' => trim(mysql_num_rows($xCertifiDet)+1), 'CHECK' => 'SI'),  //Id Subservicio
+                          array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])    ,'CHECK' => 'SI'),  //Id Subservicio
+                          array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])    ,'CHECK' => 'SI'),  //Descripcion Subservicio
+                          array('NAME' => 'ticccopx','VALUE' => trim($_POST['cCliPCECn'])  ,'CHECK' => 'SI'),  //Id Objeto Facturable
+                          array('NAME' => 'repreply','VALUE' => trim($_POST['cConten'])    ,'CHECK' => 'SI'),  //Id Unidad Facturable
+                          array('NAME' => 'reprepor','VALUE' => trim($_POST['cRePre'])     ,'CHECK' => 'SI'),  //Id Unidad Facturable
+                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el registro
+                          array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])    ,'CHECK' => 'SI'),  //Usuario que creo el registro
+                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  //Fecha de creacion
+                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  //Hora de creacion 
+                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  //Fecha de modificacion
+                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  //Hora de modificacion
+                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')             ,'CHECK' => 'SI'),  //Hora de modificacion
+                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')        ,'CHECK' => 'SI'),  //Hora de modificacion
+                          array('NAME' => 'ticidxxx','VALUE' => trim($_POST['cTicket'])    ,'CHECK' => 'WH'));
 
-            if (!f_MySql("UPDATE","lcde$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {
-              $nErrorDetalle = 1;
-            }
-          } else {
-            $qInsert = array(array('NAME' => 'ceridxxx','VALUE' => trim($_POST['cCerId'])                ,'CHECK' => 'SI'),  //Id Certificacion Cabecera
-                            array('NAME' => 'sersapxx','VALUE' => trim($_POST['cCodSapSer' . $i])       ,'CHECK' => 'NO'),  //Codigo SAP Servicio
-                            array('NAME' => 'subidxxx','VALUE' => trim($_POST['cSubId_Certi' . $i])     ,'CHECK' => 'NO'),  //Id Subservicio
-                            array('NAME' => 'subdesxx','VALUE' => trim($_POST['cDesMaterial' . $i])     ,'CHECK' => 'SI'),  //Descripcion Subservicio
-                            array('NAME' => 'obfidxxx','VALUE' => trim($_POST['cObfId_Certi' . $i])     ,'CHECK' => 'SI'),  //Id Objeto Facturable
-                            array('NAME' => 'ufaidxxx','VALUE' => trim($_POST['cUfaId_Certi' . $i])     ,'CHECK' => 'SI'),  //Id Unidad Facturable
-                            array('NAME' => 'cebidxxx','VALUE' => trim($_POST['cCebId' . $i])           ,'CHECK' => 'SI'),  //Id Codigo Cebe
-                            array('NAME' => 'basexxxx','VALUE' => trim($_POST['cBase' . $i])            ,'CHECK' => 'SI'),  //Base
-                            array('NAME' => 'cerdconx','VALUE' => trim($_POST['cCondicion' . $i])       ,'CHECK' => 'SI'),  //Condicion
-                            array('NAME' => 'cerdestx','VALUE' => trim($_POST['cStatus' . $i])          ,'CHECK' => 'SI'),  //Status
-                            array('NAME' => 'cerdorix','VALUE' => trim($_POST['cTipoCerti' . $i])       ,'CHECK' => 'SI'),  //Origen
-                            array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el registro
-                            array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                         ,'CHECK' => 'SI'),  //Fecha de creacion
-                            array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de creacion 
-                            array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                         ,'CHECK' => 'SI'),  //Fecha de modificacion
-                            array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                         ,'CHECK' => 'SI'),  //Hora de modificacion
-                            array('NAME' => 'regestxx','VALUE' => "ENPROCESO"                           ,'CHECK' => 'SI')); //Estado
-
-            if (!f_MySql("INSERT","lcde$cPerAno",$qInsert,$xConexion01,$cAlfa)) {
-              $nErrorDetalle = 1;
-            } else {
-              // Actualiza el Subservicio de la MIF con el Consecutivo de la Certificacion
-              if ($_POST['cMifComCsc'] != "" && $_POST['cMifId'] != "") {
-                $cAnioMif = $_POST['cPerAno'];
-                $qMifSubservi  = "SELECT ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.mifdidxx ";
-                $qMifSubservi .= "FROM $cAlfa.lmsu$cAnioMif ";
-                $qMifSubservi .= "WHERE ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.mifidxxx = \"{$_POST['cMifId']}\" AND ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.sersapxx = \"{$_POST['cCodSapSer' . $i]}\" AND ";
-                $qMifSubservi .= "$cAlfa.lmsu$cAnioMif.subidxxx = \"{$_POST['cSubId_Certi' . $i]}\"";
-                $xMifSubservi  = f_MySql("SELECT","",$qMifSubservi,$xConexion01,"");
-                $nError = 0;
-                if (mysql_num_rows($xMifSubservi) > 0) {
-                  while ($xRMS = mysql_fetch_array($xMifSubservi)) {
-                    $cConsecutivo = trim(strtoupper($_POST['cComId']))."-".trim(strtoupper($_POST['cComPre']))."-".trim(strtoupper($_POST['cComCsc']));
-                    $qUpdateMif   = array(array('NAME'=>'cercscxx','VALUE' => $cConsecutivo      ,'CHECK'=>'SI'),
-                                          array('NAME'=>'regestxx','VALUE' => "CERTIFICADO"      ,'CHECK'=>'SI'),
-                                          array('NAME'=>'mifdidxx','VALUE' => $xRMS['mifdidxx']  ,'CHECK'=>'WH'));
-                    
-                    if (!f_MySql("UPDATE","lmsu$cAnioMif",$qUpdateMif,$xConexion01,$cAlfa)) {
-                      $nError = 1;
-                    }
-                  }
-
-                  if ($nError == 1) {
-                    $nSwitch = 1;
-                    $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-                    $cMsj .= "No se pudo actualizar el consecutivo de Certificacion en el detalle de la MIF.\n";
-                  }
-                }
-              }
-            }
+          if (!f_MySql("INSERT","ltid$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {
+            $nErrorDetalle = 1;
           }
-        }
+        } 
 
-        if ($nErrorDetalle == 1) {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error actualizando datos en el detalle de la Certificacion.\n";
-        }
+      if ($nErrorDetalle == 1) {
+        $nSwitch = 1;
+        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+        $cMsj .= "Error actualizando datos en el detalle del Ticket.\n";
+      }
 
-      break;
-      case "ANULAR":
-        // Actualiza el registro de cabecera
-        $qUpdate = array(array('NAME' => 'cerusuan','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))   ,'CHECK' => 'SI'),
-                        array('NAME' => 'cerfecan','VALUE' => date('Y-m-d H:i:s')                    ,'CHECK' => 'SI'),
-                        array('NAME' => 'cerobsan','VALUE' => $_POST['gObservacion']                 ,'CHECK' => 'SI'),
-                        array('NAME' => 'regestxx','VALUE' => "ANULADO"                              ,'CHECK' => 'SI'),
-                        array('NAME' => 'comidxxx','VALUE' => $_POST['gComId']                       ,'CHECK' => 'WH'),
-                        array('NAME' => 'comcodxx','VALUE' => $_POST['gComCod']                      ,'CHECK' => 'WH'),
-                        array('NAME' => 'comcscxx','VALUE' => $_POST['gComCsc']                      ,'CHECK' => 'WH'),
-                        array('NAME' => 'comcsc2x','VALUE' => $_POST['gComCsc2']                     ,'CHECK' => 'WH'));
-
-        if (!f_MySql("UPDATE","lcca$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Error al actualizar el estado de Anulacion en la cabecera de la Certificacion.\n";
-        } else {
-          // Actualiza los registros de detalle
-          $qCertifiDet  = "SELECT ";
-          $qCertifiDet .= "lcde$cPerAno.cerdidxx, ";
-          $qCertifiDet .= "lcde$cPerAno.sersapxx, ";
-          $qCertifiDet .= "lcde$cPerAno.subidxxx, ";
-          $qCertifiDet .= "lcde$cPerAno.cerdorix ";
-          $qCertifiDet .= "FROM $cAlfa.lcde$cPerAno ";
-          $qCertifiDet .= "WHERE ";
-          $qCertifiDet .= "$cAlfa.lcde$cPerAno.ceridxxx = \"{$vCertificacion['ceridxxx']}\" ";
-          $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
-          if (mysql_num_rows($xCertifiDet) > 0) {
-            while ($xRCD = mysql_fetch_array($xCertifiDet)) {
-              $qUpdate = array(array('NAME' => 'regestxx','VALUE' => "ANULADO"            ,'CHECK' => 'SI'),
-                              array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')        ,'CHECK' => 'SI'),
-                              array('NAME' => 'reghmodx','VALUE' => date('H:i:s')        ,'CHECK' => 'SI'),
-                              array('NAME' => 'cerdidxx','VALUE' => $xRCD['cerdidxx']    ,'CHECK' => 'WH'));
-
-              if (!f_MySql("UPDATE","lcde$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {
-                $nSwitch = 1;
-                $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-                $cMsj .= "Error al actualizar el estado de Anulacion en el detalle de la Certificacion.\n";
-              } else {
-                if ($xRCD['sersapxx'] != "" && $xRCD['subidxxx'] != "" && $xRCD['cerdorix'] == "MIF") {
-                  fnActualizaEstadoSubserviciosMif($vCertificacion['mifidano'], $vCertificacion['mifidxxx'], $xRCD['sersapxx'], $xRCD['subidxxx'], "ACTIVO");
-                }
-              }
-            }
-          }
-        }
-      
       break;
     }
   }
@@ -594,9 +498,6 @@
       break;
       case "EDITAR":
         f_Mensaje(__FILE__,__LINE__,"Se actualizo el Ticket con exito.");
-      break;
-      case "ANULAR":
-        f_Mensaje(__FILE__,__LINE__,"Se Anulo la Certificacion con exito.");
       break;
       default:
         // no hace nada

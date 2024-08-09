@@ -238,76 +238,61 @@
       if (count($ticketEnviado) > 0) {
         $cSubject = "Solicitud: 1 / {$datosCabecera['ttidesxx']} / {$datosCabecera['clinomxx']} / {$datosCabecera['stidesxx']} / {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']} ";
         
-        $cMessage = "<body style='font-family: Arial, sans-serif'>";
-        $cMessage .= "<table width='100%' border-collapse:'collapse' margin:'20px 0'>";
+        $cMessage  = "<body style='margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 14px; color: #333;'>";
+        $cMessage .= "<table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f9f9f9;'>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Ticket</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px' >1</td>";
+        $cMessage .= "<td align='center'>";
+        $cMessage .= "<table width='600' border='0' cellspacing='0' cellpadding='10' style='margin-top: 20px; margin-bottom: 20px; background-color: #ffffff;'>";
+        $cMessage .= "<tr style='background-color: #e6e6e6;'>";
+        $cMessage .= "<td style='text-align: left; font-size: 16px; padding: 10px;'><strong>Ticket: </strong>{$_POST['cTicket']}</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Post ID</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px' >1</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Asunto: {$_POST['cAsuTck']}</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Asunto</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$_POST['cAsuTck']}</td>";
+        $cMessage .= "<td>";
+        $cMessage .= "<table width='100%' border='0' cellspacing='0' cellpadding='5' style='font-size: 14px;'>";
+        $cMessage .= "<tr>";
+        $cMessage .= "<td style='font-weight: bold;'>POST ID:</td>";
+        $cMessage .= "<td>{$datosCabecera[0]['repcscxx']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Cliente:</td>";
+        $cMessage .= "<td>{$_POST['cCliNom']}</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Prioridad</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px' >{$datosCabecera['ptidesxx']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Prioridad:</td>";
+        $cMessage .= "<td>{$datosCabecera['ptidesxx']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Estado:</td>";
+        $cMessage .= "<td>{$datosCabecera['stidesxx']}</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Estado</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['stidesxx']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Apertura Ticket:</td>";
+        $cMessage .= "<td>{$datosCabecera['regfcrex']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Cierre Ticket:</td>";
+        $cMessage .= "<td>{$cTiCcErx}</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Apertura Ticket</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['regfcrex']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Tipo de Ticket:</td>";
+        $cMessage .= "<td>{$datosCabecera['ttidesxx']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Ticket enviado a:</td>";
+        $cMessage .= "<td>".implode(', ', $ticketEnviado)."</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Cierre Ticket</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$cTiCcErx}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Ticket CC a:</td>";
+        $cMessage .= "<td>{$_POST['cCliPCECn']}</td>";
+        $cMessage .= "<td style='font-weight: bold;'>Certificacion:</td>";
+        $cMessage .= "<td>{$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}</td>";
+        $cMessage .= "</tr>";
+        $cMessage .= "</table>";
+        $cMessage .= "</td>";
         $cMessage .= "</tr>";
         $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Tipo de Ticket</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['ttidesxx']}</td>";
+        $cMessage .= "<td style='text-align: left; font-size: 14px; padding: 20px; background-color: #ffffff;'>Buen dia,<br><br>{$_POST['cConten']}</td>";
         $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Ticket enviado a</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'>" .implode(', ', $ticketEnviado). "</td>";
+        $cMessage .= "</table>";
+        $cMessage .= "</td>";
         $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Ticket CC a</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$_POST['cCliPCECn']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Certificacion</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Cliente</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$datosCabecera['cliidxxx']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<th style='padding:8px;text-align: left;border:1px solid #ddd;background-color:#f2f2f2'>Contenido</th>";
-        $cMessage .= "<td style='padding:8px;text-align: left;border:1px'> {$_POST['cConten']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .="</table>";
-        $cMessage .="</body>";
-        
-        // $cMessage  = "<b>Ticket:</b> 1<br>";
-        // $cMessage .= "<b>Post ID:</b> 1<br>";
-        // $cMessage .= "<b>Asunto:</b> {$_POST['cAsuTck']}<br>";
-        // $cMessage .= "<b>Prioridad:</b> {$datosCabecera['ptidesxx']}<br>";
-        // $cMessage .= "<b>Status:</b> {$datosCabecera['stidesxx']}<br>";
-        // $cMessage .= "<b>Apertura Ticket:</b> {$datosCabecera['regfcrex']}<br>";
-        // $cMessage .= "<b>Cierre Ticket:</b> {$cTiCcErx}<br>";
-        // $cMessage .= "<b>Tipo de Ticket:</b> {$datosCabecera['ttidesxx']}<br>";
-        // $cMessage .= "<b>Ticket enviado a:</b> ".implode(', ', $ticketEnviado)."<br>";
-        // $cMessage .= "<b>Ticket CC a:</b> {$_POST['cCliPCECn']}<br>";
-        // $cMessage .= "<b>Certificaci&oacute;n:</b> {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}<br>";
-        // $cMessage .= "<b>Cliente:</b> {$datosCabecera['cliidxxx']}<br><br>";
-        // $cMessage .= "Contenido:<br>{$_POST['cConten']}";
+        $cMessage .= "</table>";
+        $cMessage .= "</body>";
 
         if ($nSwitch == 0) {
           // Send
@@ -408,14 +393,14 @@
                           array('NAME' => 'ticccopx','VALUE' => trim($_POST['cCliPCECn'])           ,'CHECK' => 'NO'),  //Correos en copia
                           array('NAME' => 'repreply','VALUE' => trim($_POST['cConten'])             ,'CHECK' => 'SI'),  //Reply
                           array('NAME' => 'reprepor','VALUE' => trim($_POST['cRePre'])              ,'CHECK' => 'SI'),  //Realizado por (RESPONSABLE/TERCERO)
-                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_POST['cUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el Registro
-                          array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])             ,'CHECK' => 'SI'),  //Correo Usuario que Creo el Registro
-                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                       ,'CHECK' => 'SI'),  //Fecha de Creacion del Registro
-                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                       ,'CHECK' => 'SI'),  //Hora de Creacion del Registro
-                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                       ,'CHECK' => 'SI'),  //Fecha de Modificacion del Registro
-                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                       ,'CHECK' => 'SI'),  //Hora de Modificacion del Registro
-                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')                      ,'CHECK' => 'SI'),  //Estado del Registro
-                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')                 ,'CHECK' => 'SI')); //Modificado
+                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_POST['cUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el Reply
+                          array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])             ,'CHECK' => 'SI'),  //Correo Usuario que Creo el Reply
+                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')                       ,'CHECK' => 'SI'),  //Fecha de Creacion
+                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')                       ,'CHECK' => 'SI'),  //Hora de Creacion
+                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')                       ,'CHECK' => 'SI'),  //Fecha de Modificacion
+                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')                       ,'CHECK' => 'SI'),  //Hora de Modificacion
+                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')                      ,'CHECK' => 'SI'),  //Estado
+                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')                 ,'CHECK' => 'SI')); //Fecha de modificacion
 
           if (!f_MySql("INSERT","ltid$cPerAno",$qInsert,$xConexion01,$cAlfa)) {
             $nErrorDetalle = 1;
@@ -452,21 +437,21 @@
         $qCertifiDet .= "$cAlfa.ltid$cPerAno.ticidxxx = \"{$_POST['cTicket']}\" ";
         $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
         if (mysql_num_rows($xCertifiDet) > 0) {
-          $qUpdate = array(array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])   ,'CHECK' => 'SI'),  //Codigo SAP Servicio
-                          array('NAME' => 'repcscxx','VALUE' => trim(mysql_num_rows($xCertifiDet)+1), 'CHECK' => 'SI'),  //Id Subservicio
-                          array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])    ,'CHECK' => 'SI'),  //Id Subservicio
-                          array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])    ,'CHECK' => 'SI'),  //Descripcion Subservicio
-                          array('NAME' => 'ticccopx','VALUE' => trim($_POST['cCliPCECn'])  ,'CHECK' => 'SI'),  //Id Objeto Facturable
-                          array('NAME' => 'repreply','VALUE' => trim($_POST['cConten'])    ,'CHECK' => 'SI'),  //Id Unidad Facturable
-                          array('NAME' => 'reprepor','VALUE' => trim($_POST['cRePre'])     ,'CHECK' => 'SI'),  //Id Unidad Facturable
-                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  //Usuario que creo el registro
-                          array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])    ,'CHECK' => 'SI'),  //Usuario que creo el registro
-                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  //Fecha de creacion
-                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  //Hora de creacion 
-                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  //Fecha de modificacion
-                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  //Hora de modificacion
-                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')             ,'CHECK' => 'SI'),  //Hora de modificacion
-                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')        ,'CHECK' => 'SI'),  //Hora de modificacion
+          $qUpdate = array(array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])   ,'CHECK' => 'SI'),  // ID Ticket
+                          array('NAME' => 'repcscxx','VALUE' => trim(mysql_num_rows($xCertifiDet)+1), 'CHECK' => 'SI'),  // Consecutivo Reply
+                          array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])    ,'CHECK' => 'SI'),  // Codigo Prioridad Ticket
+                          array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])    ,'CHECK' => 'SI'),  // Codigo Status Ticket
+                          array('NAME' => 'ticccopx','VALUE' => trim($_POST['cCliPCECn'])  ,'CHECK' => 'SI'),  // Correos en copia
+                          array('NAME' => 'repreply','VALUE' => trim($_POST['cConten'])    ,'CHECK' => 'SI'),  // Contenido
+                          array('NAME' => 'reprepor','VALUE' => trim($_POST['cRePre'])     ,'CHECK' => 'SI'),  // Realizado por (RESPONSABLE/TERCERO)
+                          array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  // Usuario que creo el Registro
+                          array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])    ,'CHECK' => 'SI'),  // Correo Usuario que Creo el Registro
+                          array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  // Fecha de creacion
+                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  // Hora de creacion 
+                          array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  // Fecha de modificacion
+                          array('NAME' => 'reghmodx','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  // Hora de modificacion
+                          array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')             ,'CHECK' => 'SI'),  // Hora de modificacion
+                          array('NAME' => 'regstamp','VALUE' => date('Y-m-d H:m:s')        ,'CHECK' => 'SI'),  // Hora de modificacion
                           array('NAME' => 'ticidxxx','VALUE' => trim($_POST['cTicket'])    ,'CHECK' => 'WH'));
 
           if (!f_MySql("INSERT","ltid$cPerAno",$qUpdate,$xConexion01,$cAlfa)) {

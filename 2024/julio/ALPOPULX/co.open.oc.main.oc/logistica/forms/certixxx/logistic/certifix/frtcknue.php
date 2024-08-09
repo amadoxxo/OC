@@ -128,22 +128,6 @@
       }
 
       /**
-       * Carga la grilla de servicios automaticos cuando se carga la MIF.
-       */
-      function fnCargarGrillaSubServicio(xValidaExisteSubservicio) {
-        var cRuta = "frcergri.php?gCcoIdOc="+document.forms['frgrm']['cCcoIdOc'].value+
-                                "&gCliId="+document.forms['frgrm']['cCliId'].value+
-                                "&gDepNum="+document.forms['frgrm']['cDepNum'].value+
-                                "&gMifId="+document.forms['frgrm']['cMifId'].value+
-                                "&gAnio="+document.forms['frgrm']['cPerAno'].value+
-                                "&gCerId="+document.forms['frgrm']['cCerId'].value+
-                                "&gTipo=1"+
-                                "&gValidaExisteSubservicio="+xValidaExisteSubservicio;
-
-        parent.fmpro.location = cRuta;
-      }
-
-      /**
        * Permite habilitar o deshabilitar los campos de la seccion de certificacion.
        */
       function fnActivarDesactivarCamposCertificacion(xIndice, xAccion) {
@@ -372,16 +356,7 @@
     </center>
     <?php
     switch ($_COOKIE['kModo']) {
-      case "NUEVO":
-        ?>
-        <script languaje = "javascript">
-          fnAddNewRowServicio('Grid_Servicios');
-          fnCambiaTipoCertificacion(document.forms['frgrm']['cCerTip'].value);
-        </script>
-        <?php
-      break;
       case "EDITAR":
-        // fnCargaData($cCerId,$cAnio);
         $verTickets = new cTickets();
         $cabecera = $verTickets->fnCabeceraTickets($cTicId);
         $detalle  = $verTickets->fnDetalleTickets($cTicId);
@@ -406,17 +381,12 @@
           // document.forms['frgrm']['cCliId'].onblur      = "";
           // document.forms['frgrm']['cCliNom'].onfocus    = "";
           // document.forms['frgrm']['cCliNom'].onblur     = "";
-          // document.forms['frgrm']['cDepNum'].readOnly   = true;
           // document.forms['frgrm']['cDepNum'].onfocus    = "";
           // document.forms['frgrm']['cDepNum'].onblur     = "";
-          // document.forms['frgrm']['cTipoDep'].readOnly  = true;
-          // document.forms['frgrm']['cCdiSap'].readOnly   = true;
           // document.forms['frgrm']['cCdiSap'].onfocus    = "";
           // document.forms['frgrm']['cCdiSap'].onblur     = "";
-          // document.forms['frgrm']['cCdiDes'].readOnly   = true;
           // document.forms['frgrm']['cCdiDes'].onfocus    = "";
           // document.forms['frgrm']['cCdiDes'].onblur     = "";
-          // document.forms['frgrm']['cCerTipMe'].readOnly = true;
 
           // Deshabilito los link de los Valid/Windows
           // document.getElementById('id_href_cCompre').removeAttribute('href');
@@ -425,28 +395,6 @@
           // document.getElementById('id_href_dVigDesde').removeAttribute('href');
           // document.getElementById('id_href_dVigHasta').removeAttribute('href');
           // document.getElementById('id_href_CdiSap').removeAttribute('href');
-        </script>
-      <?php
-      break;
-      case "VER":
-        fnCargaData($cCerId,$cAnio);
-        ?>
-        <script languaje = "javascript">
-          for (x=0;x<document.forms['frgrm'].elements.length;x++) {
-            document.forms['frgrm'].elements[x].readOnly = true;
-            document.forms['frgrm'].elements[x].onfocus  = "";
-            document.forms['frgrm'].elements[x].onblur   = "";
-          }
-          document.forms['frgrm']['cCerTip'].disabled = true;
-          document.forms['frgrm']['cPerAno'].disabled = true;
-
-          // Deshabilita los link de los Valid/Windows
-          document.getElementById('id_href_cCompre').removeAttribute('href');
-          document.getElementById('id_href_CliId').removeAttribute('href');
-          document.getElementById('id_href_DepNum').removeAttribute('href');
-          document.getElementById('id_href_dVigDesde').removeAttribute('href');
-          document.getElementById('id_href_dVigHasta').removeAttribute('href');
-          document.getElementById('id_href_CdiSap').removeAttribute('href');
         </script>
       <?php
       break;

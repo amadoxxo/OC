@@ -12,7 +12,7 @@
  * @version 1.0
  */
 include("utimifxx.php");
-include("uticemax.php");
+include('../../../libs/php/uticemax.php');
 
 class cTickets
 {
@@ -57,6 +57,7 @@ class cTickets
       $qMiTicket .= "$cAlfa.lpar0156.ptidesxx, ";  // Prioridad descripcion
       $qMiTicket .= "$cAlfa.lpar0157.stidesxx, ";  // Status
       $qMiTicket .= "$cAlfa.SIAI0003.USRNOMXX AS usrnomxx, ";  // Creado por
+      $qMiTicket .= "$cAlfa.SIAI0003.USREMAXX AS emailcre, ";  // Creado por
       $qMiTicket .= "GROUP_CONCAT(SIAI0003_2.USRNOMXX SEPARATOR ', ') AS responsables, ";  // Responsables
       $qMiTicket .= "GROUP_CONCAT(SIAI0003_3.USREMAXX SEPARATOR ', ') AS emails ";  // Emails
       $qMiTicket .= "FROM $cAlfa.ltic$cAnio ";
@@ -125,5 +126,114 @@ class cTickets
     }
 
     return $mMatrizTickets;
+  }
+
+  function fnEnvioEmail($nSwitch, $cMsj, $cId)
+  {
+    global $cAlfa;
+    $datosCabecera = $this->fnCabeceraTickets($cId);
+
+    $cTiCcErx = ($datosCabecera['ticcierx'] != "0000-00-00") ? $datosCabecera['ticcierx'] : "";
+    // Obtener valores dinámicos de cEmaUsr
+    $i = 0;
+    $ticketEnviado = [];
+    while (isset($_POST["cEmaUsr$i"])) {
+      $ticketEnviado[] = $_POST["cEmaUsr$i"];
+      $i++;
+    }
+    
+    if (count($ticketEnviado) > 0) {
+      $cSubject = "Solicitud: 1 / {$datosCabecera['ttidesxx']} / {$datosCabecera['clinomxx']} / {$datosCabecera['stidesxx']} / {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']} ";
+      
+      $cMessage  = "<body style='margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 14px; color: #333;'>";
+      $cMessage .= "<table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f9f9f9;'>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td align='center'>";
+      $cMessage .= "<table width='600' border='0' cellspacing='0' cellpadding='10' style='margin-top: 20px; margin-bottom: 20px; background-color: #ffffff;'>";
+      $cMessage .= "<tr style='background-color: #e6e6e6;'>";
+      $cMessage .= "<td style='text-align: left; font-size: 16px; padding: 10px;'><strong>Ticket: </strong>{$_POST['cTicket']}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='font-weight: bold;'>Asunto: {$_POST['cAsuTck']}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td>";
+      $cMessage .= "<table width='100%' border='0' cellspacing='0' cellpadding='5' style='font-size: 14px;'>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='font-weight: bold;'>POST ID:</td>";
+      $cMessage .= "<td>{$datosCabecera[0]['repcscxx']}</td>";
+      $cMessage .= "<td style='font-weight: bold;'>Cliente:</td>";
+      $cMessage .= "<td>{$_POST['cCliNom']}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='font-weight: bold;'>Prioridad:</td>";
+      $cMessage .= "<td>{$datosCabecera['ptidesxx']}</td>";
+      $cMessage .= "<td style='font-weight: bold;'>Estado:</td>";
+      $cMessage .= "<td>{$datosCabecera['stidesxx']}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='font-weight: bold;'>Apertura Ticket:</td>";
+      $cMessage .= "<td>{$datosCabecera['regfcrex']}</td>";
+      $cMessage .= "<td style='font-weight: bold;'>Cierre Ticket:</td>";
+      $cMessage .= "<td>{$cTiCcErx}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='font-weight: bold;'>Tipo de Ticket:</td>";
+      $cMessage .= "<td>{$datosCabecera['ttidesxx']}</td>";
+      $cMessage .= "<td style='font-weight: bold;'>Ticket enviado a:</td>";
+      $cMessage .= "<td>".implode(', ', $ticketEnviado)."</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='font-weight: bold;'>Ticket CC a:</td>";
+      $cMessage .= "<td>{$_POST['cCliPCECn']}</td>";
+      $cMessage .= "<td style='font-weight: bold;'>Certificacion:</td>";
+      $cMessage .= "<td>{$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "</table>";
+      $cMessage .= "</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "<tr>";
+      $cMessage .= "<td style='text-align: left; font-size: 14px; padding: 20px; background-color: #ffffff;'>Buen dia,<br><br>{$_POST['cConten']}</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "</table>";
+      $cMessage .= "</td>";
+      $cMessage .= "</tr>";
+      $cMessage .= "</table>";
+      $cMessage .= "</body>";
+
+      if ($nSwitch == 0) {
+        // Send
+        $vDatos['basedato'] = $cAlfa;
+        $vDatos['asuntoxx'] = $cSubject;
+        $vDatos['mensajex'] = $cMessage;
+        $vDatos['adjuntos'] = [];
+        $vDatos['replytox'] = [$_POST['cUsrEma']]; // un array con el correo del usuario que creó el ticket
+        
+        $ObjEnvioEmail = new cEnvioEmail();
+        
+        $cCorreos = "";
+        for ($nC=0;$nC<count($ticketEnviado);$nC++) { 
+          if ($ticketEnviado[$nC] != "") {
+            $vDatos['destinos'] = [$ticketEnviado[$nC]]; // Array con los correos de destino
+            // Enviando correos a los contactos que se notifica
+            $vReturn = $ObjEnvioEmail->fnEviarEmailSMTP($vDatos);
+            if ($vReturn[0] == "false") {
+              $cMsjError = "";
+              for ($nR=1;$nR<count($vReturn);$nR++) { 
+                $cMsjError .= $vReturn[$nR]."\n"; 
+              }
+              $nSwitch = 1;
+              return $cMsj .= "\nError al Enviar Correo al destinatario [{$ticketEnviado[$nC]}].\n".$cMsjError."\n";
+            }
+            $cCorreos .= "{$ticketEnviado[$nC]}, ";
+          }
+        }
+        $cCorreos = substr($cCorreos, 0, strlen($cCorreos)-2);
+      }
+      
+      if ($nSwitch == 0) {
+        return $cMsj .= "Se Envio el ticket con Exito a los Siguientes Correos:\n$cCorreos.\n";
+      }
+    }
   }
 } #FIN class cTickets

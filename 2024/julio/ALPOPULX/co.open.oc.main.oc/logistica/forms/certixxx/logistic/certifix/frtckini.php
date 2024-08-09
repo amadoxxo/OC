@@ -51,7 +51,11 @@
                 var mCliId   = mComDat[8];  // Id del cliente
                 var mCliNom  = mComDat[9];  // Nombre del cliente
                 var mTicId   = mComDat[10]; // Id de Cabecera
-
+                var mStiDes  = mComDat[11]; // Status Descripcion Cabecera
+                if (mStiDes == "CIERRE") {
+                  alert("No es posible ingresar a un ticket con estado CIERRE\n Verifique.");
+                  return;
+                }
                 var ruta = "frtcknue.php?cCerId="   +mCerId+
                                         "&cComFec=" +mComFec+
                                         "&cComId="  +mComId+
@@ -87,7 +91,11 @@
                   var mCliId   = mComDat[8]; // Id del cliente
                   var mCliNom  = mComDat[9]; // Nombre del cliente
                   var mTicId   = mComDat[10]; // Id de Cabecera
-
+                  var mStiDes  = mComDat[11]; // Status Descripcion Cabecera
+                  if (mStiDes == "CIERRE") {
+                    alert("No es posible ingresar a un ticket con estado CIERRE\n Verifique.");
+                    return;
+                  }
                   var ruta = "frtcknue.php?cCerId=" +mCerId+
                                         "&cComFec=" +mComFec+
                                         "&cComId="  +mComId+
@@ -677,7 +685,8 @@
                                             $mMiTicket[$i]['comprexx'].'~'.  //[7]
                                             $mMiTicket[$i]['cliidxxx'].'~'.  //[8] 
                                             $mMiTicket[$i]['clinomxx'].'~'.  //[9] 
-                                            $mMiTicket[$i]['ticidxxx']  //[10] ?>"
+                                            $mMiTicket[$i]['ticidxxx'].'~'.  //[10]"
+                                            $mMiTicket[$i]['stidesxx']  //[11] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mMiTicket) ?>'">
                             </td>
                           </tr>

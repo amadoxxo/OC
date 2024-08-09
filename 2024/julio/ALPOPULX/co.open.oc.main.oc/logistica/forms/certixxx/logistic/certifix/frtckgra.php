@@ -30,6 +30,10 @@
    */
   $cPerAno = date('Y');
   
+  /** 
+   * Instancia de la clase cTickets
+   */
+  $ticket = new cTickets();
 
   // Creación de tabla anualizada en caso de que no exista
   $qTabExis = "SHOW TABLES FROM $cAlfa LIKE \"ltic$cPerAno\"";
@@ -221,114 +225,6 @@
         }
       }
 
-      $ticket = new cTickets();
-      $datosCabecera = $ticket->fnCabeceraTickets($_POST['cCerId']);
-      $datosDetalle  = $ticket->fnDetalleTickets($_POST['cTicket']);
-
-      $cTiCcErx = ($datosCabecera['ticcierx'] != "0000-00-00") ? $datosCabecera['ticcierx'] : "";
-
-      // Obtener valores dinámicos de cEmaUsr
-      $i = 0;
-      $ticketEnviado = [];
-      while (isset($_POST["cEmaUsr$i"])) {
-        $ticketEnviado[] = $_POST["cEmaUsr$i"];
-        $i++;
-      }
-
-      if (count($ticketEnviado) > 0) {
-        $cSubject = "Solicitud: 1 / {$datosCabecera['ttidesxx']} / {$datosCabecera['clinomxx']} / {$datosCabecera['stidesxx']} / {$datosCabecera['comprexx']}{$datosCabecera['comcscxx']} ";
-        
-        $cMessage  = "<body style='margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 14px; color: #333;'>";
-        $cMessage .= "<table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f9f9f9;'>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td align='center'>";
-        $cMessage .= "<table width='600' border='0' cellspacing='0' cellpadding='10' style='margin-top: 20px; margin-bottom: 20px; background-color: #ffffff;'>";
-        $cMessage .= "<tr style='background-color: #e6e6e6;'>";
-        $cMessage .= "<td style='text-align: left; font-size: 16px; padding: 10px;'><strong>Ticket: </strong>{$_POST['cTicket']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='font-weight: bold;'>Asunto: {$_POST['cAsuTck']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td>";
-        $cMessage .= "<table width='100%' border='0' cellspacing='0' cellpadding='5' style='font-size: 14px;'>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='font-weight: bold;'>POST ID:</td>";
-        $cMessage .= "<td>{$datosCabecera[0]['repcscxx']}</td>";
-        $cMessage .= "<td style='font-weight: bold;'>Cliente:</td>";
-        $cMessage .= "<td>{$_POST['cCliNom']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='font-weight: bold;'>Prioridad:</td>";
-        $cMessage .= "<td>{$datosCabecera['ptidesxx']}</td>";
-        $cMessage .= "<td style='font-weight: bold;'>Estado:</td>";
-        $cMessage .= "<td>{$datosCabecera['stidesxx']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='font-weight: bold;'>Apertura Ticket:</td>";
-        $cMessage .= "<td>{$datosCabecera['regfcrex']}</td>";
-        $cMessage .= "<td style='font-weight: bold;'>Cierre Ticket:</td>";
-        $cMessage .= "<td>{$cTiCcErx}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='font-weight: bold;'>Tipo de Ticket:</td>";
-        $cMessage .= "<td>{$datosCabecera['ttidesxx']}</td>";
-        $cMessage .= "<td style='font-weight: bold;'>Ticket enviado a:</td>";
-        $cMessage .= "<td>".implode(', ', $ticketEnviado)."</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='font-weight: bold;'>Ticket CC a:</td>";
-        $cMessage .= "<td>{$_POST['cCliPCECn']}</td>";
-        $cMessage .= "<td style='font-weight: bold;'>Certificacion:</td>";
-        $cMessage .= "<td>{$datosCabecera['comprexx']}{$datosCabecera['comcscxx']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "</table>";
-        $cMessage .= "</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "<tr>";
-        $cMessage .= "<td style='text-align: left; font-size: 14px; padding: 20px; background-color: #ffffff;'>Buen dia,<br><br>{$_POST['cConten']}</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "</table>";
-        $cMessage .= "</td>";
-        $cMessage .= "</tr>";
-        $cMessage .= "</table>";
-        $cMessage .= "</body>";
-
-        if ($nSwitch == 0) {
-          // Send
-          $vDatos['basedato'] = $cAlfa;
-          $vDatos['asuntoxx'] = $cSubject;
-          $vDatos['mensajex'] = $cMessage;
-          $vDatos['adjuntos'] = [];
-          $vDatos['replytox'] = [$_POST['cUsrEma']]; // un array con el correo del usuario que creó el ticket
-          
-          $ObjEnvioEmail = new cEnvioEmail();
-          
-          $cCorreos = "";
-          for ($nC=0;$nC<count($ticketEnviado);$nC++) { 
-            if ($ticketEnviado[$nC] != "") {
-              $vDatos['destinos'] = [$ticketEnviado[$nC]]; // Array con los correos de destino
-              // Enviando correos a los contactos que se notifica
-              $vReturn = $ObjEnvioEmail->fnEviarEmailSMTP($vDatos);
-              if ($vReturn[0] == "false") {
-                $cMsjError = "";
-                for ($nR=1;$nR<count($vReturn);$nR++) { 
-                  $cMsjError .= $vReturn[$nR]."\n"; 
-                }
-                $nSwitch = 1;
-                $cMsj .= "\nError al Enviar Correo al destinatario [{$ticketEnviado[$nC]}].\n".$cMsjError."\n";
-              }
-              $cCorreos .= "{$ticketEnviado[$nC]}, ";
-            }
-          }
-          $cCorreos = substr($cCorreos, 0, strlen($cCorreos)-2);
-        }
-        
-        if ($nSwitch == 0) {
-          $cMsj .= "Se Envio el ticket con Exito a los Siguientes Correos:\n$cCorreos.\n";
-        }
-      }
-
       // Valida que el contenido no sea vacio
       if ($_POST['cConten'] == "") {
         $nSwitch = 1;
@@ -349,7 +245,6 @@
   if ($nSwitch == 0) {
     switch ($_COOKIE['kModo']) {
       case "NUEVOTICKET":
-        $cAnioMif = $_POST['cPerAno'];
         // Insertando en la Tabla lccaYYYY (Cabecera)
         $qInsert  = array(array('NAME' => 'ceridxxx','VALUE' => trim($_POST['cCerId'])               ,'CHECK' => 'SI'),  //Id del comprobante
                           array('NAME' => 'comidxxx','VALUE' => trim($_POST['cComId'])               ,'CHECK' => 'SI'),  //Codigo del comprobante
@@ -378,14 +273,14 @@
           $cMsj .= "Error guardando datos de la Tickets - Cabecera \n";
         } else {
           // Insertando en la tabla ltidYYYY (Detalle)
-          $qCertifiCab  = "SELECT ";
-          $qCertifiCab .= "MAX(ticidxxx) AS ultimoId ";
-          $qCertifiCab .= "FROM $cAlfa.ltic$cPerAno";
-          $xCertifiCab  = f_MySql("SELECT","",$qCertifiCab,$xConexion01,"");
-          $vCertifiCab  = mysql_fetch_array($xCertifiCab);
+          $qDetalleTicket  = "SELECT ";
+          $qDetalleTicket .= "MAX(ticidxxx) AS ultimoId ";
+          $qDetalleTicket .= "FROM $cAlfa.ltic$cPerAno";
+          $xDetalleTicket  = f_MySql("SELECT","",$qDetalleTicket,$xConexion01,"");
+          $vDetalleTicket  = mysql_fetch_array($xDetalleTicket);
 
           $nErrorDetalle = 0;
-          $qInsert = array(array('NAME' => 'ticidxxx','VALUE' => $vCertifiCab['ultimoId']           ,'CHECK' => 'SI'),  //Id Tickets Cabecera
+          $qInsert = array(array('NAME' => 'ticidxxx','VALUE' => $vDetalleTicket['ultimoId']        ,'CHECK' => 'SI'),  //Id Tickets Cabecera
                           array('NAME' => 'repcscxx','VALUE' => trim('1')                           ,'CHECK' => 'SI'),  //Consecutivo Reply
                           array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])             ,'CHECK' => 'SI'),  //Codigo Tipo de Ticket
                           array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])             ,'CHECK' => 'SI'),  //Codigo Prioridad Ticket
@@ -414,8 +309,6 @@
         }
       break;
       case "EDITAR":
-        $cAnioMif = $_POST['cPerAno'];
-
         // Actualiza la observacion de cabecera
         $qUpdate = array(array('NAME' => 'tticodxx', 'VALUE' => trim($_POST['cTtiCod']) ,'CHECK'=>'NO'),
                         array('NAME' => 'pticodxx', 'VALUE' => trim($_POST['cPriori'])  ,'CHECK'=>'NO'),
@@ -430,15 +323,15 @@
 
         $nErrorDetalle = 0;
         // Actualiza o crea los nuevos subservicios de la grilla de certificacion
-        $qCertifiDet  = "SELECT ";
-        $qCertifiDet .= "$cAlfa.ltid$cPerAno.* ";
-        $qCertifiDet .= "FROM $cAlfa.ltid$cPerAno ";
-        $qCertifiDet .= "WHERE ";
-        $qCertifiDet .= "$cAlfa.ltid$cPerAno.ticidxxx = \"{$_POST['cTicket']}\" ";
-        $xCertifiDet  = f_MySql("SELECT","",$qCertifiDet,$xConexion01,"");
-        if (mysql_num_rows($xCertifiDet) > 0) {
+        $qTicketDetalle  = "SELECT ";
+        $qTicketDetalle .= "$cAlfa.ltid$cPerAno.* ";
+        $qTicketDetalle .= "FROM $cAlfa.ltid$cPerAno ";
+        $qTicketDetalle .= "WHERE ";
+        $qTicketDetalle .= "$cAlfa.ltid$cPerAno.ticidxxx = \"{$_POST['cTicket']}\" ";
+        $xTicketDetalle  = f_MySql("SELECT","",$qTicketDetalle,$xConexion01,"");
+        if (mysql_num_rows($xTicketDetalle) > 0) {
           $qUpdate = array(array('NAME' => 'tticodxx','VALUE' => trim($_POST['cTtiCod'])   ,'CHECK' => 'SI'),  // ID Ticket
-                          array('NAME' => 'repcscxx','VALUE' => trim(mysql_num_rows($xCertifiDet)+1), 'CHECK' => 'SI'),  // Consecutivo Reply
+                          array('NAME' => 'repcscxx','VALUE' => trim(mysql_num_rows($xTicketDetalle)+1), 'CHECK' => 'SI'),  // Consecutivo Reply
                           array('NAME' => 'pticodxx','VALUE' => trim($_POST['cPriori'])    ,'CHECK' => 'SI'),  // Codigo Prioridad Ticket
                           array('NAME' => 'sticodxx','VALUE' => trim($_POST['cEstado'])    ,'CHECK' => 'SI'),  // Codigo Status Ticket
                           array('NAME' => 'ticccopx','VALUE' => trim($_POST['cCliPCECn'])  ,'CHECK' => 'SI'),  // Correos en copia
@@ -447,7 +340,7 @@
                           array('NAME' => 'regusrxx','VALUE' => trim(strtoupper($_COOKIE['kUsrId']))  ,'CHECK' => 'SI'),  // Usuario que creo el Registro
                           array('NAME' => 'regusrem','VALUE' => trim($_POST['cUsrEma'])    ,'CHECK' => 'SI'),  // Correo Usuario que Creo el Registro
                           array('NAME' => 'regfcrex','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  // Fecha de creacion
-                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  // Hora de creacion 
+                          array('NAME' => 'reghcrex','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  // Hora de creacion
                           array('NAME' => 'regfmodx','VALUE' => date('Y-m-d')              ,'CHECK' => 'SI'),  // Fecha de modificacion
                           array('NAME' => 'reghmodx','VALUE' => date('H:i:s')              ,'CHECK' => 'SI'),  // Hora de modificacion
                           array('NAME' => 'regestxx','VALUE' => trim('ACTIVO')             ,'CHECK' => 'SI'),  // Hora de modificacion
@@ -480,12 +373,11 @@
     switch ($_COOKIE['kModo']) {
       case "NUEVOTICKET":
         f_Mensaje(__FILE__,__LINE__,"El Ticket se creo con exito.");
+        $ticket->fnEnvioEmail($nSwitch, $cMsj, $_POST['cCerId']);
       break;
       case "EDITAR":
         f_Mensaje(__FILE__,__LINE__,"Se actualizo el Ticket con exito.");
-      break;
-      default:
-        // no hace nada
+        $ticket->fnEnvioEmail($nSwitch, $cMsj, $_POST['cCerId']);
       break;
     }
 

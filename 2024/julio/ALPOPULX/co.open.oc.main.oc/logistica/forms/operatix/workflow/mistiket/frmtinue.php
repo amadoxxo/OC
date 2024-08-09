@@ -15,7 +15,7 @@ include("../../../../../logistica/libs/php/utiworkf.php");
 //cargo data del ticket en el utiworkf.php
 $mTicket = new cTickets();
 $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
-
+$replys = $mTicket->fnDetalleTickets($_GET['ticketId']);
 ?>
 <html>
 
@@ -31,7 +31,7 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
     function fnRetorna() {
       window.close();
     }
-
+  
     /**
      * Permite abrir los valid/windows para las diferentes parametricas.
      */
@@ -82,19 +82,21 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
           }
           break;
         case "cResTck":
-          var zRuta = "frmtigri.php?gTtiCod=" + document.forms['frgrm']['cTtiCod'].value.toUpperCase();
-          parent.fmpro.location = zRuta;
+          /* var zRuta = "frmtigri.php?gTtiCod=" + document.forms['frgrm']['cTtiCod'].value.toUpperCase();
+          parent.fmpro.location = zRuta; */
+          var inputValue = document.getElementById('cTtiCod').value;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'frmtigri.php', true); // Llama al archivo separado
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.getElementById('overDivResponsable').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send('gTtiCod=' + encodeURIComponent(inputValue));
           break;
       }
-    }
-
-    /**
-     * Habilita la seccion de servicios automaticos cuando se carga la MIF.
-     */
-    function fnHabilitaServicios(xValidaExisteSubservicio = '') {
-      fnCargarGrillaSubServicio(xValidaExisteSubservicio);
-      document.getElementById('serviciosAutomaticos').style.display = "block";
-      document.getElementById('Grid_Certificacion').innerHTML = "";
     }
 
   </script>
@@ -117,6 +119,7 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
               <input type="hidden" name="cComCsc2" value="<?php echo $cComCsc2 ?>">
               <input type="hidden" name="cAnio" value="<?php echo $cAnio ?>">
               <input type="hidden" name="cRegEst" value="">
+              <input type="hidden" name="cTicket" value="<?php echo $_GET['ticketId'] ?>">
               <?php
               // Obtengo los datos del usuario
               $qUsrNom  = "SELECT USRIDXXX, USRNOMXX, USREMAXX ";
@@ -159,9 +162,42 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
                   $mMatrizSti[$nInd_mMatrizSti]['stidesxx'] = $vStiCod['stidesxx'];
                 }
               }
+
+              /* RESPONSABLE O TERCERO */
+              $ticketcId = $ticketCabecera['tticodxx'];
+
+              $reprepor = "TERCERO"; // Valor predeterminado
+
+              // Recupera el valor de la cookie
+              $cookieUsrId = isset($_COOKIE['kUsrId']) ? $_COOKIE['kUsrId'] : "";
+              $mMatrizRes = array();
+
+              $qResTi  = "SELECT ";
+              $qResTi .= "tticodxx, ";
+              $qResTi .= "ttiusrxx ";
+              $qResTi .= "FROM $cAlfa.lpar0159 ";
+              $qResTi .= "WHERE ";
+              $qResTi .= "tticodxx = \"$ticketcId\" AND ";
+              $qResTi .= "regestxx = \"ACTIVO\" ";
+              //$qResTi .= "ORDER BY repcscxx DESC ";
+              //$qResTi .= "LIMIT 1"; // Asegúra de seleccionar solo el último registro
+              $xResTi = f_MySql("SELECT", "", $qResTi, $xConexion01, "");
+              if (mysql_num_rows($xResTi) > 0) {
+                while ($vResTi = mysql_fetch_array($xResTi)) {
+                  $nInd_mMatrizRes = count($mMatrizRes);
+                  $mMatrizRes[$nInd_mMatrizRes]['tticodxx'] = $vResTi['tticodxx'];
+                  $mMatrizRes[$nInd_mMatrizRes]['ttiusrxx'] = $vResTi['ttiusrxx'];
+
+                  if ($vResTi['ttiusrxx'] === $cookieUsrId) {
+                    $reprepor = "RESPONSABLE";
+                  }
+                }
+              }
               ?>
               <center>
                 <table border="0" cellpadding="0" cellspacing="0" width="700">
+                <input type="hidden" name="cUsrEma" value="<?php echo $usrEma?>">
+                <input type="hidden" name="cReprep" value="<?php echo $reprepor?>">
                   <?php $nCol = f_Format_Cols(35);
                   echo $nCol; ?>
                   <!-- Seccion 1 -->
@@ -211,49 +247,95 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
                     </td>
                   </tr>
                   <!-- Fila 4 -->
-                  <tr>
-                    <td class="clase08" colspan="5">
-                      <a href="javascript:document.forms['frgrm']['cTtiCod'].value = '';
-                                           document.forms['frgrm']['cTtiDes'].value = '';
-                                           fnLinks('cTtiCod','WINDOW')">Tipo</a><br>
-                      <input type="text" Class="letra" style="width:100" name="cTtiCod" id="cTtiCod" onBlur="javascript:fnLinks('cTtiCod','WINDOW');
-                                             this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'" onFocus="javascript:document.forms['frgrm']['cTtiCod'].value = '';
-                                               document.forms['frgrm']['cTtiDes'].value = '';
-                                               this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
-                    </td>
-                    <td class="clase08" colspan="1"><br>
-                      <input type="text" Class="letra" style="width:20;" readonly>
-                    </td>
-                    <td class="clase08" colspan="15"><br>
-                      <input type="text" Class="letra" style="width:300" name="cTtiDes" onBlur="javascript:this.value=this.value.toUpperCase();
-                                             fnLinks('cTtiDes','WINDOW');
-                                             this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'" onFocus="javascript:document.forms['frgrm']['cTtiCod'].value = '';
-                                               document.forms['frgrm']['cTtiDes'].value = '';
-                                               this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
-                    </td>
-                    <td class="clase08" colspan="7">Prioridad<br>
-                      <select name="cPriori" style="width:140px">
-                        <?php for ($i = 0; $i < count($mMatrizPti); $i++) {
-                          $selected = ($mMatrizPti[$i]['pticodxx'] == $ticketCabecera['pticodxx']) ? 'selected' : '';
-                        ?>
-                          <option value="<?php echo $mMatrizPti[$i]['pticodxx']; ?>" <?php echo $selected; ?>>
-                            <?php echo $mMatrizPti[$i]['ptidesxx']; ?>
-                          </option>
-                        <?php } ?>
-                      </select>
-                    </td>
-                    <td class="clase08" colspan="7">Estado<br>
-                      <select name="cEstado" style="width:140px">
-                        <?php for ($i = 0; $i < count($mMatrizSti); $i++) {
-                          $selected = ($mMatrizSti[$i]['sticodxx'] == $ticketCabecera['sticodxx']) ? 'selected' : '';
-                        ?>
-                          <option value="<?php echo $mMatrizSti[$i]['sticodxx']; ?>" <?php echo $selected; ?>>
-                            <?php echo $mMatrizSti[$i]['stidesxx']; ?>
-                          </option>
-                        <?php } ?>
-                      </select>
-                    </td>
-                  </tr>
+                   <?php 
+                    if ($reprepor == 'RESPONSABLE') {
+                      ?>
+                        <tr>
+                        <td class="clase08" colspan="5">
+                            <a href="javascript:fnLinks('cTtiCod', 'WINDOW')">Tipo</a><br>
+                            <input type="text" class="letra" style="width:100" name="cTtiCod" id="cTtiCod"
+                                  value="<?php echo htmlspecialchars($ticketCabecera['tticodxx']); ?>"
+                                  onBlur="fnLinks('cTtiCod', 'WINDOW');
+                                          this.style.background='<?php echo $vSysStr['system_imput_onblur_color']; ?>'"
+                                  onFocus="this.style.background='<?php echo $vSysStr['system_imput_onfocus_color']; ?>'">
+                        </td>
+                        <td class="clase08" colspan="1"><br>
+                            <input type="text" class="letra" style="width:20;" readonly>
+                        </td>
+                        <td class="clase08" colspan="15"><br>
+                            <input type="text" class="letra" style="width:300" name="cTtiDes"
+                                  value="<?php echo htmlspecialchars($ticketCabecera['ttidesxx']); ?>"
+                                  onBlur="this.value=this.value.toUpperCase();
+                                          this.style.background='<?php echo $vSysStr['system_imput_onblur_color']; ?>'"
+                                  onFocus="this.style.background='<?php echo $vSysStr['system_imput_onfocus_color']; ?>'">
+                        </td>
+                          <td class="clase08" colspan="7">Prioridad<br>
+                            <select name="cPriori" style="width:140px">
+                              <?php for ($i = 0; $i < count($mMatrizPti); $i++) {
+                                $selected = ($mMatrizPti[$i]['pticodxx'] == $ticketCabecera['pticodxx']) ? 'selected' : '';
+                              ?>
+                                <option value="<?php echo $mMatrizPti[$i]['pticodxx']; ?>" <?php echo $selected; ?>>
+                                  <?php echo $mMatrizPti[$i]['ptidesxx']; ?>
+                                </option>
+                              <?php } ?>
+                            </select>
+                          </td>
+                          <td class="clase08" colspan="7">Estado<br>
+                            <select name="cEstado" style="width:140px">
+                              <?php for ($i = 0; $i < count($mMatrizSti); $i++) {
+                                $selected = ($mMatrizSti[$i]['sticodxx'] == $ticketCabecera['sticodxx']) ? 'selected' : '';
+                              ?>
+                                <option value="<?php echo $mMatrizSti[$i]['sticodxx']; ?>" <?php echo $selected; ?>>
+                                  <?php echo $mMatrizSti[$i]['stidesxx']; ?>
+                                </option>
+                              <?php } ?>
+                            </select>
+                          </td>
+                        </tr>
+                      <?php
+                    }else {
+                      ?>
+                        <tr>
+                        <td class="clase08" colspan="5">
+                            <a href="javascript:void(0);" style="color: gray; pointer-events: none; text-decoration: none;"
+                              onclick="return false;">Tipo</a><br>
+                            <input type="text" class="letra" style="width:100" name="cTtiCod" id="cTtiCod" value="<?php echo $ticketCabecera['tticodxx']; ?>" readonly>
+                        </td>
+                        <td class="clase08" colspan="1"><br>
+                            <input type="text" class="letra" style="width:20;" readonly>
+                        </td>
+                        <td class="clase08" colspan="15"><br>
+                            <input type="text" class="letra" style="width:300" name="cTtiDes" value="<?php echo $ticketCabecera['ttidesxx']; ?>" readonly>
+                        </td>
+                          <td class="clase08" colspan="7">Prioridad<br>
+                            <input type="hidden" name="cPriori" value="<?php echo $ticketCabecera['pticodxx']; ?>">
+                            <select name="cPriori" style="width:140px" disabled>
+                              <?php for ($i = 0; $i < count($mMatrizPti); $i++) {
+                                $selected = ($mMatrizPti[$i]['pticodxx'] == $ticketCabecera['pticodxx']) ? 'selected' : '';
+                              ?>
+                                <option value="<?php echo $mMatrizPti[$i]['pticodxx']; ?>" <?php echo $selected; ?> readonly>
+                                  <?php echo $mMatrizPti[$i]['ptidesxx']; ?>
+                                </option>
+                              <?php } ?>
+                            </select>
+                          </td>
+                          <td class="clase08" colspan="7">Estado<br>
+                          <input type="hidden" name="cEstado" value="<?php echo $ticketCabecera['sticodxx']; ?>">
+                            <select name="cEstado" style="width:140px" disabled>
+                              <?php for ($i = 0; $i < count($mMatrizSti); $i++) {
+                                $selected = ($mMatrizSti[$i]['sticodxx'] == $ticketCabecera['sticodxx']) ? 'selected' : '';
+                              ?>
+                                <option value="<?php echo $mMatrizSti[$i]['sticodxx']; ?>" <?php echo $selected; ?> readonly>
+                                  <?php echo $mMatrizSti[$i]['stidesxx']; ?>
+                                </option>
+                              <?php } ?>
+                            </select>
+                          </td>
+                        </tr>
+                      <?php
+                    }
+                   ?>
+                  
                   <!-- Responsables Asignados al Tipo de Ticket -->
                   <tr>
                     <td Class="clase08" colspan="35">
@@ -299,6 +381,65 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
         } ?>
       </tr>
     </table>
+    <!-- historico -->
+  <table border="0" cellpadding="0" cellspacing="0" width="850">
+      <tr>
+        <td>
+          <fieldset>
+            <legend>Historico Ticket</legend>
+            <!-- vista historico -->
+            <div style="display: flex; align-items: center; padding-bottom: 5px; width: 840px;">
+              <div style="flex: 1;">Post Id Hecho Por:</div>
+              <div style="display: flex; align-items: center; flex: 1; justify-content: center;">
+                <div style="background-color: <?php echo htmlspecialchars($vSysStr['system_row_title_color_ini']); ?>; width: 30px; height: 20px; margin-right: 5px;"></div>
+                <div>Responsable</div>
+              </div>
+              <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end;">
+                <div style="background-color: #B4E197; width: 30px; height: 20px; margin-right: 5px;"></div>
+                <div>Tercero</div>
+              </div>
+            </div>
+
+            <table border="1" cellpadding="0" cellspacing="0" width="840">
+              <?php foreach ($replys as $reply) : ?>
+                <tr>
+                  <td class="clase08" style="width: 15%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; padding-left: 2px;">
+                    <b>USUARIO</b>
+                  </td>
+                  <td class="clase08" style="width: 20%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; font-weight: normal; padding-left: 2px;">
+                    <?php echo $reply['usrnomxx'] ?>
+                  </td>
+
+                  <td class="clase08" style="width: 10%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; padding-left: 2px;">
+                    <b>POST ID</b>
+                  </td>
+                  <td class="clase08" style="width: 10%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; font-weight: normal; padding-left: 2px;">
+                  <?php echo $reply['repcscxx'] ?>
+                  </td>
+                  <td class="clase08" style="width: 10%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; padding-left: 2px;">
+                    <b>FECHA</b>
+                  </td>
+                  <td class="clase08" style="width: 10%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; font-weight: normal; padding-left: 2px;">
+                  <?php echo $reply['regfcrex'] ?>
+                  </td>
+                  <td class="clase08" style="width: 10%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; padding-left: 2px;">
+                  <b>HORA</b>
+                  </td>
+                  <td class="clase08" style="width: 10%; background-color: <?php echo ($reply['reprepor'] == 'RESPONSABLE') ? $vSysStr['system_row_title_color_ini'] : '#B4E197'; ?>; font-weight: normal; padding-left: 2px;">
+                  <?php echo $reply['reghcrex'] ?>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="8" class="clase08" style="width: 100%; font-weight: normal;">
+                  <?php echo $reply['repreply'] ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </table>
+          </fieldset>
+        </td>
+      </tr>
+    </table>
   </center>
   <?php
   switch ($_COOKIE['kModo']) {
@@ -312,8 +453,6 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
       break;
     case "EDITAR":
       fnCargaData($cCerId, $cAnio);
-
-
     ?>
       <script languaje="javascript">
         // Deshabilito los campos de cabecera
@@ -345,13 +484,7 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
         document.forms['frgrm']['cCerTipMe'].readOnly = true;
 
 
-        // Deshabilito los link de los Valid/Windows
-        document.getElementById('id_href_cCompre').removeAttribute('href');
-        document.getElementById('id_href_CliId').removeAttribute('href');
-        document.getElementById('id_href_DepNum').removeAttribute('href');
-        document.getElementById('id_href_dVigDesde').removeAttribute('href');
-        document.getElementById('id_href_dVigHasta').removeAttribute('href');
-        document.getElementById('id_href_CdiSap').removeAttribute('href');
+        fnLinks("cResTck", "WINDOW");
       </script>
     <?php
       break;
@@ -366,20 +499,11 @@ $ticketCabecera = $mTicket->fnCabeceraTickets($_GET['ticketId']);
         }
         document.forms['frgrm']['cCerTip'].disabled = true;
         document.forms['frgrm']['cPerAno'].disabled = true;
-
-
-        // Deshabilita los link de los Valid/Windows
-        document.getElementById('id_href_cCompre').removeAttribute('href');
-        document.getElementById('id_href_CliId').removeAttribute('href');
-        document.getElementById('id_href_DepNum').removeAttribute('href');
-        document.getElementById('id_href_dVigDesde').removeAttribute('href');
-        document.getElementById('id_href_dVigHasta').removeAttribute('href');
-        document.getElementById('id_href_CdiSap').removeAttribute('href');
       </script>
   <?php
       break;
   }
   ?>
+  
 </body>
-
 </html>

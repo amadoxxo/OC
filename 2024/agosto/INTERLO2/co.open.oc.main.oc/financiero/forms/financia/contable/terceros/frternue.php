@@ -2434,6 +2434,56 @@
                           <br>
                         <?php
                         break;
+                        case "TEINTERLO2":
+                        case "DEINTERLO2":
+                        case "INTERLO2": ?>
+                          <tr>
+                            <td colspan="36">
+                              <fieldset>
+                                <legend>Otros Transmisi&oacute;n a SIESA</legend>
+                                  <table border="0" cellpadding="0" cellspacing="0" width="700">
+                                    <?php $nCol = f_Format_Cols(35); echo $nCol; ?>
+                                    <tr>
+                                      <td colspan="35">
+                                        <center>
+                                          <fieldset>
+                                            <legend>Criterios Clientes</legend>
+                                            <table border="0" cellpadding="0" cellspacing="0" width="680">
+                                              <?php $zCol = f_Format_Cols(34); echo $zCol; ?>
+                                              <tr>
+                                                <td class="clase08" colspan="12">Plan Criterios<br>
+                                                  <input type="text" style="width:240" name="cCliCPlCr">
+                                                </td>
+                                                <td class="clase08" colspan="23">Criterio Mayor<br>
+                                                  <input type="text" style="width:240" name="cCliCCrMa">
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </fieldset>
+                                          <fieldset>
+                                            <legend>Criterios Proveedores</legend>
+                                            <table border="0" cellpadding="0" cellspacing="0" width="680">
+                                              <?php $zCol = f_Format_Cols(34); echo $zCol; ?>
+                                              <tr>
+                                                <td class="clase08" colspan="12">Plan Criterios<br>
+                                                  <input type="text" style="width:240" name="cCliPPlCr">
+                                                </td>
+                                                <td class="clase08" colspan="23">Criterio Mayor<br>
+                                                  <input type="text" style="width:240" name="cCliPCrMa">
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </fieldset>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                  </table>
+                              </fieldset>
+                            </td>
+                          </tr>
+                          <br>
+                        <?php
+                        break;
 												default:
 													// no hace nada
 												break;

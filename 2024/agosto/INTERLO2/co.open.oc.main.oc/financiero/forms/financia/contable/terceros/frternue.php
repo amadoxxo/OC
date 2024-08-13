@@ -2724,6 +2724,14 @@
 							document.forms['frgrm']['oCliArrNr'].disabled	  = true;
 							document.forms['frgrm']['oCliArcrNr'].disabled	= true;
 						break;
+					case "TEINTERLO2":
+					case "DEINTERLO2":
+					case "INTERLO2":
+						document.forms['frgrm']['cCliCPlCr'].disabled = true;
+						document.forms['frgrm']['cCliCCrMa'].disabled = true;
+						document.forms['frgrm']['cCliPPlCr'].disabled = true;
+						document.forms['frgrm']['cCliPCrMa'].disabled = true;
+					break;
 					}
 					f_CargarGrillas();
 				</script>
@@ -2990,6 +2998,14 @@
 					case "TEADUANERA":
 					case "DEADUANERA":
 						document.forms['frgrm']['cCliOrCom'].value = "<?php echo str_replace($cBuscar01,$cReempl01,$vDatTer['CLIORCOM']) ?>";
+					break;
+					case "TEINTERLO2":
+					case "DEINTERLO2":
+					case "INTERLO2":
+						document.forms['frgrm']['cCliCPlCr'].value = "<?php echo str_replace($cBuscar01,$cReempl01,$vDatTer['CLICPLCR']); ?>";
+						document.forms['frgrm']['cCliCCrMa'].value = "<?php echo str_replace($cBuscar01,$cReempl01,$vDatTer['CLICCRMA']); ?>";
+						document.forms['frgrm']['cCliPPlCr'].value = "<?php echo str_replace($cBuscar01,$cReempl01,$vDatTer['CLIPPLCR']); ?>";
+						document.forms['frgrm']['cCliPCrMa'].value = "<?php echo str_replace($cBuscar01,$cReempl01,$vDatTer['CLIPCRMA']); ?>";
 					break;
 					default:
 						// no hace nada

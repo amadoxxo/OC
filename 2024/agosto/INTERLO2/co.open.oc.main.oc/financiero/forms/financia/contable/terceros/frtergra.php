@@ -1134,6 +1134,38 @@
             $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
             $cMsj .= " Debe Seleccionar al Menos un Vendedor.\n";
           }
+          /**
+           * Valida si el Tercero es de tipo Cliente no pueda ingresar los campos de Criterios Proveedores.
+           */
+          if (($_POST['cCliPPlCr'] != "" || $_POST['cCliPCrMa'] != "") && $cChCli == "SI") {
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= " No es Posible Ingresar un Campo de Criterios Proveedores si la Clasificacion del Tercero es Tipo Cliente.\n";
+          }
+          /**
+           * Valida que se ingresen los campos de Plan Criterios y Criterio Mayor si el Tercero es tipo Cliente.
+           */
+          if (($_POST['cCliCPlCr'] == "" || $_POST['cCliCCrMa'] == "") &&  $cChCli == "SI") {
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= " Debe Ingresar los Campos Plan Criterios y Criterio Mayor de Criterios Clientes.\n";
+          }
+          /**
+           *  Valida si el Tercero es diferente de tipo Cliente no pueda ingresar los campos de Criterios Clientes.
+           */
+          if (($_POST['cCliCPlCr'] != "" || $_POST['cCliCCrMa'] != "") && $cChCli != "SI") {
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= " No es posible ingresar un campo de Criterios Clientes si la Clasificacion del Tercero es diferente del tipo Cliente.\n";
+          }
+          /**
+           * Valida que se ingresen los campos de Plan Criterios y Criterio Mayor si el Tercero es diferente de tipo Cliente.
+           */
+          if (($_POST['cCliPPlCr'] == "" || $_POST['cCliPCrMa'] == "") && $cChCli != "SI") {
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= " Debe Ingresar los Campos Plan Criterios y Criterio Mayor de Criterios Proveedores.\n";
+          }
         break;
         default:
           // No hace nada
@@ -1169,7 +1201,7 @@
 
 
   if ($nSwitch == "0") {
-    //// Las Observaciones ////
+    // Las Observaciones ////
     $cTerObs = str_replace(array(chr(27),chr(9),chr(13),chr(10))," ",$_POST['cTerObs']);
     $cTerObs = str_replace("  "," ",$cTerObs);
     $cTerObs = str_replace("  "," ",$cTerObs);
@@ -1279,6 +1311,10 @@
                           array('NAME'=>'CLIFECFE','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliFec'])),'"'))    ,'CHECK'=>'NO'), //Fecha Inicial FE
                           array('NAME'=>'CLICOEMI','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCoEmi'])),'"'))  ,'CHECK'=>'NO'), //Correo de Emision FE
                           array('NAME'=>'CLICOREP','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCoRep'])),'"'))  ,'CHECK'=>'NO'), //Correo de Recepcion FE
+                          array('NAME'=>'CLICPLCR','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCPlCr'])),'"'))  ,'CHECK'=>'NO'), //Criterios Clientes - Plan Criterios
+                          array('NAME'=>'CLICCRMA','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCCrMa'])),'"'))  ,'CHECK'=>'NO'), //Criterios Clientes - Criterio Mayor
+                          array('NAME'=>'CLIPPLCR','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliPPlCr'])),'"'))  ,'CHECK'=>'NO'), //Criterios Proveedores - Plan Criterios
+                          array('NAME'=>'CLIPCRMA','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliPCrMa'])),'"'))  ,'CHECK'=>'NO'), //Criterios Proveedores - Criterio Mayor
                           array('NAME'=>'CLIENPRF','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliEnPrF'])),'"'))  ,'CHECK'=>'NO'), //Aplica Envio de Prefacturas DHL Express
                           array('NAME'=>'CLIESTGM','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliEstGm'])),'"'))  ,'CHECK'=>'NO'), //Estado Cliente Grupo Malco
                           array('NAME'=>'CLIEMASI','VALUE'=>str_replace($cBuscarEmail,$cReemplEmail,trim(trim($_POST['cCliEmaSi']),'"'))        ,'CHECK'=>'NO','CS'=>'NONE'), //Correos Notificación Siemens
@@ -1422,6 +1458,10 @@
                             array('NAME'=>'CLIFECFE','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliFec'])),'"'))    ,'CHECK'=>'NO'), //Fecha Inicial FE
                             array('NAME'=>'CLICOEMI','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCoEmi'])),'"'))  ,'CHECK'=>'NO'), //Correo de Emision FE
                             array('NAME'=>'CLICOREP','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCoRep'])),'"'))  ,'CHECK'=>'NO'), //Correo de Recepcion FE
+                            array('NAME'=>'CLICPLCR','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCPlCr'])),'"'))  ,'CHECK'=>'NO'), //Criterios Clientes - Plan Criterios
+                            array('NAME'=>'CLICCRMA','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliCCrMa'])),'"'))  ,'CHECK'=>'NO'), //Criterios Clientes - Criterio Mayor
+                            array('NAME'=>'CLIPPLCR','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliPPlCr'])),'"'))  ,'CHECK'=>'NO'), //Criterios Proveedores - Plan Criterios
+                            array('NAME'=>'CLIPCRMA','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliPCrMa'])),'"'))  ,'CHECK'=>'NO'), //Criterios Proveedores - Criterio Mayor
                             array('NAME'=>'CLIENPRF','VALUE'=>str_replace($cBuscar01,$cReempl01,trim(trim(strtoupper($_POST['cCliEnPrF'])),'"'))  ,'CHECK'=>'NO'), //Aplica Envio de Prefacturas DHL Express
                             array('NAME'=>'CLIEMASI','VALUE'=>str_replace($cBuscarEmail,$cReemplEmail,trim(trim($_POST['cCliEmaSi']),'"'))        ,'CHECK'=>'NO','CS'=>'NONE'), //Correos Notificación Siemens
                             array('NAME'=>'CLIBAVCN','VALUE'=>str_replace($cBuscarEmail,$cReemplEmail,trim(trim($_POST['cCliBavCn']),'"'))        ,'CHECK'=>'NO','CS'=>'NONE'), //Correos Notificación BAVARIA

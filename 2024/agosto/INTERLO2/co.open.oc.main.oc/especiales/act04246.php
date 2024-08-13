@@ -85,9 +85,7 @@
           ###################################
           //Agregacion de columna a la tabla SIAI0150
           ###################################
-          $qAlter  = "ALTER TABLE SIAI0150 ";
-          $qAlter .= "ADD COLUMN CLICPLCR VARCHAR(255) NULL COMMENT \"Cliente - Plan Criterios\" ";
-          $qAlter .= "AFTER CLICOREP";
+          $qAlter  = "ALTER TABLE SIAI0150 ADD CLICPLCR VARCHAR(255) NULL COMMENT \"Cliente - Plan Criterios\" AFTER CLICOREP";
           $xAlter  = mysql_query($qAlter,_CONEXION_);   
           if ($xAlter) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe agrego la columna CLICPLCR a la tabla SIAI0150 correctamente : ".$pdb;
@@ -98,9 +96,7 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          $qAlter  = "ALTER TABLE SIAI0150 ";
-          $qAlter .= "ADD COLUMN CLICCRMA VARCHAR(255) NULL COMMENT \"Cliente - Criterio Mayor\" ";
-          $qAlter .= "AFTER CLICPLCR";
+          $qAlter  = "ALTER TABLE SIAI0150 ADD CLICCRMA VARCHAR(255) NULL COMMENT \"Cliente - Criterio Mayor\" AFTER CLICPLCR";
           $xAlter  = mysql_query($qAlter,_CONEXION_);   
           if ($xAlter) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe agrego la columna CLICCRMA a la tabla SIAI0150 correctamente : ".$pdb;
@@ -111,9 +107,7 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          $qAlter  = "ALTER TABLE SIAI0150 ";
-          $qAlter .= "ADD COLUMN CLIPPLCR VARCHAR(255) NULL COMMENT \"Proveedor - Plan Criterios\" ";
-          $qAlter .= "AFTER CLICCRMA";
+          $qAlter  = "ALTER TABLE SIAI0150 ADD CLIPPLCR VARCHAR(255) NULL COMMENT \"Proveedor - Plan Criterios\" AFTER CLICCRMA";
           $xAlter  = mysql_query($qAlter,_CONEXION_);   
           if ($xAlter) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe agrego la columna CLIPPLCR a la tabla SIAI0150 correctamente : ".$pdb;
@@ -124,9 +118,7 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
-          $qAlter  = "ALTER TABLE SIAI0150 ";
-          $qAlter .= "ADD COLUMN CLIPCRMA VARCHAR(255) NULL COMMENT \"Proveedor - Criterio Mayor\" ";
-          $qAlter .= "AFTER CLIPPLCR";
+          $qAlter  = "ALTER TABLE SIAI0150 ADD CLIPCRMA VARCHAR(255) NULL COMMENT \"Proveedor - Criterio Mayor\" AFTER CLIPPLCR";
           $xAlter  = mysql_query($qAlter,_CONEXION_);   
           if ($xAlter) {
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe agrego la columna CLIPCRMA a la tabla SIAI0150 correctamente : ".$pdb;

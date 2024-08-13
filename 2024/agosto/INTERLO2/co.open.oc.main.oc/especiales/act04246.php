@@ -3,7 +3,7 @@
   date_default_timezone_set('America/Bogota'); set_time_limit(0);
   define("_DATABASE_",trim($argv[3]));
   define("_LOTES_",10000);
-  define("_FILELOG_","act04232.log"); // Archivo de LOG
+  define("_FILELOG_","act04246.log"); // Archivo de LOG
   //define("_OCS_MYSQL_HOST_","localhost"); define("_OCS_MYSQL_USER_","admin"); define("_OCS_MYSQL_PASS_",'$AES-128-CBC$GMF4AdklEq61RNN6QP7BDw==$Glv++aeREZGkT9SDmFFjwQ=='); // Datos de Conexion a MYSQl
   //define("_OCS_MYSQL_HOST_","10.11.8.51"); define("_OCS_MYSQL_USER_",$argv[1]); define("_OCS_MYSQL_PASS_",$argv[2]); // Datos de Conexion a MYSQl - LAN Interna Repremundo
 

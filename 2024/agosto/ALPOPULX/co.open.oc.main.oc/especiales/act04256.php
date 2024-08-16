@@ -83,7 +83,7 @@
           system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo $cMsj."\n";
 
           ###################################
-          //Tipos Documentales ECM
+          // Tipos Documentales ECM
           ###################################
           // Tabla sys00038
           $qInsert  = "INSERT INTO sys00038 (modidxxx, proidxxx, prodirxx, protipxx, proinixx, prodesxx, proordxx, proverxx, proimgon, proimgof, proalcxx, proclixx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
@@ -124,6 +124,59 @@
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
           }
 
+          ###################################
+          // Cargar Anexos M.I.F
+          ###################################
+          // Tabla sys00039
+          $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+          $qInsert .= "(\"1000\", \"160\", \"100\", \"\", \"CARGARANEXOS\", \"0100\", \"Cargar Anexos\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo la opcion de menu CARGARANEXOS M.I.F para el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear la opcion de menu CARGARANEXOS M.I.F para el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
+          $qInsert  = "INSERT INTO sys00039 (modidxxx, proidxxx, menidxxx, menformx, menopcxx, menordxx, mendesxx, menimgon, menimgof, menalcxx, mentipxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+          $qInsert .= "(\"1000\", \"160\", \"110\", \"\", \"VERANEXOS\", \"0110\", \"Ver Anexos\", \"\", \"\", \"\", \"\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", NOW())";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo la opcion de menu VERANEXOS M.I.F para el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear la opcion de menu VERANEXOS M.I.F para el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+          
+          // Tabla sys00040
+          $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES  ";
+          $qInsert .= "(\"ADMIN\", \"1000\", \"160\", \"100\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso CARGARANEXOS para la opcion de menu M.I.F en el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso CARGARANEXOS para la opcion de menu M.I.F en el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
+          $qInsert  = "INSERT INTO sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES  ";
+          $qInsert .= "(\"ADMIN\", \"1000\", \"160\", \"110\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+          $xInsert  = mysql_query($qInsert,_CONEXION_);   
+          if ($xInsert) {
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso VERANEXOS para la opcion de menu M.I.F en el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+          } else {
+            $nSwitch = 1;
+            $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso VERANEXOS para la opcion de menu M.I.F en el modulo de logistica: ".$pdb;
+            system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
           //Insertando el permiso para el usuario interno
           $qUsuarios  = "SELECT USRIDXXX ";
           $qUsuarios .= "FROM $pdb.SIAI0003 ";
@@ -133,7 +186,7 @@
           $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qUsuarios." ~ ".mysql_num_rows($xUsuarios);
           system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); //echo "\33[01;01;34m".$cMsj."\33[00m\n";
           while ($xRU = mysql_fetch_array($xUsuarios)) {
-            // Crear permisos - Prioridades Ticket
+            // Crear permisos - Tipos Documentales
             $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
             $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"1000\", \"220\", \"0\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
             $xInsert  = mysql_query($qInsert,_CONEXION_);
@@ -142,7 +195,31 @@
               system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
             } else {
               $nSwitch = 1;
-              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de la opcion de menu Tipos Documentales ECM - CONSULTAR en el modulo de logistica para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso de CONSULTAR para la opcion de menu Tipos Documentales ECM en el modulo de logistica para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+            // Crear permisos - CARGARANEXOS 
+            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"1000\", \"160\", \"100\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso de CARGARANEXOS para la opcion de menu M.I.F en el modulo de logistica para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso CARGARANEXOS de la opcion de menu M.I.F en el modulo de logistica para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+            // Crear permisos - VERANEXOS
+            $qInsert  = "INSERT INTO $pdb.sys00040 (usridxxx, modidxxx, proidxxx, menidxxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"{$xRU['USRIDXXX']}\", \"1000\", \"160\", \"110\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el permiso VERANEXOS para la opcion de menu M.I.F en el modulo de logistica para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el permiso VERANEXOS para la opcion de menu M.I.F en el modulo de logistica para el usuario interno [{$xRU['USRIDXXX']}] en: ".$pdb;
               system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
             }
           }

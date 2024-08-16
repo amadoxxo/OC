@@ -566,31 +566,16 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mComDat  = document.forms['frgrm']['oCheck'].id.split('~');
-                var mCerId   = mComDat[0]; // Id de la certificacion
-                var mComFec  = mComDat[1]; // Fecha de creacion del registro
-                var mComId   = mComDat[2]; // Id del comprobante
-                var mComCod  = mComDat[3]; // Codigo del comprobante
-                var mComCsc  = mComDat[4]; // Consecutivo uno
-                var mComCsc2 = mComDat[5]; // Consecutivo dos
-                var mComPre  = mComDat[7]; // Prefijo
-                var mCliId   = mComDat[8]; // Id del cliente
-                var mCliNom  = mComDat[9]; // Nombre del cliente
+                var cCerId   = mComDat[0]; // Id de la certificacion
+                var dComFec  = mComDat[1]; // Fecha de creacion del registro
 
-                var ruta = "frtcknue.php?cCerId="   +mCerId+
-                                        "&cComFec=" +mComFec+
-                                        "&cComId="  +mComId+
-                                        "&cComCod=" +mComCod+
-                                        "&cComCsc=" +mComCsc+
-                                        "&cComCsc2="+mComCsc2+
-                                        "&cComPre=" +mComPre+
-                                        "&cCliId="  +mCliId+
-                                        "&cCliNom=" +mCliNom+
-                                        "&cAnio="   +mComFec.substr(0,4);
+                var ruta = "frtcknue.php?cCerId="   +cCerId+
+                                        "&cAnio="   +dComFec.substr(0,4);
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                 document.cookie="kMenDes=Crear Ticket;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
                 parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                document.location.ruta; // Invoco el menu.
+                document.location = ruta; // Invoco el menu.
               }
             break;
             default:
@@ -600,26 +585,11 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mComDat  = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var mCerId   = mComDat[0]; // Id de la certificacion
-                  var mComFec  = mComDat[1]; // Fecha de creacion del registro
-                  var mComId   = mComDat[2]; // Id del comprobante
-                  var mComCod  = mComDat[3]; // Codigo del comprobante
-                  var mComCsc  = mComDat[4]; // Consecutivo uno
-                  var mComCsc2 = mComDat[5]; // Consecutivo dos
-                  var mComPre  = mComDat[7]; // Prefijo
-                  var mCliId   = mComDat[8]; // Id del cliente
-                  var mCliNom  = mComDat[9]; // Nombre del cliente
+                  var cCerId   = mComDat[0]; // Id de la certificacion
+                  var dComFec  = mComDat[1]; // Fecha de creacion del registro
 
-                  var ruta = "frtcknue.php?cCerId=" +mCerId+
-                                        "&cComFec=" +mComFec+
-                                        "&cComId="  +mComId+
-                                        "&cComCod=" +mComCod+
-                                        "&cComCsc=" +mComCsc+
-                                        "&cComCsc2="+mComCsc2+
-                                        "&cComPre=" +mComPre+
-                                        "&cCliId="  +mCliId+
-                                        "&cCliNom=" +mCliNom+
-                                        "&cAnio="   +mComFec.substr(0,4);
+                  var ruta = "frtcknue.php?cCerId=" +cCerId+
+                                        "&cAnio="   +dComFec.substr(0,4);
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                   document.cookie="kMenDes=Crear Ticket;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
@@ -647,31 +617,16 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mComDat  = document.forms['frgrm']['oCheck'].id.split('~');
-                var mCerId   = mComDat[0]; // Id de la certificacion
-                var mComFec  = mComDat[1]; // Fecha de creacion del registro
-                var mComId   = mComDat[2]; // Id del comprobante
-                var mComCod  = mComDat[3]; // Codigo del comprobante
-                var mComCsc  = mComDat[4]; // Consecutivo uno
-                var mComCsc2 = mComDat[5]; // Consecutivo dos
-                var mComPre  = mComDat[7]; // Prefijo
-                var mCliId   = mComDat[8]; // Id del cliente
-                var mCliNom  = mComDat[9]; // Nombre del cliente
+                var cCerId   = mComDat[0]; // Id de la certificacion
+                var dComFec  = mComDat[1]; // Fecha de creacion del registro
 
-                var ruta = "frtckini.php?cCerId="   +mCerId+
-                                        "&cComFec=" +mComFec+
-                                        "&cComId="  +mComId+
-                                        "&cComCod=" +mComCod+
-                                        "&cComCsc=" +mComCsc+
-                                        "&cComCsc2="+mComCsc2+
-                                        "&cComPre=" +mComPre+
-                                        "&cCliId="  +mCliId+
-                                        "&cCliNom=" +mCliNom+
-                                        "&cAnio="   +mComFec.substr(0,4);
+                var ruta = "frtckini.php?cCerId="   +cCerId+
+                                        "&cAnio="   +dComFec.substr(0,4);
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                document.cookie="kMenDes=Crear Ticket;path="+"/";
+                document.cookie="kMenDes=Ver Ticket;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
                 parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                document.location.ruta; // Invoco el menu.
+                document.location = ruta; // Invoco el menu.
               }
             break;
             default:
@@ -681,28 +636,13 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mComDat  = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var mCerId   = mComDat[0]; // Id de la certificacion
-                  var mComFec  = mComDat[1]; // Fecha de creacion del registro
-                  var mComId   = mComDat[2]; // Id del comprobante
-                  var mComCod  = mComDat[3]; // Codigo del comprobante
-                  var mComCsc  = mComDat[4]; // Consecutivo uno
-                  var mComCsc2 = mComDat[5]; // Consecutivo dos
-                  var mComPre  = mComDat[7]; // Prefijo
-                  var mCliId   = mComDat[8]; // Id del cliente
-                  var mCliNom  = mComDat[9]; // Nombre del cliente
+                  var cCerId   = mComDat[0]; // Id de la certificacion
+                  var dComFec  = mComDat[1]; // Fecha de creacion del registro
 
-                  var ruta = "frtckini.php?cCerId=" +mCerId+
-                                        "&cComFec=" +mComFec+
-                                        "&cComId="  +mComId+
-                                        "&cComCod=" +mComCod+
-                                        "&cComCsc=" +mComCsc+
-                                        "&cComCsc2="+mComCsc2+
-                                        "&cComPre=" +mComPre+
-                                        "&cCliId="  +mCliId+
-                                        "&cCliNom=" +mCliNom+
-                                        "&cAnio="   +mComFec.substr(0,4);
+                  var ruta = "frtckini.php?cCerId=" +cCerId+
+                                        "&cAnio="   +dComFec.substr(0,4);
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                  document.cookie="kMenDes=Crear Ticket;path="+"/";
+                  document.cookie="kMenDes=Ver Ticket;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
                   parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
                   document.location = ruta; // Invoco el menu.

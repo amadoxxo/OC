@@ -27,6 +27,13 @@
         var cGrid      = document.getElementById("Grid");
         var nLastRow   = cGrid.rows.length;
         var nSecuencia = nLastRow+1;
+
+        // Verificar si nSecuencia es 10 o mas
+        if (nSecuencia > 10) {
+            alert("No se pueden agregar mas de 10 filas.");
+            return; // Salir de la función si nSecuencia es 10 o más
+        }
+
         var cTableRow  = cGrid.insertRow(nLastRow);
 
         var fCrgArch = "fCrgArch" + nSecuencia;
@@ -36,7 +43,7 @@
         TD_xAll.className   = "name";
         TD_xAll.style.width = "380px";
         TD_xAll.innerHTML   = "Archivo:<br>" +
-                              "<input type='file' class='letra' style='width: 380px; height: 22px;' name="+fCrgArch+" id="+fCrgArch+">";
+                              "<input type='file' class='letra' style='width: 380px; height: 22px;' name="+fCrgArch+" id="+fCrgArch+" accept='.jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx'>";
 
         var TD_xAll = cTableRow.insertCell(1);
         TD_xAll.className   = "name";
@@ -54,24 +61,36 @@
         document.forms['frgrm']['nSecuencia'].value = nSecuencia;
       }
 
-      function fnDeleteRow(xNumRow,xSecuencia,xTabla) {
+      function fnDeleteRow(xNumRow, xSecuencia, xTabla, btn) {
         var cGrid = document.getElementById(xTabla);
         var nLastRow = cGrid.rows.length;
-        if (nLastRow > 1 && xNumRow == "X") {
-          if (confirm("Realmente Desea Eliminar La Secuencia ["+xSecuencia+"]?")){
-            if(xSecuencia < nLastRow) {
-              var j=0;
-              for(var i=xSecuencia;i<nLastRow;i++){
-                j = parseFloat(i)+1;
-                document.forms['frgrm']['fCrgArch'+ i].value = document.forms['frgrm']['fCrgArch'+ j].value; 
-                document.forms['frgrm']['sTipDocu'+ i].value = document.forms['frgrm']['sTipDocu'+ j].value; 
-              }
+        if (nLastRow > 1 && xNumRow === "X") {
+          if (confirm("Realmente Desea Eliminar La Secuencia [" + xSecuencia + "]?")) {
+            // Elimina la fila actual
+            var row = btn.parentNode.parentNode;
+            cGrid.deleteRow(row.rowIndex);
+            
+            // Reasigna los IDs y nombres de los campos restantes
+            for (var i = 0; i < cGrid.rows.length; i++) {
+              var nNuevaSecuencia = i + 1;
+              var fCrgArch = "fCrgArch" + nNuevaSecuencia;
+              var sTipDocu = "sTipDocu" + nNuevaSecuencia;
+              
+              var inputFile = cGrid.rows[i].cells[0].getElementsByTagName('input')[0];
+              var selectTipDocu = cGrid.rows[i].cells[1].getElementsByTagName('select')[0];
+              
+              inputFile.id = fCrgArch;
+              inputFile.name = fCrgArch;
+              
+              selectTipDocu.id = sTipDocu;
+              selectTipDocu.name = sTipDocu;
             }
-            cGrid.deleteRow(nLastRow - 1);
+
+            // Actualiza el valor de la secuencia en el formulario
             document.forms['frgrm']['nSecuencia'].value = nLastRow - 1;
           }
         } else {
-          alert("No se Pueden Eliminar Todas las Secuencias, Verifique.");
+            alert("No se Pueden Eliminar Todas las Secuencias, Verifique.");
         }
       }
     </script>
@@ -83,8 +102,10 @@
           <td>
             <fieldset>
               <legend><?php echo $_COOKIE['kMenDes'] ?></legend>
-              <form name="frgrm" action="" method="post" target="fmpro">
+              <form name="frgrm" action="frcragra.php" method="post" target="fmpro" enctype="multipart/form-data">
                 <input type="hidden" name="nSecuencia" value="">
+                <input type="hidden" name="nMifId"    value="<?php echo $nMifId ?>">
+                <input type="hidden" name="dFechaMif" value="<?php echo $dFechaMif ?>">
                 <center>
                   <table border="0" cellpadding="0" cellspacing="0" width="800">
                     <?php $nCol = f_Format_Cols(40); echo $nCol; ?>
@@ -116,7 +137,7 @@
       <table border="0" cellpading="0" cellspacing="0" width="800">
         <tr>
           <td width="900" height="21"></td>
-          <td width="100" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_ok_bg.gif" style="cursor: pointer;" onclick="javascript:">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upload</td>
+          <td width="100" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_ok_bg.gif" style="cursor: pointer;" onclick="javascript:document.forms['frgrm'].submit()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upload</td>
           <td width="106.6" height="21" class="name" background="<?php echo $cPlesk_Skin_Directory_Logistic ?>/btn_cancel_bg.gif" style="cursor: pointer;" onclick="javascript:fnRetorna()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
         </tr>
       </table>

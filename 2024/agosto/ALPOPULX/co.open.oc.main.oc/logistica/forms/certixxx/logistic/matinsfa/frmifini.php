@@ -447,9 +447,11 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var cRegEst = mMatriz[2]; // Estado
+                var nMifId    = mMatriz[0]; // Id M.I.F
+                var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                var cRegEst   = mMatriz[2]; // Estado
                 if (cRegEst == "ENPROCESO") {
-                  var ruta = "frcranue.php";
+                  var ruta = "frcranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif;
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
@@ -467,9 +469,11 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var cRegEst = mMatriz[2]; // Estado
+                  var nMifId    = mMatriz[0]; // Id M.I.F
+                  var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                  var cRegEst   = mMatriz[2]; // Estado
                   if (cRegEst == "ENPROCESO") {
-                    var ruta    = "frcranue.php";
+                    var ruta = "frcranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif;
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Cargar Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -500,9 +504,11 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var cRegEst = mMatriz[2]; // Estado
+                var nMifId    = mMatriz[0]; // Id M.I.F
+                var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                var cRegEst   = mMatriz[2]; // Estado
                   if (cRegEst == "ENPROCESO") {
-                    var ruta    = "frvranue.php";
+                    var ruta = "frvranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif;
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -520,9 +526,11 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var cRegEst = mMatriz[2]; // Estado
+                  var nMifId    = mMatriz[0]; // Id M.I.F
+                  var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                  var cRegEst   = mMatriz[2]; // Estado
                   if (cRegEst == "ENPROCESO") {
-                    var ruta    = "frvranue.php";
+                    var ruta = "frvranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif;
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";

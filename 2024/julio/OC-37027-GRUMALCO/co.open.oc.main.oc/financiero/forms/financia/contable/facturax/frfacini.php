@@ -854,6 +854,7 @@
           case 'FEDEXEXP': case 'DEFEDEXEXP': case 'TEFEDEXEXP': cRuta = 'frfedprn.php';    break;
           case 'EXPORCOM': case 'DEEXPORCOM': case 'TEEXPORCOM': cRuta = 'frexpprn.php';    break;
           case 'CONNECTA': case 'DECONNECTA': case 'TECONNECTA': cRuta = 'frconprn.php';    break;
+          case 'HAYDEARX': case 'DEHAYDEARX': case 'TEHAYDEARX': cRuta = 'frhayprn.php';    break;
           case 'ALADUANA': case 'TEALADUANA': case 'DEALADUANA':
             if (confirm("Imprimir PDF con formato estandar")) {
               if (confirm("Imprimir Factura con Retenciones?")) {
@@ -1466,7 +1467,6 @@
                 var cComCsc2= docun[3];
                 var dRegFCre= docun[4];
                 prints += '|'+cComId+'~'+cComCod+'~'+cComCsc+'~'+cComCsc2+'~'+dRegFCre+'|';
-
                 var zNx     = (zX-500)/2;
                 var zNy     = (zY-250)/2;
                 var zWinPro = 'width=500,scrollbars=1,height=250,left='+zNx+',top='+zNy;
@@ -1660,7 +1660,7 @@
             var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
             if(confirm(cPregunta)) {
               if (cDisId == "") {
-                alert("El comprobante ya tiene la disconformidad vacia");
+                alert("El comprobante no tiene una disconformidad asignada.");
                 return;
               }
               document.forms['frhidbod']['cComIds'].value = cComIds;
@@ -1671,32 +1671,31 @@
             }
           }
         } else {
-          var nSw_Prv = 0;
-          for (i = 0;i<document.forms['frgrm']['oChkCom'].length;i++) {
-            if (document.forms['frgrm']['oChkCom'][i].checked == true && nSw_Prv == 0) {
-              // Solo Deja Legalizar el Primero Seleccionado
-              var nSw_Prv = 1;
-              // Datos de la tabla fcoc
-              var docun     = document.forms['frgrm']['oChkCom'][i].id.split('~');
-              var cComId    = docun[0];
-              var cComCod   = docun[1];
-              var cComCsc   = docun[2];
-              var cComCsc2  = docun[3];
-              var dRegFCre  = docun[4];
-              var cDisId    = docun[12];
-              var cComIds   = "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
-              var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
-              
-              if(confirm(cPregunta)) {
-                if (cDisId == "") {
-                  alert("El comprobante ya tiene la disconformidad vacia");
-                  return;
+          if (document.forms['frgrm']['vRecords'].value > 1) { //varios registros para eliminar //
+            var cComIds = "|";
+            for (i = 0;i<document.forms['frgrm']['oChkCom'].length;i++) {
+              if (document.forms['frgrm']['oChkCom'][i].checked == true) {
+                // Datos de la tabla fcoc
+                var docun     = document.forms['frgrm']['oChkCom'][i].id.split('~');
+                var cComId    = docun[0];
+                var cComCod   = docun[1];
+                var cComCsc   = docun[2];
+                var cComCsc2  = docun[3];
+                var dRegFCre  = docun[4];
+                var cDisId    = docun[12];
+                cComIds   += "|"+cComId+"~"+cComCod+"~"+cComCsc+"~"+cComCsc2+"~"+dRegFCre+"~"+cDisId+"|";
+                var cPregunta = "Desea eliminar la disconformidad asignada a la "+cComId+"-"+cComCod+"-"+cComCsc+"-"+cComCsc2+"?";
+                if(confirm(cPregunta)) {
+                  if (cDisId == "") {
+                    alert("El comprobante ya tiene la disconformidad vacia");
+                    return;
+                  }
+                  document.forms['frhidbod']['cComIds'].value = cComIds;
+                  document.forms['frhidbod']['cModo'].value   = xModo;
+                  document.forms['frhidbod'].action = "frdisgra.php";
+                  document.forms['frhidbod'].submit();
+                  document.forms['frgrm'].submit();
                 }
-                document.forms['frhidbod']['cComIds'].value = cComIds;
-                document.forms['frhidbod']['cModo'].value   = xModo;
-                document.forms['frhidbod'].action = "frdisgra.php";
-                document.forms['frhidbod'].submit();
-                document.forms['frgrm'].submit();
               }
             }
           }
@@ -1756,6 +1755,7 @@
           case 'FEDEXEXP': case 'DEFEDEXEXP': case 'TEFEDEXEXP': cRuta = 'frfedprn.php';    break;
           case 'EXPORCOM': case 'DEEXPORCOM': case 'TEEXPORCOM': cRuta = 'frexpprn.php';    break;
           case 'CONNECTA': case 'DECONNECTA': case 'TECONNECTA': cRuta = 'frconprn.php';    break;
+          case 'HAYDEARX': case 'DEHAYDEARX': case 'TEHAYDEARX': cRuta = 'frhayprn.php';    break;
           case 'ALADUANA': case 'TEALADUANA': case 'DEALADUANA':
             if (confirm("Imprimir PDF con formato estandar")) {
               if (confirm("Imprimir Factura con Retenciones?")) {
@@ -2631,6 +2631,113 @@
           alert("Debe Seleccionar una Factura.");
         }
       }
+
+      function fnCertificadoPagosTerceros(xOpcion) {
+        var cRuta = 'frcptprn.php';
+
+        if (document.forms['frgrm']['vRecords'].value == 1){
+          if (document.forms['frgrm']['oChkCom'].checked == true) {
+
+            var docun   = document.forms['frgrm']['oChkCom'].id.split('~');
+            var cComId  = docun[0];
+            var cComCod = docun[1];
+            var cComCsc = docun[2];
+            var cComCsc2= docun[3];
+            var dRegFCre= docun[4];
+            var prints = '|'+cComId+'~'+cComCod+'~'+cComCsc+'~'+cComCsc2+'~'+dRegFCre+'|';
+          }
+        }else{
+          if (document.forms['frgrm']['vRecords'].value > 1){ //varios registros para imprimir //
+            var prints = '|';
+            for (i=0;i<document.forms['frgrm']['oChkCom'].length;i++){
+              if (document.forms['frgrm']['oChkCom'][i].checked == true){
+
+                var docun   = document.forms['frgrm']['oChkCom'][i].id.split('~');
+                var cComId  = docun[0];
+                var cComCod = docun[1];
+                var cComCsc = docun[2];
+                var cComCsc2= docun[3];
+                var dRegFCre= docun[4];
+                prints += '|'+cComId+'~'+cComCod+'~'+cComCsc+'~'+cComCsc2+'~'+dRegFCre+'|';
+              }
+            }
+          }
+        }
+
+        cRuta = 'frfacval.php?gTipo='+xOpcion+'&gMenDes=Imprimir%20Certificado&gModo='+xOpcion+'&gNomArc='+cRuta+'&prints='+prints;
+        parent.fmpro.location = cRuta; // Invoco el menu.
+      }
+
+      function fnEnviarPrefactura() {
+        var nSwitch = 0;
+        var cRuta   = 'frdhlprn.php';
+
+        if (document.forms['frgrm']['vRecords'].value == 1){
+          if (document.forms['frgrm']['oChkCom'].checked == true) {
+            var docun   = document.forms['frgrm']['oChkCom'].id.split('~');
+            var cComId  = docun[0];
+            var cComCod = docun[1];
+            var cComCsc = docun[2];
+            var cComCsc2= docun[3];
+            var dRegFCre= docun[4];
+            var cEstado = docun[5];
+            var cTerId  = docun[6];
+            var dComFec = docun[10];
+
+            if(cEstado != 'PROVISIONAL') {
+              alert("Solo se pueden enviar las Pre-Facturas.");
+            } else {
+              var prints = '|'+cComId+'~'+cComCod+'~'+cComCsc+'~'+cComCsc2+'~'+dRegFCre+'~'+dComFec+'|';
+              cRuta = 'frfacval.php?gTipo=CORREO&gNomArc='+cRuta+'&prints='+prints;
+              parent.fmpro.location = cRuta; // Invoco el menu.
+            }
+          }
+        } else {
+          if (document.forms['frgrm']['vRecords'].value > 1){ //varios registros para imprimir //
+            var nActivos = 0;
+            var elemento = null;
+            for(i=0;i<document.forms['frgrm']['oChkCom'].length;i++) {
+              if(document.forms['frgrm']['oChkCom'][i].checked == true ) {
+                nActivos++;
+                elemento = document.forms['frgrm']['oChkCom'][i];
+              }
+              if (nActivos > 1){
+                break;
+              }
+            }
+
+            if (nActivos == 1){
+              var prints = '|';
+              for (i=0;i<document.forms['frgrm']['oChkCom'].length;i++){
+                if (document.forms['frgrm']['oChkCom'][i].checked == true){
+                  var docun   = document.forms['frgrm']['oChkCom'][i].id.split('~');
+                  var cComId  = docun[0];
+                  var cComCod = docun[1];
+                  var cComCsc = docun[2];
+                  var cComCsc2= docun[3];
+                  var dRegFCre= docun[4];
+                  var cEstado = docun[5];
+                  var cTerId  = docun[6];
+                  var dComFec = docun[10];
+
+                  if(cEstado != 'PROVISIONAL') {
+                    alert("Solo se pueden enviar las Pre-Facturas.");
+                  } else {
+                    prints += '|'+cComId+'~'+cComCod+'~'+cComCsc+'~'+cComCsc2+'~'+dRegFCre+'~'+dComFec+'|';
+                    cRuta = 'frfacval.php?gTipo=CORREO&gNomArc='+cRuta+'&prints='+prints;
+                    parent.fmpro.location = cRuta; // Invoco el menu.
+                  }
+                }
+              }
+            } else if (nActivos == 0){
+              alert("Para esta opcion debe seleccionar un comprobante");
+            } else{
+              alert("Para esta opcion solo se permite seleccionar un comprobante")
+            }
+          }
+        }
+      }
+
     </script>
   </head>
   <body topmargin = "0" leftmargin = "0" rightmargin = "0" bottommargin = "0" marginheight = "0" marginwidth = "0">
@@ -3591,6 +3698,16 @@
                                   <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_create-file_bg.gif" onClick = "javascript:fnAsignarDisconformidad('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
                                 <?php }
                               break;
+                              case "CERTIFICADOPCC":
+                                if ($vSysStr['system_activar_openetl'] == "SI" && ($vSysStr['financiero_documento_cobro_openetl'] != "NA" || $vSysStr['financiero_factura_excluir_pcc_openetl'] != "NA")) { ?>
+                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/file_text.gif" onClick = "javascript:f_Certificado_PCC('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                                <?php }
+                              break;
+                              case "REENVIARCORREO":
+                                if ($vSysStr['system_activar_openetl'] == "SI") { ?>
+                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/btn_uplevel_bg.gif" onClick = "javascript:fnConsultarETL('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                                <?php }
+                              break;
                               case "TBFACTURAXNCONSDO":
                                 if (f_InList($kDf[3],"GRUMALCO","TEGRUMALCO","DEGRUMALCO")) { ?>
                                   <img src = "<?php echo $cPlesk_Skin_Directory ?>/upload_file01.png" onClick = "javascript:fnEnviarFacturaTbFacturaxnconsdo('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
@@ -3599,6 +3716,11 @@
                               case "BORRARDISCONFORMIDAD":
                                 if (f_InList($kDf[3],"GRUMALCO","TEGRUMALCO","DEGRUMALCO")) { ?>
                                   <img src = "<?php echo $cPlesk_Skin_Directory ?>/s_error.png" onClick = "javascript:fnBorrarDisconformidad('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
+                                <?php }
+                              break;
+                              case "ENVIOPREFACTURA":
+                                if (f_InList($kDf[3],"DHLEXPRE","TEDHLEXPRE","DEDHLEXPRE")) { ?>
+                                  <img src = "<?php echo $cPlesk_Skin_Directory ?>/page_go.png" onClick = "javascript:fnEnviarPrefactura('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="<?php echo $mBotAcc['mendesxx'] ?>">
                                 <?php }
                               break;
                             }
@@ -3860,19 +3982,19 @@
                             <?php } ?>
                             <td Class="letra7" align="right">
                               <input type="checkbox" name="oChkCom" value = "<?php echo mysql_num_rows($xCabMov) ?>"
-                              id="<?php echo  $mCabMov[$i]['comidxxx'].'~'. //[0]
-                                              $mCabMov[$i]['comcodxx'].'~'. //[1]
-                                              $mCabMov[$i]['comcscxx'].'~'. //[2]
-                                              $mCabMov[$i]['comcsc2x'].'~'. //[3]
-                                              $mCabMov[$i]['comfecxx'].'~'. //[4]
-                                              $mCabMov[$i]['regestxx'].'~'. //[5]
-                                              $mCabMov[$i]['teridixx'].'~'. //[6]
-                                              $mCabMov[$i]['comipfxx'].'~'. //[7]
-                                              $mCabMov[$i]['comealpo'].'~'. //[8]
-                                              $mCabMov[$i]['perestxx'].'~'. //[9]
-                                              $mCabMov[$i]['comfecxx'].'~'. //[10]
-                                              $cTipoFac .'~'. //[11]
-                                              $mCabMov[$i]['disidxxx'] //[12] ?>"
+                              id="<?php echo $mCabMov[$i]['comidxxx'].'~'. //[0]
+                                             $mCabMov[$i]['comcodxx'].'~'. //[1]
+                                             $mCabMov[$i]['comcscxx'].'~'. //[2]
+                                             $mCabMov[$i]['comcsc2x'].'~'. //[3]
+                                             $mCabMov[$i]['comfecxx'].'~'. //[4]
+                                             $mCabMov[$i]['regestxx'].'~'. //[5]
+                                             $mCabMov[$i]['teridixx'].'~'. //[6]
+                                             $mCabMov[$i]['comipfxx'].'~'. //[7]
+                                             $mCabMov[$i]['comealpo'].'~'. //[8]
+                                             $mCabMov[$i]['perestxx'].'~'. //[9]
+                                             $mCabMov[$i]['comfecxx'].'~'. //[10]
+                                             $cTipoFac .'~'.               //[11]
+                                             $mCabMov[$i]['disidxxx'] //[12] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mCabMov) ?>'">
                             </td>
                           </tr>

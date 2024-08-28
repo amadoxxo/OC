@@ -87,7 +87,6 @@
           ###################################
           $qCreate  = "CREATE TABLE lpar0162 ( ";
           $qCreate .= "tdoidxxx int(10) NOT NULL AUTO_INCREMENT COMMENT \"Id Tipo Documental\",";
-          $qCreate .= "tdocliid varchar(20) NOT NULL COMMENT \"Id del Cliente\",";
           $qCreate .= "tdoserxx varchar(255) NOT NULL COMMENT \"Servicio\",";
           $qCreate .= "tdositxx varchar(255) NOT NULL COMMENT \"Sitio\",";
           $qCreate .= "tdogruxx varchar(255) NOT NULL COMMENT \"Grupo\",";
@@ -110,6 +109,155 @@
             $nSwitch = 1;
             $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qCreate." ~ ".mysql_error(_CONEXION_)."\tError Al Crear la Tabla lpar0162 en: ".$pdb;
             system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+          }
+
+          ##############################################################################
+          //Creacion de registros en la tabla lpar0162 para el cliente ALPOPULX
+          ##############################################################################
+          if ($pdb == "DEALPOPULX" || $pdb == "TEALPOPULX" || $pdb == "ALPOPULX" || $pdb == "TEALPOPULP") {
+            
+            // OPERACIONES LOGISTICAS - LOGISTICA - MIF - REPORTES APLICATIVOS
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"MIF\", \"\" ,\"REPORTES APLICATIVOS\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - MIF - REPORTES APLICATIVOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - MIF - REPORTES APLICATIVOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - MIF - PLANTILLAS DE TRABAJO
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"MIF\", \"\" ,\"PLANTILLAS DE TRABAJO\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - MIF - PLANTILLAS DE TRABAJO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - MIF - PLANTILLAS DE TRABAJO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - MIF - OC - PO - EA - HS - MIGO
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"MIF\", \"\" ,\"OC - PO - EA - HS - MIGO\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - MIF - OC - PO - EA - HS - MIGO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - MIF - OC - PO - EA - HS - MIGO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - MIF - OTROS ANEXOS
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"MIF\", \"\" ,\"OTROS ANEXOS\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - MIF - OTROS ANEXOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - MIF - OTROS ANEXOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - SOPORTES SERVICIO
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"CERTIFICACION\", \"\" ,\"SOPORTES SERVICIO\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - SOPORTES SERVICIO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - SOPORTES SERVICIO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - OC - PO - EA - HS - MIGO
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"CERTIFICACION\", \"\" ,\"OC - PO - EA - HS - MIGO\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - OC - PO - EA - HS - MIGO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - OC - PO - EA - HS - MIGO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - OTROS ANEXOS
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"CERTIFICACION\", \"\" ,\"OTROS ANEXOS\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - OTROS ANEXOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - CERTIFICACION - OTROS ANEXOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - PRE-FACTURA
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"PEDIDO\", \"\" ,\"PRE-FACTURA\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - PRE-FACTURA en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - PRE-FACTURA en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - REPORTES APLICATIVOS
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"PEDIDO\", \"\" ,\"REPORTES APLICATIVOS\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - REPORTES APLICATIVOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - REPORTES APLICATIVOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - OC - PO - EA - HS - MIGO
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"PEDIDO\", \"\" ,\"OC - PO - EA - HS - MIGO\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - OC - PO - EA - HS - MIGO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - OC - PO - EA - HS - MIGO en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
+
+            // OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - OTROS ANEXOS
+            $qInsert  = "INSERT INTO lpar0162 (tdoserxx, tdositxx, tdogruxx, tdoidecm, tdodesxx, regusrxx, regfcrex, reghcrex, regfmodx, reghmodx, regestxx, regstamp) VALUES ";
+            $qInsert .= "(\"OPERACIONES LOGISTICAS\", \"LOGISTICA\", \"PEDIDO\", \"\" ,\"OTROS ANEXOS\", \"ADMIN\", NOW(), NOW(), NOW(), NOW(), \"ACTIVO\", CURRENT_TIMESTAMP)";
+            $xInsert  = mysql_query($qInsert,_CONEXION_);
+            if ($xInsert) {
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\tSe creo el campo OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - OTROS ANEXOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;34m".$cMsj."\33[00m\n";
+            } else {
+              $nSwitch = 1;
+              $cMsj = date("Y-m-d H:m:s")."\t".str_pad(__LINE__,4,"0",STR_PAD_LEFT)."\t".number_format(microtime(true)-_MICROTIME_,2)."\t".$qInsert." ~ ".mysql_error(_CONEXION_)."\tError al crear el campos OPERACIONES LOGISTICAS - LOGISTICA - PEDIDO - OTROS ANEXOS en la tabla lpar0162 Tipos Documentales: ".$pdb;
+              system("/bin/echo -e '".$cMsj."' >> "._DIRLOG_._FILELOG_); echo "\33[01;01;91m".$cMsj."\33[00m\n";
+            }
           }
 
         } else {

@@ -119,7 +119,6 @@ include("../../../../../financiero/libs/php/utility.php");
         $mTipDoc  = array();
         $qTipDoc  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
         $qTipDoc .= "$cAlfa.lpar0162.tdoidxxx, ";
-        $qTipDoc .= "$cAlfa.lpar0150.clinomxx, ";
         $qTipDoc .= "$cAlfa.lpar0162.tdoserxx, ";
         $qTipDoc .= "$cAlfa.lpar0162.tdositxx, ";
         $qTipDoc .= "$cAlfa.lpar0162.tdogruxx, ";
@@ -138,10 +137,8 @@ include("../../../../../financiero/libs/php/utility.php");
         if (substr_count($_POST['cOrderByOrder'],"usrnomxx") > 0) {
           $qTipDoc .= "LEFT JOIN $cAlfa.SIAI0003 ON $cAlfa.lpar0162.regusrxx = $cAlfa.SIAI0003.USRIDXXX ";
         }
-        $qTipDoc .= "LEFT JOIN $cAlfa.lpar0150 ON $cAlfa.lpar0162.tdocliid = $cAlfa.lpar0150.cliidxxx ";
         if ($_POST['vSearch'] != "") {
           $qTipDoc .= "WHERE ";
-          $qTipDoc .= "$cAlfa.lpar0162.clinomxx LIKE \"%{$_POST['vSearch']}%\" OR ";
           $qTipDoc .= "$cAlfa.lpar0162.tdoserxx LIKE \"%{$_POST['vSearch']}%\" OR ";
           $qTipDoc .= "$cAlfa.lpar0162.tdositxx LIKE \"%{$_POST['vSearch']}%\" OR ";
           $qTipDoc .= "$cAlfa.lpar0162.tdogruxx LIKE \"%{$_POST['vSearch']}%\" OR ";
@@ -172,7 +169,7 @@ include("../../../../../financiero/libs/php/utility.php");
         // FIN CODIGO NUEVO PARA ORDER BY
         $qTipDoc .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
         $xTipDoc  = f_MySql("SELECT","",$qTipDoc,$xConexion01,"");
-        //echo $qTipDoc." ~ ".mysql_num_rows($xTipDoc);
+        // echo $qTipDoc." ~ ".mysql_num_rows($xTipDoc);
 
         /***** FIN SQL *****/
 
@@ -310,12 +307,6 @@ include("../../../../../financiero/libs/php/utility.php");
                   <table cellspacing="0" width="100%">
                     <tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
                       <td class="name" width="20%">
-                        <a href = "javascript:fnOrder_By('onclick','clinomxx');" title="Ordenar">Cliente ECM</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="15" title = "" id = "clinomxx">
-                        <input type = "hidden" name = "clinomxx" value = "<?php echo $_POST['clinomxx'] ?>" id = "clinomxx">
-                        <script language="javascript">fnOrder_By('','clinomxx')</script>
-                      </td>
-                      <td class="name" width="20%">
                         <a href = "javascript:fnOrder_By('onclick','tdoserxx');" title="Ordenar">Servicio</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="15" title = "" id = "tdoserxx">
                         <input type = "hidden" name = "tdoserxx" value = "<?php echo $_POST['tdoserxx'] ?>" id = "tdoserxx">
@@ -333,25 +324,25 @@ include("../../../../../financiero/libs/php/utility.php");
                         <input type = "hidden" name = "tdogruxx" value = "<?php echo $_POST['tdogruxx'] ?>" id = "tdogruxx">
                         <script language="javascript">fnOrder_By('','tdogruxx')</script>
                       </td>
-                      <td class="name" width="15%">
+                      <td class="name" width="20%">
                         <a href = "javascript:fnOrder_By('onclick','tdodesxx');" title="Ordenar">Tipo Documental</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="15" title = "" id = "tdodesxx">
                         <input type = "hidden" name = "tdodesxx" value = "<?php echo $_POST['tdodesxx'] ?>" id = "tdodesxx">
                         <script language="javascript">fnOrder_By('','tdodesxx')</script>
                       </td>
-                      <td class="name" width="05%">
+                      <td class="name" width="10%">
                         <a href = "javascript:fnOrder_By('onclick','regfcrex');" title="Ordenar">Creado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="15" title = "" id = "regfcrex">
                         <input type = "hidden" name = "regfcrex" value = "<?php echo $_POST['regfcrex'] ?>" id = "regfcrex">
                         <script language="javascript">fnOrder_By('','regfcrex')</script>
                       </td>
-                      <td class="name" width="05%">
+                      <td class="name" width="10%">
                         <a href = "javascript:fnOrder_By('onclick','regfmodx');" title="Ordenar">Modificado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="15" title = "" id = "regfmodx">
                         <input type = "hidden" name = "regfmodx" value = "<?php echo $_POST['regfmodx'] ?>" id = "regfmodx">
                         <script language="javascript">fnOrder_By('','regfmodx')</script>
                       </td>
-                      <td class="name" width="05%">
+                      <td class="name" width="10%">
                         <a href = "javascript:fnOrder_By('onclick','regestxx');" title="Ordenar">Estado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="15" title = "" id = "regestxx">
                         <input type = "hidden" name = "regestxx" value = "<?php echo $_POST['regestxx'] ?>" id = "regestxx">
@@ -369,14 +360,13 @@ include("../../../../../financiero/libs/php/utility.php");
                         } ?>
                         <!--<tr bgcolor = "<?php echo $cColor ?>">-->
                         <tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
-                          <td class="letra7" height="20" width="20%"><?php echo $mTipDoc [$i]['clinomxx'] ?></td>
                           <td class="letra7" height="20" width="20%"><?php echo $mTipDoc [$i]['tdoserxx'] ?></td>
                           <td class="letra7" height="20" width="15%"><?php echo $mTipDoc [$i]['tdositxx'] ?></td>
                           <td class="letra7" height="20" width="15%"><?php echo $mTipDoc [$i]['tdogruxx'] ?></td>
-                          <td class="letra7" height="20" width="15%"><?php echo $mTipDoc [$i]['tdodesxx'] ?></td>
-                          <td class="letra7" height="20" width="05%"><?php echo $mTipDoc [$i]['regfcrex'] ?></td>
-                          <td class="letra7" height="20" width="05%"><?php echo $mTipDoc [$i]['regfmodx'] ?></td>
-                          <td class="letra7" height="20" width="05%"><?php echo $mTipDoc [$i]['regestxx'] ?></td>
+                          <td class="letra7" height="20" width="20%"><?php echo $mTipDoc [$i]['tdodesxx'] ?></td>
+                          <td class="letra7" height="20" width="10%"><?php echo $mTipDoc [$i]['regfcrex'] ?></td>
+                          <td class="letra7" height="20" width="10%"><?php echo $mTipDoc [$i]['regfmodx'] ?></td>
+                          <td class="letra7" height="20" width="10%"><?php echo $mTipDoc [$i]['regestxx'] ?></td>
                         </tr>
                         <?php $y++;
                         }

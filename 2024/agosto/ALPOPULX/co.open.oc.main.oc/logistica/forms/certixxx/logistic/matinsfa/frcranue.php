@@ -7,6 +7,22 @@
    * @version 001
    */
   include("../../../../../financiero/libs/php/utility.php");
+
+  // Obtengo los datos de Gestor Documental - Tipos Documentales
+  $mMatrizTipDoc = array();
+  $qTipDoc  = "SELECT tdoidxxx, tdodesxx ";
+  $qTipDoc .= "FROM $cAlfa.lpar0162 ";
+  $qTipDoc .= "WHERE ";
+  $qTipDoc .= "tdogruxx = \"MIF\" AND ";
+  $qTipDoc .= "regestxx = \"ACTIVO\"";
+  $xTipDoc = f_MySql("SELECT","",$qTipDoc,$xConexion01,"");
+  if (mysql_num_rows($xTipDoc) > 0) {
+    while ($vTipDoc = mysql_fetch_array($xTipDoc)) {
+      $nInd_mMatrizTipDoc = count($mMatrizTipDoc);
+      $mMatrizTipDoc[$nInd_mMatrizTipDoc]['tdoidxxx'] = $vTipDoc['tdoidxxx'];
+      $mMatrizTipDoc[$nInd_mMatrizTipDoc]['tdodesxx'] = $vTipDoc['tdodesxx'];
+    }
+  }
 ?>
 <html>
   <head>
@@ -19,8 +35,16 @@
     <script languaje="javascript" src="<?php echo $cSystem_Libs_JS_Directory ?>/utility.js"></script>
     <script languaje="javascript">
       function fnRetorna() {
-        document.location="<?php echo $_COOKIE['kIniAnt'] ?>";
-        parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
+        if ("<?php echo $cOrigen ?>" == "CERTIFICACION") {
+          document.location="../certifix/frcerini.php";
+          parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
+        } else if("<?php echo $cOrigen ?>" == "PEDIDO") {
+          document.location="../pedidoxx/frpedini.php";
+          parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
+        } else {
+          document.location="<?php echo $_COOKIE['kIniAnt'] ?>";
+          parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
+        }
       }
 
       function fnAddNewRow() {
@@ -50,7 +74,10 @@
         TD_xAll.style.width = "400px";
         TD_xAll.innerHTML   = "Tipo Documental " +
                               "<select name="+sTipDocu+" id="+sTipDocu+" style='width: 400px;'>" +
-                                "<option value=''>[SELECCIONE]</option>" +
+                                "<option value='' selected>[SELECCIONE]</option>" +
+                                <?php for($i=0;$i<count($mMatrizTipDoc);$i++) { ?> 
+                                  "<option value='<?php echo $mMatrizTipDoc[$i]['tdoidxxx'] ?>'><?php echo $mMatrizTipDoc[$i]['tdodesxx'] ?></option>" +
+                                <?php } ?> 
                               "</select>" ;
 
         var TD_xAll = cTableRow.insertCell(2);
@@ -106,6 +133,7 @@
                 <input type="hidden" name="nSecuencia" value="">
                 <input type="hidden" name="nMifId"    value="<?php echo $nMifId ?>">
                 <input type="hidden" name="dFechaMif" value="<?php echo $dFechaMif ?>">
+                <input type="hidden" name="cOrigen"   value="<?php echo $cOrigen ?>">
                 <center>
                   <table border="0" cellpadding="0" cellspacing="0" width="800">
                     <?php $nCol = f_Format_Cols(40); echo $nCol; ?>

@@ -20,7 +20,7 @@
       $nDia  = $dFechaMif[2];
     
       // Consulta para obtener la hora de creacion del registro
-      $qMif  = "SELECT reghcrex ";
+      $qMif  = "SELECT mifidxxx, reghcrex ";
       $qMif .= "FROM $cAlfa.lmca$nAnio ";
       $qMif .= "WHERE mifidxxx = \"{$_POST['nMifId']}\" ";
       $xMif  = f_MySql("SELECT", "", $qMif, $xConexion01, "");
@@ -35,7 +35,7 @@
         $nSegundos = $dHoraMif[2];
       }
     
-      $cRuta = "{$OPENINIT['pathdr']}/opencomex/propios/$cAlfa/$nAnio/$nMes/$nDia/$nHora/$nMinutos/$nSegundos";
+      $cRuta = "{$OPENINIT['pathdr']}/opencomex/propios/$cAlfa/$nAnio/$nMes/$nDia/$nHora/$nMinutos/$nSegundos/MIF/{$vMif['mifidxxx']}";
     
       if (!is_dir($cRuta)) {
         if (mkdir($cRuta, 0777, true)) {

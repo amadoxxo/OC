@@ -358,11 +358,15 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var nPedId    = mMatriz[0]; // Id Pedido
-                var dFechaPed = mMatriz[1]; // Fecha de Creacion
+                var nCagId    = mMatriz[0]; // Id Pedido
+                var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[6]; // Estado
+                var cRegHCre  = mMatriz[8]; // Hora de Creacion
                 if (cRegEst == "PROVISIONAL") {
-                  var ruta = "../matinsfa/frcranue.php?nPedId="+nPedId+"&dFechaPed="+dFechaPed+"&cOrigen=PEDIDO";
+                  var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                                                  "&dFechaCag="+dFechaCag+
+                                                  "&cRegHCre="+cRegHCre+
+                                                  "&cOrigen=PEDIDO";
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
@@ -380,11 +384,15 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var nPedId    = mMatriz[0]; // Id Pedido
-                  var dFechaPed = mMatriz[1]; // Fecha de Creacion
+                  var nCagId    = mMatriz[0]; // Id Pedido
+                  var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[6]; // Estado
+                  var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "PROVISIONAL") {
-                    var ruta = "../matinsfa/frcranue.php?nPedId="+nPedId+"&dFechaPed="+dFechaPed+"&cOrigen=PEDIDO";
+                    var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                                                    "&dFechaCag="+dFechaCag+
+                                                    "&cRegHCre="+cRegHCre+
+                                                    "&cOrigen=PEDIDO";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Cargar Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -415,11 +423,15 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var nPedId    = mMatriz[0]; // Id Pedido
-                var dFechaPed = mMatriz[1]; // Fecha de Creacion
+                var nCagId    = mMatriz[0]; // Id Pedido
+                var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[6]; // Estado
+                var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "PROVISIONAL") {
-                    var ruta = "../matinsfa/frvranue.php?nPedId="+nPedId+"&dFechaPed="+dFechaPed+"&cOrigen=PEDIDO";
+                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
+                                                    "&dFechaCag="+dFechaCag+
+                                                    "&cRegHCre="+cRegHCre+
+                                                    "&cOrigen=PEDIDO";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -437,11 +449,15 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var nPedId    = mMatriz[0]; // Id Pedido
-                  var dFechaPed = mMatriz[1]; // Fecha de Creacion
+                  var nCagId    = mMatriz[0]; // Id Pedido
+                  var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[6]; // Estado
+                  var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "PROVISIONAL") {
-                    var ruta = "../matinsfa/frvranue.php?nPedId="+nPedId+"&dFechaPed="+dFechaPed+"&cOrigen=PEDIDO";
+                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
+                                                    "&dFechaCag="+dFechaCag+
+                                                    "&cRegHCre="+cRegHCre+
+                                                    "&cOrigen=PEDIDO";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -1248,7 +1264,8 @@
                                              $mPedido[$i]['comcscxx'].'~'. //[4]
                                              $mPedido[$i]['comcsc2x'].'~'. //[5]
                                              $mPedido[$i]['regestxx'].'~'. //[6]
-                                             $mPedido[$i]['comprexx'] //[7] ?>"
+                                             $mPedido[$i]['comprexx'].'~'. //[7] "
+                                             $mPedido[$i]['reghcrex'] //[8] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mPedido) ?>'">
                             </td>
                           </tr>

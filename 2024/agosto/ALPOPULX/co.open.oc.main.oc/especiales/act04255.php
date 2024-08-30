@@ -87,8 +87,11 @@
           ###################################
           $qCreate  = "CREATE TABLE lpar0162 ( ";
           $qCreate .= "tdoidxxx int(10) NOT NULL AUTO_INCREMENT COMMENT \"Id Tipo Documental\",";
+          $qCreate .= "seridecm int(10) NOT NULL COMMENT \"Id Servicio ECM\",";
           $qCreate .= "tdoserxx varchar(255) NOT NULL COMMENT \"Servicio\",";
+          $qCreate .= "sitidecm int(10) NOT NULL COMMENT \"Id Sitio ECM\",";
           $qCreate .= "tdositxx varchar(255) NOT NULL COMMENT \"Sitio\",";
+          $qCreate .= "gruidecm int(10) NOT NULL COMMENT \"Id Grupo ECM\",";
           $qCreate .= "tdogruxx varchar(255) NOT NULL COMMENT \"Grupo\",";
           $qCreate .= "tdoidecm int(10) NOT NULL COMMENT \"Id Tipo Documental ECM\",";
           $qCreate .= "tdodesxx varchar(255) NOT NULL COMMENT \"Descripcion Tipo Documental\",";

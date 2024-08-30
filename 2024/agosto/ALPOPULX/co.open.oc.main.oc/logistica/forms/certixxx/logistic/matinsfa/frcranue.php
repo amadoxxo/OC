@@ -13,7 +13,7 @@
   $qTipDoc  = "SELECT tdoidxxx, tdodesxx ";
   $qTipDoc .= "FROM $cAlfa.lpar0162 ";
   $qTipDoc .= "WHERE ";
-  $qTipDoc .= "tdogruxx = \"MIF\" AND ";
+  $qTipDoc .= "tdogruxx = \"$cOrigen\" AND ";
   $qTipDoc .= "regestxx = \"ACTIVO\"";
   $xTipDoc = f_MySql("SELECT","",$qTipDoc,$xConexion01,"");
   if (mysql_num_rows($xTipDoc) > 0) {
@@ -31,9 +31,9 @@
     <link rel="stylesheet" href="<?php echo $cSystem_Libs_JS_Directory ?>/layout.css">
     <link rel="stylesheet" href="<?php echo $cSystem_Libs_JS_Directory ?>/custom.css">
     <link rel="stylesheet" href="<?php echo $cSystem_Libs_JS_Directory ?>/overlib.css">
-    <script languaje="javascript" src="<?php echo $cSystem_Libs_JS_Directory ?>/date_picker.js"></script>
-    <script languaje="javascript" src="<?php echo $cSystem_Libs_JS_Directory ?>/utility.js"></script>
-    <script languaje="javascript">
+    <script language="javascript" src="<?php echo $cSystem_Libs_JS_Directory ?>/date_picker.js"></script>
+    <script language="javascript" src="<?php echo $cSystem_Libs_JS_Directory ?>/utility.js"></script>
+    <script language="javascript">
       function fnRetorna() {
         if ("<?php echo $cOrigen ?>" == "CERTIFICACION") {
           document.location="../certifix/frcerini.php";
@@ -75,7 +75,7 @@
         TD_xAll.innerHTML   = "Tipo Documental " +
                               "<select name="+sTipDocu+" id="+sTipDocu+" style='width: 400px;'>" +
                                 "<option value='' selected>[SELECCIONE]</option>" +
-                                <?php for($i=0;$i<count($mMatrizTipDoc);$i++) { ?> 
+                                <?php for($i=0;$i<count($mMatrizTipDoc);$i++) { ?>
                                   "<option value='<?php echo $mMatrizTipDoc[$i]['tdoidxxx'] ?>'><?php echo $mMatrizTipDoc[$i]['tdodesxx'] ?></option>" +
                                 <?php } ?> 
                               "</select>" ;
@@ -131,9 +131,10 @@
               <legend><?php echo $_COOKIE['kMenDes'] ?></legend>
               <form name="frgrm" action="frcragra.php" method="post" target="fmpro" enctype="multipart/form-data">
                 <input type="hidden" name="nSecuencia" value="">
-                <input type="hidden" name="nMifId"    value="<?php echo $nMifId ?>">
-                <input type="hidden" name="dFechaMif" value="<?php echo $dFechaMif ?>">
-                <input type="hidden" name="cOrigen"   value="<?php echo $cOrigen ?>">
+                <input type="hidden" name="nCagId"    value="<?php echo $nCagId ?>"    readonly>
+                <input type="hidden" name="dFechaCag" value="<?php echo $dFechaCag ?>" readonly>
+                <input type="hidden" name="cRegHCre"  value="<?php echo $cRegHCre ?>"  readonly>
+                <input type="hidden" name="cOrigen"   value="<?php echo $cOrigen ?>"   readonly>
                 <center>
                   <table border="0" cellpadding="0" cellspacing="0" width="800">
                     <?php $nCol = f_Format_Cols(40); echo $nCol; ?>
@@ -152,7 +153,7 @@
                     </tr>
                   </table>
                 </center>
-                <script languaje="javascript">
+                <script language="javascript">
                   fnAddNewRow();
                 </script>
               </form>

@@ -447,11 +447,15 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var nMifId    = mMatriz[0]; // Id M.I.F
-                var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                var nCagId    = mMatriz[0]; // Id M.I.F
+                var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[2]; // Estado
+                var cRegHCre  = mMatriz[8]; // Hora de Creacion
                 if (cRegEst == "ENPROCESO") {
-                  var ruta = "frcranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif+"&cOrigen=MIF";
+                  var ruta = "frcranue.php?nCagId="+nCagId+
+                                      "&dFechaCag="+dFechaCag+
+                                      "&cRegHCre="+cRegHCre+
+                                      "&cOrigen=MIF";
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
@@ -469,11 +473,15 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var nMifId    = mMatriz[0]; // Id M.I.F
-                  var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                  var nCagId    = mMatriz[0]; // Id M.I.F
+                  var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[2]; // Estado
+                  var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "frcranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif+"&cOrigen=MIF";
+                    var ruta = "frcranue.php?nCagId="+nCagId+
+                                        "&dFechaCag="+dFechaCag+
+                                        "&cRegHCre="+cRegHCre+
+                                        "&cOrigen=MIF";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Cargar Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -504,11 +512,15 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var nMifId    = mMatriz[0]; // Id M.I.F
-                var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                var nCagId    = mMatriz[0]; // Id M.I.F
+                var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[2]; // Estado
+                var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "frvranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif+"&cOrigen=MIF";
+                    var ruta = "frvranue.php?nCagId="+nCagId+
+                                        "&dFechaCag="+dFechaCag+
+                                        "&cRegHCre="+cRegHCre+
+                                        "&cOrigen=MIF";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -526,11 +538,15 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var nMifId    = mMatriz[0]; // Id M.I.F
-                  var dFechaMif = mMatriz[1]; // Fecha de Creacion
+                  var nCagId    = mMatriz[0]; // Id M.I.F
+                  var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[2]; // Estado
+                  var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "frvranue.php?nMifId="+nMifId+"&dFechaMif="+dFechaMif+"&cOrigen=MIF";
+                    var ruta = "frvranue.php?nCagId="+nCagId+
+                                        "&dFechaCag="+dFechaCag+
+                                        "&cRegHCre="+cRegHCre+
+                                        "&cOrigen=MIF";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -1081,13 +1097,14 @@
                               <td Class="letra7" align="right">
                                 <input type="checkbox" name="oCheck" value = "<?php echo  mysql_num_rows($xMatrInsFac) ?>"
                                 id="<?php echo $mMatrInsFac[$i]['mifidxxx'].'~'. //[0]
-                                              $mMatrInsFac[$i]['regfcrex'].'~'. //[1]
-                                              $mMatrInsFac[$i]['regestxx'].'~'. //[2]
-                                              $mMatrInsFac[$i]['miforixx'].'~'. //[3]
-                                              $mMatrInsFac[$i]['comprexx'].'~'. //[4]
-                                              $mMatrInsFac[$i]['comcscxx'].'~'. //[5]
-                                              $mMatrInsFac[$i]['miffdexx'].'~'. //[6]
-                                              $mMatrInsFac[$i]['miffhaxx'] //[7]?>"
+                                               $mMatrInsFac[$i]['regfcrex'].'~'. //[1]
+                                               $mMatrInsFac[$i]['regestxx'].'~'. //[2]
+                                               $mMatrInsFac[$i]['miforixx'].'~'. //[3]
+                                               $mMatrInsFac[$i]['comprexx'].'~'. //[4]
+                                               $mMatrInsFac[$i]['comcscxx'].'~'. //[5]
+                                               $mMatrInsFac[$i]['miffdexx'].'~'. //[6]
+                                               $mMatrInsFac[$i]['miffhaxx'].'~'. //[7]
+                                               $mMatrInsFac[$i]['reghcrex'] //[8] ?>"
                                 onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mMatrInsFac) ?>'">
                               </td>
                             </tr>

@@ -668,11 +668,15 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var nCerId    = mMatriz[0]; // Id Certificacion
-                var dFechaCer = mMatriz[1]; // Fecha de Creacion
-                var cRegEst   = mMatriz[6]; // Estado
+                var nCagId    = mMatriz[0];  // Id Certificacion
+                var dFechaCag = mMatriz[1];  // Fecha de Creacion
+                var cRegEst   = mMatriz[6];  // Estado
+                var cRegHCre  = mMatriz[10]; // Hora de Creacion
                 if (cRegEst == "ENPROCESO") {
-                  var ruta = "../matinsfa/frcranue.php?nCerId="+nCerId+"&dFechaCer="+dFechaCer+"&cOrigen=CERTIFICACION";
+                  var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                                                  "&dFechaCag="+dFechaCag+
+                                                  "&cRegHCre="+cRegHCre+
+                                                  "&cOrigen=CERTIFICACION";
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
@@ -690,11 +694,15 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var nCerId    = mMatriz[0]; // Id Certificacion
-                  var dFechaCer = mMatriz[1]; // Fecha de Creacion
-                  var cRegEst   = mMatriz[6]; // Estado
+                  var nCagId    = mMatriz[0];  // Id Certificacion
+                  var dFechaCag = mMatriz[1];  // Fecha de Creacion
+                  var cRegEst   = mMatriz[6];  // Estado
+                  var cRegHCre  = mMatriz[10]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "../matinsfa/frcranue.php?nCerId="+nCerId+"&dFechaCer="+dFechaCer+"&cOrigen=CERTIFICACION";
+                    var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                                                    "&dFechaCag="+dFechaCag+
+                                                    "&cRegHCre="+cRegHCre+
+                                                    "&cOrigen=CERTIFICACION";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Cargar Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -725,11 +733,14 @@
             case "1":
               if (document.forms['frgrm']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
-                var nCerId    = mMatriz[0]; // Id Certificacion
-                var dFechaCer = mMatriz[1]; // Fecha de Creacion
+                var nCagId    = mMatriz[0]; // Id Certificacion
+                var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[6]; // Estado
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "../matinsfa/frvranue.php?nCerId="+nCerId+"&dFechaCer="+dFechaCer+"&cOrigen=CERTIFICACION";
+                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
+                                                    "&dFechaCag="+dFechaCag+
+                                                    "&cRegHCre="+cRegHCre+
+                                                    "&cOrigen=CERTIFICACION";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -747,11 +758,14 @@
                   // Solo Deja Legalizar el Primero Seleccionado
                   zSw_Prv = 1;
                   var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
-                  var nCerId    = mMatriz[0]; // Id Certificacion
-                  var dFechaCer = mMatriz[1]; // Fecha de Creacion
+                  var nCagId    = mMatriz[0]; // Id Certificacion
+                  var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[6]; // Estado
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "../matinsfa/frvranue.php?nCerId="+nCerId+"&dFechaCer="+dFechaCer+"&cOrigen=CERTIFICACION";
+                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
+                                                    "&dFechaCag="+dFechaCag+
+                                                    "&cRegHCre="+cRegHCre+
+                                                    "&cOrigen=CERTIFICACION";
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.cookie="kMenDes=Ver Anexos;path="+"/";
                     document.cookie="kModo="+xModo+";path="+"/";
@@ -1453,7 +1467,8 @@
                                               $mCertificacion[$i]['regestxx'].'~'.  //[6]
                                               $mCertificacion[$i]['comprexx'].'~'.  //[7]
                                               $mCertificacion[$i]['cliidxxx'].'~'.  //[8]
-                                              $mCertificacion[$i]['clinomxx']  //[9] ?>"
+                                              $mCertificacion[$i]['clinomxx'].'~'.  //[9] 
+                                              $mCertificacion[$i]['reghcrex'] //[10] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mCertificacion) ?>'">
                             </td>
                           </tr>

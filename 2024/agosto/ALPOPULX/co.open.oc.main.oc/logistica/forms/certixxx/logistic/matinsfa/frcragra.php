@@ -12,30 +12,51 @@
   $cMsj = "";
 
   switch ($_COOKIE['kModo']) {
+    // Validaciones
     case "CARGARANEXOS":
 
-      $dFechaMif = explode('-', $_POST['dFechaMif']);
-      $nAnio = $dFechaMif[0];
-      $nMes  = $dFechaMif[1];
-      $nDia  = $dFechaMif[2];
-    
-      // Consulta para obtener la hora de creacion del registro
-      $qMif  = "SELECT mifidxxx, reghcrex ";
-      $qMif .= "FROM $cAlfa.lmca$nAnio ";
-      $qMif .= "WHERE mifidxxx = \"{$_POST['nMifId']}\" ";
-      $xMif  = f_MySql("SELECT", "", $qMif, $xConexion01, "");
-      // f_Mensaje(__FILE__,__LINE__,$qMif."~".mysql_num_rows($xMif));
-      // echo $qMif."~".mysql_num_rows($xMif);
-      if (mysql_num_rows($xMif) > 0) {
-        $vMif     = mysql_fetch_array($xMif);
-        $dHoraMif = explode(':', $vMif['reghcrex']);
-        
-        $nHora     = $dHoraMif[0];
-        $nMinutos  = $dHoraMif[1];
-        $nSegundos = $dHoraMif[2];
+      $mTipDocId   = array();
+      $mTipDocDesc = array();
+
+      for ($i=1;$i<=$_POST['nSecuencia'];$i++) { 
+        if ($_POST['sTipDocu'.$i] == "") {
+          $nSwitch = 1;
+          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+          $cMsj .= "El Tipo Documental es requerido. \n";
+          break;
+        }
+        $mTipDocId[] = $_POST['sTipDocu'.$i];
+
+        // Consulta para obtener la descripción
+        $qTipDoc  = "SELECT tdodesxx ";
+        $qTipDoc .= "FROM $cAlfa.lpar0162 ";
+        $qTipDoc .= "WHERE tdoidxxx = \"{$_POST['sTipDocu'.$i]}\" AND ";
+        $qTipDoc .= "tdogruxx = \"$cOrigen\" AND ";
+        $qTipDoc .= "regestxx = \"ACTIVO\";";
+        $xTipDoc  = f_MySql("SELECT", "", $qTipDoc, $xConexion01, "");
+        // f_Mensaje(__FILE__,__LINE__,$qTipDoc."~".mysql_num_rows($xTipDoc));
+        // echo $qTipDoc."~".mysql_num_rows($xTipDoc);
+        if (mysql_num_rows($xTipDoc) > 0) {
+          $vTipDoc  = mysql_fetch_array($xTipDoc);
+          $mTipDocDesc[] = $vTipDoc['tdodesxx'];
+        }
       }
+
+      var_dump($mTipDocId);
+      var_dump($mTipDocDesc);
+
+      $dFechaCag = explode('-', $_POST['dFechaCag']);
+      $nAnio = $dFechaCag[0];
+      $nMes  = $dFechaCag[1];
+      $nDia  = $dFechaCag[2];
+
+      $dHoraCag = explode(':', $_POST['cRegHCre']);
+        
+      $nHora     = $dHoraCag[0];
+      $nMinutos  = $dHoraCag[1];
+      $nSegundos = $dHoraCag[2];
     
-      $cRuta = "{$OPENINIT['pathdr']}/opencomex/propios/$cAlfa/$nAnio/$nMes/$nDia/$nHora/$nMinutos/$nSegundos/MIF/{$vMif['mifidxxx']}";
+      $cRuta = "{$OPENINIT['pathdr']}/opencomex/propios/$cAlfa/$nAnio/$nMes/$nDia/$nHora/$nMinutos/$nSegundos/{$_POST['cOrigen']}/{$_POST['nCagId']}";
     
       if (!is_dir($cRuta)) {
         if (mkdir($cRuta, 0777, true)) {
@@ -57,6 +78,7 @@
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
           $cMsj .= "Todas las filas deben cargar un documento. \n";
+          break;
         } else {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
@@ -76,9 +98,19 @@
       case "CARGARANEXOS":
         f_Mensaje(__FILE__,__LINE__,"Los Archivos se han Subido con Exito.\n");
       ?>
-        <form name="frgrm" action="<?php echo $_COOKIE['kIniAnt'] ?>" method="post" target="fmwork"></form>
-        <script languaje="javascript">
-          parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
+        <form name="frgrm" method="post" target="fmwork"></form>
+        <script language="javascript">
+          var cOrigen = "<?php echo $_POST['cOrigen'] ?>";
+
+          if (cOrigen == "CERTIFICACION") {
+            document.forms['frgrm'].action = "../certifix/frcerini.php";
+          } else if (cOrigen == "PEDIDO") {
+            document.forms['frgrm'].action = "../pedidoxx/frpedini.php";
+          } else {
+            document.forms['frgrm'].action = "<?php echo $_COOKIE['kIniAnt'] ?>";
+          }
+
+          parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
           document.forms['frgrm'].submit();
         </script>
       <?php

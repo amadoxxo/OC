@@ -705,6 +705,7 @@
           $qPedido .= "$cAlfa.lpca$iAno.pedtipxx,";    // Tipo de Pedido
           $qPedido .= "$cAlfa.lpca$iAno.pedmemde,";    // Campo Memo Depositos 
           $qPedido .= "$cAlfa.lpca$iAno.pedvlrxx,";    // Valor del Pedido
+          $qPedido .= "$cAlfa.lpca$iAno.pedanexx,";    // Anexos
           $qPedido .= "$cAlfa.lpca$iAno.regessap,";    // Estado del Pedido en SAP
           $qPedido .= "$cAlfa.lpar0150.clisapxx, ";    // Codigo SAP
           $qPedido .= "IF($cAlfa.lpar0150.clinomxx != \"\",$cAlfa.lpar0150.clinomxx,REPLACE(CONCAT($cAlfa.lpar0150.clinom1x,\" \",$cAlfa.lpar0150.clinom2x,\" \",$cAlfa.lpar0150.cliape1x,\" \",$cAlfa.lpar0150.cliape2x), \"  \", \" \")) AS clinomxx, "; // Nombre Cliente
@@ -1177,7 +1178,7 @@
                         <input type = "hidden" name = "cliidxxx" value = "<?php echo $_POST['cliidxxx'] ?>" id = "cliidxxx">
                         <script language="javascript">fnOrderBy('','cliidxxx')</script>
                       </td>
-                      <td class="name" width="15%">
+                      <td class="name" width="12%">
                         <a href = "javascript:fnOrderBy('onclick','clinomxx');" title="Ordenar">Cliente</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "clinomxx">
                         <input type = "hidden" name = "clinomxx" value = "<?php echo $_POST['clinomxx'] ?>" id = "clinomxx">
@@ -1201,19 +1202,25 @@
                         <input type = "hidden" name = "fechhast" value = "<?php echo $_POST['fechhast'] ?>" id = "fechhast">
                         <script language="javascript">fnOrderBy('','fechhast')</script>
                       </td>
-                      <td class="name" width="05%">
+                      <td class="name" width="06%">
                         <a href = "javascript:fnOrderBy('onclick','pedvlrxx');" title="Ordenar">Valor</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "pedvlrxx">
                         <input type = "hidden" name = "pedvlrxx" value = "<?php echo $_POST['pedvlrxx'] ?>" id = "pedvlrxx">
                         <script language="javascript">fnOrderBy('','pedvlrxx')</script>
                       </td>
-                      <td class="name" width="12%">
+                      <td class="name" width="05%">
+                        <a href = "javascript:fnOrderBy('onclick','pedanexx');" title="Ordenar">Anexos</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "pedanexx">
+                        <input type = "hidden" name = "pedanexx" value = "<?php echo $_POST['pedanexx'] ?>" id = "pedanexx">
+                        <script language="javascript">fnOrderBy('','pedanexx')</script>
+                      </td>
+                      <td class="name" width="11%">
                         <a href = "" title="Ordenar">Creado Por</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "usrnomxx">
                         <input type = "hidden" name = "usrnomxx" value = "<?php echo $_POST['usrnomxx'] ?>" id = "usrnomxx">
                         <script language="javascript">fnOrderBy('','usrnomxx')</script>
                       </td>
-                      <td class="name" width="07%">
+                      <td class="name" width="05%">
                         <a href = "javascript:fnOrderBy('onclick','regessap');" title="Ordenar">Estado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regessap">
                         <input type = "hidden" name = "regessap" value = "<?php echo $_POST['regessap'] ?>" id = "regessap">
@@ -1252,6 +1259,7 @@
                             <td class="letra7"><?php echo $mPedido[$i]['fechinix'] ?></td>
                             <td class="letra7"><?php echo $mPedido[$i]['fechhast'] ?></td>
                             <td class="letra7"><?php echo number_format($mPedido[$i]['pedvlrxx'], 2, '.', ',') ?></td>
+                            <td class="letra7"><?php echo $mPedido[$i]['pedanexx'] ?></td>
                             <td class="letra7"><?php echo $mPedido[$i]['usrnomxx'] ?></td>
                             <td class="letra7"><?php echo str_replace("_", " ", $mPedido[$i]['regessap']) ?></td>
                             <td class="letra7"><?php echo str_replace("_", " ", $mPedido[$i]['regestxx']) ?></td>

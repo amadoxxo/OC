@@ -14,11 +14,8 @@
   switch ($_COOKIE['kModo']) {
     // Validaciones
     case "CARGARANEXOS":
-
       $mTipDocId   = array();
-      $mTipDocDesc = array();
-
-      for ($i=1;$i<=$_POST['nSecuencia'];$i++) { 
+      for ($i=1;$i<=$_POST['nSecuencia'];$i++) {
         if ($_POST['sTipDocu'.$i] == "") {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
@@ -26,24 +23,7 @@
           break;
         }
         $mTipDocId[] = $_POST['sTipDocu'.$i];
-
-        // Consulta para obtener la descripción
-        $qTipDoc  = "SELECT tdodesxx ";
-        $qTipDoc .= "FROM $cAlfa.lpar0162 ";
-        $qTipDoc .= "WHERE tdoidxxx = \"{$_POST['sTipDocu'.$i]}\" AND ";
-        $qTipDoc .= "tdogruxx = \"$cOrigen\" AND ";
-        $qTipDoc .= "regestxx = \"ACTIVO\";";
-        $xTipDoc  = f_MySql("SELECT", "", $qTipDoc, $xConexion01, "");
-        // f_Mensaje(__FILE__,__LINE__,$qTipDoc."~".mysql_num_rows($xTipDoc));
-        // echo $qTipDoc."~".mysql_num_rows($xTipDoc);
-        if (mysql_num_rows($xTipDoc) > 0) {
-          $vTipDoc  = mysql_fetch_array($xTipDoc);
-          $mTipDocDesc[] = $vTipDoc['tdodesxx'];
-        }
       }
-
-      var_dump($mTipDocId);
-      var_dump($mTipDocDesc);
 
       $dFechaCag = explode('-', $_POST['dFechaCag']);
       $nAnio = $dFechaCag[0];
@@ -63,28 +43,62 @@
           chmod($cRuta, intval($vSysStr['system_permisos_directorios'], 8));
         }
       }
-    
-      foreach($_FILES as $file) {
-        // Obtener el nombre del archivo
+
+      // Validar que todos los archivos tengan un nombre no vacío antes de procesarlos
+      foreach ($_FILES as $file) {
         $cNombreArchivo = basename($file['name']);
-    
-        // Establecer la ruta de destino para el archivo
-        $cDestinoArchivo = $cRuta . "/" . $cNombreArchivo;
-        
-        // Mover el archivo subido a la carpeta dinámica
-        if (move_uploaded_file($file['tmp_name'], $cDestinoArchivo)) {
-          /** SE SUBIO EL ARCHIVO CORRECTAMENTE */
-        } elseif ($cNombreArchivo == "") {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Todas las filas deben cargar un documento. \n";
-          break;
-        } else {
-          $nSwitch = 1;
-          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-          $cMsj .= "Hubo un error al subir el archivo. \n";
+        if ($cNombreArchivo == "") {
+            $nSwitch = 1;
+            $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
+            $cMsj .= "Todas las filas deben cargar un documento. \n";
+            break;
         }
       }
+
+      $mDocumentos = array();
+      // Si no hubo errores en la validación, proceder a mover los archivos
+      if ($nSwitch == 0) {
+        $nCount = 0; // Contador para $mTipDocId
+        foreach($_FILES as $file) {
+          // Obtener el nombre del archivo
+          $cNombreArchivo = basename($file['name']);
+          // Establecer la ruta de destino para el archivo
+          $cDestinoArchivo = $cRuta . "/" . $cNombreArchivo;
+
+          // Mover el archivo subido a la carpeta dinámica
+          if (move_uploaded_file($file['tmp_name'], $cDestinoArchivo)) {
+            /** SE SUBIO EL ARCHIVO CORRECTAMENTE */
+            $mDocumentos[count($mDocumentos)] = [
+              'tdoidecm' => $mTipDocId[$nCount], //Id Tipos Documentales
+              'rutaxxxx' => $cRuta,              //Ruta del Archivo
+              'nomfilex' => $cNombreArchivo,     //Nombre del archivo
+            ];
+          } else {
+            $nSwitch = 1;
+            $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+            $cMsj .= "Hubo un error al subir el archivo. \n";
+            break;
+          }
+          $nCount++;
+        }
+      }
+
+      /** 
+       * Almacena los parametros para enviar a la API.
+       */
+      $vParametros = array();
+      $vParametros['idcompro'] = $_POST['nCagId']; //Id del registro
+      $vParametros['anioxxxx'] = $nAnio;           //Año del registro
+      $vParametros['procesox'] = $_POST['cOrigen'];//Origen del registro a la que esta consultando
+      $vParametros['datos']    = $mDocumentos;     //Archivos Anexados
+
+      /**
+       * Envio de parametros al metodo del utility donde se hace la conexion a openECM.
+       */
+      // fnRadicarDocumentosAnexos($vParametros);
+
+      echo '<pre>'; print_r($vParametros);
+
     break;
   }
 

@@ -691,6 +691,7 @@
           $qMatrInsFac .= "$cAlfa.lmca$iAno.depnumxx, ";   // Numero deposito
           $qMatrInsFac .= "$cAlfa.lmca$iAno.miffdexx, ";   // Fecha desde
           $qMatrInsFac .= "$cAlfa.lmca$iAno.miffhaxx, ";   // Fecha hasta
+          $qMatrInsFac .= "$cAlfa.lmca$iAno.mifanexx, ";   // Anexos
           $qMatrInsFac .= "$cAlfa.lmca$iAno.miforixx, ";   // Fecha hasta
           $qMatrInsFac .= "$cAlfa.lmca$iAno.regusrxx, ";   // Usuario que creo el registro
           $qMatrInsFac .= "$cAlfa.lmca$iAno.regfcrex, ";   // Fecha de vigencia hasta
@@ -1030,7 +1031,7 @@
                         <input type = "hidden" name = "clinomxx" value = "<?php echo $_POST['clinomxx'] ?>" id = "clinomxx">
                         <script language="javascript">fnOrderBy('','clinomxx')</script>
                       </td>
-                      <td class="name" width="19%">
+                      <td class="name" width="17%">
                         <a href = "javascript:fnOrderBy('onclick','depnumxx');" title="Ordenar">Deposito</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "depnumxx">
                         <input type = "hidden" name = "depnumxx" value = "<?php echo $_POST['depnumxx'] ?>" id = "depnumxx">
@@ -1042,11 +1043,17 @@
                         <input type = "hidden" name = "miffdexx" value = "<?php echo $_POST['miffdexx'] ?>" id = "miffdexx">
                         <script language="javascript">fnOrderBy('','miffdexx')</script>
                       </td>
-                      <td class="name" width="08%">
+                      <td class="name" width="06%">
                         <a href = "javascript:fnOrderBy('onclick','miffhaxx');" title="Ordenar">Hasta</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "miffhaxx">
                         <input type = "hidden" name = "miffhaxx" value = "<?php echo $_POST['miffhaxx'] ?>" id = "miffhaxx">
                         <script language="javascript">fnOrderBy('','miffhaxx')</script>
+                      </td>
+                      <td class="name" width="05%">
+                        <a href = "javascript:fnOrderBy('onclick','mifanexx');" title="Ordenar">Anexos</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "mifanexx">
+                        <input type = "hidden" name = "mifanexx" value = "<?php echo $_POST['mifanexx'] ?>" id = "mifanexx">
+                        <script language="javascript">fnOrderBy('','mifanexx')</script>
                       </td>
                       <td class="name" width="05%">
                         <a href = "javascript:fnOrderBy('onclick','regfcrex');" title="Ordenar">Creado</a>&nbsp;
@@ -1091,6 +1098,7 @@
                               <td class="letra7"><?php echo $mMatrInsFac[$i]['depnumxx'] ?></td>
                               <td class="letra7"><?php echo $mMatrInsFac[$i]['miffdexx'] ?></td>
                               <td class="letra7"><?php echo $mMatrInsFac[$i]['miffhaxx'] ?></td>
+                              <td class="letra7"><?php echo $mMatrInsFac[$i]['mifanexx'] ?></td>
                               <td class="letra7"><?php echo $mMatrInsFac[$i]['regfcrex'] ?></td>
                               <td class="letra7"><?php echo $mMatrInsFac[$i]['regfmodx'] ?></td>
                               <td class="letra7"><?php echo $mMatrInsFac[$i]['regestxx'] ?></td>

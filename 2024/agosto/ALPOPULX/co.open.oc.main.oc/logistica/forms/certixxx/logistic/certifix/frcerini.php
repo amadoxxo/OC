@@ -932,6 +932,7 @@
           $qCertificacion .= "$cAlfa.lcca$iAno.depnumxx, ";   // Numero deposito
           $qCertificacion .= "$cAlfa.lcca$iAno.cerfdexx, ";   // Fecha desde
           $qCertificacion .= "$cAlfa.lcca$iAno.cerfhaxx, ";   // Fecha hasta
+          $qCertificacion .= "$cAlfa.lcca$iAno.ceranexx, ";   // Anexos
           $qCertificacion .= "$cAlfa.lcca$iAno.regusrxx, ";   // Usuario que creo el registro
           $qCertificacion .= "$cAlfa.lcca$iAno.regfcrex, ";   // Fecha de creación
           $qCertificacion .= "$cAlfa.lcca$iAno.reghcrex, ";   // Hora de creación
@@ -1403,6 +1404,12 @@
                         <input type = "hidden" name = "cerfhaxx" value = "<?php echo $_POST['cerfhaxx'] ?>" id = "cerfhaxx">
                         <script language="javascript">fnOrderBy('','cerfhaxx')</script>
                       </td>
+                      <td class="name" width="06%">
+                        <a href = "javascript:fnOrderBy('onclick','ceranexx');" title="Ordenar">Anexos</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ceranexx">
+                        <input type = "hidden" name = "ceranexx" value = "<?php echo $_POST['ceranexx'] ?>" id = "ceranexx">
+                        <script language="javascript">fnOrderBy('','ceranexx')</script>
+                      </td>
                       <td class="name" width="05%">
                         <a href = "javascript:fnOrderBy('onclick','regfcrex');" title="Ordenar">Creado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfcrex">
@@ -1411,12 +1418,6 @@
                       </td>
                       <td class="name" width="06%">
                         <a href = "javascript:fnOrderBy('onclick','regfmodx');" title="Ordenar">Modificado</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfmodx">
-                        <input type = "hidden" name = "regfmodx" value = "<?php echo $_POST['regfmodx'] ?>" id = "regfmodx">
-                        <script language="javascript">fnOrderBy('','regfmodx')</script>
-                      </td>
-                      <td class="name" width="06%">
-                        <a href = "javascript:fnOrderBy('onclick','regfmodx');" title="Ordenar">Hora</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfmodx">
                         <input type = "hidden" name = "regfmodx" value = "<?php echo $_POST['regfmodx'] ?>" id = "regfmodx">
                         <script language="javascript">fnOrderBy('','regfmodx')</script>
@@ -1452,23 +1453,23 @@
                             <td class="letra7"><?php echo $mCertificacion[$i]['depnumxx'] ?></td>
                             <td class="letra7"><?php echo $mCertificacion[$i]['cerfdexx'] ?></td>
                             <td class="letra7"><?php echo $mCertificacion[$i]['cerfhaxx'] ?></td>
+                            <td class="letra7"><?php echo $mCertificacion[$i]['ceranexx'] ?></td>
                             <td class="letra7"><?php echo $mCertificacion[$i]['regfcrex'] ?></td>
-                            <td class="letra7"><?php echo $mCertificacion[$i]['regfmodx'] ?></td>
                             <td class="letra7"><?php echo $mCertificacion[$i]['reghmodx'] ?></td>
                             <td class="letra7"><?php echo str_replace("_", " ", $mCertificacion[$i]['regestxx']) ?></td>
                             <td Class="letra7" align="right">
                               <input type="checkbox" name="oCheck" value = "<?php echo  mysql_num_rows($xCertificacion) ?>"
                                 id="<?php echo $mCertificacion[$i]['ceridxxx'].'~'. //[0]
-                                              $mCertificacion[$i]['regfcrex'].'~'.  //[1]
-                                              $mCertificacion[$i]['comidxxx'].'~'.  //[2]
-                                              $mCertificacion[$i]['comcodxx'].'~'.  //[3]
-                                              $mCertificacion[$i]['comcscxx'].'~'.  //[4]
-                                              $mCertificacion[$i]['comcsc2x'].'~'.  //[5]
-                                              $mCertificacion[$i]['regestxx'].'~'.  //[6]
-                                              $mCertificacion[$i]['comprexx'].'~'.  //[7]
-                                              $mCertificacion[$i]['cliidxxx'].'~'.  //[8]
-                                              $mCertificacion[$i]['clinomxx'].'~'.  //[9] 
-                                              $mCertificacion[$i]['reghcrex'] //[10] ?>"
+                                               $mCertificacion[$i]['regfcrex'].'~'.  //[1]
+                                               $mCertificacion[$i]['comidxxx'].'~'.  //[2]
+                                               $mCertificacion[$i]['comcodxx'].'~'.  //[3]
+                                               $mCertificacion[$i]['comcscxx'].'~'.  //[4]
+                                               $mCertificacion[$i]['comcsc2x'].'~'.  //[5]
+                                               $mCertificacion[$i]['regestxx'].'~'.  //[6]
+                                               $mCertificacion[$i]['comprexx'].'~'.  //[7]
+                                               $mCertificacion[$i]['cliidxxx'].'~'.  //[8]
+                                               $mCertificacion[$i]['clinomxx'].'~'.  //[9] 
+                                               $mCertificacion[$i]['reghcrex'] //[10] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mCertificacion) ?>'">
                             </td>
                           </tr>

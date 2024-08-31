@@ -7,22 +7,27 @@
   * @version 001
   */
   include("../../../../../financiero/libs/php/utility.php");
+  include("../../../../libs/php/utigesdo.php");
+  include('../../../../../libs/php/uticecmx.php');
 
   $nSwitch = 0; // Switch para Vericar la Validacion de Datos
   $cMsj = "";
 
+  ini_set('error_reporting', E_ERROR);
+  ini_set("display_errors","1");
+
   switch ($_COOKIE['kModo']) {
     // Validaciones
     case "CARGARANEXOS":
-      $mTipDocId   = array();
+      $mTipDocId = array();
       for ($i=1;$i<=$_POST['nSecuencia'];$i++) {
-        if ($_POST['sTipDocu'.$i] == "") {
+        if ($_POST['cTdoIdEcm'.$i] == "") {
           $nSwitch = 1;
           $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
           $cMsj .= "El Tipo Documental es requerido. \n";
           break;
         }
-        $mTipDocId[] = $_POST['sTipDocu'.$i];
+        $mTipDocId[] = $_POST['cTdoIdEcm'.$i];
       }
 
       $dFechaCag = explode('-', $_POST['dFechaCag']);
@@ -31,7 +36,6 @@
       $nDia  = $dFechaCag[2];
 
       $dHoraCag = explode(':', $_POST['cRegHCre']);
-        
       $nHora     = $dHoraCag[0];
       $nMinutos  = $dHoraCag[1];
       $nSegundos = $dHoraCag[2];
@@ -92,12 +96,24 @@
       $vParametros['procesox'] = $_POST['cOrigen'];//Origen del registro a la que esta consultando
       $vParametros['datos']    = $mDocumentos;     //Archivos Anexados
 
+      echo '<pre>'; 
+      print_r($vParametros);
+
       /**
        * Envio de parametros al metodo del utility donde se hace la conexion a openECM.
        */
-      // fnRadicarDocumentosAnexos($vParametros);
+      $objIntegracion = new cIntegracionGestorDocumentalopenECM();
+      $mReturnRadicarDocumentos = $objIntegracion->fnRadicarDocumentosAnexos($vParametros);
+      echo '<pre>'; 
+      print_r($mReturnRadicarDocumentos);
 
-      echo '<pre>'; print_r($vParametros);
+      if ($mReturnRadicarDocumentos[0] == 'false') {
+        $nSwitch = 1;
+        for ($n=2; $n < count($mReturnRadicarDocumentos); $n++) {
+          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+          $cMsj .= $mReturnRadicarDocumentos[$n] . "\n";
+        }
+      }
 
     break;
   }

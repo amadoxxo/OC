@@ -10,7 +10,10 @@
 
   // Obtengo los datos de Gestor Documental - Tipos Documentales
   $mMatrizTipDoc = array();
-  $qTipDoc  = "SELECT tdoidxxx, tdodesxx ";
+  $qTipDoc  = "SELECT ";
+  $qTipDoc .= "tdoidxxx, ";
+  $qTipDoc .= "tdoidecm, ";
+  $qTipDoc .= "tdodesxx ";
   $qTipDoc .= "FROM $cAlfa.lpar0162 ";
   $qTipDoc .= "WHERE ";
   $qTipDoc .= "tdogruxx = \"$cOrigen\" AND ";
@@ -19,7 +22,7 @@
   if (mysql_num_rows($xTipDoc) > 0) {
     while ($vTipDoc = mysql_fetch_array($xTipDoc)) {
       $nInd_mMatrizTipDoc = count($mMatrizTipDoc);
-      $mMatrizTipDoc[$nInd_mMatrizTipDoc]['tdoidxxx'] = $vTipDoc['tdoidxxx'];
+      $mMatrizTipDoc[$nInd_mMatrizTipDoc]['tdoidecm'] = $vTipDoc['tdoidecm'];
       $mMatrizTipDoc[$nInd_mMatrizTipDoc]['tdodesxx'] = $vTipDoc['tdodesxx'];
     }
   }
@@ -61,7 +64,7 @@
         var cTableRow  = cGrid.insertRow(nLastRow);
 
         var fCrgArch = "fCrgArch" + nSecuencia;
-        var sTipDocu = "sTipDocu" + nSecuencia;
+        var cTdoIdEcm = "cTdoIdEcm" + nSecuencia;
 
         var TD_xAll = cTableRow.insertCell(0);
         TD_xAll.className   = "name";
@@ -73,10 +76,10 @@
         TD_xAll.className   = "name";
         TD_xAll.style.width = "400px";
         TD_xAll.innerHTML   = "Tipo Documental " +
-                              "<select name="+sTipDocu+" id="+sTipDocu+" style='width: 400px;'>" +
+                              "<select name="+cTdoIdEcm+" id="+cTdoIdEcm+" style='width: 400px;'>" +
                                 "<option value='' selected>[SELECCIONE]</option>" +
                                 <?php for($i=0;$i<count($mMatrizTipDoc);$i++) { ?>
-                                  "<option value='<?php echo $mMatrizTipDoc[$i]['tdoidxxx'] ?>'><?php echo $mMatrizTipDoc[$i]['tdodesxx'] ?></option>" +
+                                  "<option value='<?php echo $mMatrizTipDoc[$i]['tdoidecm'] ?>'><?php echo $mMatrizTipDoc[$i]['tdodesxx'] ?></option>" +
                                 <?php } ?> 
                               "</select>" ;
 
@@ -101,7 +104,7 @@
             for (var i = 0; i < cGrid.rows.length; i++) {
               var nNuevaSecuencia = i + 1;
               var fCrgArch = "fCrgArch" + nNuevaSecuencia;
-              var sTipDocu = "sTipDocu" + nNuevaSecuencia;
+              var cTdoIdEcm = "cTdoIdEcm" + nNuevaSecuencia;
               
               var inputFile = cGrid.rows[i].cells[0].getElementsByTagName('input')[0];
               var selectTipDocu = cGrid.rows[i].cells[1].getElementsByTagName('select')[0];
@@ -109,8 +112,8 @@
               inputFile.id = fCrgArch;
               inputFile.name = fCrgArch;
               
-              selectTipDocu.id = sTipDocu;
-              selectTipDocu.name = sTipDocu;
+              selectTipDocu.id = cTdoIdEcm;
+              selectTipDocu.name = cTdoIdEcm;
             }
 
             // Actualiza el valor de la secuencia en el formulario

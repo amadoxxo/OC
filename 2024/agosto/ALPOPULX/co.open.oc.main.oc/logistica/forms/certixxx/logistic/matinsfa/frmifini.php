@@ -399,6 +399,10 @@
                 if (document.forms['frgrm']['oCheck'].checked == true) {
                   var mMatriz = document.forms['frgrm']['oCheck'].id.split('~');
                   if (confirm("Esta seguro de cambiar el estado "+cEstado+" de la M.I.F. ["+mMatriz[4]+"-"+mMatriz[5]+"]?")) {
+                    if (xModo == "ACTIVAR" && mMatriz[9] == "NO") {
+                      alert("No es posible ACTIVAR la MIF, no cuenta con anexos.");
+                      return;
+                    }
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                     document.forms['frestado']['cMifId'].value  = mMatriz[0];
                     document.forms['frestado']['dFecCre'].value = mMatriz[1];
@@ -415,6 +419,10 @@
                   if (document.forms['frgrm']['oCheck'][i].checked == true && zSw_Prv == 0) {
                     var mMatriz = document.forms['frgrm']['oCheck'][i].id.split('~');
                     if (confirm("Esta seguro de cambiar el estado "+cEstado+" de la M.I.F. ["+mMatriz[4]+"-"+mMatriz[5]+"]?")) {
+                      if (xModo == "ACTIVAR" && mMatriz[9] == "NO") {
+                        alert("No es posible ACTIVAR la MIF, no cuenta con anexos.");
+                        return;
+                      }
                       zSw_Prv = 1;
                       document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
                       document.forms['frestado']['cMifId'].value  = mMatriz[0];
@@ -452,7 +460,7 @@
                 var cRegEst   = mMatriz[2]; // Estado
                 var cRegHCre  = mMatriz[8]; // Hora de Creacion
                 if (cRegEst == "ENPROCESO") {
-                  var ruta = "frcranue.php?nCagId="+nCagId+
+                  var ruta = "frmifran.php?nCagId="+nCagId+
                                       "&dFechaCag="+dFechaCag+
                                       "&cRegHCre="+cRegHCre+
                                       "&cOrigen=MIF";
@@ -460,7 +468,7 @@
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
                   parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                  document.location.ruta; // Invoco el menu.
+                  document.location = ruta; // Invoco el menu.
                 } else {
                   alert("La M.I.F seleccionada no se encuentra ENPROCESO");
                 }
@@ -478,7 +486,7 @@
                   var cRegEst   = mMatriz[2]; // Estado
                   var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "frcranue.php?nCagId="+nCagId+
+                    var ruta = "frmifran.php?nCagId="+nCagId+
                                         "&dFechaCag="+dFechaCag+
                                         "&cRegHCre="+cRegHCre+
                                         "&cOrigen=MIF";
@@ -515,21 +523,20 @@
                 var nCagId    = mMatriz[0]; // Id M.I.F
                 var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[2]; // Estado
-                var cRegHCre  = mMatriz[8]; // Hora de Creacion
-                  if (cRegEst == "ENPROCESO") {
-                    var ruta = "frvranue.php?nCagId="+nCagId+
-                                        "&dFechaCag="+dFechaCag+
-                                        "&cRegHCre="+cRegHCre+
-                                        "&cOrigen=MIF";
-                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.cookie="kMenDes=Ver Anexos;path="+"/";
-                    document.cookie="kModo="+xModo+";path="+"/";
-                    parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                    document.location.ruta; // Invoco el menu.
-                  } else {
-                    alert("La M.I.F seleccionada no se encuentra ENPROCESO");
-                  }
+                if (cRegEst == "ENPROCESO") {
+                  var x = screen.width;
+                  var y = screen.height;
+                  var nx = (x-650)/2;
+                  var ny = (y-600)/2;
+                  var opt = 'MIF';
+                  var str = 'width=650,scrollbars=1,height=600,left='+nx+',top='+ny;
+                  var rut = 'frmifmex.php?nCagId='+ nCagId +'&dFecCrea='+ dFechaCag +'&gTipOri='+ opt;
+                  msg = window.open(rut,'verane',str);
+                  msg.focus();
+                } else {
+                  alert("La M.I.F seleccionada no se encuentra ENPROCESO");
                 }
+              }
             break;
             default:
               var zSw_Prv = 0;
@@ -541,17 +548,16 @@
                   var nCagId    = mMatriz[0]; // Id M.I.F
                   var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[2]; // Estado
-                  var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "frvranue.php?nCagId="+nCagId+
-                                        "&dFechaCag="+dFechaCag+
-                                        "&cRegHCre="+cRegHCre+
-                                        "&cOrigen=MIF";
-                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.cookie="kMenDes=Ver Anexos;path="+"/";
-                    document.cookie="kModo="+xModo+";path="+"/";
-                    parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                    document.location = ruta; // Invoco el menu.
+                    var x = screen.width;
+                    var y = screen.height;
+                    var nx = (x-650)/2;
+                    var ny = (y-600)/2;
+                    var opt = 'MIF';
+                    var str = 'width=650,scrollbars=1,height=600,left='+nx+',top='+ny;
+                    var rut = 'frmifmex.php?nCagId='+ nCagId +'&dFecCrea='+ dFechaCag +'&gTipOri='+ opt;
+                    msg = window.open(rut,'verane',str);
+                    msg.focus();
                   } else {
                     alert("La M.I.F seleccionada no se encuentra ENPROCESO");
                   }
@@ -1112,7 +1118,8 @@
                                                $mMatrInsFac[$i]['comcscxx'].'~'. //[5]
                                                $mMatrInsFac[$i]['miffdexx'].'~'. //[6]
                                                $mMatrInsFac[$i]['miffhaxx'].'~'. //[7]
-                                               $mMatrInsFac[$i]['reghcrex'] //[8] ?>"
+                                               $mMatrInsFac[$i]['reghcrex'].'~'. //[8]
+                                               $mMatrInsFac[$i]['mifanexx'] //[9] ?>"
                                 onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mMatrInsFac) ?>'">
                               </td>
                             </tr>

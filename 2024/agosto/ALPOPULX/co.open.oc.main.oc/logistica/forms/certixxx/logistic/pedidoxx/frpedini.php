@@ -363,7 +363,7 @@
                 var cRegEst   = mMatriz[6]; // Estado
                 var cRegHCre  = mMatriz[8]; // Hora de Creacion
                 if (cRegEst == "PROVISIONAL") {
-                  var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                  var ruta = "../matinsfa/frmifran.php?nCagId="+nCagId+
                                                   "&dFechaCag="+dFechaCag+
                                                   "&cRegHCre="+cRegHCre+
                                                   "&cOrigen=PEDIDO";
@@ -371,7 +371,7 @@
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
                   parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                  document.location.ruta; // Invoco el menu.
+                  document.location = ruta; // Invoco el menu.
                 } else {
                   alert("El Pedido seleccionado no se encuentra PROVISIONAL");
                 }
@@ -389,7 +389,7 @@
                   var cRegEst   = mMatriz[6]; // Estado
                   var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "PROVISIONAL") {
-                    var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                    var ruta = "../matinsfa/frmifran.php?nCagId="+nCagId+
                                                     "&dFechaCag="+dFechaCag+
                                                     "&cRegHCre="+cRegHCre+
                                                     "&cOrigen=PEDIDO";
@@ -426,21 +426,20 @@
                 var nCagId    = mMatriz[0]; // Id Pedido
                 var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[6]; // Estado
-                var cRegHCre  = mMatriz[8]; // Hora de Creacion
-                  if (cRegEst == "PROVISIONAL") {
-                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
-                                                    "&dFechaCag="+dFechaCag+
-                                                    "&cRegHCre="+cRegHCre+
-                                                    "&cOrigen=PEDIDO";
-                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.cookie="kMenDes=Ver Anexos;path="+"/";
-                    document.cookie="kModo="+xModo+";path="+"/";
-                    parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                    document.location.ruta; // Invoco el menu.
-                  } else {
-                    alert("El Pedido seleccionado no se encuentra PROVISIONAL");
-                  }
+                if (cRegEst == "PROVISIONAL") {
+                  var x = screen.width;
+                  var y = screen.height;
+                  var nx = (x-650)/2;
+                  var ny = (y-600)/2;
+                  var opt = 'PEDIDO';
+                  var str = 'width=650,scrollbars=1,height=600,left='+nx+',top='+ny;
+                  var rut = '../matinsfa/frmifmex.php?nCagId='+ nCagId +'&dFecCrea='+ dFechaCag +'&gTipOri='+ opt;
+                  msg = window.open(rut,'verane',str);
+                  msg.focus();
+                } else {
+                  alert("El Pedido seleccionado no se encuentra PROVISIONAL");
                 }
+              }
             break;
             default:
               var zSw_Prv = 0;
@@ -452,17 +451,16 @@
                   var nCagId    = mMatriz[0]; // Id Pedido
                   var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[6]; // Estado
-                  var cRegHCre  = mMatriz[8]; // Hora de Creacion
                   if (cRegEst == "PROVISIONAL") {
-                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
-                                                    "&dFechaCag="+dFechaCag+
-                                                    "&cRegHCre="+cRegHCre+
-                                                    "&cOrigen=PEDIDO";
-                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.cookie="kMenDes=Ver Anexos;path="+"/";
-                    document.cookie="kModo="+xModo+";path="+"/";
-                    parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                    document.location = ruta; // Invoco el menu.
+                    var x = screen.width;
+                    var y = screen.height;
+                    var nx = (x-650)/2;
+                    var ny = (y-600)/2;
+                    var opt = 'PEDIDO';
+                    var str = 'width=650,scrollbars=1,height=600,left='+nx+',top='+ny;
+                    var rut = '../matinsfa/frmifmex.php?nCagId='+ nCagId +'&dFecCrea='+ dFechaCag +'&gTipOri='+ opt;
+                    msg = window.open(rut,'verane',str);
+                    msg.focus();
                   } else {
                     alert("El Pedido seleccionado no se encuentra PROVISIONAL");
                   }

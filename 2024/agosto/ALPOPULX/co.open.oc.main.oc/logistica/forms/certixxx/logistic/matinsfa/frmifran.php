@@ -132,7 +132,7 @@
           <td>
             <fieldset>
               <legend><?php echo $_COOKIE['kMenDes'] ?></legend>
-              <form name="frgrm" action="frcragra.php" method="post" target="fmpro" enctype="multipart/form-data">
+              <form name="frgrm" action="frmifrag.php" method="post" target="fmpro" enctype="multipart/form-data">
                 <input type="hidden" name="nSecuencia" value="">
                 <input type="hidden" name="nCagId"    value="<?php echo $nCagId ?>"    readonly>
                 <input type="hidden" name="dFechaCag" value="<?php echo $dFechaCag ?>" readonly>

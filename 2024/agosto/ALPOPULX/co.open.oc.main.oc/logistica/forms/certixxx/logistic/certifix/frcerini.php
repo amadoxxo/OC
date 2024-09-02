@@ -216,6 +216,10 @@
 
                 if (mComDat[6] == "ENPROCESO") {
                   if (confirm("Desea Enviar la Certificacion ["+mComDat[2]+"-"+mComDat[3]+"-"+mComDat[4]+"-"+mComDat[5]+"] a Validacion Financiera?")) {
+                    if (mComDat[11] == "NO") {
+                      alert("No es posible asignar el estado Certificar para Financiero, la certificacion es MANUAL y no cuenta con anexos.");
+                      return;
+                    }
                     var cPathUrl = "frcerobs.php?gComId="+mComDat[2]+
                                                 "&gComCod="+mComDat[3]+
                                                 "&gComCsc="+mComDat[4]+
@@ -248,6 +252,10 @@
 
                   if (mComDat[6] == "ENPROCESO") {
                     if (confirm("Desea Enviar la Certificacion ["+mComDat[2]+"-"+mComDat[3]+"-"+mComDat[4]+"-"+mComDat[5]+"] a Validacion Financiera?")) {
+                      if (mComDat[11] == "NO") {
+                        alert("No es posible asignar el estado Certificar para Financiero, la certificacion es MANUAL y no cuenta con anexos.");
+                        return;
+                      }
                       nSw_Prv = 1;
                       var cPathUrl = "frcerobs.php?gComId="+mComDat[2]+
                                                   "&gComCod="+mComDat[3]+
@@ -382,6 +390,10 @@
                 var nHeight = 200;
 
                 if (confirm("Desea Enviar la Certificacion ["+mComDat[2]+"-"+mComDat[3]+"-"+mComDat[4]+"-"+mComDat[5]+"] a Facturacion?")) {
+                  if (mComDat[11] == "NO") {
+                    alert("No es posible asignar el estado Certificar para Facturacion, la certificacion es MANUAL y no cuenta con anexos.");
+                    return;
+                  }
                   var cPathUrl = "frcerobs.php?gComId="+mComDat[2]+
                                               "&gComCod="+mComDat[3]+
                                               "&gComCsc="+mComDat[4]+
@@ -411,6 +423,10 @@
                   var nHeight = 200;
 
                   if (confirm("Desea Enviar la Certificacion ["+mComDat[2]+"-"+mComDat[3]+"-"+mComDat[4]+"-"+mComDat[5]+"] a Facturacion?")) {
+                    if (mComDat[11] == "NO") {
+                      alert("No es posible asignar el estado Certificar para Facturacion, la certificacion es MANUAL y no cuenta con anexos.");
+                      return;
+                    }
                     nSw_Prv = 1;
                     var cPathUrl = "frcerobs.php?gComId="+mComDat[2]+
                                                 "&gComCod="+mComDat[3]+
@@ -673,7 +689,7 @@
                 var cRegEst   = mMatriz[6];  // Estado
                 var cRegHCre  = mMatriz[10]; // Hora de Creacion
                 if (cRegEst == "ENPROCESO") {
-                  var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                  var ruta = "../matinsfa/frmifran.php?nCagId="+nCagId+
                                                   "&dFechaCag="+dFechaCag+
                                                   "&cRegHCre="+cRegHCre+
                                                   "&cOrigen=CERTIFICACION";
@@ -681,7 +697,7 @@
                   document.cookie="kMenDes=Cargar Anexos;path="+"/";
                   document.cookie="kModo="+xModo+";path="+"/";
                   parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                  document.location.ruta; // Invoco el menu.
+                  document.location = ruta; // Invoco el menu.
                 } else {
                   alert("La Certificacion seleccionada no se encuentra ENPROCESO");
                 }
@@ -699,7 +715,7 @@
                   var cRegEst   = mMatriz[6];  // Estado
                   var cRegHCre  = mMatriz[10]; // Hora de Creacion
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "../matinsfa/frcranue.php?nCagId="+nCagId+
+                    var ruta = "../matinsfa/frmifran.php?nCagId="+nCagId+
                                                     "&dFechaCag="+dFechaCag+
                                                     "&cRegHCre="+cRegHCre+
                                                     "&cOrigen=CERTIFICACION";
@@ -736,20 +752,20 @@
                 var nCagId    = mMatriz[0]; // Id Certificacion
                 var dFechaCag = mMatriz[1]; // Fecha de Creacion
                 var cRegEst   = mMatriz[6]; // Estado
-                  if (cRegEst == "ENPROCESO") {
-                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
-                                                    "&dFechaCag="+dFechaCag+
-                                                    "&cRegHCre="+cRegHCre+
-                                                    "&cOrigen=CERTIFICACION";
-                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.cookie="kMenDes=Ver Anexos;path="+"/";
-                    document.cookie="kModo="+xModo+";path="+"/";
-                    parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                    document.location.ruta; // Invoco el menu.
-                  } else {
-                    alert("La Certificacion seleccionada no se encuentra ENPROCESO");
-                  }
+                if (cRegEst == "ENPROCESO") {
+                  var x = screen.width;
+                  var y = screen.height;
+                  var nx = (x-650)/2;
+                  var ny = (y-600)/2;
+                  var opt = 'CERTIFICACION';
+                  var str = 'width=650,scrollbars=1,height=600,left='+nx+',top='+ny;
+                  var rut = '../matinsfa/frmifmex.php?nCagId='+ nCagId +'&dFecCrea='+ dFechaCag +'&gTipOri='+ opt;
+                  msg = window.open(rut,'verane',str);
+                  msg.focus();
+                } else {
+                  alert("La Certificacion seleccionada no se encuentra ENPROCESO");
                 }
+              }
             break;
             default:
               var zSw_Prv = 0;
@@ -762,15 +778,15 @@
                   var dFechaCag = mMatriz[1]; // Fecha de Creacion
                   var cRegEst   = mMatriz[6]; // Estado
                   if (cRegEst == "ENPROCESO") {
-                    var ruta = "../matinsfa/frvranue.php?nCagId="+nCagId+
-                                                    "&dFechaCag="+dFechaCag+
-                                                    "&cRegHCre="+cRegHCre+
-                                                    "&cOrigen=CERTIFICACION";
-                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.cookie="kMenDes=Ver Anexos;path="+"/";
-                    document.cookie="kModo="+xModo+";path="+"/";
-                    parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
-                    document.location = ruta; // Invoco el menu.
+                    var x = screen.width;
+                    var y = screen.height;
+                    var nx = (x-650)/2;
+                    var ny = (y-600)/2;
+                    var opt = 'CERTIFICACION';
+                    var str = 'width=650,scrollbars=1,height=600,left='+nx+',top='+ny;
+                    var rut = '../../matinsfa/frmifmex.php?nCagId='+ nCagId +'&dFecCrea='+ dFechaCag +'&gTipOri='+ opt;
+                    msg = window.open(rut,'verane',str);
+                    msg.focus();
                   } else {
                     alert("La Certificacion seleccionada no se encuentra ENPROCESO");
                   }
@@ -1469,7 +1485,8 @@
                                                $mCertificacion[$i]['comprexx'].'~'.  //[7]
                                                $mCertificacion[$i]['cliidxxx'].'~'.  //[8]
                                                $mCertificacion[$i]['clinomxx'].'~'.  //[9] 
-                                               $mCertificacion[$i]['reghcrex'] //[10] ?>"
+                                               $mCertificacion[$i]['reghcrex'].'~'.  //[10]
+                                               $mCertificacion[$i]['ceranexx'] //[11] ?>"
                               onclick="javascript:document.forms['frgrm']['vRecords'].value='<?php echo count($mCertificacion) ?>'">
                             </td>
                           </tr>

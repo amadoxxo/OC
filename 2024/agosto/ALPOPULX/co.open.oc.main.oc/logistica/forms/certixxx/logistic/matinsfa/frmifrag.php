@@ -10,14 +10,72 @@
   include("../../../../libs/php/utigesdo.php");
   include('../../../../../libs/php/uticecmx.php');
 
+  // ini_set('error_reporting', E_ERROR);
+  // ini_set("display_errors","1");
+
+  /**
+   * Variable para saber si hay o no errores de validacion.
+   *
+   * @var int
+   */
   $nSwitch = 0; // Switch para Vericar la Validacion de Datos
+
+  /**
+   * Almacena los mensajes de error.
+   *
+   * @var string
+   */
   $cMsj = "";
-
-  ini_set('error_reporting', E_ERROR);
-  ini_set("display_errors","1");
-
+ 
   switch ($_COOKIE['kModo']) {
     // Validaciones
+    case "ACTIVAR":
+      $dFecha = explode('-', $_POST['dFechaCag']);
+      $iAno   = $dFechaCag[0];
+      $qActMif  = "SELECT mifanexx ";
+      $qActMif .= "FROM $cAlfa.lmca$iAno ";
+      $qActMif .= "WHERE regestxx = \"ACTIVO\";";
+      $xActMif = f_MySql("SELECT","",$qMatrInsFac,$xConexion01,"");
+      // f_Mensaje(__FILE__,__LINE__,$qActMif."~".mysql_num_rows($xActMif));
+      // echo $qActMif."~".mysql_num_rows($xActMif);
+      if (mysql_num_rows($xActMif) > 0) {
+        $vActMif = mysql_fetch_array($xActMif);
+        $cMifAne = $vActMif['mifanexx'];
+      }
+
+      if ($cMifAne == "NO") {
+        $nSwitch = 1;
+        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+        $cMsj .= "No es posible ACTIVAR la MIF, no cuenta con anexos. \n";
+      }
+    break;
+    case "CERTIFICAFINANCIERO":
+    case "CERTIFICAFACTURA":
+      $dFecha = explode('-', $_POST['dFechaCag']);
+      $iAno   = $dFechaCag[0];
+      $qCertfi  = "SELECT ceranexx ";
+      $qCertfi .= "FROM $cAlfa.lcca$iAno ";
+      $qCertfi .= "WHERE regestxx = \"CERTIFICADO\";";
+      $xCertfi = f_MySql("SELECT","",$qMatrInsFac,$xConexion01,"");
+      // f_Mensaje(__FILE__,__LINE__,$qCertfi."~".mysql_num_rows($xCertfi));
+      // echo $qCertfi."~".mysql_num_rows($xCertfi);
+      if (mysql_num_rows($xCertfi) > 0) {
+        $vCertfi = mysql_fetch_array($xCertfi);
+        $cCerAne = $vCertfi['ceranexx'];
+      }
+
+      if ($cCerAne == "NO" && $_COOKIE['kModo'] == "CERTIFICAFINANCIERO") {
+        $nSwitch = 1;
+        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+        $cMsj .= "No es posible asignar el estado Certificar para Financiero, la certificacion es MANUAL y no cuenta con anexos. \n";
+      }
+
+      if ($cCerAne == "NO" && $_COOKIE['kModo'] == "CERTIFICAFACTURA") {
+        $nSwitch = 1;
+        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+        $cMsj .= "No es posible asignar el estado Certificar para Facturación, la certificacion es MANUAL y no cuenta con anexos. \n";
+      }
+    break;
     case "CARGARANEXOS":
       $mTipDocId = array();
       for ($i=1;$i<=$_POST['nSecuencia'];$i++) {
@@ -34,10 +92,10 @@
       if ($nSwitch == 0) {
         foreach ($_FILES as $file) {
           if (basename($file['name']) == "") {
-              $nSwitch = 1;
-              $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
-              $cMsj .= "Todas las filas deben cargar un documento. \n";
-              break;
+            $nSwitch = 1;
+            $cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
+            $cMsj .= "Todas las filas deben cargar un documento. \n";
+            break;
           }
         }
       }
@@ -54,12 +112,12 @@
         $nSegundos = $dHoraCag[2];
       
         $cRuta = "{$OPENINIT['pathdr']}/opencomex/propios/$cAlfa/$nAnio/$nMes/$nDia/$nHora/$nMinutos/$nSegundos/{$_POST['cOrigen']}/{$_POST['nCagId']}";
-      
         if (!is_dir($cRuta)) {
           if (mkdir($cRuta, 0777, true)) {
             chmod($cRuta, intval($vSysStr['system_permisos_directorios'], 8));
           }
         }
+
         // Si no hubo errores en la validación, proceder a mover los archivos
         $mDocumentos = array();
         $nCount = 0; // Contador para $mTipDocId
@@ -100,32 +158,19 @@
          */
         $objIntegracion = new cIntegracionGestorDocumentalopenECM();
         $mReturnRadicarDocumentos = $objIntegracion->fnRadicarDocumentosAnexos($vParametros);
-
-        // Función para eliminar la carpeta y su contenido
-        function eliminarDirectorio($ruta) {
-          if (is_dir($ruta)) {
-            $files = array_diff(scandir($ruta), array('.', '..'));
-            foreach ($files as $file) {
-              (is_dir("$ruta/$file")) ? eliminarDirectorio("$ruta/$file") : unlink("$ruta/$file");
-            }
-            return rmdir($ruta);
-          }
-        }
-        
         if ($mReturnRadicarDocumentos[0] == 'false') {
           $nSwitch = 1;
           for ($n=2; $n < count($mReturnRadicarDocumentos); $n++) {
             $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
             $cMsj .= $mReturnRadicarDocumentos[$n] . "\n";
           }
-        } else {
-          // Eliminar la ruta de archivos creada anteriormente
-          eliminarDirectorio($cRuta);
         }
+
+        // Elimina los archivos y directorios temporales
+        fnEliminarArchivoDirectorio($cRuta);
       }
     break;
   }
-
 
   if ($nSwitch == 1) {
     f_Mensaje(__FILE__,__LINE__,"$cMsj Verifique.");
@@ -153,6 +198,47 @@
         </script>
       <?php
       break;
+    }
+  }
+
+  /**
+   * Función para eliminar la carpeta y su contenido.
+   */
+  function fnEliminarArchivoDirectorio($cRuta) {
+    // Se define el directorio raiz hasta donde se deben eliminar las carpetas temporales
+    $cRutaRaiz = "{$OPENINIT['pathdr']}/opencomex/propios/";
+
+    if (is_dir($cRuta)) {
+      // Obtiene los archivos del directorio para eliminarlos
+      $vFiles = array_diff(scandir($cRuta), array('.', '..'));
+      foreach ($vFiles as $file) {
+        if (file_exists("$cRuta/$file")) {
+          unlink("$cRuta/$file");
+        }
+      }
+
+      $vDirectorios  = explode('/', $cRuta);
+      // Se recorren todas las rutas para ir eliminando los directorios que van quedando vacíos
+      for ($i=0; $i < count($vDirectorios); $i++) { 
+        $directoryPath = "";
+        foreach ($vDirectorios as $directorio) {
+          $directoryPath .= $directorio . '/';
+        }
+
+        // Valida si es la ruta raiz para no eliminarla
+        if ($cRutaRaiz == $directoryPath) {
+          break;
+        }
+
+        // Valida si el directorio esta vacio
+        $vCarpeta = @scandir($directoryPath);
+        if (count($vCarpeta) <= 2){
+          rmdir($directoryPath);
+        }
+
+        // Elimina la última posición del array la cual corresponde al último directorio que se va recorriendo en el foreach
+        $vDirectorios = array_slice($vDirectorios, 0 , (count($vDirectorios)-1));
+      }
     }
   }
 ?>

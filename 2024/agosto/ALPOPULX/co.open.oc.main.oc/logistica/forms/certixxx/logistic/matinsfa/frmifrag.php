@@ -29,53 +29,6 @@
  
   switch ($_COOKIE['kModo']) {
     // Validaciones
-    case "ACTIVAR":
-      $dFecha = explode('-', $_POST['dFechaCag']);
-      $iAno   = $dFechaCag[0];
-      $qActMif  = "SELECT mifanexx ";
-      $qActMif .= "FROM $cAlfa.lmca$iAno ";
-      $qActMif .= "WHERE regestxx = \"ACTIVO\";";
-      $xActMif = f_MySql("SELECT","",$qMatrInsFac,$xConexion01,"");
-      // f_Mensaje(__FILE__,__LINE__,$qActMif."~".mysql_num_rows($xActMif));
-      // echo $qActMif."~".mysql_num_rows($xActMif);
-      if (mysql_num_rows($xActMif) > 0) {
-        $vActMif = mysql_fetch_array($xActMif);
-        $cMifAne = $vActMif['mifanexx'];
-      }
-
-      if ($cMifAne == "NO") {
-        $nSwitch = 1;
-        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "No es posible ACTIVAR la MIF, no cuenta con anexos. \n";
-      }
-    break;
-    case "CERTIFICAFINANCIERO":
-    case "CERTIFICAFACTURA":
-      $dFecha = explode('-', $_POST['dFechaCag']);
-      $iAno   = $dFechaCag[0];
-      $qCertfi  = "SELECT ceranexx ";
-      $qCertfi .= "FROM $cAlfa.lcca$iAno ";
-      $qCertfi .= "WHERE regestxx = \"CERTIFICADO\";";
-      $xCertfi = f_MySql("SELECT","",$qMatrInsFac,$xConexion01,"");
-      // f_Mensaje(__FILE__,__LINE__,$qCertfi."~".mysql_num_rows($xCertfi));
-      // echo $qCertfi."~".mysql_num_rows($xCertfi);
-      if (mysql_num_rows($xCertfi) > 0) {
-        $vCertfi = mysql_fetch_array($xCertfi);
-        $cCerAne = $vCertfi['ceranexx'];
-      }
-
-      if ($cCerAne == "NO" && $_COOKIE['kModo'] == "CERTIFICAFINANCIERO") {
-        $nSwitch = 1;
-        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "No es posible asignar el estado Certificar para Financiero, la certificacion es MANUAL y no cuenta con anexos. \n";
-      }
-
-      if ($cCerAne == "NO" && $_COOKIE['kModo'] == "CERTIFICAFACTURA") {
-        $nSwitch = 1;
-        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "No es posible asignar el estado Certificar para Facturación, la certificacion es MANUAL y no cuenta con anexos. \n";
-      }
-    break;
     case "CARGARANEXOS":
       $mTipDocId = array();
       for ($i=1;$i<=$_POST['nSecuencia'];$i++) {

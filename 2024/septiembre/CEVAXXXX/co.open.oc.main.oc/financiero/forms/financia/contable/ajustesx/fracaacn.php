@@ -234,17 +234,14 @@
 											<fieldset>
 							   				<legend>Seleccione el Archivo Plano</legend>
 												<table border = "0" cellpadding = "0" cellspacing = "0" width="370">
-													<?php
-														$cExtPer .= "application/vnd.ms-excel,";
-													?>
 													<tr>
 														<td Class="name">
-															<input type = "file" Class = "letra" style = "width:360px;height:22px" name = "cArcPla" accept="<?php echo $cExtPer ?>">
+															<input type = "file" Class = "letra" style = "width:360px;height:22px" name = "cArcPla" accept="text/plain">
 														</td>
 													</tr>
 													<tr>
 														<td colspan = "30">
-															<span style="color:#0046D5">Extensiones permitidas: .xls, .xlsx</span><br>
+															<span style="color:#0046D5">Extensiones permitidas: .txt </span><br>
 														</td>
 													</tr> 
 													<tr>

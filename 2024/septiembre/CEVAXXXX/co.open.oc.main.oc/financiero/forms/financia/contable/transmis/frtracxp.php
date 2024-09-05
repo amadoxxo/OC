@@ -32,6 +32,20 @@
         
         $nCrsTbl = mysql_query($zSql,$xConexion01);
  			  
+				/**
+				 * Validando extension permitida del archivo
+				 */
+				if($_FILES['upfile']['name'] != ""){
+					$vExtPer = ["text/plain"];
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mime = finfo_file($finfo, $_FILES['upfile']['tmp_name']);
+					if (!in_array($mime, $vExtPer)) {
+						$nSwitch = 1;
+						$cMsj .= "Linea ".str_pad(__LINE__, 4, "0", STR_PAD_LEFT).": ";
+						$cMsj .= "Archivo No Permitido.\n";
+					}
+					finfo_close($finfo);
+				}
  			  
  			  $zGestor = fopen($_FILES["upfile"]["tmp_name"],"r");
         while (!feof($zGestor)) {
@@ -240,7 +254,7 @@
   							<form method='POST' enctype='multipart/form-data' action='frtracxp.php'>
   								<input type = 'hidden' name = 'zBand' value = "1">
   								<input type = 'hidden' name = 'kUsrId' value = '<?php echo $_COOKIE['kUsrId'] ?>'>
-  								Archivo: <input type='file' class="letra" name='upfile'>
+  								Archivo: <input type='file' class="letra" name='upfile' accept="text/plain">
   								<input type='submit' class="letra" value='Aceptar' style="height:18">
   							</form>
   							</fieldset>

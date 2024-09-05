@@ -64,7 +64,7 @@
        * Validando extension permitida del archivo
        */
       if($_FILES['cArcPla']['name'] != ""){
-        $vExtPer = ["application/vnd.ms-excel"];
+        $vExtPer = ["text/plain"];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $_FILES['cArcPla']['tmp_name']);
         if (!in_array($mime, $vExtPer)) {

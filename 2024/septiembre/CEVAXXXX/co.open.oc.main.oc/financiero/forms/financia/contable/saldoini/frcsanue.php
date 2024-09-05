@@ -155,9 +155,6 @@
                                   <option value="CxP">CUENTAS POR PAGAR</option>
                                 </select>
                             </tr>
-                            <?php
-                              $cExtPer = "application/vnd.ms-excel,";
-                            ?>
                             <tr>
                               <td Class="name" colspan="19">
                                 <br>
@@ -167,12 +164,12 @@
                             </tr>
                             <tr>
                               <td Class="name" colspan="19"><br>Archivo<br>
-                                <input type = "file" Class = "letra" style = "width:380" name = "cArcPla" accept="<?php echo $cExtPer ?>">
+                                <input type = "file" Class = "letra" style = "width:380" name = "cArcPla" accept="text/plain">
     													</td>
     												</tr>
                             <tr>
                               <td colspan = "30">
-                                <span style="color:#0046D5">Extensiones permitidas: .xls, .xlsx</span><br>
+                                <span style="color:#0046D5">Extensiones permitidas: .txt </span><br>
                               </td>
                             </tr> 
     												<tr>

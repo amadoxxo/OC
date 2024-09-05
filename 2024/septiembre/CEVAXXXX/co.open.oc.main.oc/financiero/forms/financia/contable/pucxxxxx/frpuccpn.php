@@ -55,9 +55,14 @@ include("../../../../libs/php/utility.php");
                         <?php $nCol = f_Format_Cols(19); echo $nCol; ?>
                         <tr>
                           <td Class="name" colspan="19">El archivo debe ser un TXT separado por tabulaciones<br>
-                            <input type = "file" Class = "letra" style = "width:380px;height:22px" name = "cArcPla">
+                            <input type = "file" Class = "letra" style = "width:380px;height:22px" name = "cArcPla" accept="text/plain">
                           </td>
                         </tr>
+                        <tr>
+													<td colspan = "30">
+														<span style="color:#0046D5">Extensiones permitidas: .txt </span><br>
+													</td>
+												</tr> 
                         <tr>
                           <td Class="name" colspan="9"><br>
                             <a href = "javascript:fnDownLoad('0')">Descargar Formato</a>

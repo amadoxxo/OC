@@ -100,14 +100,16 @@
 						   				<legend>Carga de Terceros<?php echo $_COOKIE['kProDes'] ?></legend>
 											<table border = "0" cellpadding = "0" cellspacing = "0" width="380">
 												<?php $nCol = f_Format_Cols(19); echo $nCol; ?>
-												<?php
-													$cExtPer = "application/vnd.ms-excel,";
-												?>
 												<tr>
 													<td Class="name" colspan="19">Archivo<br>
-														<input type = "file" Class = "letra" style = "width:380px;height:22px" name = "cArcPla" accept="<?php echo $cExtPer ?>">
+														<input type = "file" Class = "letra" style = "width:380px;height:22px" name = "cArcPla" accept="text/plain">
 													</td>
 												</tr>
+												<tr>
+													<td colspan = "30">
+														<span style="color:#0046D5">Extensiones permitidas: .txt </span><br>
+													</td>
+												</tr> 
 												<tr>
 													<td Class="name" colspan="19"><br>
 														<a href = "javascript:fnDownLoad('0')">Descargar Formato</a>

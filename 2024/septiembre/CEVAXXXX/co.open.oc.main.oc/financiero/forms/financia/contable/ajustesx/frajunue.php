@@ -1456,25 +1456,20 @@
 					}
 				}
 
-        /**
-         * Validando extension permitida del archivo
-         */
-        if($_FILES['cArcPla']['name'] != ""){
-          $vExtPer = ["application/vnd.ms-excel"];
-          $finfo = finfo_open(FILEINFO_MIME_TYPE);
-          $mime = finfo_file($finfo, $_FILES['cArcPla']['tmp_name']);
-					echo "<pre>";
-          print_r($mime);
-          echo "<pre>";
-          print_r($_FILES['cArcPla']['tmp_name']);
-          die();
-          if (!in_array($mime, $vExtPer)) {
-            $nSwitch = 1;
-            $cMsj .= "Linea ".str_pad(__LINE__, 4, "0", STR_PAD_LEFT).": ";
-            $cMsj .= "Archivo No Permitido.\n";
-          }
-          finfo_close($finfo);
-        }
+				/**
+				 * Validando extension permitida del archivo
+				 */
+				if($_FILES['cArcPla']['name'] != ""){
+					$vExtPer = ["text/plain"];
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mime = finfo_file($finfo, $_FILES['cArcPla']['tmp_name']);
+					if (!in_array($mime, $vExtPer)) {
+						$nSwitch = 1;
+						$cMensaje .= "Linea ".str_pad(__LINE__, 4, "0", STR_PAD_LEFT).": ";
+						$cMensaje .= "Archivo No Permitido.\n";
+					}
+					finfo_close($finfo);
+				}
 
 				## Validando que haya seleccionado un archivo
 				if ($_FILES['cArcPla']['name'] == "") {

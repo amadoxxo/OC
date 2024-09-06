@@ -1522,6 +1522,13 @@
 						document.forms['frgrm'].action="frajugra.php";
 					</script>
 				<?php
+				} else {
+					f_Mensaje(__FILE__,__LINE__,$cMensaje);
+					?>
+					<script languaje = "javascript">
+						location.replace("fracaacn.php");
+					</script>
+					<?php
 				}
 			break;
       case "LIQUIDARDO":

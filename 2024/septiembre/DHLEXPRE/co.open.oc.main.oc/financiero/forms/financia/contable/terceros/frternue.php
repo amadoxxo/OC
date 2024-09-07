@@ -2022,7 +2022,7 @@
 																	onFocus = "javascript:this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
 															</td>
                               <td Class = "clase08" colspan = "23"><br>ID Personalizado<br>
-																<input type = "text" Class = "letra" name = "cTerIdPer" style = "width:240" maxlength="100"
+																<input type = "text" Class = "letra" name = "cTerIdPer" id = "cTerIdPer" style = "width:240" maxlength="100"
 																	onblur = "javascript:this.value=this.value.toUpperCase();
 																											this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
 																	onFocus = "javascript:this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
@@ -2450,7 +2450,25 @@
               document.forms['frgrm']['oCliReIva'].value = "SI";
               document.forms['frgrm']['oCliReIva'].disabled = false;
               document.getElementById('tblCliReIva').style.display='block';
+							// Desahabilita los radio Regimen Comun y Regimen Simplificado
+							document.getElementById('oCliReCom').disabled  = false;
+							document.getElementById('oCliReSim').disabled  = false;
+							// Selecciona por defecto la opcion Regimen Comun
+							document.getElementById('oCliReCom').checked = true;
+							// ID personalizado por defecto
+              document.forms['frgrm']['cTerIdPer'].value = "CONTADO";
+							
+							if (document.forms['frgrm']['oCliReCom'].checked == true) {
+								document.forms['frgrm']['oCliArr'].checked = true;
+								document.forms['frgrm']['oCliArcr'].checked = true;
+							}
 
+							document.forms['frgrm']['oCliReCom'].addEventListener('change', function() {
+								if (document.forms['frgrm']['oCliReCom'].checked == true) {
+									document.forms['frgrm']['oCliArr'].checked = true;
+									document.forms['frgrm']['oCliArcr'].checked = true;
+								}
+							});
             break;
 					}
 					f_CargarGrillas();

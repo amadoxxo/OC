@@ -1077,30 +1077,26 @@
       $nPosX = 12.5;
 
       $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/copianovalida.jpg',10,50,190,190);
-      $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoandinos.jpg',$nPosX,$nPosY-5,50,19);
+      $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoAndinos2.jpeg',$nPosX,$nPosY-13,25,30);
 
       $this->SetFont($cEstiloLetra,'',11);
-      $this->setXY($nPosX+55,$nPosY-5);
+      $this->setXY($nPosX+55,$nPosY-9);
       $this->Cell(77,4,utf8_decode("AGENCIA DE ADUANAS ANDINOS S.A.S NIVEL 1"),0,0,'C');
       $this->SetFont($cEstiloLetra,'',8);
-      $this->setXY($nPosX+55,$nPosY-1);
+      $this->setXY($nPosX+55,$nPosY-5);
       $this->Cell(77,4,utf8_decode("NIT: {$vSysStr['financiero_nit_agencia_aduanas']}"),0,0,'C');
-      $this->setXY($nPosX+55,$nPosY+2);
+      $this->setXY($nPosX+55,$nPosY-1);
       $this->Cell(77,4,utf8_decode("IVA RÉGIMEN COMÚN DIAN No 0128"),0,0,'C');
 
       $this->SetFont($cEstiloLetra,'B',8);
-      $this->setXY($nPosX+130,$nPosY);
-      $this->Cell(77,4,utf8_decode(" OFICINA PRINCIPAL"),0,0,'C');
-      $this->setXY($nPosX+130,$nPosY+6);
-      $this->Cell(77,4,utf8_decode("Parque Industrial de San Cayetano"),0,0,'C');
-      $this->setXY($nPosX+130,$nPosY+9);
-      $this->Cell(77,4,utf8_decode("Diagonal 47 77B - 09 ln 05"),0,0,'C');
-      $this->setXY($nPosX+130,$nPosY+12);
-      $this->Cell(77,4,utf8_decode("PBX: 7466775"),0,0,'C');
-      $this->setXY($nPosX+130,$nPosY+15);
-      $this->Cell(77,4,utf8_decode("E-mail: facturacion@andicoor.com"),0,0,'C');
-      $this->setXY($nPosX+130,$nPosY+18);
-      $this->Cell(77,4,utf8_decode("Bogotá D.C Colombia"),0,0,'C');
+      $this->setXY($nPosX+125,$nPosY);
+      $this->Cell(77,4,utf8_decode("OFICINA PRINCIPAL"),0,0,'C');
+      $this->setXY($nPosX+120,$nPosY+6);
+      $this->Cell(77,4,utf8_decode("Carrera 46 No. 62 - 20 APT 202 - EDIFICIO TOWER 62"),0,0,'C');
+      $this->setXY($nPosX+125,$nPosY+9);
+      $this->Cell(77,4,utf8_decode("Celular: 3165339963"),0,0,'C');
+      $this->setXY($nPosX+125,$nPosY+12);
+      $this->Cell(77,4,utf8_decode("Barranquilla - Colombia"),0,0,'C');
 
       #RESOLUCION
       $this->SetFont($cEstiloLetra,'',6);
@@ -1113,7 +1109,7 @@
       $this->setXY($nPosX,$nPosY+23);
       $this->Cell(77,4,utf8_decode("NO SOMOS GRANDES CONTRIBUYENTES CODIGO DE INDUSTRIA Y COMERCIO No 7490. Tarifa ICA 9.66*1000 Para Bogotá"),0,0,'L');
       $this->setXY($nPosX,$nPosY+26);
-      $this->Cell(77,4,"Tarifa de Industria y Comercio Cali-Buenaventura 10*1000 - Tarifa Industria y Comercio Cartagena 8*1000 - Tarifa Ipiales 7*1000",0,0,'L');
+      $this->Cell(77,4,"Tarifa de Industria y Comercio Cali-Buenaventura 10*1000 Tarifa Industria y Comercio Cartagena 8*1000 - Tarifa Ipiales 7*1000",0,0,'L');
 
 
       #SEÑORES 

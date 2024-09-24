@@ -144,6 +144,16 @@
       $cEstMif   = "";
       $cNumCert  = "";
       $cEstCert  = "";
+      $cCodOrgVen = null;
+      $cDesOrgVen = null;
+      $cCodOfiVen = null;
+      $cDesOfiVen = null;
+      $cCodCosLog = null;
+      $cDesCosLog = null;
+      $cCodSect   = null;
+      $cDesSect   = null;
+      $cCondCom   = null;
+      $cFecDesd   = null;
       if (mysql_num_rows($xPedido) > 0) {
         while ($xRPE = mysql_fetch_array($xPedido)) {
           
@@ -275,11 +285,17 @@
               $qOrgVentas .= "WHERE ";
               $qOrgVentas .= "orvsapxx = \"{$xRPE['orvsap2x']}\" LIMIT 0,1 ";
               $xOrgVentas  = f_MySql("SELECT", "", $qOrgVentas, $xConexion01, "");
-              if (mysql_num_rows($xOrgVentas)) {
+              if (is_null($cCodOrgVen) && mysql_num_rows($xOrgVentas)) {
                 $vOrgVentas  = mysql_fetch_array($xOrgVentas);
-                $mOrgVentas[$xRPE['orvsapxx']][] = $vOrgVentas;
                 $cCodOrgVen = $vOrgVentas['orvsapxx'];
                 $cDesOrgVen = $vOrgVentas['orvdesxx'];
+              }
+
+              if ($cCodOrgVen && $cDesOrgVen) {
+                $mOrgVentas[$xRPE['orvsapxx']][] = array(
+                  'orvsapxx' => $cCodOrgVen,
+                  'orvdesxx' => $cDesOrgVen
+                );
               }
             }
 
@@ -295,11 +311,17 @@
               $qOfiVentas .= "WHERE ";
               $qOfiVentas .= "ofvsapxx = \"{$xRPE['ofvsap2x']}\" LIMIT 0,1 ";
               $xOfiVentas  = f_MySql("SELECT", "", $qOfiVentas, $xConexion01, "");
-              if (mysql_num_rows($xOfiVentas)) {
+              if (is_null($cCodOfiVen) && mysql_num_rows($xOfiVentas)) {
                 $vOfiVentas  = mysql_fetch_array($xOfiVentas);
-                $mOfiVentas[$xRPE['ofvsapxx']][] = $vOfiVentas;
                 $cCodOfiVen = $vOfiVentas['ofvsapxx'];
                 $cDesOfiVen = $vOfiVentas['ofvdesxx'];
+              }
+
+              if ($cCodOfiVen && $cDesOfiVen) {
+                $mOfiVentas[$xRPE['ofvsapxx']][] = array(
+                  'ofvsapxx' => $cCodOfiVen,
+                  'ofvdesxx' => $cDesOfiVen
+                );
               }
             }
 
@@ -315,11 +337,18 @@
               $qCentLog .= "WHERE ";
               $qCentLog .= "closapxx = \"{$xRPE['closapxx']}\" LIMIT 0,1 ";
               $xCentLog  = f_MySql("SELECT", "", $qCentLog, $xConexion01, "");
-              if (mysql_num_rows($xCentLog)) {
+              if (is_null($cCodCosLog) && mysql_num_rows($xCentLog)) {
                 $vCentLog  = mysql_fetch_array($xCentLog);
                 $mCentLog[$xRPE['closapxx']][] = $vCentLog;
                 $cCodCosLog = $vCentLog['closapxx'];
                 $cDesCosLog = $vCentLog['clodesxx'];
+              }
+
+              if ($cCodCosLog && $cDesCosLog) {
+                $mCentLog[$xRPE['closapxx']][] = array(
+                  'closapxx' => $cCodCosLog,
+                  'clodesxx' => $cDesCosLog
+                );
               }
             }
 
@@ -335,11 +364,17 @@
               $qSector .= "WHERE ";
               $qSector .= "secsapxx = \"{$xRPE['secsapxx']}\" LIMIT 0,1 ";
               $xSector  = f_MySql("SELECT", "", $qSector, $xConexion01, "");
-              if (mysql_num_rows($xSector)) {
+              if (is_null($cCodSect) && mysql_num_rows($xSector)) {
                 $vSector  = mysql_fetch_array($xSector);
-                $mSector[$xRPE['secsapxx']][] = $vSector;
                 $cCodSect = $vSector['secsapxx'];
                 $cDesSect = $vSector['secdesxx'];
+              }
+
+              if ($cCodSect && $cDesSect) {
+                $mSector[$xRPE['secsapxx']][] = array(
+                  'secsapxx' => $cCodSect,
+                  'secdesxx' => $cDesSect
+                );
               }
             }
 
@@ -353,8 +388,13 @@
             $mData[$nInd_mData]['dessectx'] = $cDesSect;    // DESCRIPCIÓN SECTOR
           }
 
-          $mData[$nInd_mData]['condcomx'] = ($xRPE['ccoidocx'] != "" ) ? $xRPE['ccoidocx'] : $xRPE['ccoidoc2'];  // N° COND. COMERCIAL
-          $mData[$nInd_mData]['deposito'] = ($xRPE['depnumxx'] != "" ) ? $xRPE['depnumxx'] : $xRPE['depnum2x'];  // DEPÓSITO
+          if (is_null($cCondCom)) {
+            $cCondCom = $xRPE['ccoidoc2'];
+            $cDeposit = $xRPE['depnum2x'];
+          }
+
+          $mData[$nInd_mData]['condcomx'] = ($xRPE['ccoidocx'] != "" ) ? $xRPE['ccoidocx'] : $cCondCom;  // N° COND. COMERCIAL
+          $mData[$nInd_mData]['deposito'] = ($xRPE['depnumxx'] != "" ) ? $xRPE['depnumxx'] : $cDeposit;  // DEPÓSITO
 
           // Consulta del Servicio
           if(in_array($xRPE['sersapxx'], $mServicio)){
@@ -449,7 +489,11 @@
               $cDesObjFac = $vObjFact['obfdesxx'];
             }
           }
-         
+
+          if (is_null($cFecDesd)) {
+            $cFecDesd = $xRPE['pedfdexx'];
+            $cFecHast = $xRPE['pedfhaxx'];
+          }
           // Informacion de Cabecera de Pedidos
           $mData[$nInd_mData]['numpedid'] = $xRPE['comidxxx']."-".$xRPE['comprexx'].$xRPE['comcscxx']; // N° PEDIDO
           $mData[$nInd_mData]['docusapx'] = "";                 // DOCUMENTO SAP
@@ -457,8 +501,8 @@
           $mData[$nInd_mData]['cliidxxx'] = $xRPE['cliidxxx'];  // NIT
           $mData[$nInd_mData]['clisapxx'] = $xRPE['clisapxx'];  // COD. SAP CLIENTE
           $mData[$nInd_mData]['clinomxx'] = $xRPE['clinomxx'];  // CLIENTE
-          $mData[$nInd_mData]['fecdesde'] = ($xRPE['pedtipxx'] == "AUTOMATICA") ? $xRPE['cerfdexx'] : $xRPE['pedfdexx'];  // FECHA DESDE
-          $mData[$nInd_mData]['fechasta'] = ($xRPE['pedtipxx'] == "AUTOMATICA") ? $xRPE['cerfhaxx'] : $xRPE['pedfhaxx'];  // FECHA HASTA
+          $mData[$nInd_mData]['fecdesde'] = ($xRPE['pedtipxx'] == "AUTOMATICA") ? $xRPE['cerfdexx'] : $cFecDesd;  // FECHA DESDE
+          $mData[$nInd_mData]['fechasta'] = ($xRPE['pedtipxx'] == "AUTOMATICA") ? $xRPE['cerfhaxx'] : $cFecHast;  // FECHA HASTA
 
           // Informacion de detalle del Paso 3 del Pedido
           $mData[$nInd_mData]['itemxxxx'] = ($nItem++);         // ITEM

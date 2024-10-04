@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
  /**
    * Interface Condiciones Comerciales.
    * --- Descripcion: Interface para cargar por las Condiciones Comerciales.

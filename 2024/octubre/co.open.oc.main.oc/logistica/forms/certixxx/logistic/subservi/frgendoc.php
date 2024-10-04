@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Descargar Archivo Subservicios.
    * --- Descripcion: Descargar Archivo Excel. 

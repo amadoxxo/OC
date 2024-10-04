@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   //set_time_limit(0);
 	include("../../../../../financiero/libs/php/utility.php");
 

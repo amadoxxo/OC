@@ -1,7 +1,4 @@
 <?php
-  namespace openComex;
-  use FPDF;
-
   // ini_set('display_errors', 1);
   // ini_set('display_startup_errors', 1);
   // error_reporting(E_ERROR);
@@ -387,7 +384,7 @@
 												case "DEGRUMALCO"://GRUMALCO
 													?>
 													<center>
-														<img width="150" height="90" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
+														<img width="120" height="70" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
 														<br/>
 													</center>
 													<?php
@@ -407,7 +404,7 @@
 												case "DEANDINOSX": //ANDINOSX
 													?>
 													<center>
-														<img width="150" height="60" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg">
+														<img width="55" height="60" style="left: 20px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg">
 														<br/>
 													</center>
 													<?php
@@ -1117,7 +1114,7 @@
 										$this->Cell($nLarXAnt,28,'',1,0,'C');
 	
 										// Dibujo //
-										$this->Image($cRoot.$cPlesk_Skin_Directory.'/logomalco.jpg',$nPosXAnt+1,8,40,25);
+										$this->Image($cRoot.$cPlesk_Skin_Directory.'/logomalco.jpg',$nPosXAnt+3,10,35,22);
 	
 										$this->SetFont('verdana','',12);
 										$this->SetXY(55,7);
@@ -1249,7 +1246,7 @@
 										$this->Cell(42, 28, '', 1, 0, 'C');
 										$this->Cell(213, 28, '', 1, 0, 'C');
 											// Dibujo //
-										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoandinos.jpg', 14, 8, 40, 25);
+										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 24, 8, 20, 25);
 										$this->SetXY(13, 6);
 										$this->Cell(255, 28, '', 1, 0, 'C');
 										$this->SetFont('verdana', '', 12);
@@ -3540,6 +3537,11 @@
 					fclose($fOp);
 						
 					if (file_exists($cFile)) {
+
+						if ($data == "") {
+							$data = "\n(0) REGISTROS!\n";
+						}
+
 						// Obtener la ruta absoluta del archivo
 						$cAbsolutePath = realpath($cFile);
 						$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
@@ -3570,7 +3572,6 @@
 								$cNomArc = $cNomFile;
 							}
 						}
-
 
 					}else {
 						$nSwitch = 1;

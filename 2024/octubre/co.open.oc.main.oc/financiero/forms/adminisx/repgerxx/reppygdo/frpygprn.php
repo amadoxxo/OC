@@ -1,7 +1,4 @@
 <?php
-  namespace openComex;
-  use FPDF;
-  
 	/**
 	 * Imprime Reporte PyG por DO.
 	 * --- Descripcion: Permite Imprimir Reporte PyG por DO.
@@ -477,6 +474,11 @@
               fclose($fOp);
 
               if (file_exists($cFile)) {
+
+                if ($cData == "") {
+                  $cData = "\n(0) REGISTROS!\n";
+                }
+        
                 // Obtener la ruta absoluta del archivo
                 $cAbsolutePath = realpath($cFile);
                 $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));

@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Genera archivo Excel.
 	 * --- Descripcion: Permite generar el Excel del Reporte de Tarifas siempre por porceso en Background
@@ -414,6 +413,10 @@
 
         if (file_exists($cFile)) {
 
+          if ($cData == "") {
+            $cData = "\n(0) REGISTROS!\n";
+          }
+  
           // Obtener la ruta absoluta del archivo
           $cAbsolutePath = realpath($cFile);
           $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
@@ -451,7 +454,6 @@
           } else {
             $cMsj .= "No se encontro el archivo $cFile, Favor Comunicar este Error a openTecnologia S.A.";
           }
-
         }
       }else{
         if ($_SERVER["SERVER_PORT"] != "") {

@@ -1,6 +1,4 @@
 <?php
-  namespace openComex;
-  use FPDF;
 
 	/**
 	 * Imprime Consecutivos de Comprobantes.
@@ -701,7 +699,7 @@
 											?>
 												<tr>
 													<td class="name">
-														<center><img width="100" height="40" style="left: 15px;margin-top: 2px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg"><br>REPORTE DE CONSECUTIVOS DE COMPROBANTES
+														<center><img width="70" height="50" style="left: 15px;margin-top: 2px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg"><br>REPORTE DE CONSECUTIVOS DE COMPROBANTES
 													</td>
 												</tr>
 												<?php if ($cNomCom != "") { ?>
@@ -1893,7 +1891,7 @@
 										$this->SetXY(6, 7);
 										$this->Cell(204.5, 24, '', 1,0,'C');
 
-										$this->Image($cRoot.$cPlesk_Skin_Directory.'/logoandinos.jpg', 9, 9, 36, 21);
+										$this->Image($cRoot.$cPlesk_Skin_Directory.'/logoAndinos2.jpeg', 16, 9, 20, 21);
 
 										$this->SetFont('verdana', '', 12);
 										$this->SetXY(6, 8);

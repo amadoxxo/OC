@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Transmitir Documento a OpenETL
    * @author Johana Arboleda Ramos <johana.arboleda@openits.co>
@@ -202,7 +201,7 @@
           $fOp = fopen($cFile, 'a');
           fwrite($fOp, $cArcvhivo);
 
-           // Obtener la ruta absoluta del archivo
+          // Obtener la ruta absoluta del archivo
           $cAbsolutePath = realpath($cFile);
           $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 

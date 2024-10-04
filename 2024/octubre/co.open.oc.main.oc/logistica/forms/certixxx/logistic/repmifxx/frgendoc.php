@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Descargar Archivo Reporte MIF.
    * --- Descripcion: Descargar Archivo Excel. 

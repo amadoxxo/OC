@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Descargar Archivo Certificacion.
    * --- Descripcion: Descargar Archivo Excel. 

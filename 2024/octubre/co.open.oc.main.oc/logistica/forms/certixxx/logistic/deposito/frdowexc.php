@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   include("../../../../../financiero/libs/php/utility.php");
 
   $cNomFile = "CargueDepositos_".$_COOKIE['kUsrId']."_".date("YmdHis").".xls";

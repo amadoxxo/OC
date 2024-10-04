@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Descargar Archivo.
    * --- Descripcion: Descargar Archivo Excel -> Proceso Background.

@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
 	 * Genera Reporte Autorizar Tarifas
 	 * --- Descripcion: Permite Generar el Reporte Autorizar Tarifas 

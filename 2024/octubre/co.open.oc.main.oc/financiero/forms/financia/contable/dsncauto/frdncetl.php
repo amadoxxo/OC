@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Transmitir Documento a OpenETL
    * @author Johana Arboleda Ramos <johana.arboleda@openits.co>

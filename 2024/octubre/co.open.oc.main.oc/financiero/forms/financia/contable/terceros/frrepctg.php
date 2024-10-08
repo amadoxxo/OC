@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
   //set_time_limit(0);
 	include("../../../../libs/php/utility.php");
 

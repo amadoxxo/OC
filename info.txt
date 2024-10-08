@@ -1,32 +1,67 @@
-co.open.oc.main.oc/financiero/forms/financia/contable/recibosc/frrecprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/carbcoxx/frcbaprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/comprast/frcomprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/cauproau/frcpaprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/comprase/frcpeprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/egresosx/fregrprn1.php 
-co.open.oc.main.oc/financiero/forms/financia/contable/egresosx/fregrprn3.php
-co.open.oc.main.oc/financiero/forms/financia/contable/egresosx/fregrprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/egresosx/frei3prn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/cajameno/frcamprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/remcajme/frrcmprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/ajustesx/frajuprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/notacrev/frnocprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/notadebv/frnodprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/dsautofa/frdsaprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/movimido/frmdoprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/estctaxx/frescprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/movdocxx/frmdcprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/csccomxx/frcscprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/auxctaxx/fraucprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/cerpccxx/frcemprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/pagterxx/frpccprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/auxcuexx/fraucprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/ingproco/fripcprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/escdotra/frescprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/ippccfac/fripfprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/repfacpr/frrfpprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/estcarxx/francprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/repipcxx/fripcprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/estcarpc/frescprn.php
-co.open.oc.main.oc/financiero/forms/financia/contable/estctage/fresgprn.php
-co.open.oc.main.oc/financiero/forms/adminisx/comercia/creatari/frctrrep.php
+/** SQL */
+
+/** CONTENEDOR */
+
+
+/** ARCHIVOS DE TERCEROS */
+opencomex/financiero/forms/financia/contable/terceros/frisu055.php**
+opencomex/financiero/forms/financia/contable/terceros/frpar104Dc.php**
+opencomex/financiero/forms/financia/contable/terceros/frpar104Df.php**
+opencomex/financiero/forms/financia/contable/terceros/frpar105Dc.php**
+opencomex/financiero/forms/financia/contable/terceros/frpar105Df.php**
+
+
+opencomex/financiero/forms/financia/contable/terceros/frcac144.php
+opencomex/financiero/forms/financia/contable/terceros/frpar124.php
+opencomex/financiero/forms/financia/contable/terceros/frrepctg.php
+opencomex/financiero/forms/financia/contable/terceros/frter119.php
+opencomex/financiero/forms/financia/contable/terceros/frtercbg.php
+opencomex/financiero/forms/financia/contable/terceros/frtercbn.php
+opencomex/financiero/forms/financia/contable/terceros/frterfrm.php
+
+
+// Consultar Recursos
+SELECT * FROM sysrecoc WHERE proidxxx LIKE '1130'
+ORDER BY sysrecoc.menidxxx ASC
+
+// Consultar Recursos para ver que archivos se han insertado
+SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '1130'
+ORDER BY sysrecoc.menidxxx ASC
+
+// Consultar Opciones Menu
+SELECT *  FROM sys00005 WHERE proidxxx LIKE '1130'
+
+// Consultar Permisos
+SELECT *  FROM sys00006 WHERE usridxxx LIKE 'ADMIN' AND proidxxx LIKE '1130' ORDER BY usridxxx DESC
+
+
+// Insertar nuevos datos
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frterini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frternue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frclicto.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frtergri.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frpar109.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frterobs.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '40', 'opencomex/financiero/forms/financia/contable/terceros/frpar008.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00006', '1000', '1130', '20', 'opencomex/financiero/forms/financia/contable/terceros/frgendoc.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());

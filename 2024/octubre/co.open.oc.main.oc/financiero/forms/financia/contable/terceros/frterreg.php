@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
   //set_time_limit(0);
   include("../../../../libs/php/utility.php");
 
@@ -15,7 +16,6 @@
   $cCad01  = "<table border=\"1\">";
     $cCad01  .= "<tr>";
       $cCad01 .= "<td style=\"font-weight: bold\">NIT</td>";
-      $cCad01 .= "<td style=\"font-weight: bold;background-color:red\">DIGITO VERIFICACION</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">CODIGO TIPO DE DOCUMENTO</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">TIPO DE PERSONA (PUBLICA - JURIDICA - NATURAL)</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">RAZON SOCIAL</td>";
@@ -51,12 +51,6 @@
       $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - APLICA IVA (SI - NO)</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - APLICA GMF (SI - NO)</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - NO SUJETO RETEFTE POR RENTA (SI - NO)</td>";
-      if (f_InList($cAlfa,"ROLDANLO","TEROLDANLO","DEROLDANLO")) { 
-        $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - AUTORRETENEDOR EN RENTA (SI - NO)</td>";
-        $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - AUTORRETENEDOR EN CREE (SI - NO)</td>";
-        $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - AGENTE RETENEDOR EN RENTA (SI - NO)</td>";
-        $cCad01 .= "<td style=\"font-weight: bold\">NO RESIDENTE EN EL PAIS - AGENTE RETENEDOR EN CREE (SI - NO)</td>";
-      }
       $cCad01 .= "<td style=\"font-weight: bold\">AUTORETENEDOR EN RENTA (SI - NO)</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">AUTORETENEDOR DE IVA (SI - NO)</td>";
       $cCad01 .= "<td style=\"font-weight: bold\">AUTORETENEDOR DE ICA (SI - NO)</td>";
@@ -306,29 +300,6 @@
     $qSqlAux .="CLINSOFE = \"{$_POST['oCliNsOfe']}\" $cBuscar ";
   }
 
-  // Condiciones tributarias no residente en el pais para facturacion
-  if (f_InList($cAlfa,"ROLDANLO","TEROLDANLO","DEROLDANLO")) { 
-    if ($_POST['oCliArNr'] == "SI"){
-      $qSqlAux .="CLIARNRX = \"{$_POST['oCliArNr']}\" $cBuscar ";
-    }
-
-    if ($_POST['oCliArAreNr'] == "SI"){
-      $qSqlAux .="CLIARENR = \"{$_POST['oCliArAreNr']}\" $cBuscar ";
-    }
-
-    if ($_POST['oCliArAcrNr'] == "SI"){
-      $qSqlAux .="CLIACRNR = \"{$_POST['oCliArAcrNr']}\" $cBuscar ";
-    }
-
-    if ($_POST['oCliArrNr'] == "SI"){
-      $qSqlAux .="CLIARRNR = \"{$_POST['oCliArrNr']}\" $cBuscar ";
-    }
-
-    if ($_POST['oCliArcrNr'] == "SI"){
-      $qSqlAux .="CLIRCRNR = \"{$_POST['oCliArcrNr']}\" $cBuscar ";
-    }
-  }
-
   $qSqlAux = substr($qSqlAux, 0, (($cBuscar == "OR") ? -4 : -5));
   $qSqlTip = substr($qSqlTip, 0, (($cBuscar == "OR") ? -4 : -5));
 
@@ -413,7 +384,6 @@
 
       $cCad01  = "<tr>";
         $cCad01 .= "<td style=\"mso-number-format:\@\">{$xRT['CLIIDXXX']}</td>"; //NIT
-        $cCad01 .= "<td style=\"background-color:red;mso-number-format:\@\">". gendv($xRT['CLIIDXXX']) ."</td>"; //DIGITO VERIFICACION
         $cCad01 .= "<td style=\"mso-number-format:\@\">{$xRT['TDIIDXXX']}</td>"; //CODIGO TIPO DE DOCUMENTO
         $cCad01 .= "<td style=\"mso-number-format:\@\">{$xRT['CLITPERX']}</td>"; //TIPO DE PERSONA (PUBLICA - JURIDICA - NATURAL)
         $cCad01 .= "<td style=\"mso-number-format:\@\">{$xRT['CLINOMXX']}</td>"; //RAZON SOCIAL
@@ -449,12 +419,6 @@
         $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLINRPAI'] == "SI") ? $xRT['CLINRPAI'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - APLICA IVA (SI - NO)
         $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLINRPIF'] == "SI") ? $xRT['CLINRPIF'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - APLICA GMF (SI - NO)
         $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLINRNSR'] == "SI") ? $xRT['CLINRNSR'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - NO SUJETO RETEFTE POR RENTA (SI - NO)
-        if (f_InList($cAlfa,"ROLDANLO","TEROLDANLO","DEROLDANLO")) { 
-          $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIARENR'] == "SI") ? $xRT['CLIARENR'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - AUTORRETENEDOR EN RENTA (SI - NO)
-          $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIACRNR'] == "SI") ? $xRT['CLIACRNR'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - AUTORRETENEDOR EN CREE (SI - NO)
-          $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIARRNR'] == "SI") ? $xRT['CLIARRNR'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - AGENTE RETENEDOR EN RENTA (SI - NO)
-          $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIRCRNR'] == "SI") ? $xRT['CLIRCRNR'] : "")."</td>"; //NO RESIDENTE EN EL PAIS - AGENTE RETENEDOR EN CREE (SI - NO)
-        }
         $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIARARE'] == "SI") ? $xRT['CLIARARE'] : "")."</td>"; //AUTORETENEDOR EN RENTA (SI - NO)
         $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIARAIV'] == "SI") ? $xRT['CLIARAIV'] : "")."</td>"; //AUTORETENEDOR DE IVA (SI - NO)
         $cCad01 .= "<td style=\"mso-number-format:\@\">".(($xRT['CLIARAIC'] == "SI") ? $xRT['CLIARAIC'] : "")."</td>"; //AUTORETENEDOR DE ICA (SI - NO)

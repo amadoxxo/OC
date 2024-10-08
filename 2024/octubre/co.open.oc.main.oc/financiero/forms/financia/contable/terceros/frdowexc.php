@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
   //set_time_limit(0);
 	include("../../../../libs/php/utility.php");
 
@@ -45,12 +46,6 @@
   $cCad01 .= "NO RESIDENTE EN EL PAIS - APLICA IVA (SI - NO)\t";
   $cCad01 .= "NO RESIDENTE EN EL PAIS - APLICA GMF (SI - NO)\t";
   $cCad01 .= "NO RESIDENTE EN EL PAIS - NO SUJETO RETEFTE POR RENTA (SI - NO)\t";
-  if ((f_InList($cAlfa,"ROLDANLO","TEROLDANLO","DEROLDANLO"))) {
-    $cCad01 .= "NO RESIDENTE EN EL PAIS - AUTORRETENEDOR EN RENTA (SI - NO)\t";
-    $cCad01 .= "NO RESIDENTE EN EL PAIS - AUTORRETENEDOR EN CREE (SI - NO)\t";
-    $cCad01 .= "NO RESIDENTE EN EL PAIS - AGENTE RETENEDOR EN RENTA (SI - NO)\t";
-    $cCad01 .= "NO RESIDENTE EN EL PAIS - AGENTE RETENEDOR EN CREE (SI - NO)\t";
-  }
   $cCad01 .= "AUTORETENEDOR EN RENTA (SI - NO)\t";
   $cCad01 .= "AUTORETENEDOR DE IVA (SI - NO)\t";
   $cCad01 .= "AUTORETENEDOR DE ICA (SI - NO)\t";

@@ -1,4 +1,6 @@
 <?php
+  namespace openComex;
+  use FPDF;
 
   ##Estableciendo que el tiempo de ejecucion no se limite
 
@@ -163,13 +165,14 @@ $qLoad .= "$cAlfa.fcod$cPerAno.comfecxx BETWEEN \"$gDesde\" AND \"$gHasta\" AND 
 $qLoad .= "$cAlfa.fcod$cPerAno.pucidxxx BETWEEN \"$gPucIdIni\" AND \"$gPucIdFin\" AND ";
 $qLoad .= "$cAlfa.fcod$cPerAno.regestxx = \"ACTIVO\" ";
 $qLoad .= "LIMIT 0,1";
-$xLoad = f_Mysql("SELECT", "", $qLoad, $xConexion01, "");
+$cIdCountRow = mt_rand(1000000000, 9999999999);
+$xLoad = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
 
 mysql_free_result($xLoad);
 
-$xNumRows = mysql_query("SELECT FOUND_ROWS();");
-$xRNR = mysql_fetch_array($xNumRows);
-$nRegistros = $xRNR['FOUND_ROWS()'];
+$xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+$xRNR       = mysql_fetch_array($xNumRows);
+$nRegistros = $xRNR['CANTIDAD'];
 mysql_free_result($xNumRows);
 
 if ($_SERVER["SERVER_PORT"] != "" && $cEjProBg == "SI" && $nSwitch == 0) {
@@ -461,7 +464,7 @@ if ($cEjePro == 0) {
                         case "DEGRUMALCO"://GRUMALCO
                           ?>
                           <td class="name" colspan="1" align="left">
-                            <img width="120" height="70" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
+                            <img width="150" height="90" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
                           </td>
                           <td class="name" colspan="17" align="left">
                             <font size="3">
@@ -495,7 +498,7 @@ if ($cEjePro == 0) {
                         case "DEANDINOSX"://ANDINOSX
                           ?>
                           <td class="name" colspan="1" align="left">
-                            <img width="90" height="90" style="left: 35;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg">
+                            <img width="150" height="50" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg">
                           </td>
                           <td class="name" colspan="17" align="left">
                             <font size="3">
@@ -1583,7 +1586,7 @@ if ($cEjePro == 0) {
                   case "GRUMALCO":
                   case "TEGRUMALCO":
                   case "DEGRUMALCO":
-										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logomalco.jpg', 7, 10, 35, 18);                
+										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logomalco.jpg', 7, 8, 40, 22);                
                   break;
                   case "ALADUANA":
                   case "TEALADUANA":
@@ -1593,7 +1596,7 @@ if ($cEjePro == 0) {
                   case "ANDINOSX":
                   case "TEANDINOSX":
                   case "DEANDINOSX":
-                    $this->Image($cRoot . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 10, 9, 18, 20);
+                    $this->Image($cRoot . $cPlesk_Skin_Directory . '/logoandinos.jpg', 6, 9, 38, 20);
                   break;
                   case "GRUPOALC":
                   case "TEGRUPOALC":

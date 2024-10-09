@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Movimiento Por Documento.
 	 * --- Descripcion: Permite Imprimir Movimiento Por Documento.
@@ -389,7 +392,7 @@
 														case "ANDINOSX": //ANDINOSX
 														case "TEANDINOSX": //ANDINOSX
 														case "DEANDINOSX": //ANDINOSX?>
-															<td class="name"><center><img width="70" height="46" style="left: 15px;margin-top: 6px;position: absolute;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg"></td><?php
+															<td class="name"><center><img width="100" height="46" style="left: 15px;margin-top: 6px;position: absolute;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg"></td><?php
 														break;
 														case "GRUPOALC": //GRUPOALC
 														case "TEGRUPOALC": //GRUPOALC
@@ -770,7 +773,6 @@
 						    $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
 						    if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
-			
 									header('Content-Description: File Transfer');
 									header('Content-Type: application/octet-stream');
 									header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
@@ -937,7 +939,7 @@
 										$this->Cell(51, 28, '', 1, 0, 'C');
 										$this->Cell(221, 28, '', 1, 0, 'C');
 											// Dibujo //
-										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 15, 9, 26, 24);
+										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoandinos.jpg', 10, 9, 40, 24);
 										$this->SetFont('verdana', '', 16);
 										$this->SetXY(55, 13);
 										$this->Cell(221, 8, "REPORTE DE MOVIMIENTO DE DOCUMENTOS", 0, 0, 'C');

@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Certificado Mensual de Retenciones x Pagos a Terceros.
 	 * --- Descripcion: Permite Imprimir Certificado Mensual de Retenciones x Pagos a Terceros.
@@ -8,7 +11,6 @@
 
 	// ini_set('error_reporting', E_ERROR);
   // ini_set('display_errors','1');
-  include("../../../../../config/config.php");
 
 	ini_set("memory_limit","512M");
 	set_time_limit(0);
@@ -120,52 +122,15 @@
 
   // f_Mensaje(__FILE__,__LINE__,$dFecDes." ~ ".$dFecHas);
 
-	$cTablaCab = "";
-	$cTablaDet = "";
-	if ($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI") {
-		/**
-		 * Instancia la clase para crear la estructura de las tablas temporales.
-		 */
-		$objEstructurasCertificadoPagosaTerceros = new cEstructurasCertificadoPagosaTerceros();
-
-		// Crea la estructura para la tabla de Cabecera
-		$vParametros['TABLAXXX'] = 'CABECERA';
-		$mReturnTablaCabecera = $objEstructurasCertificadoPagosaTerceros->fnCrearEstructurasCertificadoPagosaTerceros($vParametros);
-		if ($mReturnTablaCabecera[0] == 'false') {
-			$nSwitch = 1;
-			for ($n=2; $n < count($mReturnTablaCabecera); $n++) {
-				$cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
-				$cMsj .= $mReturnTablaCabecera[$n] . "\n";
-			}
-		} else {
-			$cTablaCab = $mReturnTablaCabecera[1];
-		}
-
-		// Crea la estructura para la tabla de Detalle
-		$vParametros['TABLAXXX'] = 'DETALLE';
-		$mReturnTablaDetalle = $objEstructurasCertificadoPagosaTerceros->fnCrearEstructurasCertificadoPagosaTerceros($vParametros);
-		if ($mReturnTablaDetalle[0] == 'false') {
-			$nSwitch = 1;
-			for ($n=2; $n < count($mReturnTablaDetalle); $n++) {
-				$cMsj .= "Linea " . str_pad(__LINE__, 4, "0", STR_PAD_LEFT) . ": ";
-				$cMsj .= $mReturnTablaDetalle[$n] . "\n";
-			}
-		} else {
-			$cTablaDet = $mReturnTablaDetalle[1];
-		}
-	}
-
   // array para el envío de datos al método
   $vDatos = array();
-  $vDatos['cTipo']    = $cTipo;     // Tipo de impresión, por pdf o excel
-  $vDatos['cGenerar'] = $cGenerar;  // opción para impresión: facturado y/o no facturado
-  $vDatos['cIntPag']  = $cIntPag;   // Intermediación de Pagos
-  $vDatos['cTerId']   = $gTerId;    // Tercero
-  $vDatos['dFecDes']  = $dFecDes;   // Fecha desde
-	$vDatos['dFecHas']  = $dFecHas;   // Fecha Hasta
-	$vDatos['cTabCab']  = $cTablaCab; // Aplica tabla temporal de Cabecera
-	$vDatos['cTabDet']  = $cTablaDet; // Aplica tabla temporal de Detalle
-
+  $vDatos['cTipo']    = $cTipo;    // Tipo de impresión, por pdf o excel
+  $vDatos['cGenerar'] = $cGenerar; // opción para impresión: facturado y/o no facturado
+  $vDatos['cIntPag']  = $cIntPag;  // Intermediación de Pagos
+  $vDatos['cTerId']   = $gTerId;   // Tercero
+  $vDatos['dFecDes']  = $dFecDes;  // Fecha desde
+	$vDatos['dFecHas']  = $dFecHas;  // Fecha Hasta
+	
 	if ($_SERVER["SERVER_PORT"] != "" && $cEjProBg == "SI" && $nSwitch == 0) {
 		$cEjePro  = 1;
 		$nRegistros = 0;
@@ -223,74 +188,8 @@
 		$ObjMovimiento = new cMovimientoDo();
 		// se envían todos los datos necesarios al método fnPagosaTerceros
 		$mReturn = $ObjMovimiento->fnPagosaTerceros($vDatos);
+		$mDatos  = $mReturn[1];
 		$vCocDat = $mReturn[4];
-
-		if ($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI") {
-			// Se realiza la consulta de las Notas Credito
-			$vDatos = array();
-			$vDatos['cTipo']    = $cTipo;     // Tipo de impresión, por pdf o excel
-			$vDatos['cTipCom']  = 'NC';       // NC-> Nota Credito ND->Nota Debito
-			$vDatos['cTerId']   = $gTerId;    // Tercero
-			$vDatos['dFecDes']  = $dFecDes;   // Fecha desde
-			$vDatos['dFecHas']  = $dFecHas;   // Fecha Hasta
-			$vDatos['cTabCab']  = $cTablaCab; // Aplica tabla temporal de Cabecera
-			$vDatos['cTabDet']  = $cTablaDet; // Aplica tabla temporal de Detalle
-			// se envían todos los datos necesarios al método fnPagosaTercerosNotas
-			$ObjMovimiento->fnPagosaTercerosNotas($vDatos);
-
-			// Se realiza la consulta de las Notas Credito Debito
-			$vDatos = array();
-			$vDatos['cTipo']    = $cTipo;     // Tipo de impresión, por pdf o excel
-			$vDatos['cTipCom']  = 'ND';       // NC-> Nota Credito ND->Nota Debito
-			$vDatos['cTerId']   = $gTerId;    // Tercero
-			$vDatos['dFecDes']  = $dFecDes;   // Fecha desde
-			$vDatos['dFecHas']  = $dFecHas;   // Fecha Hasta
-			$vDatos['cTabCab']  = $cTablaCab; // Aplica tabla temporal de Cabecera
-			$vDatos['cTabDet']  = $cTablaDet; // Aplica tabla temporal de Detalle
-			// se envían todos los datos necesarios al método fnPagosaTercerosNotas
-			$ObjMovimiento->fnPagosaTercerosNotas($vDatos);
-
-			// Obtiene la información de cabecera que corresponde al primer registro de la tabla
-			$vDataCab  = array();
-			$qDataCab  = "SELECT * ";
-			$qDataCab .= "FROM $cAlfa.$cTablaCab LIMIT 0,1";
-			$xDataCab  = f_MySql("SELECT", "", $qDataCab, $xConexion01, "");
-			if (mysql_num_rows($xDataCab) > 0) {
-				$vDataCab = mysql_fetch_array($xDataCab);
-			}
-
-			// Obtiene la información de cada registro para ser pintada en el certificado
-			$mDatos    = array();
-			$qDataCab  = "SELECT * ";
-			$qDataCab .= "FROM $cAlfa.$cTablaCab";
-			$xDataCab  = f_MySql("SELECT", "", $qDataCab, $xConexion01, "");
-			if (mysql_num_rows($xDataCab) > 0) {
-				while($xRDC = mysql_fetch_array($xDataCab)) {
-
-					// Consulta el detalle que corresponde a las retenciones para almacenar en la matriz principal en la posición [retencio]
-					$mRetenciones = array();
-					$qDataDet  = "SELECT * ";
-					$qDataDet .= "FROM $cAlfa.$cTablaDet ";
-					$qDataDet .= "WHERE ";
-					$qDataDet .= "$cTablaDet.indicabx = \"{$xRDC['indicabx']}\"";
-					$xDataDet  = f_MySql("SELECT", "", $qDataDet, $xConexion01, "");
-
-					if (mysql_num_rows($xDataDet) > 0) {
-						while($xRDD = mysql_fetch_array($xDataDet)) {
-							$mRetenciones[count($mRetenciones)] = $xRDD;
-						}
-					}
-
-					// Construye la matriz principal con la información de las tablas temporales
-					$nInd_mDatos = count($mDatos);
-					$mDatos[$nInd_mDatos] = $xRDC;
-					$mDatos[$nInd_mDatos]['retencio'] = $mRetenciones;
-				}
-			}
-		} else {
-			$mDatos   = $mReturn[1];
-			$vDataCab = $mDatos[0];
-		}
 		
 		switch ($cTipo) {
 			case "1": //Impirmir como Pdf
@@ -373,7 +272,7 @@
 								case "ANDINOSX": //ANDINOSX
 								case "TEANDINOSX": //ANDINOSX
 								case "DEANDINOSX": //ANDINOSX
-									$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 10, 8, 35, 15);
+									$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoandinos.jpg', 10, 8, 35, 15);
 								break;
 								case "GRUPOALC": //GRUPOALC
 								case "TEGRUPOALC": //GRUPOALC
@@ -657,7 +556,7 @@
 					case "ANDINOSX"://ANDINOSX
 					case "TEANDINOSX"://TEANDINOSX
 					case "DEANDINOSX"://DEANDINOSX
-						$pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 4, 7, 22, 25);
+						$pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoandinos.jpg', 4, 7, 34, 18);
 					break;
 					case "GRUPOALC"://GRUPOALC
 					case "TEGRUPOALC"://TEGRUPOALC
@@ -773,7 +672,7 @@
 					case "DESIACOSIP":
 						//Introduccion para siaco
 						$cLeyenda  = "El suscrito Revisor Fiscal de la Agencia de Aduanas Siaco S.A.S Nivel 1 certifica que los valores relacionados ";
-						$cLeyenda .= "a continuacion hacen parte de los costos o gastos y de los impuestos descontables de nuestro cliente {$vDataCab['clinomxx']} ";
+						$cLeyenda .= "a continuacion hacen parte de los costos o gastos y de los impuestos descontables de nuestro cliente {$mDatos[0]['clinomxx']} ";
 						$cLeyenda .= "Nit. ".$gTerId."-".f_Digito_Verificacion($gTerId)." correspondiente a lo facturado el PERIODO: DEL $dFecDes AL $dFecHas, ";
 						$cLeyenda .= "por lo tanto no se han tomado como deducciones o impuestos descontables por parte de la Agencia de Aduanas, ";
 						$cLeyenda .= "igualmente certificamos que se han practicado y pagado las retenciones de acuerdo a la normatividad vigente.";
@@ -790,7 +689,7 @@
 						//Introduccion para colmas
 						$cLeyenda  = "El suscrito Revisor Fiscal y/o Contador Publico de la Agencia de Aduanas Colmas S.A.S. Nivel 1  certifica que ";
 						$cLeyenda .= "los valores relacionados a continuacion hacen parte de los costos o gastos y de los impuestos descontables de ";
-						$cLeyenda .= "nuestro cliente {$vDataCab['clinomxx']} Nit. ".$gTerId."-".f_Digito_Verificacion($gTerId)." correspondiente a lo facturado el ";
+						$cLeyenda .= "nuestro cliente {$mDatos[0]['clinomxx']} Nit. ".$gTerId."-".f_Digito_Verificacion($gTerId)." correspondiente a lo facturado el ";
 						$cLeyenda .= "PERIODO: DEL $dFecDes AL $dFecHas, por lo tanto no se han tomado como deducciones o impuestos descontables por ";
 						$cLeyenda .= "parte de la Agencia de Aduanas, igualmente certificamos que se han practicado y pagado las retenciones de acuerdo ";
 						$cLeyenda .= "a la normatividad vigente.";
@@ -808,7 +707,7 @@
 						//Introduccion para Adimpex
 						$cLeyenda  = "EL área de contabilidad de la compañía AGENCIA DE ADUANAS ADUANAMIENTOS IMPORTACIONES Y EXPORTACIONES S.A.S NIVEL 2 ";
 						$cLeyenda .= "con Nit 830.032.263-9 de acuerdo con el artículo 3 del decreto 1514 de 1998, la Agencia a efectuado pagos a terceros en ";
-						$cLeyenda .= "calidad de mandatario por cuenta del cliente {$vDataCab['clinomxx']} con Nit ".$gTerId."-".f_Digito_Verificacion($gTerId).", Así: ";
+						$cLeyenda .= "calidad de mandatario por cuenta del cliente {$mDatos[0]['clinomxx']} con Nit ".$gTerId."-".f_Digito_Verificacion($gTerId).", Así: ";
 						$posy += 15;
 						$pdf->SetFont('verdana','',10);
 						$pdf->setXY($posx+5,$posy);
@@ -851,7 +750,7 @@
 				$pdf->SetFont('verdanab','',7);
 				$pdf->Cell(12,10,"Cliente:",0,0,'L');
 				$pdf->SetFont('verdana','',7);
-				$pdf->Cell(168,10,$vDataCab['clinomxx'],0,0,'L');
+				$pdf->Cell(168,10,$mDatos[0]['clinomxx'],0,0,'L');
 				$pdf->SetFont('verdanab','',7);
 				$pdf->Cell(10,10,"NIT: ",0,0,'L');
 				$pdf->SetFont('verdana','',7);
@@ -990,15 +889,15 @@
 					$pdf->Rect(133,$posy,27,$n);
 
 					$pdf->setXY(160,$posy);
-					$pdf->Cell(15,4,(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['costoxxx'],0,',','.'),0,0,'R');
+					$pdf->Cell(15,4,number_format($mDatos[$i]['costoxxx'],0,',','.'),0,0,'R');
 					$pdf->Rect(160,$posy,15,$n);
 
 					$pdf->setXY(175,$posy);
-					$pdf->Cell(15,4,(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['ivaxxxxx'],0,',','.'),0,0,'R');
+					$pdf->Cell(15,4,number_format($mDatos[$i]['ivaxxxxx'],0,',','.'),0,0,'R');
 					$pdf->Rect(175,$posy,15,$n);
 
 					$pdf->setXY(190,$posy);
-					$pdf->Cell(20,4,(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['totalxxx'],0,',','.'),0,0,'R');
+					$pdf->Cell(20,4,number_format($mDatos[$i]['totalxxx'],0,',','.'),0,0,'R');
 					$pdf->Rect(190,$posy,20,$n);
 
 
@@ -1011,7 +910,7 @@
 							$pdf->Rect(210,$posy2,15,4);
 
 							$pdf->setXY(225,$posy2);
-							$pdf->Cell(20,4,(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mRetenciones[$y]['comvlr01'],0,',','.'),0,0,'R');
+							$pdf->Cell(20,4,number_format($mRetenciones[$y]['comvlr01'],0,',','.'),0,0,'R');
 							$pdf->Rect(225,$posy2,20,4);
 
 							$pdf->setXY(245,$posy2);
@@ -1033,7 +932,7 @@
 							}
 
 							$pdf->setXY(255,$posy2);
-							$pdf->Cell(20,4,(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($nRetencion,0,',','.'),0,0,'R');
+							$pdf->Cell(20,4,number_format($nRetencion,0,',','.'),0,0,'R');
 							$pdf->Rect(255,$posy2,20,4);
 							$posy2 += 4;
 						}
@@ -1058,15 +957,9 @@
 
 					$posy += 4;
 
-					if ($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) {
-						$nTotCos -= $mDatos[$i]['costoxxx'];
-						$nTotIva -= $mDatos[$i]['ivaxxxxx'];
-						$nTotFac -= $mDatos[$i]['totalxxx'];
-					} else {
-						$nTotCos += $mDatos[$i]['costoxxx'];
-						$nTotIva += $mDatos[$i]['ivaxxxxx'];
-						$nTotFac += $mDatos[$i]['totalxxx'];
-					}
+					$nTotCos += $mDatos[$i]['costoxxx'];
+					$nTotIva += $mDatos[$i]['ivaxxxxx'];
+					$nTotFac += $mDatos[$i]['totalxxx'];
 				}
 
 				$nBan = 0;
@@ -1419,9 +1312,9 @@
 						$cData .= $mDatos[$i]['document']."\t";
 						$cData .= $mDatos[$i]['comfecxx']."\t";
 						$cData .= $mDatos[$i]['concepto']."\t";
-						$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['costoxxx'],0,',','')."\t";
-						$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['ivaxxxxx'],0,',','')."\t";
-						$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['totalxxx'],0,',','')."\t";
+						$cData .= number_format($mDatos[$i]['costoxxx'],0,',','')."\t";
+						$cData .= number_format($mDatos[$i]['ivaxxxxx'],0,',','')."\t";
+						$cData .= number_format($mDatos[$i]['totalxxx'],0,',','')."\t";
 
 						if (count($mRetenciones) > 0) {
 							for ($y = 0; $y < count($mRetenciones); $y++){
@@ -1435,9 +1328,9 @@
 									$cData .= "\t";
 									$cData .= "\t";
 									$cData .= "\t";
-									$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['costoxxx'],0,',','')."\t";
-									$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['ivaxxxxx'],0,',','')."\t";
-									$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['totalxxx'],0,',','')."\t";
+									$cData .= number_format($mDatos[$i]['costoxxx'],0,',','')."\t";
+									$cData .= number_format($mDatos[$i]['ivaxxxxx'],0,',','')."\t";
+									$cData .= number_format($mDatos[$i]['totalxxx'],0,',','')."\t";
 								}
 								$nRetencion = round($mRetenciones[$y]['comvlrxx']);
 								if($mRetenciones[$y]['retenxxx'] == 'ReteCree'){
@@ -1454,9 +1347,9 @@
 								}
 
 								$cData .= $mRetenciones[$y]['retenxxx']."\t";
-								$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mRetenciones[$y]['comvlr01'],0,',','')."\t";
+								$cData .= number_format($mRetenciones[$y]['comvlr01'],0,',','')."\t";
 								$cData .= number_format($mRetenciones[$y]['pucretxx'],3,',','')."\t";
-								$cData .= (($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($nRetencion,0,',','')."\t";
+								$cData .= number_format($nRetencion,0,',','')."\t";
 								$cData .= "\n";
 							}
 						}else{
@@ -1469,15 +1362,9 @@
 
 						fwrite($fOp,$cData);
 
-						if ($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) {
-							$nTotCos -= $mDatos[$i]['costoxxx'];
-							$nTotIva -= $mDatos[$i]['ivaxxxxx'];
-							$nTotFac -= $mDatos[$i]['totalxxx'];
-						} else {
-							$nTotCos += $mDatos[$i]['costoxxx'];
-							$nTotIva += $mDatos[$i]['ivaxxxxx'];
-							$nTotFac += $mDatos[$i]['totalxxx'];
-						}
+						$nTotCos += $mDatos[$i]['costoxxx'];
+						$nTotIva += $mDatos[$i]['ivaxxxxx'];
+						$nTotFac += $mDatos[$i]['totalxxx'];
 					}
 
 					for($nT=0;$nT<($nNumCol-7);$nT++){
@@ -1529,7 +1416,7 @@
 							$cData .= '<tr bgcolor = "white" height="20" style="padding-left:5px;padding-top:5px">';
 								$cData .= '<td class="name" colspan="'.($nNumCol - 4).'" align="left">';
 									$cData .= '<font size="2">';
-										$cData .= '<b>Cliente:  </b>'. $vDataCab['clinomxx'];
+										$cData .= '<b>Cliente:  </b>'. $mDatos[0]['clinomxx'];
 									$cData .= '</font>';
 								$cData .= '</td>';
 								$cData .= '<td class="name" colspan="2" align="left">';
@@ -1627,14 +1514,14 @@
 									$cData .= '<td align="center" '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.((($mDatos[$i]['comfecfa']) != "") ? ($mDatos[$i]['comfecfa']) : "00/00/0000") .'</td>';
 								}
 								$cData .= '<td align="left"   '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.$mDatos[$i]['concepto'].'</td>';
-								$cData .= '<td align="right"  '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['costoxxx'],0,',','').'</td>';
-								$cData .= '<td align="right"  '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['ivaxxxxx'],0,',','').'</td>';
-								$cData .= '<td align="right"  '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mDatos[$i]['totalxxx'],0,',','').'</td>';
+								$cData .= '<td align="right"  '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.number_format($mDatos[$i]['costoxxx'],0,',','').'</td>';
+								$cData .= '<td align="right"  '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.number_format($mDatos[$i]['ivaxxxxx'],0,',','').'</td>';
+								$cData .= '<td align="right"  '.(($n > 0) ? "rowspan=\"$n\" " : "").'style = "color:'.$cColorPro.'">'.number_format($mDatos[$i]['totalxxx'],0,',','').'</td>';
 
 								if (count($mRetenciones) > 0) {
 									for ($y = 0; $y < count($mRetenciones); $y++){
 										$cData .= '<td align="left"   style = "color:'.$cColorPro.'">'.$mRetenciones[$y]['retenxxx'].'</td>';
-										$cData .= '<td align="right"  style = "color:'.$cColorPro.'">'.(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($mRetenciones[$y]['comvlr01'],0,',','').'</td>';
+										$cData .= '<td align="right"  style = "color:'.$cColorPro.'">'.number_format($mRetenciones[$y]['comvlr01'],0,',','').'</td>';
 										$cData .= '<td align="right"  style = "color:'.$cColorPro.'">'.number_format($mRetenciones[$y]['pucretxx'],3,',','').'</td>';
 
 										$nRetencion = round($mRetenciones[$y]['comvlrxx']);
@@ -1650,7 +1537,7 @@
 										if($mRetenciones[$y]['retenxxx'] == 'ReteIca'){
 											$nTotRIca += $nRetencion;
 										}
-										$cData .= '<td align="right"  style = "color:'.$cColorPro.'">'.(($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) ? "-" : "") . number_format($nRetencion,0,',','').'</td>';
+										$cData .= '<td align="right"  style = "color:'.$cColorPro.'">'.number_format($nRetencion,0,',','').'</td>';
 
 										$cData .= '</tr>';
 								}
@@ -1664,15 +1551,9 @@
 
 						fwrite($fOp,$cData);
 
-						if ($vSysStr['financiero_incluir_notas_certificado_pcc'] == "SI" && ($mDatos[$i]['comidxxx'] == "C" || $mDatos[$i]['comidxxx'] == "D")) {
-							$nTotCos -= $mDatos[$i]['costoxxx'];
-							$nTotIva -= $mDatos[$i]['ivaxxxxx'];
-							$nTotFac -= $mDatos[$i]['totalxxx'];
-						} else {
-							$nTotCos += $mDatos[$i]['costoxxx'];
-							$nTotIva += $mDatos[$i]['ivaxxxxx'];
-							$nTotFac += $mDatos[$i]['totalxxx'];
-						}
+						$nTotCos += $mDatos[$i]['costoxxx'];
+						$nTotIva += $mDatos[$i]['ivaxxxxx'];
+						$nTotFac += $mDatos[$i]['totalxxx'];
 					}
 
 					$cData  = '<tr bgcolor = "white" height="20" style="padding-left:4px;padding-right:4px">';
@@ -1744,6 +1625,7 @@
 							$cNomArc = $cNomFile;
 						}
 					}
+
 				} else {
 					if ($_SERVER["SERVER_PORT"] != "") {
             f_Mensaje(__FILE__, __LINE__, "No se encontro el archivo $cFile, Favor Comunicar este Error a openTecnologia S.A.");
@@ -1790,183 +1672,4 @@
 			}
 		}
 	} // fin del if ($_SERVER["SERVER_PORT"] == "")
-
-	class cEstructurasCertificadoPagosaTerceros {
-
-		/**
-		 * Metodo que realiza la conexion
-		 */
-		function fnConectarDBCertificadoPagosaTerceros(){
-			/**
-			 * Variable para saber si hay o no errores de validacion.
-			 *
-			 * @var number
-			 */
-			$nSwitch = 0;
-
-			/**
-			 * Matriz para Retornar Valores
-			 */
-			$mReturn = array();
-
-			/**
-			 * Reservo Primera Posicion para retorna true o false
-			 */
-			$mReturn[0] = "";
-
-			$xConexion99 = mysql_connect(OC_SERVER,OC_USERROBOT,OC_PASSROBOT) or die("El Sistema no Logro Conexion con ".OC_SERVER);
-			if($xConexion99){
-				$nSwitch = 0;
-			}else{
-				$nSwitch = 1;
-				$mReturn[count($mReturn)] = "El Sistema no Logro Conexion con ".OC_SERVER;
-			}
-
-			if($nSwitch == 0){
-				$mReturn[0] = "true";
-				$mReturn[1] = $xConexion99;
-			}else{
-				$mReturn[0] = "false";
-			}
-			return $mReturn;
-		}##function fnConectarDBCertificadoPagosaTerceros(){##
-
-		/**
-		 * Metodo que se encarga de crear la estructura de la tabla temporal de los pagos a terceros
-		 */
-		function fnCrearEstructurasCertificadoPagosaTerceros($pvParametros){
-
-			/**
-			 * Como deben de llegar los parametros:
-			 * $pvParametros['TABLAXXX'] // Indica la tabla a crear
-			 */
-
-			global $cAlfa;
-
-			/**
-			 * Variable para saber si hay o no errores de validacion.
-			 * @var number
-			 */
-			$nSwitch = 0;
-
-			/**
-			 * Matriz para Retornar Valores
-			 * @var array
-			 */
-			$mReturn = array();
-
-			/**
-			 * Reservando Primera Posición para retorna true o false
-			 */
-			$mReturn[0]  = ""; // Resultado del proceso
-			$mReturn[1]  = ""; // Nombre de tabla
-
-			/**
-			 * Llamando Metodo que hace conexion
-			 */
-			$mReturnConexionGestor = $this->fnConectarDBCertificadoPagosaTerceros();
-			if($mReturnConexionGestor[0] == "true"){
-				$xConexionTM = $mReturnConexionGestor[1];
-			}else{
-				$nSwitch = 1;
-				for($nR=1;$nR<count($mReturnConexionGestor);$nR++){
-					$mReturn[count($mReturn)] = $mReturnConexionGestor[$nR];
-				}
-			}
-
-			if($nSwitch == 0) {
-				switch ($pvParametros['TABLAXXX']) {
-					case 'CABECERA':
-						/**
-						 * Nombre Random para la Tabla
-						 */
-						$cTabla = "memcepcc".mt_rand(1000000000, 9999999999);
-
-						$qNewTab  = "CREATE TABLE IF NOT EXISTS $cAlfa.$cTabla (";
-						$qNewTab .= "lineidxx int(11) NOT NULL AUTO_INCREMENT COMMENT \"Id Temporal\", ";		  		 // Autoincremental
-						$qNewTab .= "indicabx varchar(255) NOT NULL COMMENT \"Indice de la tabla de cabecera\", "; // Indice de la tabla de cabecera
-						$qNewTab .= "sucidxxx varchar(3)  NOT NULL COMMENT \"Id de la Sucursal\", ";  						 // Id de la Sucursal
-						$qNewTab .= "docidxxx varchar(20)  NOT NULL COMMENT \"Id del DO\", ";  										 // Id del DO
-						$qNewTab .= "docsufxx varchar(3)  NOT NULL COMMENT \"Sufijo del DO\", "; 									 // Sufijo del DO
-						$qNewTab .= "docpedxx text  NOT NULL COMMENT \"Numero del Pedido\", ";  									 // Numero del Pedido
-						$qNewTab .= "doctipxx varchar(20)  NOT NULL COMMENT \"Tipo de Operacion del DO\", ";  		 // Tipo de Operacion del DO
-						$qNewTab .= "comidxxx varchar(1)  NOT NULL COMMENT \"Id del Comprobante\", ";      				 // Id del Comprobante
-						$qNewTab .= "comcodxx varchar(4)  NOT NULL COMMENT \"Codigo del Comprobante\", ";  				 // Codigo del Comprobante
-						$qNewTab .= "facturax varchar(30)  NOT NULL COMMENT \"Numero de Factura\", ";      				 // Numero de Factura
-						$qNewTab .= "teridxxx varchar(20)  NOT NULL COMMENT \"Id del Tercero\", ";         				 // Id del Tercero
-						$qNewTab .= "ternomxx varchar(150)  NOT NULL COMMENT \"Nombre del Tercero\", ";  					 // Nombre del Tercero
-						$qNewTab .= "document varchar(30)  NOT NULL COMMENT \"Numero de Causacion\", ";  					 // Numero de Causacion
-						$qNewTab .= "comfecxx date  NOT NULL COMMENT \"Fecha del Comprobante\", ";  							 // Fecha del Comprobante
-						$qNewTab .= "concepto varchar(50)  NOT NULL COMMENT \"Descripcion del Concepto\", ";  		 // Descripcion del Concepto
-						$qNewTab .= "costoxxx decimal(15,2)  NOT NULL COMMENT \"Costo del Concepto\", ";  				 // Costo del Concepto
-						$qNewTab .= "ivaxxxxx decimal(15,2)  NOT NULL COMMENT \"Iva del Concepto\", ";  					 // Iva del Concepto
-						$qNewTab .= "totalxxx decimal(15,2)  NOT NULL COMMENT \"Total del Concepto\", ";  				 // Total del Concepto
-						$qNewTab .= "cliidxxx varchar(20)  NOT NULL COMMENT \"Id del Cliente\", ";  							 // Id del Cliente
-						$qNewTab .= "clinomxx varchar(150)  NOT NULL COMMENT \"Nombre del Cliente\", ";  					 // Nombre del Cliente
-						$qNewTab .= "residxxx varchar(50)  NOT NULL COMMENT \"Resolucion\", ";  									 // Resolucion
-						$qNewTab .= "regestxx varchar(10)  NOT NULL COMMENT \"Estado\", ";  											 // Estado
-						$qNewTab .= "PRIMARY KEY (lineidxx)) ENGINE=MyISAM ";
-						$xNewTab  = mysql_query($qNewTab,$xConexionTM);
-
-						if(!$xNewTab) {
-							$mReturn[0] = "false";
-							$mReturn[count($mReturn)] = "Error al Crear Tabla Temporal de Cabecera. ".mysql_error($xConexionTM);
-						} else {
-							$mReturn[0] = "true";
-							$mReturn[1] = $cTabla;
-						}
-					break;
-					case 'DETALLE':
-						/**
-						 * Nombre Random para la Tabla
-						 */
-						$cTabla = "memceret".mt_rand(1000000000, 9999999999);
-
-						$qNewTab  = "CREATE TABLE IF NOT EXISTS $cAlfa.$cTabla (";
-						$qNewTab .= "lineidxx int(11) NOT NULL AUTO_INCREMENT COMMENT \"Id Temporal\", ";		            // Autoincremental
-						$qNewTab .= "indicabx varchar(255) NOT NULL COMMENT \"Indice de la tabla de cabecera\", ";			// Indice de la tabla de cabecera
-						$qNewTab .= "doiidxxx varchar(20)  NOT NULL COMMENT \"Id de la Sucursal\", ";  				          // Id del DO
-						$qNewTab .= "comcscxx varchar(50)  NOT NULL COMMENT \"Numero del Comprobante\", ";              // Numero del Comprobante
-						$qNewTab .= "facturax varchar(50)  NOT NULL COMMENT \"Numero de la Factura\", "; 			          // Numero de la Factura
-						$qNewTab .= "pucidxxx varchar(10)  NOT NULL COMMENT \"Cuenta PUC\", ";  							          // Cuenta PUC
-						$qNewTab .= "pucretxx decimal(6,3)  NOT NULL COMMENT \"Porcentaje Retencion\", ";               // Porcentaje Retencion
-						$qNewTab .= "comvlr01 decimal(15,2)  NOT NULL COMMENT \"Base de Retencion del Comprobante\", "; // Base de Retencion del Comprobante
-						$qNewTab .= "comvlrxx decimal(15,2)  NOT NULL COMMENT \"Valor del Comprobante\", ";  		        // Valor del Comprobante
-						$qNewTab .= "teridxxx varchar(20)  NOT NULL COMMENT \"Id del Tercero\", ";      				        // Id del Tercero
-						$qNewTab .= "ternomxx varchar(150)  NOT NULL COMMENT \"Nombre del Tercero\", ";      		        // Nombre del Tercero
-						$qNewTab .= "terid2xx varchar(20)  NOT NULL COMMENT \"Id del Tercero Dos\", ";  			          // Id del Tercero Dos
-						$qNewTab .= "comfecxx date  NOT NULL COMMENT \"Fecha del Comprobante\", ";  						        // Fecha del Comprobante
-						$qNewTab .= "retenxxx varchar(20)  NOT NULL COMMENT \"Retencion\", ";  									        // Retencion
-						$qNewTab .= "comidsxx varchar(1)  NOT NULL COMMENT \"Id del Comprobante\", ";  				          // Id del Comprobante
-						$qNewTab .= "comcodsx varchar(4)  NOT NULL COMMENT \"Codigo del Comprobante\", ";  		          // Codigo del Comprobante
-						$qNewTab .= "comcscsx varchar(20)  NOT NULL COMMENT \"Consecutivo del Comprobante\", ";         // Consecutivo del Comprobante
-						$qNewTab .= "comseqsx varchar(5)  NOT NULL COMMENT \"Secuencia del Comprobante\", ";            // Secuencia del Comprobante
-						$qNewTab .= "terid2sx varchar(20)  NOT NULL COMMENT \"Id del Tercero Dos\", ";  				        // Id del Tercero Dos
-						$qNewTab .= "pucidsxx varchar(10)  NOT NULL COMMENT \"Cuenta PUC\", ";  								        // Cuenta PUC
-						$qNewTab .= "ctoidsxx varchar(10)  NOT NULL COMMENT \"Id del Concepto\", ";  						        // Id del Concepto
-						$qNewTab .= "sucidsxx varchar(3)  NOT NULL COMMENT \"Id de la Sucursal\", ";  									// Id de la Sucursal
-						$qNewTab .= "docidsxx varchar(20)  NOT NULL COMMENT \"Id del DO\", ";  													// Id del DO
-						$qNewTab .= "docsufsx varchar(3)  NOT NULL COMMENT \"Sufijo del DO\", ";  											// Sufijo del DO
-						$qNewTab .= "sccidsxx varchar(20)  NOT NULL COMMENT \"Subcentro de Costo\", ";  								// Subcentro de Costo
-						$qNewTab .= "PRIMARY KEY (lineidxx)) ENGINE=MyISAM ";
-						$xNewTab  = mysql_query($qNewTab,$xConexionTM);
-
-						if(!$xNewTab) {
-							$mReturn[0] = "false";
-							$mReturn[count($mReturn)] = "Error al Crear Tabla Temporal de Detalle. ".mysql_error($xConexionTM);
-						} else {
-							$mReturn[0] = "true";
-							$mReturn[1] = $cTabla;
-						}
-					break;
-					default:
-					break;
-				}
-			} else {
-				$mReturn[0] = "false";
-			}
-
-			return $mReturn;
-		} ## function fnCrearEstructurasCertificadoPagosaTerceros($pvParametros){ ##
-	}
 ?>

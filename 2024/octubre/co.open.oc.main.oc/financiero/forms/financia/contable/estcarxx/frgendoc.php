@@ -1,11 +1,12 @@
 <?php
-/**
- * Descargar Archivo.
- * --- Descripcion: Descargar Plantillas
- * @author Julio Lopez <julio.lopez@open-eb.co>
- * @version 001
- * @package opencomex
- */
+  namespace openComex;
+  /**
+   * Descargar Archivo.
+   * --- Descripcion: Descargar Plantillas
+   * @author Julio Lopez <julio.lopez@open-eb.co>
+   * @version 001
+   * @package opencomex
+   */
 
 	include("../../../../libs/php/utility.php");
 
@@ -17,8 +18,8 @@
     $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
     if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
-  	  $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cRuta);
-
+      $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cRuta);
+      
       header('Content-Description: File Transfer');
       header('Content-Type: application/octet-stream');
       header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
@@ -27,7 +28,7 @@
       header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
       header('Pragma: public');
       header('Content-Length: ' . filesize($cRuta));
-
+  
       ob_clean();
       flush();
       readfile($cRuta);

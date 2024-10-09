@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 	ini_set("memory_limit","512M");
 	set_time_limit(0);
 
@@ -165,7 +166,7 @@
 	$cPucId = ""; $vCuenta = array();
 	$cTitCue = "";
 	for($i=1;$i<=$_POST['nSecuencia'];$i++){
-		if($_POST['cPucId'.$i] != ""){
+		if($_POST['cPucId'.$i] <> ""){
 			$vCuenta[count($vCuenta)] = $_POST['cPucId'.$i];
 			$cPucId .= "\"".$_POST['cPucId'.$i]."\" ,";
 			$cTitCue .= $_POST['cPucId'.$i].", ";
@@ -422,24 +423,24 @@
 						}
           }
 
-					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] != "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
-					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] != "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
-					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] != "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
-					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] != "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
-					$mData[$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['teridxxx']]['PAIIDXXX'] != "")?$mData[$xDATA['teridxxx']]['PAIIDXXX']:$mDatCli[$xDATA['teridxxx']]['PAIIDXXX'];
-					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] <> "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] <> "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
+					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
+					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
+					$mData[$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['teridxxx']]['PAIIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['PAIIDXXX']:$mDatCli[$xDATA['teridxxx']]['PAIIDXXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
 					$mData[$xDATA['teridxxx']]['PAGODEXX'] += $xDATA['comvlrxx'];
 					$mData[$xDATA['teridxxx']]['PAGONODE']  = 0;
 					$mData[$xDATA['teridxxx']]['IVAXXXXX'] += ($cAlfa == 'MIRCANAX' || $cAlfa == 'TEMIRCANAX' || $cAlfa == 'DEMIRCANAX')? 0 : $nIva;
@@ -530,23 +531,23 @@
 						}
 					}
 
-					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] != "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
-					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] != "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
-					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] != "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
-					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] != "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
-					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] <> "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] <> "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
+					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
+					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
 					$mData[$xDATA['teridxxx']]['COMVRL01'] += $xDATA['comvlr01'];
 					$mData[$xDATA['teridxxx']]['COMVLRXX'] += $xDATA['comvlrxx'];
 				}
@@ -624,23 +625,23 @@
 						}
 					}
 
-					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] != "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
-					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] != "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
-					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] != "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
-					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] != "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
-					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] <> "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] <> "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
+					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
+					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
 					$mData[$xDATA['teridxxx']]['COMVRL01'] += $xDATA['comvlr01'];
 					$mData[$xDATA['teridxxx']]['COMVLRXX'] += $xDATA['comvlrxx'];
 				}
@@ -820,24 +821,24 @@
 						}
 					}
 
-					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] != "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
-					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] != "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
-					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] != "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
-					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] != "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
-					$mData[$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['teridxxx']]['PAIIDXXX'] != "")?$mData[$xDATA['teridxxx']]['PAIIDXXX']:$mDatCli[$xDATA['teridxxx']]['PAIIDXXX'];
-					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] != "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
-					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] != "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] != "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] != "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['teridxxx']]['TDIIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXX']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['teridxxx']  = ($mData[$xDATA['teridxxx']]['teridxxx'] <> "")?$mData[$xDATA['teridxxx']]['teridxxx']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['teridxxx']]['CLIAPE1X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['teridxxx']]['CLIAPE2X'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2X']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['teridxxx']]['CLINOM1X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1X']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['teridxxx']]['CLINOM2X'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2X']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['teridxxx']]['CLINOMXX'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXX']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+					$mData[$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['teridxxx']]['CLIDIRXX'] <> "")?$mData[$xDATA['teridxxx']]['CLIDIRXX']:$mDatCli[$xDATA['teridxxx']]['CLIDIRXX'];
+					$mData[$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['teridxxx']]['DEPIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['DEPIDXXX']:$mDatCli[$xDATA['teridxxx']]['DEPIDXXX'];
+					$mData[$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['teridxxx']]['CIUIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['CIUIDXXX']:$mDatCli[$xDATA['teridxxx']]['CIUIDXXX'];
+					$mData[$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['teridxxx']]['PAIIDXXX'] <> "")?$mData[$xDATA['teridxxx']]['PAIIDXXX']:$mDatCli[$xDATA['teridxxx']]['PAIIDXXX'];
+					$mData[$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['teridxxx']]['TDIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['teridxxx']]['CLIIDXXC'] <> "")?$mData[$xDATA['teridxxx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['teridxxx']]['CLIAPE1C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+					$mData[$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['teridxxx']]['CLIAPE2C'] <> "")?$mData[$xDATA['teridxxx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+					$mData[$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['teridxxx']]['CLINOM1C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+					$mData[$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['teridxxx']]['CLINOM2C'] <> "")?$mData[$xDATA['teridxxx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+					$mData[$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['teridxxx']]['CLINOMXC'] <> "")?$mData[$xDATA['teridxxx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
 
 					$mData[$xDATA['teridxxx']]['IPROXXXX'] += $nIpro;
 					$mData[$xDATA['teridxxx']]['ICONXXXX'] += $nIcon;
@@ -911,17 +912,17 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] <> "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] <> "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] <> "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
 					}
 				}
@@ -990,17 +991,17 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] <> "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] <> "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] <> "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] <> "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
 					}
 				}
@@ -1072,15 +1073,15 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$vNomCli['CLIIDXXX'];
-						$mData[$cKey]['pucidxxx']  = ($mData[$cKey]['pucidxxx'] != "")?$mData[$cKey]['pucidxxx']:$mAux[$cKey]['pucidxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$vNomCli['CLIIDXXX'];
+						$mData[$cKey]['pucidxxx']  = ($mData[$cKey]['pucidxxx'] <> "")?$mData[$cKey]['pucidxxx']:$mAux[$cKey]['pucidxxx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] <> "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['saldoxxx'];
 					}
 				}
@@ -1278,7 +1279,7 @@
 				$qData .= "$cAlfa.fcoc$nAno.comintpa != \"SI\"         AND ";
 				$qData .= "$cAlfa.fcod$nAno.pucidxxx IN ($cCuenta)     AND ";
 				$qData .= "$cAlfa.fcod$nAno.ctoidxxx NOT IN ($cCtoAnt) AND ";
-				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri != "") {
+				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri <> "") {
 					$qData .= "$cAlfa.fcod$nAno.ctoidxxx NOT IN ($cPagTri) AND ";
 				}
 				/**
@@ -1293,7 +1294,7 @@
 				$qData .= "GROUP BY $cAlfa.fcod$nAno.terid2xx,$cAlfa.fcod$nAno.teridxxx,$cAlfa.fcod$nAno.comidxxx,$cAlfa.fcod$nAno.comcodxx,$cAlfa.fcod$nAno.comcscxx ";
 				$qData .= "ORDER BY $cAlfa.fcod$nAno.terid2xx,$cAlfa.fcod$nAno.teridxxx,$cAlfa.fcod$nAno.comidxxx,$cAlfa.fcod$nAno.comcodxx,$cAlfa.fcod$nAno.comcscxx ";
 				$xData  = f_MySql("SELECT","",$qData,$xConexion01,"");
-				//f_Mensaje(__FILE__,__LINE__,$qData." ~ ".mysql_num_rows($xData));
+				// f_Mensaje(__FILE__,__LINE__,$qData." ~ ".mysql_num_rows($xData));
 
 				$mLisCli = array(); $mDatCli = array();
 				while ($xDATA = mysql_fetch_array($xData)) {
@@ -1609,25 +1610,25 @@
 					}
 
 					if ($nIncluir == 0) {
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] != "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] != "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['terid2xx']]['CLIDIRXX'] != "")?$mData[$xDATA['terid2xx']]['CLIDIRXX']:$mDatCli[$xDATA['terid2xx']]['CLIDIRXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['terid2xx']]['DEPIDXXX'] != "")?$mData[$xDATA['terid2xx']]['DEPIDXXX']:$mDatCli[$xDATA['terid2xx']]['DEPIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['terid2xx']]['CIUIDXXX'] != "")?$mData[$xDATA['terid2xx']]['CIUIDXXX']:$mDatCli[$xDATA['terid2xx']]['CIUIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['terid2xx']]['CLIAPE1C'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['terid2xx']]['CLIAPE2C'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['terid2xx']]['CLINOM1C'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['terid2xx']]['CLINOM2C'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['terid2xx']]['CLINOMXC'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] <> "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] <> "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['terid2xx']]['CLIDIRXX'] <> "")?$mData[$xDATA['terid2xx']]['CLIDIRXX']:$mDatCli[$xDATA['terid2xx']]['CLIDIRXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['terid2xx']]['DEPIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['DEPIDXXX']:$mDatCli[$xDATA['terid2xx']]['DEPIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['terid2xx']]['CIUIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['CIUIDXXX']:$mDatCli[$xDATA['terid2xx']]['CIUIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['terid2xx']]['CLIAPE1C'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['terid2xx']]['CLIAPE2C'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['terid2xx']]['CLINOM1C'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['terid2xx']]['CLINOM2C'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['terid2xx']]['CLINOMXC'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAGOXXXX'] += $xDATA['comvlr01'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IVAXXXXX'] += $xDATA['comvlr02'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PRACXXXX'] += $nPrac;
@@ -1762,30 +1763,30 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] <> "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] <> "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] <> "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] <> "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
 						//Datos adicionales para terid2xx
-						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] != "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
-						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] != "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
-						$mData[$cKey]['CLIAPE1C']  = ($mData[$cKey]['CLIAPE1C'] != "")?$mData[$cKey]['CLIAPE1C']:$vNomCl2['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2C']  = ($mData[$cKey]['CLIAPE2C'] != "")?$mData[$cKey]['CLIAPE2C']:$vNomCl2['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1C']  = ($mData[$cKey]['CLINOM1C'] != "")?$mData[$cKey]['CLINOM1C']:$vNomCl2['CLINOM1X'];
-						$mData[$cKey]['CLINOM2C']  = ($mData[$cKey]['CLINOM2C'] != "")?$mData[$cKey]['CLINOM2C']:$vNomCl2['CLINOM2X'];
-						$mData[$cKey]['CLINOMXC']  = ($mData[$cKey]['CLINOMXC'] != "")?$mData[$cKey]['CLINOMXC']:$vNomCl2['CLINOMXX'];
-						$mData[$cKey]['CLIDIRXC']  = ($mData[$cKey]['CLIDIRXC'] != "")?$mData[$cKey]['CLIDIRXC']:$vNomCl2['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXC']  = ($mData[$cKey]['DEPIDXXC'] != "")?$mData[$cKey]['DEPIDXXC']:$vNomCl2['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXC']  = ($mData[$cKey]['CIUIDXXC'] != "")?$mData[$cKey]['CIUIDXXC']:$vNomCl2['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXC']  = ($mData[$cKey]['PAIIDXXC'] != "")?$mData[$cKey]['PAIIDXXC']:$vNomCl2['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] <> "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
+						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] <> "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
+						$mData[$cKey]['CLIAPE1C']  = ($mData[$cKey]['CLIAPE1C'] <> "")?$mData[$cKey]['CLIAPE1C']:$vNomCl2['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2C']  = ($mData[$cKey]['CLIAPE2C'] <> "")?$mData[$cKey]['CLIAPE2C']:$vNomCl2['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1C']  = ($mData[$cKey]['CLINOM1C'] <> "")?$mData[$cKey]['CLINOM1C']:$vNomCl2['CLINOM1X'];
+						$mData[$cKey]['CLINOM2C']  = ($mData[$cKey]['CLINOM2C'] <> "")?$mData[$cKey]['CLINOM2C']:$vNomCl2['CLINOM2X'];
+						$mData[$cKey]['CLINOMXC']  = ($mData[$cKey]['CLINOMXC'] <> "")?$mData[$cKey]['CLINOMXC']:$vNomCl2['CLINOMXX'];
+						$mData[$cKey]['CLIDIRXC']  = ($mData[$cKey]['CLIDIRXC'] <> "")?$mData[$cKey]['CLIDIRXC']:$vNomCl2['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXC']  = ($mData[$cKey]['DEPIDXXC'] <> "")?$mData[$cKey]['DEPIDXXC']:$vNomCl2['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXC']  = ($mData[$cKey]['CIUIDXXC'] <> "")?$mData[$cKey]['CIUIDXXC']:$vNomCl2['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXC']  = ($mData[$cKey]['PAIIDXXC'] <> "")?$mData[$cKey]['PAIIDXXC']:$vNomCl2['PAIIDXXX'];
 					}
 				}
 
@@ -1913,30 +1914,30 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] <> "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] <> "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] <> "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] <> "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
 						//Datos adicionales para terid2xx
-						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] != "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
-						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] != "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
-						$mData[$cKey]['CLIAPE1C']  = ($mData[$cKey]['CLIAPE1C'] != "")?$mData[$cKey]['CLIAPE1C']:$vNomCl2['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2C']  = ($mData[$cKey]['CLIAPE2C'] != "")?$mData[$cKey]['CLIAPE2C']:$vNomCl2['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1C']  = ($mData[$cKey]['CLINOM1C'] != "")?$mData[$cKey]['CLINOM1C']:$vNomCl2['CLINOM1X'];
-						$mData[$cKey]['CLINOM2C']  = ($mData[$cKey]['CLINOM2C'] != "")?$mData[$cKey]['CLINOM2C']:$vNomCl2['CLINOM2X'];
-						$mData[$cKey]['CLINOMXC']  = ($mData[$cKey]['CLINOMXC'] != "")?$mData[$cKey]['CLINOMXC']:(($vNomCl2['TDIIDXXX'] == 31) ? $vNomCl2['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXC']  = ($mData[$cKey]['CLIDIRXC'] != "")?$mData[$cKey]['CLIDIRXC']:$vNomCl2['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXC']  = ($mData[$cKey]['DEPIDXXC'] != "")?$mData[$cKey]['DEPIDXXC']:$vNomCl2['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXC']  = ($mData[$cKey]['CIUIDXXC'] != "")?$mData[$cKey]['CIUIDXXC']:$vNomCl2['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXC']  = ($mData[$cKey]['PAIIDXXC'] != "")?$mData[$cKey]['PAIIDXXC']:$vNomCl2['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] <> "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
+						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] <> "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
+						$mData[$cKey]['CLIAPE1C']  = ($mData[$cKey]['CLIAPE1C'] <> "")?$mData[$cKey]['CLIAPE1C']:$vNomCl2['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2C']  = ($mData[$cKey]['CLIAPE2C'] <> "")?$mData[$cKey]['CLIAPE2C']:$vNomCl2['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1C']  = ($mData[$cKey]['CLINOM1C'] <> "")?$mData[$cKey]['CLINOM1C']:$vNomCl2['CLINOM1X'];
+						$mData[$cKey]['CLINOM2C']  = ($mData[$cKey]['CLINOM2C'] <> "")?$mData[$cKey]['CLINOM2C']:$vNomCl2['CLINOM2X'];
+						$mData[$cKey]['CLINOMXC']  = ($mData[$cKey]['CLINOMXC'] <> "")?$mData[$cKey]['CLINOMXC']:(($vNomCl2['TDIIDXXX'] == 31) ? $vNomCl2['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXC']  = ($mData[$cKey]['CLIDIRXC'] <> "")?$mData[$cKey]['CLIDIRXC']:$vNomCl2['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXC']  = ($mData[$cKey]['DEPIDXXC'] <> "")?$mData[$cKey]['DEPIDXXC']:$vNomCl2['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXC']  = ($mData[$cKey]['CIUIDXXC'] <> "")?$mData[$cKey]['CIUIDXXC']:$vNomCl2['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXC']  = ($mData[$cKey]['PAIIDXXC'] <> "")?$mData[$cKey]['PAIIDXXC']:$vNomCl2['PAIIDXXX'];
 					}
 				}
 
@@ -2006,7 +2007,7 @@
 				$qData .= "WHERE ";
 				$qData .= "$cAlfa.fcod$nAno.comidxxx NOT IN (\"F\") AND ";
 				$qData .= "$cAlfa.fcod$nAno.pucidxxx IN ($cCuenta) AND ";
-				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri != "") {
+				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri <> "") {
 					$qData .= "$cAlfa.fcod$nAno.ctoidxxx NOT IN ($cPagTri) AND ";
 				}
 				$qData .= "$cAlfa.fcod$nAno.comfecxx BETWEEN \"$dDesde\" AND \"$dHasta\" AND ";
@@ -2186,25 +2187,25 @@
 					}
 
 					if ($nIncluir == 0) {
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] != "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] != "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['terid2xx']]['CLIDIRXX'] != "")?$mData[$xDATA['terid2xx']]['CLIDIRXX']:$mDatCli[$xDATA['terid2xx']]['CLIDIRXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['terid2xx']]['DEPIDXXX'] != "")?$mData[$xDATA['terid2xx']]['DEPIDXXX']:$mDatCli[$xDATA['terid2xx']]['DEPIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['terid2xx']]['CIUIDXXX'] != "")?$mData[$xDATA['terid2xx']]['CIUIDXXX']:$mDatCli[$xDATA['terid2xx']]['CIUIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['terid2xx']]['CLIAPE1C'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['terid2xx']]['CLIAPE2C'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['terid2xx']]['CLINOM1C'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['terid2xx']]['CLINOM2C'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['terid2xx']]['CLINOMXC'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] <> "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] <> "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['terid2xx']]['CLIDIRXX'] <> "")?$mData[$xDATA['terid2xx']]['CLIDIRXX']:$mDatCli[$xDATA['terid2xx']]['CLIDIRXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['terid2xx']]['DEPIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['DEPIDXXX']:$mDatCli[$xDATA['terid2xx']]['DEPIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['terid2xx']]['CIUIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['CIUIDXXX']:$mDatCli[$xDATA['terid2xx']]['CIUIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1C']  = ($mData[$xDATA['terid2xx']]['CLIAPE1C'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2C']  = ($mData[$xDATA['terid2xx']]['CLIAPE2C'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2C']:$mDatCli[$xDATA['teridxxx']]['CLIAPE2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1C']  = ($mData[$xDATA['terid2xx']]['CLINOM1C'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1C']:$mDatCli[$xDATA['teridxxx']]['CLINOM1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2C']  = ($mData[$xDATA['terid2xx']]['CLINOM2C'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2C']:$mDatCli[$xDATA['teridxxx']]['CLINOM2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXC']  = ($mData[$xDATA['terid2xx']]['CLINOMXC'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXC']:$mDatCli[$xDATA['teridxxx']]['CLINOMXX'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IMPDXXXX'] += $xDATA['comvlr02'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IVARXXXX']  = 0;
 					}
@@ -2400,7 +2401,7 @@
 				$qData .= "$cAlfa.fcoc$nAno.comintpa != \"SI\"         AND ";
 				$qData .= "$cAlfa.fcod$nAno.pucidxxx IN ($cCuenta)     AND ";
 				$qData .= "$cAlfa.fcod$nAno.ctoidxxx NOT IN ($cCtoAnt) AND ";
-				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri != "") {
+				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri <> "") {
 					$qData .= "$cAlfa.fcod$nAno.ctoidxxx NOT IN ($cPagTri) AND ";
 				}
 				/**
@@ -2733,26 +2734,26 @@
 					
 
 					if ($nIncluir == 0) {
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] != "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] != "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['terid2xx']]['CLIDIRXX'] != "")?$mData[$xDATA['terid2xx']]['CLIDIRXX']:$mDatCli[$xDATA['terid2xx']]['CLIDIRXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['terid2xx']]['DEPIDXXX'] != "")?$mData[$xDATA['terid2xx']]['DEPIDXXX']:$mDatCli[$xDATA['terid2xx']]['DEPIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['terid2xx']]['CIUIDXXX'] != "")?$mData[$xDATA['terid2xx']]['CIUIDXXX']:$mDatCli[$xDATA['terid2xx']]['CIUIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] <> "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] <> "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIDIRXX']  = ($mData[$xDATA['terid2xx']]['CLIDIRXX'] <> "")?$mData[$xDATA['terid2xx']]['CLIDIRXX']:$mDatCli[$xDATA['terid2xx']]['CLIDIRXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEPIDXXX']  = ($mData[$xDATA['terid2xx']]['DEPIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['DEPIDXXX']:$mDatCli[$xDATA['terid2xx']]['DEPIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CIUIDXXX']  = ($mData[$xDATA['terid2xx']]['CIUIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['CIUIDXXX']:$mDatCli[$xDATA['terid2xx']]['CIUIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAGOXXXX'] += $xDATA['comvlr01'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IVAXXXXX'] += $xDATA['comvlr02'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PRACXXXX'] += $nPrac;
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['ASUMXXXX'] += $nAsum;
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['COMUNXXX'] += $nComun;
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['NDOMXXXX'] += $nDom;
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
 					}
 				}
 			
@@ -2852,23 +2853,23 @@
 						}
 					}
 					
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] != "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] <> "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['PAIIDXXX']  = ($mData[$xDATA['terid2xx']]['PAIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['PAIIDXXX']:$mDatCli[$xDATA['terid2xx']]['PAIIDXXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
 					if($xDATA['commovxx'] == "C"){
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IPROXXXX'] += $xDATA['comvlrxx']; 
 					}elseif($xDATA['commovxx'] == "D"){
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['DEVXXXXX'] += $xDATA['comvlrxx']; 
 					}
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
 				
 				}
 			break;
@@ -2936,7 +2937,7 @@
 				$qData .= "WHERE ";
 				$qData .= "$cAlfa.fcod$nAno.comidxxx NOT IN (\"F\") AND ";
 				$qData .= "$cAlfa.fcod$nAno.pucidxxx IN ($cCuenta) AND ";
-				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri != "") {
+				if (($cAlfa == "ADUACARX" || $cAlfa == "TEADUACARX" || $cAlfa == "DEADUACARX") && $cPagTri <> "") {
 					$qData .= "$cAlfa.fcod$nAno.ctoidxxx NOT IN ($cPagTri) AND ";
 				}
 				$qData .= "$cAlfa.fcod$nAno.comfecxx BETWEEN \"$dDesde\" AND \"$dHasta\" AND ";
@@ -3108,18 +3109,18 @@
 					}
 
 					if ($nIncluir == 0) {
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] != "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] != "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] <> "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2di']  = ($mData[$xDATA['terid2xx']]['terid2di'] <> "")?$mData[$xDATA['terid2xx']]['terid2di']:$xDATA['terid2xx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IMPDXXXX'] += $xDATA['comvlr02'];
 						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IVARXXXX']  = 0;
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+						$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
 					
 					}
 				}
@@ -3258,20 +3259,20 @@
 			
 					}
 					
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] != "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] != "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] != "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] != "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXX']  = ($mData[$xDATA['terid2xx']]['TDIIDXXX'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXX']:$mDatCli[$xDATA['terid2xx']]['TDIIDXXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['terid2xx']  = ($mData[$xDATA['terid2xx']]['terid2xx'] <> "")?$mData[$xDATA['terid2xx']]['terid2xx']:$xDATA['terid2xx'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE1X']  = ($mData[$xDATA['terid2xx']]['CLIAPE1X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE1X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE1X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIAPE2X']  = ($mData[$xDATA['terid2xx']]['CLIAPE2X'] <> "")?$mData[$xDATA['terid2xx']]['CLIAPE2X']:$mDatCli[$xDATA['terid2xx']]['CLIAPE2X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM1X']  = ($mData[$xDATA['terid2xx']]['CLINOM1X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM1X']:$mDatCli[$xDATA['terid2xx']]['CLINOM1X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOM2X']  = ($mData[$xDATA['terid2xx']]['CLINOM2X'] <> "")?$mData[$xDATA['terid2xx']]['CLINOM2X']:$mDatCli[$xDATA['terid2xx']]['CLINOM2X'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLINOMXX']  = ($mData[$xDATA['terid2xx']]['CLINOMXX'] <> "")?$mData[$xDATA['terid2xx']]['CLINOMXX']:$mDatCli[$xDATA['terid2xx']]['CLINOMXX'];
 				
 					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IMPGENXX'] += $nImpGen;
 					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IVADEXXX'] += $nIvaDev; 
 					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['IMPCONXX'] = $nImpCon;
 
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
-					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] != "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['TDIIDXXC']  = ($mData[$xDATA['terid2xx']]['TDIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['TDIIDXXC']:$mDatCli[$xDATA['teridxxx']]['TDIIDXXX'];
+					$mData[$xDATA['terid2xx']."~".$xDATA['teridxxx']]['CLIIDXXC']  = ($mData[$xDATA['terid2xx']]['CLIIDXXC'] <> "")?$mData[$xDATA['terid2xx']]['CLIIDXXC']:$xDATA['teridxxx'];
 				
 				}
 			break;
@@ -3394,160 +3395,24 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] != "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] <> "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] <> "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] <> "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] <> "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] <> "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
-						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] != "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
+						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] <> "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
 						
 					}
 				}
 
-			break;
-      case "5251PCC": // 5251 ~ CXC MANDATOS
-
-				//Dentro de las cuentas seleccionadas busco solo aquellas que sean por cobrar
-				$cCuenta = "";
-				for($nC=0; $nC<count($vCuenta); $nC++) {
-					$qCxC  = "SELECT CONCAT(pucgruxx,pucctaxx,pucsctax,pucauxxx,pucsauxx) AS pucidxxx ";
-					$qCxC .= "FROM $cAlfa.fpar0115 ";
-					$qCxC .= "WHERE ";
-					$qCxC .= "CONCAT(pucgruxx,pucctaxx,pucsctax,pucauxxx,pucsauxx) = \"{$vCuenta[$nC]}\" ";
-					$qCxC .= "LIMIT 0,1";
-					$xCxC  = mysql_query($qCxC,$xConexion01);
-					// f_Mensaje(__FILE__,__LINE__,$qCxC."~".mysql_num_rows($xCxC));
-					if (mysql_num_rows($xCxC) > 0) {
-						$xRCxC = mysql_fetch_array($xCxC);
-						$cCuenta .= "\"{$xRCxC['pucidxxx']}\",";
-					}
-				}
-				$cCuenta = substr($cCuenta, 0, -1);
-
-        //Buscando comprobantes marcados de Nota Credito
-        $qNotCre  = "SELECT ";
-        $qNotCre .= "CONCAT(comidxxx,\"-\",comcodxx) AS comidxxx ";
-        $qNotCre .= "FROM $cAlfa.fpar0117 ";
-        $qNotCre .= "WHERE ";
-        $qNotCre .= "comidxxx = \"C\" AND ";
-        $qNotCre .= "comtipxx != \"AJUSTES\" ";
-        $xNotCre  = mysql_query($qNotCre,$xConexion01);
-        $cNotCre  = "";
-        while ($xRDB = mysql_fetch_array($xNotCre)) {
-          $cNotCre .= "\"{$xRDB['comidxxx']}\",";
-        }
-        $cNotCre = substr($cNotCre,0,strlen($cNotCre)-1);
-        //FIN Buscando comprobantes marcados de Nota Credito
-
-        //Buscando comprobantes marcados de Nota Debito
-        $qNotDeb  = "SELECT ";
-        $qNotDeb .= "CONCAT(comidxxx,\"-\",comcodxx) AS comidxxx ";
-        $qNotDeb .= "FROM $cAlfa.fpar0117 ";
-        $qNotDeb .= "WHERE ";
-        $qNotDeb .= "comidxxx = \"D\" AND ";
-        $qNotDeb .= "comtipxx != \"AJUSTES\" ";
-        $xNotDeb = f_MySql("SELECT","",$qNotDeb,$xConexion01,"");
-        $cNotDeb = "";
-        while ($xRDB = mysql_fetch_array($xNotDeb)) {
-          $cNotDeb .= "\"{$xRDB['comidxxx']}\",";
-        }
-        $cNotDeb = substr($cNotDeb,0,strlen($cNotDeb)-1);
-        //FIN Buscando comprobantes marcados de Nota Debito
-
-				$vTablas = array(); $mAux = array();
-				if ($cCuenta != "") {
-					for ($nAnio=$vSysStr['financiero_ano_instalacion_modulo'];$nAnio<=$nAno;$nAnio++) {
-						$qDatMov  = "SELECT ";
-						$qDatMov .= "comidxxx,";
-            $qDatMov .= "comcodxx,";
-            $qDatMov .= "comcscxx,";
-            $qDatMov .= "comcsc2x,";
-            $qDatMov .= "comseqxx,";
-            $qDatMov .= "comidcxx,";
-            $qDatMov .= "comcodcx,";
-            $qDatMov .= "comcsccx,";
-            $qDatMov .= "pucidxxx,";
-            $qDatMov .= "teridxxx,";
-            $qDatMov .= "terid2xx,";
-            $qDatMov .= "comfecxx,";
-            $qDatMov .= "regestxx,";
-            $qDatMov .= "regfcrex,";
-            $qDatMov .= "ccoidxxx,";
-            $qDatMov .= "sccidxxx,";
-            $qDatMov .= "commovxx,";
-						$qDatMov .= "SUM(IF(commovxx = \"D\", comvlrxx, comvlrxx*-1)) AS saldoxxx ";
-						$qDatMov .= "FROM $cAlfa.fcod$nAnio ";
-						$qDatMov .= "WHERE ";
-            //Excluyendo Facturas y notas credito y notas debito
-            $qDatMov .= "comidxxx != \"F\" AND ";
-            if ($cNotCre != "") {
-              $qDatMov .= "CONCAT(comidxxx,\"-\",comcodxx) NOT IN ($cNotCre) AND ";
-            }
-            if ($cNotDeb != "") {
-              $qDatMov .= "CONCAT(comidxxx,\"-\",comcodxx) NOT IN ($cNotDeb) AND ";
-            }
-						$qDatMov .= "pucidxxx IN ($cCuenta)  AND ";
-						$qDatMov .= "comfecxx <= \"$dHasta\" AND ";
-            $qDatMov .= "(comfacxx = \"\" OR comfacxx LIKE \"%-P%\") AND ";
-						$qDatMov .= "regestxx = \"ACTIVO\" ";
-						$qDatMov .= "GROUP BY ABS(teridxxx) ";
-            $qDatMov .= "ORDER BY ABS(teridxxx) ";
-						$xDatMov = mysql_query($qDatMov,$xConexion01);
-						// echo $qDatMov."~".mysql_num_rows($xDatMov)."<br><br>";
-
-						while ($xDATA = mysql_fetch_array($xDatMov)) {
-              //La cuenta por cobrar se genera al proveedor, por lo que el tercero del arreglo es terid2xx y el cliente es teridxxx
-							$mAux["{$xDATA['teridxxx']}"]['teridxxx']  = $xDATA['teridxxx'];
-							$mAux["{$xDATA['teridxxx']}"]['COMVLRXX'] += $xDATA['saldoxxx'];
-						}
-					}
-				}
-
-				##Creacion de la tabla detalle del dia
-				foreach ($mAux as $cKey => $cValue) {
-					if ($mAux[$cKey]['COMVLRXX'] != 0) {
-
-						# Traigo el Nombre del Cliente
-						$qNomCli  = "SELECT * ";
-						$qNomCli .= "FROM $cAlfa.SIAI0150 ";
-						$qNomCli .= "WHERE $cAlfa.SIAI0150.CLIIDXXX = \"{$mAux[$cKey]['teridxxx']}\" LIMIT 0,1";
-						$xNomCli = f_MySql("SELECT","",$qNomCli,$xConexion01,"");
-						$vNomCli = mysql_fetch_array($xNomCli);
-						# Fin Traigo el Nombre del Cliente
-
-						//Busco el codigo del pais
-						$qCodPai = "SELECT PAIIDNXX FROM $cAlfa.SIAI0052 WHERE PAIIDXXX = \"{$vNomCli['PAIIDXXX']}\" LIMIT 0,1";
-						$xCodPai  = f_MySql("SELECT","",$qCodPai,$xConexion01,"");
-						if (mysql_num_rows($xCodPai) > 0) {
-							$xRCP = mysql_fetch_array($xCodPai);
-							$vNomCli['PAIIDXXX'] =  ($xRCP['PAIIDNXX'] != "") ? $xRCP['PAIIDNXX'] : $vNomCli['PAIIDXXX'];
-						}
-						//Fin Busco el codigo del pais
-
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] != "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['teridxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
-						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
-						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] != "")?$mData[$cKey]['TDIIDXXC']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
-					}
-				}
 			break;
 			case "5252": // NUEVO 5252 ~ CXP
 
@@ -3667,21 +3532,21 @@
 						}
 						//Fin Busco el codigo del pais
 
-						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] != "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
-						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] != "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
-						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] != "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
-						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] != "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
-						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] != "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
-						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] != "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
-						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] != "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
-						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] != "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
-						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] != "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
-						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] != "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
-						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] != "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
+						$mData[$cKey]['TDIIDXXX']  = ($mData[$cKey]['TDIIDXXX'] <> "")?$mData[$cKey]['TDIIDXXX']:$vNomCli['TDIIDXXX'];
+						$mData[$cKey]['teridxxx']  = ($mData[$cKey]['teridxxx'] <> "")?$mData[$cKey]['teridxxx']:$mAux[$cKey]['teridxxx'];
+						$mData[$cKey]['CLIAPE1X']  = ($mData[$cKey]['CLIAPE1X'] <> "")?$mData[$cKey]['CLIAPE1X']:$vNomCli['CLIAPE1X'];
+						$mData[$cKey]['CLIAPE2X']  = ($mData[$cKey]['CLIAPE2X'] <> "")?$mData[$cKey]['CLIAPE2X']:$vNomCli['CLIAPE2X'];
+						$mData[$cKey]['CLINOM1X']  = ($mData[$cKey]['CLINOM1X'] <> "")?$mData[$cKey]['CLINOM1X']:$vNomCli['CLINOM1X'];
+						$mData[$cKey]['CLINOM2X']  = ($mData[$cKey]['CLINOM2X'] <> "")?$mData[$cKey]['CLINOM2X']:$vNomCli['CLINOM2X'];
+						$mData[$cKey]['CLINOMXX']  = ($mData[$cKey]['CLINOMXX'] <> "")?$mData[$cKey]['CLINOMXX']:(($vNomCli['TDIIDXXX'] == 31) ? $vNomCli['CLINOMXX'] : "");
+						$mData[$cKey]['CLIDIRXX']  = ($mData[$cKey]['CLIDIRXX'] <> "")?$mData[$cKey]['CLIDIRXX']:$vNomCli['CLIDIRXX'];
+						$mData[$cKey]['DEPIDXXX']  = ($mData[$cKey]['DEPIDXXX'] <> "")?$mData[$cKey]['DEPIDXXX']:$vNomCli['DEPIDXXX'];
+						$mData[$cKey]['CIUIDXXX']  = ($mData[$cKey]['CIUIDXXX'] <> "")?$mData[$cKey]['CIUIDXXX']:$vNomCli['CIUIDXXX'];
+						$mData[$cKey]['PAIIDXXX']  = ($mData[$cKey]['PAIIDXXX'] <> "")?$mData[$cKey]['PAIIDXXX']:$vNomCli['PAIIDXXX'];
 						$mData[$cKey]['COMVLRXX']  = $mAux[$cKey]['COMVLRXX'];
 						//Datos adicionales para terid2xx
-						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] != "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
-						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] != "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
+						$mData[$cKey]['TDIIDXXC']  = ($mData[$cKey]['TDIIDXXC'] <> "")?$mData[$cKey]['TDIIDXXC']:$vNomCl2['TDIIDXXX'];
+						$mData[$cKey]['terid2xx']  = ($mData[$cKey]['terid2xx'] <> "")?$mData[$cKey]['terid2xx']:$mAux[$cKey]['terid2xx'];
 					}
 				}
 
@@ -3755,18 +3620,18 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PAGODEXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PAGONODE'],0,",",".") ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IVAXXXXX'],0,",",".") ?></td>
@@ -3822,17 +3687,17 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVRL01'],0,",",".") ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 															</tr>
@@ -3872,14 +3737,14 @@
 														</tr>
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"> <?php echo number_format(0,0,",",".") ?></td>
 															</tr>
@@ -3922,15 +3787,15 @@
 														</tr>
 														<?php for ($i=0;$i<count($mData);$i++) { ?>
 															<tr bgcolor = "white" height="30">
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="right"><?php echo ($mData[$i]['comvlrxx'] != "")?number_format($mData[$i]['comvlrxx'],0,",","."):"&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="right"><?php echo ($mData[$i]['comvlrxx'] <> "")?number_format($mData[$i]['comvlrxx'],0,",","."):"&nbsp;"; ?></td>
 																<td class="letra7" align="right"><?php echo number_format(0,0,",",".") ?></td>
 																<td class="letra7" align="right"><?php echo number_format(0,0,",",".") ?></td>
 															</tr>
@@ -3980,15 +3845,15 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['IPROXXXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['ICONXXXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['IMANXXXX'],0,",",".") ?></td>
@@ -4039,18 +3904,18 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
@@ -4095,18 +3960,18 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
@@ -4148,15 +4013,15 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['pucidxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['pucidxxx']}','')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
@@ -4236,18 +4101,18 @@
 											?>
 												<tr bgcolor = "white" height="30">
 													<td class="letra7" align="center">&nbsp;</td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2di']!= "") ?f_Digito_Verificacion($mData[$i]['terid2di']): "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2di']<> "") ?f_Digito_Verificacion($mData[$i]['terid2di']): "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PAGOXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IVAXXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PRACXXXX'],0,",",".") ?></td>
@@ -4257,14 +4122,14 @@
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['NDOMXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PRACCREE'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['ASUMCREE'],0,",",".") ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "") ? f_Digito_Verificacion($mData[$i]['CLIIDXXC']): "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1C']!= "") ?$mData[$i]['CLIAPE1C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2C']!= "") ?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1C']!= "") ?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2C']!= "") ?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXC']!= "") ?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "") ? f_Digito_Verificacion($mData[$i]['CLIIDXXC']): "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1C']<> "") ?$mData[$i]['CLIAPE1C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2C']<> "") ?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1C']<> "") ?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2C']<> "") ?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXC']<> "") ?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
 												</tr>
 											<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 										</table><br>
@@ -4314,28 +4179,28 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 																<!-- Nuevos campos para el reporte 1018 -->
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?"{$mData[$i]['terid2xx']}": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?f_Digito_Verificacion($mData[$i]['terid2xx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1C'] != "") ?  $mData[$i]['CLIAPE1C'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2C']!= "")?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1C']!= "")?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2C']!= "")?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXC']!= "")?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?"{$mData[$i]['terid2xx']}": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?f_Digito_Verificacion($mData[$i]['terid2xx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1C'] <> "") ?  $mData[$i]['CLIAPE1C'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2C']<> "")?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1C']<> "")?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2C']<> "")?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXC']<> "")?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
 													</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 													</table>
@@ -4388,28 +4253,28 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?f_Digito_Verificacion($mData[$i]['teridxxx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
 																<!-- Nuevos campos para el reporte 1027 -->
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?"{$mData[$i]['terid2xx']}": "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?f_Digito_Verificacion($mData[$i]['terid2xx']): "&nbsp;";  ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1C'] != "") ?  $mData[$i]['CLIAPE1C'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2C']!= "")?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1C']!= "")?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2C']!= "")?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXC']!= "")?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?"{$mData[$i]['terid2xx']}": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?f_Digito_Verificacion($mData[$i]['terid2xx']): "&nbsp;";  ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1C'] <> "") ?  $mData[$i]['CLIAPE1C'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2C']<> "")?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1C']<> "")?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2C']<> "")?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXC']<> "")?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
 													</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 													</table>
@@ -4462,24 +4327,24 @@
 												##Fin Arreglo para Aducarga y si es el concepto "1330950001" ##
 											?>
 												<tr bgcolor = "white" height="30">
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2di']!= "") ?f_Digito_Verificacion($mData[$i]['terid2di']): "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2di']<> "") ?f_Digito_Verificacion($mData[$i]['terid2di']): "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IMPDXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IVARXXXX'],0,",",".") ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "") ? f_Digito_Verificacion($mData[$i]['CLIIDXXC']): "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1C']!= "") ?$mData[$i]['CLIAPE1C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2C']!= "") ?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1C']!= "") ?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2C']!= "") ?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXC']!= "") ?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "") ? f_Digito_Verificacion($mData[$i]['CLIIDXXC']): "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1C']<> "") ?$mData[$i]['CLIAPE1C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2C']<> "") ?$mData[$i]['CLIAPE2C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1C']<> "") ?$mData[$i]['CLINOM1C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2C']<> "") ?$mData[$i]['CLINOM2C']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXC']<> "") ?$mData[$i]['CLINOMXC']: "&nbsp;"; ?></td>
 												</tr>
 											<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 										</table><br>
@@ -4547,17 +4412,17 @@
 												<tr bgcolor = "white" height="30">
 													<td class="letra7" align="center"></td>
 													<td class="letra7" align="center"></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PAGOXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IVAXXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['PRACXXXX'],0,",",".") ?></td>
@@ -4565,8 +4430,8 @@
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMUNXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['NDOMXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="center">0</td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
 												</tr>
 											<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 										</table><br>
@@ -4612,19 +4477,19 @@
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['terid2xx']}','')\">{$mData[$i]['terid2xx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['terid2xx']}','')\">{$mData[$i]['terid2xx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['IPROXXXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['DEVXXXXX'],0,",",".") ?></td>
 																<td class="letra7" align="center">0</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "")?$mData[$i]['TDIIDXXC']: "&nbsp;"?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "")?$mData[$i]['CLIIDXXC']: "&nbsp;"?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "")?$mData[$i]['TDIIDXXC']: "&nbsp;"?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "")?$mData[$i]['CLIIDXXC']: "&nbsp;"?></td>
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 													</table>
@@ -4673,17 +4538,17 @@
 											?>
 												<tr bgcolor = "white" height="30">
 													<td class="letra7" align="center">&nbsp;</td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "") ?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['CLIIDXXC']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['terid2di']}</a>": "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+													<td class="letra7" align="left">  <?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IMPDXXXX'],0,",",".") ?></td>
 													<td class="letra7" align="right"> <?php echo number_format($mData[$i]['IVARXXXX'],0,",",".") ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "") ? $mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+													<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "") ? $mData[$i]['CLIIDXXC']: "&nbsp;"; ?></td>
 												</tr>
 											<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 										</table><br>
@@ -4726,20 +4591,20 @@
 														<?php foreach ($mData as $i => $cValue) {	?>
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['terid2xx']}','')\">{$mData[$i]['terid2xx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['terid2xx']}','')\">{$mData[$i]['terid2xx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
 												
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['IMPGENXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['IVADEXXX'],0,",",".") ?></td>
 																<td class="letra7" align="right"><?php echo number_format($mData[$i]['IMPCONXX'],0,",",".") ?></td>
 															
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "")?$mData[$i]['TDIIDXXC']: "&nbsp;"?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] != "")?$mData[$i]['CLIIDXXC']: "&nbsp;"?></td> 
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "")?$mData[$i]['TDIIDXXC']: "&nbsp;"?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CLIIDXXC'] <> "")?$mData[$i]['CLIIDXXC']: "&nbsp;"?></td> 
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 													</table>
@@ -4748,8 +4613,7 @@
 										</table><br>
 									<?php break;
 
-									case "5251": // Nuevo 5251
-                  case "5251PCC": // Nuevo 5251 ?>
+									case "5251": // Nuevo 5251 ?>
 										<table width="99%"  cellspacing="0" cellpadding="0" border="0">
 											<tr>
 												<td>
@@ -4789,20 +4653,20 @@
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['terid2xx']}','{$mData[$i]['teridxxx']}')\">{$mData[$i]['terid2xx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?$mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['terid2xx']}','{$mData[$i]['teridxxx']}')\">{$mData[$i]['terid2xx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?$mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"{$mData[$i]['teridxxx']}": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"{$mData[$i]['teridxxx']}": "&nbsp;"; ?></td>
 
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
@@ -4851,20 +4715,20 @@
 															<tr bgcolor = "white" height="30">
 																<td class="letra7" align="center">&nbsp;</td>
 																<td class="letra7" align="center">&nbsp;</td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] != "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']!= "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] != "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']!= "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']!= "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']!= "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']!= "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']!= "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']!= "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']!= "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']!= "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXX'] <> "")?$mData[$i]['TDIIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['teridxxx']<> "")?"<a href=\"javascript:f_Datos_Tercero('{$mData[$i]['teridxxx']}','{$mData[$i]['terid2xx']}')\">{$mData[$i]['teridxxx']}</a>": "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE1X'] <> "") ?  $mData[$i]['CLIAPE1X'] : "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIAPE2X']<> "")?$mData[$i]['CLIAPE2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM1X']<> "")?$mData[$i]['CLINOM1X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOM2X']<> "")?$mData[$i]['CLINOM2X']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLINOMXX']<> "")?$mData[$i]['CLINOMXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="left"><?php echo ($mData[$i]['CLIDIRXX']<> "")?$mData[$i]['CLIDIRXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['DEPIDXXX']<> "")?$mData[$i]['DEPIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['CIUIDXXX']<> "")?$mData[$i]['CIUIDXXX']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['PAIIDXXX']<> "")?$mData[$i]['PAIIDXXX']: "&nbsp;"; ?></td>
 																<td class="letra7" align="right"> <?php echo number_format($mData[$i]['COMVLRXX'],0,",",".") ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] != "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
-																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']!= "")?"{$mData[$i]['terid2xx']}": "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['TDIIDXXC'] <> "")?$mData[$i]['TDIIDXXC']: "&nbsp;"; ?></td>
+																<td class="letra7" align="center"><?php echo ($mData[$i]['terid2xx']<> "")?"{$mData[$i]['terid2xx']}": "&nbsp;"; ?></td>
 															</tr>
 														<?php } //Fin While que recorre el cursor de la matriz generada por la consulta. ?>
 													</table>
@@ -5837,7 +5701,6 @@
 					break;
 
 					case "5251": ## Nuevo 5251 ~ CXC
-          case "5251PCC": ## Nuevo 5251 ~ CXC
 						$data .= '<table cellspacing="0" cellpadding="0" border="1">';
 							$data .= '<tr>';
 								$data .= '<td align="left" colspan="16"><b>Informe de Medios Magneticos - Formato 5251</b></td>';
@@ -5956,7 +5819,7 @@
 							header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 							header("Cache-Control: private",false); // required for certain browsers
 							header('Pragma: public');
-
+	
 							ob_clean();
 							flush();
 							readfile($cFile);

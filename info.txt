@@ -3,6 +3,7 @@
 /** CONTENEDOR */
 
 
+
 /** ARCHIVOS DE TERCEROS */
 opencomex/financiero/forms/financia/contable/terceros/frisu055.php**
 opencomex/financiero/forms/financia/contable/terceros/frpar104Dc.php**
@@ -25,7 +26,7 @@ SELECT * FROM sysrecoc WHERE proidxxx LIKE '1130'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Recursos para ver que archivos se han insertado
-SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '2020'
+SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '1140'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Opciones Menu

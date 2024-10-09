@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 
   /**
    * Genera archivo excel de Ingresos Propios Detallado por Concepto
@@ -745,7 +746,7 @@
                     case "DEGRUMALCO"://GRUMALCO
                       ?>
                       <td class = "name" style="width: 150px;"><center>
-                        <img width="120" height="70" style="left: 17px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
+                        <img width="150" height="100" style="left: 17px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
                       </td>
                       <?php
                       $nColRes = 1;
@@ -765,7 +766,7 @@
                     case "DEANDINOSX": //ANDINOSX
                       ?>
                       <td class = "name" style="width: 150px;"><center>
-                        <img width="75" height="90" style="left: 25px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg">
+                        <img width="150" height="60" style="left: 17px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg">
                       </td>
                       <?php
                       $nColRes = 1;
@@ -1237,7 +1238,7 @@
               header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
               header('Pragma: public');
               header('Content-Length: ' . filesize($cFile));
-
+  
               ob_clean();
               flush();
               readfile($cFile);

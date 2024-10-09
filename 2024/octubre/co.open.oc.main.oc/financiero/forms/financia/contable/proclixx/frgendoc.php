@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
   /**
    * Descargar Archivo.
    * --- Descripcion: Descargar Reporte Excel -> Productividad por Cliente.
@@ -25,7 +26,7 @@
       header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
       header('Pragma: public');
       header('Content-Length: ' . filesize($cRuta));
-
+  
       ob_clean();
       flush();
       readfile($cRuta);

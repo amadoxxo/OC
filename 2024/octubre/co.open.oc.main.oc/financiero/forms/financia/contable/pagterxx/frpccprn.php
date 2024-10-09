@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
   /**
 	 * Imprime Concepto de Pagos a Terceros.
 	 * --- Descripcion: Permite Imprimir Concepto de Pagos a Terceros.
@@ -445,7 +446,7 @@
                         case "DEGRUMALCO"://GRUMALCO
                           ?>
                             <td class="name" width="150"><center>
-                              <img width="120" height="70" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
+                              <img width="150" height="90" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
                             </td>
                           <?php
                           $nColRes = 1;
@@ -465,7 +466,7 @@
                         case "DEANDINOSX": //ANDINOSX
                           ?>
                             <td class="name" width="150"><center>
-                              <img width="70" height="60" style="left: 30px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg">
+                              <img width="150" height="60" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg">
                             </td>
                           <?php
                         $nColRes = 1;
@@ -845,7 +846,7 @@
                 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                 header("Cache-Control: private",false); // required for certain browsers
                 header('Pragma: public');
-
+  
                 ob_clean();
                 flush();
                 readfile($cFile);

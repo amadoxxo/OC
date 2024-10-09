@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Analisis de Cuentas.
 	 * --- Descripcion: Permite Imprimir Estado de cuentas(por Cobrar / por Pagar).
@@ -623,7 +626,7 @@
 																	case "GRUMALCO"://GRUMALCO
 																	case "TEGRUMALCO"://GRUMALCO
 																	case "DEGRUMALCO"://GRUMALCO?>
-																		<img width="120" height="60" src="<?php echo $cRoot.$cPlesk_Skin_Directory.'/logomalco.jpg'?>" >
+																		<img width="160" height="60" src="<?php echo $cRoot.$cPlesk_Skin_Directory.'/logomalco.jpg'?>" >
 																	<?php break;
 																	case "DHLEXPRE": //DHLEXPRE
 																	case "TEDHLEXPRE": //DHLEXPRE
@@ -638,7 +641,7 @@
 																	case "ANDINOSX"://ANDINOSX
 																	case "TEANDINOSX"://ANDINOSX
 																	case "DEANDINOSX": ?>
-																		<img width="100" height="70" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg' ?>" >
+																		<img width="200" height="70" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/logoandinos.jpg' ?>" >
 																	<?php break;
 																	case "GRUPOALC"://GRUPOALC
 																	case "TEGRUPOALC"://GRUPOALC
@@ -2049,7 +2052,7 @@
 								  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 								  header("Cache-Control: private",false); // required for certain browsers
 								  header('Pragma: public');
-
+ 
 								  ob_clean();
 								  flush();
 								  readfile($cFile);
@@ -2154,7 +2157,7 @@
 										case "GRUMALCO"://GRUMALCO
 										case "TEGRUMALCO"://GRUMALCO
 										case "DEGRUMALCO"://GRUMALCO
-											$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logomalco.jpg',14,8,30,13);
+											$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logomalco.jpg',14,8,40,13);
 										break;
 										case "DHLEXPRE": //DHLEXPRE
 										case "TEDHLEXPRE": //DHLEXPRE
@@ -2169,7 +2172,7 @@
 										case "ANDINOSX"://ANDINOSX
 										case "TEANDINOSX"://ANDINOSX
 										case "DEANDINOSX"://ANDINOSX
-											$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 15, 8, 20, 13);
+											$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoandinos.jpg', 15, 8, 30, 13);
 											break;
 										case "GRUPOALC"://GRUPOALC
 										case "TEGRUPOALC"://GRUPOALC

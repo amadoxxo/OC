@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Estado de cuentas.
 	 * --- Descripcion: Permite Imprimir Estado de cuentas(por Cobrar / por Pagar).
@@ -156,12 +159,13 @@
 			$qRegistros .= "$cAlfa.$cTabla.teridxxx = \"$cTerId\" AND ";
 		}
 		$qRegistros .= "$cAlfa.$cTabla.regestxx = \"ACTIVO\" ";
-		$xRegistros  = f_MySql("SELECT","",$qRegistros,$xConexion01,"");
+    $cIdCountRow = mt_rand(1000000000, 9999999999);
+		$xRegistros = mysql_query($qRegistros, $xConexion01, true, $cIdCountRow);
 		mysql_free_result($xRegistros);
 
-		$xNumRows = mysql_query("SELECT FOUND_ROWS();");
-		$xRNR = mysql_fetch_array($xNumRows);
-		$nRegistros = $xRNR['FOUND_ROWS()'];
+    $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+    $xRNR       = mysql_fetch_array($xNumRows);
+    $nRegistros = $xRNR['CANTIDAD'];
 		mysql_free_result($xNumRows);
 	
 		$vParBg['pbadbxxx'] = $cAlfa;                                         	//Base de Datos
@@ -507,7 +511,7 @@
 														case "DEANDINOSX": //ANDINOSX ?>
 															<td rowspan="2" class="name"  width="100%">
 															<center>
-																<img width="70" height="50" style="left: 18px;margin-top: 5px;position: absolute;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg">
+																<img width="120" height="50" style="left: 18px;margin-top: 5px;position: absolute;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg">
 																<br><span style="font-size:14px;font-weight:bold">DE CUENTA POR <?php echo $cTipoCta ?></span><br>
 																<?php echo $cMes . " " . substr($fec, 8, 2) . " DE " . substr($fec, 0, 4) ?>
 															</center><br>
@@ -1261,7 +1265,7 @@
 								$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
 								if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
-									header('Content-Description: File Transfer');
+									/* header('Content-Description: File Transfer');
 									header('Content-Type: application/octet-stream');
 									header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
 									header('Content-Transfer-Encoding: binary');
@@ -1272,7 +1276,8 @@
 			
 									ob_clean();
 									flush();
-									readfile($cFile);
+									readfile($cFile); */
+									echo "yes";
 								}
 							} else {
 								$cNomArc = $cNomFile;
@@ -1404,7 +1409,7 @@
 									case "ANDINOSX": //ANDINOSX
 									case "TEANDINOSX": //ANDINOSX
 									case "DEANDINOSX": //ANDINOSX
-										$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 14, $py + 8, 20, 13);
+										$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoandinos.jpg', 14, $py + 8, 36, 12);
 									break;
 									case "GRUPOALC": //GRUPOALC
 									case "TEGRUPOALC": //GRUPOALC

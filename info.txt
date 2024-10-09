@@ -25,7 +25,7 @@ SELECT * FROM sysrecoc WHERE proidxxx LIKE '1130'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Recursos para ver que archivos se han insertado
-SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '1130'
+SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '2020'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Opciones Menu

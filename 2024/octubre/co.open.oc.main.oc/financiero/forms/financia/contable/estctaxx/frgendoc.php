@@ -1,7 +1,8 @@
 <?php
+  namespace openComex;
   /**
    * Descargar Archivo.
-   * --- Descripcion: Descargar Reporte Excel -> Reporte Estado de Cuenta
+   * --- Descripcion: Descargar Reporte Excel -> Estado de Cuenta
    * @author Juan Jose Trujillo <juan.trujillo@open-eb.co>
    * @version 001
    * @package opencomex
@@ -11,7 +12,7 @@
 
 	$cRuta = f_Buscar_Niveles_Hasta_Opencomex(getcwd()).$vSysStr['system_download_directory']."/".$cRuta;
   if (file_exists($cRuta)) {
-    // Obtener la ruta absoluta del archivo
+  	// Obtener la ruta absoluta del archivo
     $cAbsolutePath = realpath($cRuta);
     $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 

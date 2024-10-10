@@ -1,5 +1,7 @@
-
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Reporte Inventario de Formularios.
 	 * --- Descripcion: Permite Imprimir Reporte Inventario de Formularios.

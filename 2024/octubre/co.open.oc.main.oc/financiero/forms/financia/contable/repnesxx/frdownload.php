@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 /**
  * Descargar Archivo.
  * --- Descripcion: Descargar Plantillas Generar Interface Subir Productos

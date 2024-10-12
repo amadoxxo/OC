@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 
 	/**
    * Genera archivo excel de ingresos propios y pagos a terceros facturados
@@ -2180,6 +2181,7 @@
 							ob_clean();
 							flush();
 							readfile($cFile);
+							exit;
 						}
 					}else{
 						$cNomArc = $cNomFile;

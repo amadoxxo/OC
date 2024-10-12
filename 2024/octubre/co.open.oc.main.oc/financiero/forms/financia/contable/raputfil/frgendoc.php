@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 /**
  * Descargar Archivo.
  * --- Descripcion: Descargar Excel Errores REPORTE APUTFILE

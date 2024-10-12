@@ -1,20 +1,9 @@
 /** SQL */
 
 /** CONTENEDOR */
-opencomex/financiero/forms/financia/contable/cauproau/frcaafrm.php
-opencomex/financiero/forms/financia/contable/cauproau/frcaanue.php
-opencomex/financiero/forms/financia/contable/cauproau/frcac144.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpabpo.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpacli.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpacnt.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpacnv.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpacom.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpacsc.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpadel.php
-opencomex/financiero/forms/financia/contable/cauproau/frcpaprn.php
-opencomex/financiero/forms/financia/contable/cauproau/frgridos.php
-opencomex/financiero/forms/financia/contable/cauproau/frscc121.php
-
+opencomex/financiero/forms/financia/contable/estcarpc/fresc150.php
+opencomex/financiero/forms/financia/contable/estcarpc/frescprn.php
+opencomex/financiero/forms/financia/contable/estcarpc/frvercom.php
 
 
 
@@ -40,7 +29,7 @@ SELECT * FROM sysrecoc WHERE proidxxx LIKE '1130'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Recursos para ver que archivos se han insertado
-SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '3420'
+SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '3430'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Opciones Menu

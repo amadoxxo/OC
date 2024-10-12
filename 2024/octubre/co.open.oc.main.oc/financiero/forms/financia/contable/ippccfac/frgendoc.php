@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 /**
  * Descargar Archivo.
  * --- Descripcion: Descargar Plantillas
@@ -16,7 +17,7 @@
 
     if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
       $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cRuta);
-
+  	
       header('Content-Description: File Transfer');
       header('Content-Type: application/octet-stream');
       header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
@@ -30,6 +31,6 @@
       flush();
       readfile($cRuta);
       exit;
-    } 
+    }
   }
 ?>

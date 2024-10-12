@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 
   set_time_limit(0);
   ini_set("memory_limit", "512M");
@@ -714,7 +715,7 @@
                             case "DEGRUMALCO"://GRUMALCO
                               ?>
                               <td class = "name" style="width: 150px;">
-                                <img width="120" height="70" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
+                                <img width="150" height="90" style="left: 15px;margin-top:1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg">
                               </td>
                               <?php
                               $nColRes = 1;
@@ -734,7 +735,7 @@
                             case "DEANDINOSX"://ANDINOSX
                               ?>
                               <td class = "name" style="width: 150px;">
-                              <img width="75" height="80" style="left: 30px;margin-top: 1px;position: relative;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg">
+                              <img width="133" height="50" style="left: 55px;margin-top: 1px;" src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg">
                               </td>
                               <?php
                               $nColRes = 1;

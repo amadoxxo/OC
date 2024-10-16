@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 /**
  * Genera el archivo Excel para cargas de CODIGO CEBE
  * @package opencomex

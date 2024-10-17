@@ -1,9 +1,6 @@
 /** SQL */
 
 /** CONTENEDOR */
-opencomex/financiero/forms/financia/contable/estcarpc/fresc150.php
-opencomex/financiero/forms/financia/contable/estcarpc/frescprn.php
-opencomex/financiero/forms/financia/contable/estcarpc/frvercom.php
 
 
 
@@ -29,7 +26,7 @@ SELECT * FROM sysrecoc WHERE proidxxx LIKE '1130'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Recursos para ver que archivos se han insertado
-SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE proidxxx LIKE '3430'
+SELECT DISTINCT(recrutax)  FROM sysrecoc WHERE rectabpu LIKE 'sys00040' AND proidxxx LIKE '160'
 ORDER BY sysrecoc.menidxxx ASC
 
 // Consultar Opciones Menu
@@ -41,37 +38,40 @@ SELECT *  FROM sys00006 WHERE usridxxx LIKE 'ADMIN' AND proidxxx LIKE '1130' ORD
 
 // Consultar
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '0', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '0', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcseini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '0', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomnue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '0', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcsenue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 // Nuevo
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '10', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '10', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcseini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '10', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomnue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '10', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcsenue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '10', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomgra.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '10', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcsegra.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 // Editar
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '20', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '1000', '160', '90', 'opencomex/logistica/forms/certixxx/logistic/matinsfa/frmifini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '20', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomnue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '1000', '160', '90', 'opencomex/logistica/forms/certixxx/logistic/matinsfa/frmifnue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '20', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomgra.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '1000', '160', '90', 'opencomex/logistica/forms/certixxx/logistic/matinsfa/frmifgri.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+
+INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
+VALUES (NULL, 'sys00040', '1000', '160', '90', 'opencomex/logistica/forms/certixxx/logistic/matinsfa/frmifgra.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 // Cambiar estado
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '30', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '40', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcseini.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '30', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomnue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '40', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcsenue.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
 
 INSERT INTO `LOCK`.`sysrecoc` (`recidxxx`, `rectabpu`, `modidxxx`, `proidxxx`, `menidxxx`, `recrutax`, `recexcxx`, `regusrxx`, `regdcrex`, `regdmodx`, `regestxx`, `regstamp`) 
-VALUES (NULL, 'sys00040', '1000', '140', '30', 'opencomex/logistica/forms/certixxx/logistic/comproba/frcomgra.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());
+VALUES (NULL, 'sys00040', '2000', '20', '50', 'opencomex/logistica/forms/adminisx/comercia/condiser/frcsegra.php', '', 'ADMIN', NOW(), NOW(), 'ACTIVO', NOW());

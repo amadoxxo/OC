@@ -135,7 +135,7 @@
 						 	  <center>
 						 	  	<?php 
 									/*** Si la variable Categoriacion Conceptos Factuacion esta encendida se habilita el menu de Categoria Conceptos***/ 
-									if($vSysStr['system_habilitar_categorizacion_conceptos_facturacion'] == 'SI'){?>
+									// if($vSysStr['system_habilitar_categorizacion_conceptos_facturacion'] == 'SI'){?>
 										<fieldset>
 	   									<legend>B&uacute;squeda por Categor&iacute;a</legend>
  											<table border = '0' cellpadding = '0' cellspacing = '0' width='600'>
@@ -167,9 +167,9 @@
   									  </table>
 									  </fieldset>
 									 	<br>
-									 	<?php 
-										}
-										?>
+									 	<!-- <?php 
+										// }
+										?> -->
 						 	  <center>
 										<?php 
 							/*** Si la variable Categoriacion Conceptos Factuacion esta encendida se habilita el menu de Categoria Conceptos***/ 

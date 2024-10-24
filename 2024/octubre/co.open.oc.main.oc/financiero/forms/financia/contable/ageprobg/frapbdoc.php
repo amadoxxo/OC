@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 /**
  * Descargar Archivo.
  * --- Descripcion: Descargar Plantillas Interface Standar de Items Vuce

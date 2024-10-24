@@ -1134,15 +1134,7 @@
             } ?>
   					<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_remove_bg.gif" style="cursor:pointer" onClick = "javascript:document.forms['frgrm']['oBuscar'][0].checked = true;f_Radio('cBuscar','OR');f_LimpiarConsulta();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Limpiar</td>
   					<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_ok_bg.gif" style="cursor:pointer" onClick = "javascript:f_GenSql()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generar</td>
-            <?php
-						switch ($kMysqlDb) {
-							case "SIACOSIA":
-							case "DESIACOSIP":
-							case "TESIACOSIP": ?>
-  					    <td width="160" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_new4-038_160.gif" style="cursor:pointer" onClick = "javascript:fnGenSqlReporteCuentasTerceros();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cuentas Terceros</td>
-            <?php
-              break;
-            } ?>
+            <td width="160" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_new4-038_160.gif" style="cursor:pointer" onClick = "javascript:fnGenSqlReporteCuentasTerceros();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cuentas Terceros</td>
   					<td width="91" height="21" Class="name" background="<?php echo $cPlesk_Skin_Directory ?>/btn_cancel_bg.gif" style="cursor:pointer" onClick = 'javascript:f_Retorna()'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir</td>
   				</tr>
   			</table>

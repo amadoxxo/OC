@@ -11,16 +11,6 @@ opencomex/financiero/forms/financia/contable/terceros/frpar104Df.php**
 opencomex/financiero/forms/financia/contable/terceros/frpar105Dc.php**
 opencomex/financiero/forms/financia/contable/terceros/frpar105Df.php**
 
-
-opencomex/financiero/forms/financia/contable/terceros/frcac144.php
-opencomex/financiero/forms/financia/contable/terceros/frpar124.php
-opencomex/financiero/forms/financia/contable/terceros/frrepctg.php
-opencomex/financiero/forms/financia/contable/terceros/frter119.php
-opencomex/financiero/forms/financia/contable/terceros/frtercbg.php
-opencomex/financiero/forms/financia/contable/terceros/frtercbn.php
-opencomex/financiero/forms/financia/contable/terceros/frterfrm.php
-
-
 // Consultar Recursos
 SELECT * FROM sysrecoc WHERE proidxxx LIKE '1130'
 ORDER BY sysrecoc.menidxxx ASC

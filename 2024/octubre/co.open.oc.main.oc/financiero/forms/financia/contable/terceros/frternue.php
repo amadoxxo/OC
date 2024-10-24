@@ -1613,13 +1613,7 @@
 													<?php 
 													$cOnChange = "";
 													if ($_COOKIE['kModo'] == "EDITAR") {
-														switch($cAlfa){
-															case "DESIACOSIP":
-															case "TESIACOSIP":
-															case "SIACOSIA":
-																$cOnChange = "onChange = \"javascript:fnHabilitarCuentasBancarias();\"";
-															break;
-														}
+														$cOnChange = "onChange = \"javascript:fnHabilitarCuentasBancarias();\"";
 													}
 													?>
 													<select class="letrase" size="1" name="cTerMedP" style = "width:240"<?php echo ($cOnChange != '') ? " ".$cOnChange : ""?>>
@@ -1790,7 +1784,7 @@
 												</td>
 											</tr>
 											<!-- Condiciones Especiales Tasa de Cambio -->
-											<?php if (f_InList($cAlfa,"SIACOSIA","TESIACOSIP","DESIACOSIP")) { ?>
+											<!-- <?php if (f_InList($cAlfa,"SIACOSIA","TESIACOSIP","DESIACOSIP")) { ?> -->
 											<tr>
 												<td colspan="36">
 													<fieldset id="tblTasaCambio">
@@ -1836,7 +1830,7 @@
 													</fieldset>
 												</td>
 											</tr>
-											<?php } else { ?>
+											<!-- <?php } else { ?> -->
 												<tr>
 													<td colspan="36">
 														<input type = 'hidden' name = 'cCliTp'   readonly>
@@ -1845,7 +1839,7 @@
 														<input type = 'hidden' name = 'cCliTpPuc'  readonly>
 													</td>
 												</tr>
-											<?php }?>
+											<!-- <?php }?> -->
 											<!-- Fin Condiciones Especiales Tasa de Cambio -->
 											<tr>
 												<td colspan="36">
@@ -2208,11 +2202,6 @@
 														</td>
 													</tr>
                           <br>
-                        <?php
-                        break;
-                        case "TEDHLEXPRE":
-                        case "DEDHLEXPRE":
-                        case "DHLEXPRE": ?>
 													<tr>
 														<td colspan="36">
                               <fieldset>
@@ -2327,7 +2316,6 @@
 													</tr>
                           <br>
                         <?php
-                        break;
                         case "TEADUANERA":
                         case "DEADUANERA":
                         case "ADUANERA": ?>
@@ -2428,13 +2416,9 @@
 					f_Habilita('oCliArAcr');
 					f_Mostrar_Conceptos();
 					f_Mostrar();
+					fnCargarCuentasBancarias();
+					fnHabilitarCuentasBancarias();
 					switch("<?php echo $cAlfa ?>"){
-						case "TESIACOSIP":
-						case "DESIACOSIP":
-						case "SIACOSIA":
-							fnCargarCuentasBancarias();
-              fnHabilitarCuentasBancarias();
-						break;
             case "TEGRUMALCO":
             case "DEGRUMALCO":
             case "GRUMALCO":
@@ -2461,14 +2445,8 @@
 					document.forms['frgrm']['nTerDV'].value = "";
 					}
 					f_HideShow(document.forms['frgrm']['cTpeId'].value);
-					switch("<?php echo $cAlfa ?>"){
-						case "TESIACOSIP":
-						case "DESIACOSIP":
-						case "SIACOSIA":
-							fnCargarCuentasBancarias();
-              fnHabilitarCuentasBancarias();
-						break;
-					}
+					fnCargarCuentasBancarias();
+          fnHabilitarCuentasBancarias();
 					f_CargarGrillas();
 					f_Habilita('oCliNrp');
 					f_Habilita('oCliAr');
@@ -2564,13 +2542,9 @@
 					document.forms['frgrm']['oCliPci'].disabled	   = true;
           document.forms['frgrm']['oCliNsOfe'].disabled	 = true;
 
+					fnCargarCuentasBancarias();
+					fnHabilitarCuentasBancarias();
 					switch("<?php echo $cAlfa ?>"){
-						case "TESIACOSIP":
-						case "DESIACOSIP":
-						case "SIACOSIA":
-							fnCargarCuentasBancarias();
-              fnHabilitarCuentasBancarias();
-						break;
 						case "TEDHLEXPRE":
 						case "DEDHLEXPRE":
 						case "DHLEXPRE":

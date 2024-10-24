@@ -1,10 +1,9 @@
 <?php
-  namespace openComex;
-
+namespace openComex;
 /**
- * Tracking Formas de Cobro
- * --- Este programa permite realizar consultas rapidas de las Formas de Cobro que se Encuentra en la Base de Datos.
- * @author elian.amado@openits.co
+ * Tracking Tipos de Ticket.
+ * --- Descripcion: Este programa permite realizar consultas rapidas Tipos de Ticket que se Encuentra en la Base de Datos.
+ * @author cristian.perdomo@openits.co
  * @package openComex
  * @version 001
  */
@@ -34,10 +33,10 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
     <script languaje = 'javascript' src = '<?php echo $cSystem_Libs_JS_Directory ?>/utility.js'></script>
     <script language="javascript">
 
-      function fnVer(xPfaId) {
-        var cPathUrl = "frfconue.php?cFcoId="+xPfaId;
+      function fnVer(xTtiCod) {
+        var cPathUrl = "frttinue.php?cTtiCod="+xTtiCod;
         document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-        document.cookie="kMenDes=Ver Forma de Cobro;path="+"/";
+        document.cookie="kMenDes=Ver Tipo de Ticket;path="+"/";
         document.cookie="kModo=VER;path="+"/";
         parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
         document.location = cPathUrl; // Invoco el menu.
@@ -48,9 +47,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           case "1":
             if (document.forms['frnav']['oCheck'].checked == true) {
               var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-              var cPathUrl = "frfconue.php?cFcoId="+mMatriz[0];
+              var cPathUrl = "frttinue.php?cTtiCod="+mMatriz[0];
               document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-              document.cookie="kMenDes=Editar Forma de Cobro;path="+"/";
+              document.cookie="kMenDes=Editar Tipo de Ticket;path="+"/";
               document.cookie="kModo="+xModo+";path="+"/";
               parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
               document.location = cPathUrl; // Invoco el menu.
@@ -63,9 +62,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                 // Solo Deja Legalizar el Primero Seleccionado
                 zSw_Prv = 1;
                 var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                var cPathUrl = "frfconue.php?cFcoId="+mMatriz[0];
+                var cPathUrl = "frttinue.php?cTtiCod="+mMatriz[0];
                 document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                document.cookie="kMenDes=Editar Forma de Cobro;path="+"/";
+                document.cookie="kMenDes=Editar Organizacion de Ventas;path="+"/";
                 document.cookie="kModo="+xModo+";path="+"/";
                 parent.fmnav.location = "<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel4.php";
                 document.location = cPathUrl; // Invoco el menu.
@@ -81,9 +80,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
             case "1":
               if (document.forms['frnav']['oCheck'].checked == true) {
                 var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
-                if (confirm("Esta Seguro de Cambiar el Estado de la Forma de Cobro["+mMatriz[0]+"] ?")) {
+                if (confirm("Esta Seguro de Cambiar el Estado de la Tipo del Ticket ["+mMatriz[0]+"] ?")) {
                   document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                  document.forms['frestado']['cFcoId'].value=mMatriz[0];
+                  document.forms['frestado']['cTtiCod'].value=mMatriz[0];
                   document.forms['frestado']['cEstado'].value=mMatriz[1];
                   document.cookie="kModo="+xModo+";path="+"/";
                   document.forms['frestado'].submit();
@@ -95,11 +94,47 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
               for (i=0;i<document.forms['frnav']['oCheck'].length;i++) {
                 if (document.forms['frnav']['oCheck'][i].checked == true && zSw_Prv == 0) {
                   var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
-                  if (confirm("Esta Seguro de Cambiar el Estado de la Forma de Cobro["+mMatriz[0]+"] ?")) {
+                  if (confirm("Esta Seguro de Cambiar el Estado de la Tipo del Ticket ["+mMatriz[0]+"] ?")) {
                     zSw_Prv = 1;
                     var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
                     document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
-                    document.forms['frestado']['cFcoId'].value=mMatriz[0];
+                    document.forms['frestado']['cTtiCod'].value=mMatriz[0];
+                    document.forms['frestado']['cEstado'].value=mMatriz[1];
+                    document.cookie="kModo="+xModo+";path="+"/";
+                    document.forms['frestado'].submit();
+                  }
+                }
+              }
+            break;
+          }
+        }
+      }
+
+      function fnEliminar(xModo) {
+        if (document.forms['frnav']['nRecords'].value!="0"){
+          switch (document.forms['frnav']['nRecords'].value) {
+            case "1":
+              if (document.forms['frnav']['oCheck'].checked == true) {
+                var mMatriz = document.forms['frnav']['oCheck'].id.split('~');
+                if (confirm("Esta Seguro de Eliminar la Tipo del Ticket ["+mMatriz[0]+"] ?")) {
+                  document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
+                  document.forms['frestado']['cTtiCod'].value=mMatriz[0];
+                  document.forms['frestado']['cEstado'].value=mMatriz[1];
+                  document.cookie="kModo="+xModo+";path="+"/";
+                  document.forms['frestado'].submit();
+                }
+              }
+            break;
+            default:
+              var zSw_Prv = 0;
+              for (i=0;i<document.forms['frnav']['oCheck'].length;i++) {
+                if (document.forms['frnav']['oCheck'][i].checked == true && zSw_Prv == 0) {
+                  var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
+                  if (confirm("Esta Seguro de Eliminar la Tipo del Ticket ["+mMatriz[0]+"] ?")) {
+                    zSw_Prv = 1;
+                    var mMatriz = document.forms['frnav']['oCheck'][i].id.split('~');
+                    document.cookie="kIniAnt=<?php echo substr($_SERVER['PHP_SELF'],(strrpos($_SERVER['PHP_SELF'],"/")+1),strlen($_SERVER['PHP_SELF'])) ?>;path="+"/";
+                    document.forms['frestado']['cTtiCod'].value=mMatriz[0];
                     document.forms['frestado']['cEstado'].value=mMatriz[1];
                     document.cookie="kModo="+xModo+";path="+"/";
                     document.forms['frestado'].submit();
@@ -198,12 +233,12 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
     </script>
   </head>
   <body topmargin = "0" leftmargin = "0" rightmargin = "0" bottommargin = "0" marginheight = "0" marginwidth = "0">
-    <form name = "frestado" action = "frfcogra.php" method = "post" target="fmpro">
-      <input type = "hidden" name = "cFcoId" value = "">
+    <form name = "frestado" action = "frttigra.php" method = "post" target="fmpro">
+      <input type = "hidden" name = "cTtiCod" value = "">
       <input type = "hidden" name = "cEstado" value = "">
     </form>
 
-    <form name = "frnav" action="frfcoini.php" method="post" target="fmwork">
+    <form name = "frnav" action="frttiini.php" method="post" target="fmwork">
       <input type = "hidden" name = "nRecords"   value = "">
       <input type = "hidden" name = "vLimInf"    value = "<?php echo $vLimInf ?>">
       <input type = "hidden" name = "cSortField" value = "<?php echo $cSortField ?>">
@@ -249,7 +284,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                                 <a href = "javascript:fnLink('<?php echo $mUsrMen['modidxxx'] ?>','<?php echo $mUsrMen['proidxxx'] ?>','<?php echo $mUsrMen['menidxxx'] ?>','<?php echo $mUsrMen['menformx']?>','<?php echo $mUsrMen['menopcxx']?>','<?php echo $mUsrMen['mendesxx']?>')"
                                   style="color:<?php echo $vSysStr['system_link_menu_color'] ?>"><?php echo $mUsrMen['mendesxx'] ?></a>
                               </center>
-                            </td>
+                            </td> 
                           <?php } else { ?>
                             <td Class="clase08" width="20%">
                               <center>
@@ -291,53 +326,26 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           $vPaginas = "1";
         }
 
-        if ($_POST['vSearch'] != "") {
-          /**
-           * Buscando los id que corresponden a las busquedas de los lefjoin
-           */
-          $qUsuario  = "SELECT ";
-          $qUsuario .= "USRIDXXX, USRNOMXX ";
-          $qUsuario .= "FROM $cAlfa.SIAI0003 ";
-          $qUsuario .= "WHERE ";
-          $qUsuario .= "USRNOMXX LIKE \"%{$_POST['vSearch']}%\" ";
-          $xUsuario = f_MySql("SELECT","",$qUsuario,$xConexion01,"");
-          $cNombreSearch = "";
-          while ($xRCN = mysql_fetch_array($xUsuario)) {
-            $cNombreSearch .= "\"{$xRCN['USRIDXXX']}\",";
-          }
-          $cNombreSearch = substr($cNombreSearch,0,strlen($cNombreSearch)-1);
-        }
-
         $y=0;
-
-        $mFormCo = array();
-        $qFormCo  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
-        $qFormCo .= "$cAlfa.lpar0130.fcoidxxx, ";
-        $qFormCo .= "$cAlfa.lpar0130.fcodesxx, ";
-        $qFormCo .= "$cAlfa.lpar0130.regusrxx, "; // Código Usuario
-        $qFormCo .= "$cAlfa.lpar0130.regfcrex, "; // Fecha de creación
-        $qFormCo .= "$cAlfa.lpar0130.reghcrex, "; // Hora de creación
-        $qFormCo .= "$cAlfa.lpar0130.regfmodx, "; // Fecha de modificación
-        $qFormCo .= "$cAlfa.lpar0130.reghmodx, "; // Hora de modificación
-        if (substr_count($_POST['cOrderByOrder'],"usrnomxx") > 0) {
-          $qFormCo .= "IF($cAlfa.SIAI0003.USRNOMXX != \"\",$cAlfa.SIAI0003.USRNOMXX,TRIM(CONCAT($cAlfa.SIAI0003.USRPAPEX,\" \",$cAlfa.SIAI0003.USRSAPEX,\" \",$cAlfa.SIAI0003.USRPNOMX,\" \",$cAlfa.SIAI0003.USRSNOMX))) AS usrnomxx, ";
-        }
-        $qFormCo .= "$cAlfa.lpar0130.regestxx ";
-        $qFormCo .= "FROM $cAlfa.lpar0130 ";
-        if (substr_count($_POST['cOrderByOrder'],"usrnomxx") > 0) {
-          $qFormCo .= "LEFT JOIN $cAlfa.SIAI0003 ON $cAlfa.lpar0130.regusrxx = $cAlfa.SIAI0003.USRIDXXX ";
-        }
+        $mTipTic = array();
+        $qTipTic  = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ";
+        $qTipTic .= "$cAlfa.lpar0158.tticodxx, ";
+        $qTipTic .= "$cAlfa.lpar0158.ttidesxx, ";
+        $qTipTic .= "$cAlfa.lpar0158.regusrxx, "; // Código Usuario
+        $qTipTic .= "$cAlfa.lpar0158.regfcrex, "; // Fecha de creación
+        $qTipTic .= "$cAlfa.lpar0158.reghcrex, "; // Hora de creación
+        $qTipTic .= "$cAlfa.lpar0158.regfmodx, "; // Fecha de modificación
+        $qTipTic .= "$cAlfa.lpar0158.reghmodx, "; // Hora de modificación
+        $qTipTic .= "$cAlfa.lpar0158.regestxx ";
+        $qTipTic .= "FROM $cAlfa.lpar0158 ";
         if ($_POST['vSearch'] != "") {
-          $qFormCo .= "WHERE ";
-          $qFormCo .= "$cAlfa.lpar0130.fcoidxxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qFormCo .= "$cAlfa.lpar0130.fcodesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qFormCo .= "$cAlfa.lpar0130.regfcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qFormCo .= "$cAlfa.lpar0130.reghcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
-          $qFormCo .= "$cAlfa.lpar0130.regfmodx LIKE \"%{$_POST['vSearch']}%\" OR ";
-          if ($cNombreSearch != "") {
-            $qFormCo .= "$cAlfa.lpar0130.regusrxx IN ($cNombreSearch) OR ";
-          }
-          $qFormCo .= "$cAlfa.lpar0130.regestxx LIKE \"%{$_POST['vSearch']}%\" ";
+          $qTipTic .= "WHERE ";
+          $qTipTic .= "$cAlfa.lpar0158.tticodxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qTipTic .= "$cAlfa.lpar0158.ttidesxx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qTipTic .= "$cAlfa.lpar0158.regfcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qTipTic .= "$cAlfa.lpar0158.reghcrex LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qTipTic .= "$cAlfa.lpar0158.regfmodx LIKE \"%{$_POST['vSearch']}%\" OR ";
+          $qTipTic .= "$cAlfa.lpar0158.regestxx LIKE \"%{$_POST['vSearch']}%\" ";
         }
         //// CODIGO NUEVO PARA ORDER BY
         $cOrderBy = "";
@@ -356,31 +364,21 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           $cOrderBy = "ORDER BY regfmodx DESC ";
         }
         //// FIN CODIGO NUEVO PARA ORDER BY
-        $qFormCo .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
-        $xFormCo  = f_MySql("SELECT","",$qFormCo,$xConexion01,"");
-        //echo $qFormCo." ~ ".mysql_num_rows($xFormCo);
+        $qTipTic .= "$cOrderBy LIMIT $vLimInf,$vLimSup ";
+        $cIdCountRow = mt_rand(1000000000, 9999999999);
+        $xTipTic = mysql_query($qTipTic, $xConexion01, true, $cIdCountRow);
+        // echo $qTipTic." ~ ".mysql_num_rows($xTipTic);
 
         /***** FIN SQL *****/
 
-        $xNumRows = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
-        $xRNR = mysql_fetch_array($xNumRows);
-        $nRNR += $xRNR['FOUND_ROWS()'];
+        $xNumRows = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD",$xConexion01);
+        $xRNR     = mysql_fetch_array($xNumRows);
+        $nRNR     = $xRNR['CANTIDAD'];
 
-        while ($xRDC = mysql_fetch_array($xFormCo)) {
-          //Buscando nombre del cliente
-          $qUsuario  = "SELECT ";
-          $qUsuario .= "IF($cAlfa.SIAI0003.USRNOMXX != \"\",$cAlfa.SIAI0003.USRNOMXX,TRIM(CONCAT($cAlfa.SIAI0003.USRPAPEX,\" \",$cAlfa.SIAI0003.USRSAPEX,\" \",$cAlfa.SIAI0003.USRPNOMX,\" \",$cAlfa.SIAI0003.USRSNOMX))) AS USRNOMXX ";
-          $qUsuario .= "FROM $cAlfa.SIAI0003 ";
-          $qUsuario .= "WHERE ";
-          $qUsuario .= "USRIDXXX = \"{$xRDC['regusrxx']}\" LIMIT 0,1 ";
-          $xUsuario = f_MySql("SELECT","",$qUsuario,$xConexion01,"");
-          if (mysql_num_rows($xUsuario) > 0) {
-            $vUsuario = mysql_fetch_array($xUsuario);
-            $xRDC['usrnomxx'] = $vUsuario['USRNOMXX'];
-          } else {
-            $xRDC['usrnomxx'] = "SIN NOMBRE";
-          }
-          $mFormCo[count($mFormCo)] = $xRDC;
+        while ($xRDC = mysql_fetch_array($xTipTic)) {
+          // Aplicando Filtro XSS
+          $xRDC = fnSetFilter($xRDC);
+          $mTipTic[count($mTipTic)] = $xRDC;
         }
       ?>
       <center>
@@ -388,7 +386,7 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
           <tr>
             <td>
               <fieldset>
-                <legend>Periodicidad de Facturaci&oacute;n(<?php echo $nRNR?>)</legend>
+                <legend>Registros en la Consulta (<?php echo $nRNR?>)</legend>
                 <center>
                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                     <tr>
@@ -511,6 +509,9 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                               case "CAMBIAESTADO": ?>
                                 <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_cambest.gif" onClick = "javascript:fnCambiaEstado('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="Cambiar Estado, Solo Uno">
                               <?php break;
+                              case "ELIMINAR": ?>
+                                <img src = "<?php echo $cPlesk_Skin_Directory_Logistic ?>/b_drop.png" onClick = "javascript:fnEliminar('<?php echo $mBotAcc['menopcxx'] ?>')" style = "cursor:pointer" title="Eliminar, Solo Uno">
+                              <?php break;
                             }
                           }
                           /***** Fin Botones de Acceso Rapido *****/
@@ -524,23 +525,18 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                   <table cellspacing="0" width="100%">
                     <tr bgcolor = '<?php echo $vSysStr['system_row_title_color_ini'] ?>'>
                       <td class="name" width="13%">
-                        <a href = "javascript:fnOrder_By('onclick','fcoidxxx');" title="Ordenar">Id</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "fcoidxxx">
-                        <input type = "hidden" name = "fcoidxxx" value = "<?php echo $_POST['fcoidxxx'] ?>" id = "fcoidxxx">
-                        <script language="javascript">fnOrder_By('','fcoidxxx')</script>
+                        <a href = "javascript:fnOrder_By('onclick','tticodxx');" title="Ordenar">C&oacute;digo</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "tticodxx">
+                        <input type = "hidden" name = "tticodxx" value = "<?php echo $_POST['tticodxx'] ?>" id = "tticodxx">
+                        <script language="javascript">fnOrder_By('','tticodxx')</script>
                       </td>
                       <td class="name" width="40%">
-                        <a href = "javascript:fnOrder_By('onclick','fcodesxx');" title="Ordenar">Forma de Cobro</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "fcodesxx">
-                        <input type = "hidden" name = "fcodesxx" value = "<?php echo $_POST['fcodesxx'] ?>" id = "fcodesxx">
-                        <script language="javascript">fnOrder_By('','fcodesxx')</script>
+                        <a href = "javascript:fnOrder_By('onclick','ttidesxx');" title="Ordenar">Descripci&oacute;n</a>&nbsp;
+                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "ttidesxx">
+                        <input type = "hidden" name = "ttidesxx" value = "<?php echo $_POST['ttidesxx'] ?>" id = "ttidesxx">
+                        <script language="javascript">fnOrder_By('','ttidesxx')</script>
                       </td>
-                      <td class="name" width="18%">
-                        <a href = "javascript:fnOrder_By('onclick','usrnomxx');" title="Ordenar">Usuario</a>&nbsp;
-                        <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "usrnomxx">
-                        <input type = "hidden" name = "usrnomxx" value = "<?php echo $_POST['usrnomxx'] ?>" id = "usrnomxx">
-                        <script language="javascript">fnOrder_By('','usrnomxx')</script>
-                      </td>
+                      
                       <td class="name" width="07%">
                         <a href = "javascript:fnOrder_By('onclick','regfcrex');" title="Ordenar">Creado</a>&nbsp;
                         <img src="<?php echo $cPlesk_Skin_Directory_Logistic ?>/spacer.png" border="0" width="11" height="9" title = "" id = "regfcrex">
@@ -576,10 +572,10 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                       </td>
                     </tr>
                     <script languaje="javascript">
-                      document.forms['frnav']['nRecords'].value = "<?php echo count($mFormCo) ?>";
+                      document.forms['frnav']['nRecords'].value = "<?php echo count($mTipTic) ?>";
                     </script>
-                      <?php for ($i=0;$i<count($mFormCo);$i++) {
-                        if ($i < count($mFormCo)) { // Para Controlar el Error
+                      <?php for ($i=0;$i<count($mTipTic);$i++) {
+                        if ($i < count($mTipTic)) { // Para Controlar el Error
                         $cColor = "{$vSysStr['system_row_impar_color_ini']}";
                         if($y % 2 == 0) {
                           $cColor = "{$vSysStr['system_row_par_color_ini']}";
@@ -587,27 +583,26 @@ $xUsrMen = f_MySql("SELECT","",$qUsrMen,$xConexion01,"");
                         <!--<tr bgcolor = "<?php echo $cColor ?>">-->
                         <tr bgcolor = "<?php echo $cColor ?>" onmouseover="javascript:uRowColor(this,'<?php echo $vSysStr['system_row_select_color_ini'] ?>')" onmouseout="javascript:uRowColor(this,'<?php echo $cColor ?>')">
                           <td class="letra7" width="13%">
-                            <a href = javascript:fnVer('<?php echo $mFormCo[$i]['fcoidxxx']?>')>
-                                                        <?php echo $mFormCo[$i]['fcoidxxx']?>
+                            <a href = javascript:fnVer('<?php echo $mTipTic[$i]['tticodxx']?>')>
+                                                        <?php echo $mTipTic[$i]['tticodxx']?>
                             </a>
-                          <td class="letra7" width="40%"><?php echo $mFormCo[$i]['fcodesxx'] ?></td>
-                          <td class="letra7" width="18%"><?php echo substr($mFormCo[$i]['usrnomxx'],0,20) ?></td>
-                          <td class="letra7" width="07%"><?php echo $mFormCo[$i]['regfcrex'] ?></td>
-                          <td class="letra7" width="05%"><?php echo $mFormCo[$i]['reghcrex'] ?></td>
-                          <td class="letra7" width="07%"><?php echo $mFormCo[$i]['regfmodx'] ?></td>
-                          <td class="letra7" width="05%"><?php echo $mFormCo[$i]['reghmodx'] ?></td>
-                          <td class="letra7" width="05%"><?php echo $mFormCo[$i]['regestxx'] ?></td>
+                          <td class="letra7" width="58%"><?php echo $mTipTic[$i]['ttidesxx'] ?></td>
+                          <td class="letra7" width="07%"><?php echo $mTipTic[$i]['regfcrex'] ?></td>
+                          <td class="letra7" width="05%"><?php echo $mTipTic[$i]['reghcrex'] ?></td>
+                          <td class="letra7" width="07%"><?php echo $mTipTic[$i]['regfmodx'] ?></td>
+                          <td class="letra7" width="05%"><?php echo $mTipTic[$i]['reghmodx'] ?></td>
+                          <td class="letra7" width="05%"><?php echo $mTipTic[$i]['regestxx'] ?></td>
                           <td Class="letra7" width="02%" align="right">
-                            <input type="checkbox" name="oCheck" value = "<?php echo count($mFormCo) ?>"
-                            id="<?php echo $mFormCo[$i]['fcoidxxx'].'~'.
-                                            $mFormCo[$i]['regestxx'] ?>"
-                            onclick="javascript:document.forms['frnav']['nRecords'].value='<?php echo count($mFormCo) ?>'">
+                            <input type="checkbox" name="oCheck" value = "<?php echo count($mTipTic) ?>"
+                            id="<?php echo $mTipTic[$i]['tticodxx'].'~'.
+                                            $mTipTic[$i]['regestxx'] ?>"
+                            onclick="javascript:document.forms['frnav']['nRecords'].value='<?php echo count($mTipTic) ?>'">
                           </td>
                         </tr>
                         <?php $y++;
                         }
                       }
-                    if(count($mFormCo) == 1){ ?>
+                    if(count($mTipTic) == 1){ ?>
                       <script language="javascript">
                         document.forms['frnav']['oCheck'].checked = true;
                       </script>

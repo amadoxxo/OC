@@ -1,4 +1,6 @@
 <?php
+  namespace openComex;
+
 /**
  * Graba Paramétrica Formas de Cobro.
  * --- Permite Guardar Nuevas Forma de Cobro.

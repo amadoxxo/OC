@@ -1,10 +1,9 @@
 <?php
-  namespace openComex;
-
+namespace openComex;
 /**
- * Formas de Cobro.
- * --- Permite Crear Nuevas Formas de Cobro.
- * @author elian.amado@openits.co
+ * Prioridad de ticket.
+ * --- Descripcion: Permite Crear una Nueva Prioridad de ticket.
+ * @author cristian.perdomo@openits.co
  * @package openComex
  * @version 001
  */
@@ -24,24 +23,31 @@ include("../../../../../financiero/libs/php/utility.php");
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
       }
 
-      function fnValidacEstado() {
-        var cEstado = document.forms['frgrm']['cEstado'].value.toUpperCase();
-        if(cEstado == 'A' || cEstado == 'AC' || cEstado == 'ACT' || cEstado == 'ACTI' || cEstado == 'ACTIV' || cEstado == 'ACTIVO'){
-          cEstado = 'ACTIVO';
-        } else {
-          if(cEstado == 'I' || cEstado == 'IN' || cEstado == 'INA' || cEstado == 'INAC' || cEstado == 'INACT' || cEstado == 'INACTI' || cEstado == 'INACTIV' || cEstado == 'INACTIVO') {
-            cEstado = 'INACTIVO';
-          } else {
-            cEstado = '';
-          }
-        }
-        document.forms['frgrm']['cEstado'].value = cEstado;
-      }
-
       function fnGuardar() {
         document.forms['frgrm'].submit();
       }
+      function actualizarColor() {
+        var select = document.getElementById("colorSelect");
+        var colorBox = document.getElementById("colorBox");
+        var selectedColor = select.value;
+        colorBox.style.backgroundColor = selectedColor;
+      }
     </script>
+    <style>
+        .color-box {
+            width: 100%;
+            height: 15px;
+            display: inline-block;
+            border: 1px solid #d8d8d8;
+            margin: 0px;
+            border-radius: 2px;
+        }
+        .readonly {
+            background-color: #e9ecef;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
   </head>
   <body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
     <center>
@@ -50,17 +56,35 @@ include("../../../../../financiero/libs/php/utility.php");
           <td>
             <fieldset>
               <legend><?php echo ($_COOKIE['kModo'] == "NUEVO") ?  "Nuevo ".$_COOKIE['kProDes'] : $_COOKIE['kMenDes']  ?></legend>
-              <form name = 'frgrm' action = 'frfcogra.php' method = 'post' target='fmpro'>
+              <form name = 'frgrm' action = 'frptigra.php' method = 'post' target='fmpro'>
                 <center>
                     <table border = '0' cellpadding = '0' cellspacing = '0' width='460'>
                       <?php $cCol = f_Format_Cols(23);
                       echo $cCol;?>
                       <tr>
-                        <td Class = 'clase08' colspan = '6'>Id<br>
-                          <input type = "text" Class = "letra" style = 'width:120;text-align:center' name = 'cFcoId' onBlur = "javascript:this.value=this.value.toUpperCase()" readonly>
+                        <td Class = 'clase08' colspan = '04'>Codigo<br>
+                          <input type = "text" Class = "letra" style = 'width:080' name = 'cPtiCod' readonly>
                         </td>
-                        <td Class = 'clase08' colspan = '17'>Forma de Cobro<br>
-                          <input type = "text" Class = "letra" style = 'width:340' name = 'cFcoDes' onBlur = "javascript:this.value=this.value.toUpperCase()" maxlength="255">
+                        <td Class = 'clase08' colspan = '13'>Descripci&oacute;n<br>
+                          <input type = "text" Class = "letra" style = 'width:260' name = 'cPtiDes' onBlur = "javascript:this.value=this.value.toUpperCase()" maxlength="255">
+                        </td>
+                        <td Class = 'clase08' colspan = '05'>Color<br>
+                          <select name="cPtiCol" id="colorSelect" class='letrase' style = 'width:100' onchange="actualizarColor()">
+                            <option value="">SELECCIONE</option>
+                            <option value="#808080">GRIS</option>
+                            <option value="#000000">NEGRO</option>
+                            <option value="#FF0000">ROJO</option>
+                            <option value="#804000">CAFE</option>
+                            <option value="#FFFF00">AMARILLO</option>
+                            <option value="#008000">VERDE</option>
+                            <option value="#0000FF">AZUL</option>
+                            <option value="#FF00FF">FUCSIA</option>
+                            <option value="#800080">PURPURA</option>
+                          </select>
+                        </td>
+                        </td>
+                        <td Class = 'clase08' colspan = '01' align="center"><br>
+                          <div id="colorBox" class="color-box"></div>
                         </td>
                       </tr>
                       <tr>
@@ -78,9 +102,9 @@ include("../../../../../financiero/libs/php/utility.php");
                         </td>
                         <td Class = "clase08" colspan = "5">Estado<br>
                           <input type = "text" Class = "letra" style = "width:100;text-align:center" name = "cEstado"  value = "ACTIVO"
-                                onblur = "javascript:this.value=this.value.toUpperCase();fnValidacEstado();
+                                onblur = "javascript:this.value=this.value.toUpperCase();
                                                     this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
-                                onFocus="javascript:this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'" readOnly>
+                                onFocus="javascript:this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                         </td>
                       </tr>
                   </table>
@@ -115,36 +139,21 @@ include("../../../../../financiero/libs/php/utility.php");
 <?php
 switch ($_COOKIE['kModo']) {
   case "NUEVO":
-		f_Mensaje(__FILE__,__LINE__,"Para [INSERTAR] Una Forma de Cobro, por favor Comunicarse con openTecnologia Ltda.");
-
-    $nMaxId = 0;
-    $qMaximo  = "SELECT MAX(ABS(fcoidxxx)) AS fcoidxxx ";
-    $qMaximo .= "FROM $cAlfa.lpar0130 ";
-    $xMaximo = f_MySql("SELECT","",$qMaximo,$xConexion01,"");
-    if (mysql_num_rows($xMaximo) > 0){
-      $vMaximo = mysql_fetch_array($xMaximo);
-      $nMaxId = $vMaximo['fcoidxxx'] + 1;
-    } else {
-      $nMaxId = 1;
-    }
-
     ?>
     <script languaje = "javascript">
-      document.forms['frgrm']['cFcoId'].value = "<?php echo str_pad($nMaxId, 3, "00", STR_PAD_LEFT) ?>";
       document.forms['frgrm']['cEstado'].readOnly  = true;
-      fnRetorna();
     </script>
     <?php
   break;
   case "EDITAR":
-    fnCargaData($cFcoId);
+    fnCargaData($cPtiCod);
     ?>
     <script languaje = "javascript">
-      document.forms['frgrm']['cFcoId'].readOnly	 = true;
+      actualizarColor(); 
     </script>
   <?php break;
   case "VER":
-    fnCargaData($cFcoId); ?>
+    fnCargaData($cPtiCod); ?>
     <script languaje = "javascript">
       for (x=0;x<document.forms['frgrm'].elements.length;x++) {
         document.forms['frgrm'].elements[x].readOnly = true;
@@ -152,30 +161,32 @@ switch ($_COOKIE['kModo']) {
         document.forms['frgrm'].elements[x].onblur   = "";
         document.forms['frgrm'].elements[x].disabled = true;
       }
+      actualizarColor();
     </script>
   <?php break;
 } ?>
 
-<?php function fnCargaData($xPfaId) {
+<?php function fnCargaData($cPtiCod) {
   global $cAlfa; global $xConexion01;
-  
+
   /* TRAIGO DATOS DE CABECERA*/
-  $qFormCo  = "SELECT * ";
-  $qFormCo .= "FROM $cAlfa.lpar0130 ";
-  $qFormCo .= "WHERE ";
-  $qFormCo .= "fcoidxxx = \"$xPfaId\" LIMIT 0,1";
-  $xFormCo  = f_MySql("SELECT","",$qFormCo,$xConexion01,"");
-  // f_Mensaje(__FILE__,__LINE__,$qFormCo."~".mysql_num_rows($xFormCo)."~".mysql_error($xConexion01));
-  $vFormCo  = mysql_fetch_array($xFormCo);
+  $qOrgVen  = "SELECT * ";
+  $qOrgVen .= "FROM $cAlfa.lpar0156 ";
+  $qOrgVen .= "WHERE ";
+  $qOrgVen .= "pticodxx = \"$cPtiCod\" LIMIT 0,1";
+  $xOrgVen  = f_MySql("SELECT","",$qOrgVen,$xConexion01,"");
+  // f_Mensaje(__FILE__,__LINE__,$qOrgVen."~".mysql_num_rows($xOrgVen));
+  $vOrgVen  = mysql_fetch_array($xOrgVen);
   ?>
   <script language = "javascript">
-    document.forms['frgrm']['cFcoId'].value  = "<?php echo $vFormCo['fcoidxxx'] ?>";
-    document.forms['frgrm']['cFcoDes'].value = "<?php echo $vFormCo['fcodesxx'] ?>";
-    document.forms['frgrm']['dFecCre'].value = "<?php echo $vFormCo['regfcrex'] ?>";
-    document.forms['frgrm']['dHorCre'].value = "<?php echo $vFormCo['reghcrex'] ?>";
-    document.forms['frgrm']['dFecMod'].value = "<?php echo $vFormCo['regfmodx'] ?>";
-    document.forms['frgrm']['dHorMod'].value = "<?php echo $vFormCo['reghmodx'] ?>";
-    document.forms['frgrm']['cEstado'].value = "<?php echo $vFormCo['regestxx'] ?>";
-	</script>
+    document.forms['frgrm']['cPtiCod'].value = "<?php echo $vOrgVen['pticodxx'] ?>";
+    document.forms['frgrm']['cPtiDes'].value = "<?php echo $vOrgVen['ptidesxx'] ?>";
+    document.forms['frgrm']['cPtiCol'].value = "<?php echo $vOrgVen['pticolxx'] ?>";
+    document.forms['frgrm']['dFecCre'].value = "<?php echo $vOrgVen['regfcrex'] ?>";
+    document.forms['frgrm']['dHorCre'].value = "<?php echo $vOrgVen['reghcrex'] ?>";
+    document.forms['frgrm']['dFecMod'].value = "<?php echo $vOrgVen['regfmodx'] ?>";
+    document.forms['frgrm']['dHorMod'].value = "<?php echo $vOrgVen['reghmodx'] ?>";
+    document.forms['frgrm']['cEstado'].value = "<?php echo $vOrgVen['regestxx'] ?>";
+  </script>
   <?php
 } ?>

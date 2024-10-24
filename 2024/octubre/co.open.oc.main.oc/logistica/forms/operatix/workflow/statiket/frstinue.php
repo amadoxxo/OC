@@ -1,10 +1,9 @@
 <?php
-  namespace openComex;
-
+namespace openComex;
 /**
- * Formas de Cobro.
- * --- Permite Crear Nuevas Formas de Cobro.
- * @author elian.amado@openits.co
+ * Orgainzacion de Ventas.
+ * --- Descripcion: Permite Crear un nuevo estado de ticket.
+ * @author cristian.perdomo@openits.co
  * @package openComex
  * @version 001
  */
@@ -24,24 +23,17 @@ include("../../../../../financiero/libs/php/utility.php");
         parent.fmnav.location="<?php echo $cPlesk_Forms_Directory_Logistic ?>/frnivel3.php";
       }
 
-      function fnValidacEstado() {
-        var cEstado = document.forms['frgrm']['cEstado'].value.toUpperCase();
-        if(cEstado == 'A' || cEstado == 'AC' || cEstado == 'ACT' || cEstado == 'ACTI' || cEstado == 'ACTIV' || cEstado == 'ACTIVO'){
-          cEstado = 'ACTIVO';
-        } else {
-          if(cEstado == 'I' || cEstado == 'IN' || cEstado == 'INA' || cEstado == 'INAC' || cEstado == 'INACT' || cEstado == 'INACTI' || cEstado == 'INACTIV' || cEstado == 'INACTIVO') {
-            cEstado = 'INACTIVO';
-          } else {
-            cEstado = '';
-          }
-        }
-        document.forms['frgrm']['cEstado'].value = cEstado;
-      }
-
       function fnGuardar() {
         document.forms['frgrm'].submit();
       }
     </script>
+    <style>
+      .readonly {
+            background-color: #e9ecef;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
   </head>
   <body topmargin = 0 leftmargin = 0 margnwidth = 0 marginheight = 0 style = 'margin-right:0'>
     <center>
@@ -50,17 +42,24 @@ include("../../../../../financiero/libs/php/utility.php");
           <td>
             <fieldset>
               <legend><?php echo ($_COOKIE['kModo'] == "NUEVO") ?  "Nuevo ".$_COOKIE['kProDes'] : $_COOKIE['kMenDes']  ?></legend>
-              <form name = 'frgrm' action = 'frfcogra.php' method = 'post' target='fmpro'>
+              <form name = 'frgrm' action = 'frstigra.php' method = 'post' target='fmpro'>
                 <center>
                     <table border = '0' cellpadding = '0' cellspacing = '0' width='460'>
                       <?php $cCol = f_Format_Cols(23);
                       echo $cCol;?>
                       <tr>
-                        <td Class = 'clase08' colspan = '6'>Id<br>
-                          <input type = "text" Class = "letra" style = 'width:120;text-align:center' name = 'cFcoId' onBlur = "javascript:this.value=this.value.toUpperCase()" readonly>
+                        <td Class = 'clase08' colspan = '04'>Codigo<br>
+                          <input type = "text" Class = "letra" style = 'width:080' name = 'cStiCod' readonly>
                         </td>
-                        <td Class = 'clase08' colspan = '17'>Forma de Cobro<br>
-                          <input type = "text" Class = "letra" style = 'width:340' name = 'cFcoDes' onBlur = "javascript:this.value=this.value.toUpperCase()" maxlength="255">
+                        <td Class = 'clase08' colspan = '14'>Descripci&oacute;n<br>
+                          <input type = "text" Class = "letra" style = 'width:280' name = 'StiDes' onBlur = "javascript:this.value=this.value.toUpperCase()" maxlength="255">
+                        </td>
+                        <td Class = 'clase08' colspan = '05'>Tipo<br>
+                          <select name="cStaPti" class='letrase' style = 'width:100'>
+                            <option value="">SELECCIONE</option>
+                            <option value="APERTURA">APERTURA</option>
+                            <option value="CIERRE">CIERRE</option>
+                          </select>
                         </td>
                       </tr>
                       <tr>
@@ -78,9 +77,9 @@ include("../../../../../financiero/libs/php/utility.php");
                         </td>
                         <td Class = "clase08" colspan = "5">Estado<br>
                           <input type = "text" Class = "letra" style = "width:100;text-align:center" name = "cEstado"  value = "ACTIVO"
-                                onblur = "javascript:this.value=this.value.toUpperCase();fnValidacEstado();
+                                onblur = "javascript:this.value=this.value.toUpperCase();
                                                     this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
-                                onFocus="javascript:this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'" readOnly>
+                                onFocus="javascript:this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                         </td>
                       </tr>
                   </table>
@@ -115,36 +114,17 @@ include("../../../../../financiero/libs/php/utility.php");
 <?php
 switch ($_COOKIE['kModo']) {
   case "NUEVO":
-		f_Mensaje(__FILE__,__LINE__,"Para [INSERTAR] Una Forma de Cobro, por favor Comunicarse con openTecnologia Ltda.");
-
-    $nMaxId = 0;
-    $qMaximo  = "SELECT MAX(ABS(fcoidxxx)) AS fcoidxxx ";
-    $qMaximo .= "FROM $cAlfa.lpar0130 ";
-    $xMaximo = f_MySql("SELECT","",$qMaximo,$xConexion01,"");
-    if (mysql_num_rows($xMaximo) > 0){
-      $vMaximo = mysql_fetch_array($xMaximo);
-      $nMaxId = $vMaximo['fcoidxxx'] + 1;
-    } else {
-      $nMaxId = 1;
-    }
-
     ?>
     <script languaje = "javascript">
-      document.forms['frgrm']['cFcoId'].value = "<?php echo str_pad($nMaxId, 3, "00", STR_PAD_LEFT) ?>";
       document.forms['frgrm']['cEstado'].readOnly  = true;
-      fnRetorna();
     </script>
     <?php
   break;
   case "EDITAR":
-    fnCargaData($cFcoId);
-    ?>
-    <script languaje = "javascript">
-      document.forms['frgrm']['cFcoId'].readOnly	 = true;
-    </script>
-  <?php break;
+    fnCargaData($cStiCod);
+  break;
   case "VER":
-    fnCargaData($cFcoId); ?>
+    fnCargaData($cStiCod); ?>
     <script languaje = "javascript">
       for (x=0;x<document.forms['frgrm'].elements.length;x++) {
         document.forms['frgrm'].elements[x].readOnly = true;
@@ -156,26 +136,27 @@ switch ($_COOKIE['kModo']) {
   <?php break;
 } ?>
 
-<?php function fnCargaData($xPfaId) {
+<?php function fnCargaData($xOrvSap) {
   global $cAlfa; global $xConexion01;
-  
+
   /* TRAIGO DATOS DE CABECERA*/
-  $qFormCo  = "SELECT * ";
-  $qFormCo .= "FROM $cAlfa.lpar0130 ";
-  $qFormCo .= "WHERE ";
-  $qFormCo .= "fcoidxxx = \"$xPfaId\" LIMIT 0,1";
-  $xFormCo  = f_MySql("SELECT","",$qFormCo,$xConexion01,"");
-  // f_Mensaje(__FILE__,__LINE__,$qFormCo."~".mysql_num_rows($xFormCo)."~".mysql_error($xConexion01));
-  $vFormCo  = mysql_fetch_array($xFormCo);
+  $qOrgVen  = "SELECT * ";
+  $qOrgVen .= "FROM $cAlfa.lpar0157 ";
+  $qOrgVen .= "WHERE ";
+  $qOrgVen .= "sticodxx = \"$xOrvSap\" LIMIT 0,1";
+  $xOrgVen  = f_MySql("SELECT","",$qOrgVen,$xConexion01,"");
+  // f_Mensaje(__FILE__,__LINE__,$qOrgVen."~".mysql_num_rows($xOrgVen));
+  $vOrgVen  = mysql_fetch_array($xOrgVen);
   ?>
   <script language = "javascript">
-    document.forms['frgrm']['cFcoId'].value  = "<?php echo $vFormCo['fcoidxxx'] ?>";
-    document.forms['frgrm']['cFcoDes'].value = "<?php echo $vFormCo['fcodesxx'] ?>";
-    document.forms['frgrm']['dFecCre'].value = "<?php echo $vFormCo['regfcrex'] ?>";
-    document.forms['frgrm']['dHorCre'].value = "<?php echo $vFormCo['reghcrex'] ?>";
-    document.forms['frgrm']['dFecMod'].value = "<?php echo $vFormCo['regfmodx'] ?>";
-    document.forms['frgrm']['dHorMod'].value = "<?php echo $vFormCo['reghmodx'] ?>";
-    document.forms['frgrm']['cEstado'].value = "<?php echo $vFormCo['regestxx'] ?>";
-	</script>
+    document.forms['frgrm']['cStiCod'].value = "<?php echo $vOrgVen['sticodxx'] ?>";
+    document.forms['frgrm']['StiDes'].value = "<?php echo $vOrgVen['stidesxx'] ?>";
+    document.forms['frgrm']['cStaPti'].value = "<?php echo $vOrgVen['stitipxx'] ?>";
+    document.forms['frgrm']['dFecCre'].value = "<?php echo $vOrgVen['regfcrex'] ?>";
+    document.forms['frgrm']['dHorCre'].value = "<?php echo $vOrgVen['reghcrex'] ?>";
+    document.forms['frgrm']['dFecMod'].value = "<?php echo $vOrgVen['regfmodx'] ?>";
+    document.forms['frgrm']['dHorMod'].value = "<?php echo $vOrgVen['reghmodx'] ?>";
+    document.forms['frgrm']['cEstado'].value = "<?php echo $vOrgVen['regestxx'] ?>";
+  </script>
   <?php
 } ?>

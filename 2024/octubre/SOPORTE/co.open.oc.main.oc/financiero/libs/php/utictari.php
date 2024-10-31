@@ -11,6 +11,8 @@
   // ini_set('error_reporting', E_ERROR);
   // ini_set("display_errors","1");
 
+  date_default_timezone_set('America/Bogota');
+
   require_once($OPENINIT['pathdr']."/opencomex/class/spout-3.1.0/src/Spout/Autoloader/autoload.php");
 
   use Box\Spout\Common\Entity\Style\Border;
@@ -6938,52 +6940,60 @@
       $qInsCab .= "FECHA_CREACION,";
       $qInsCab .= "FECHA_MODIFICACION,";
       $qInsCab .= "COLUMNAS_RESALTADAS) VALUES ";
-      
-      // Consulta las tarifas
-      $qTarifas  = "SELECT ";
-      $qTarifas .= "$cAlfa.fpar0131.* ";
-      $qTarifas .= "FROM $cAlfa.fpar0131 ";
+
+      // SQL_CALC
+      $nNumReg = 100;
+
+      $qLoad  = "SELECT SQL_CALC_FOUND_ROWS ";
+      $qLoad .= "$cAlfa.fpar0131.* ";
+      $qLoad .= "FROM $cAlfa.fpar0131 ";
       if ($pArrayParametros['APLITARX'] == "CLIENTE") {
         if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
-          $qTarifas .= "LEFT JOIN $cAlfa.SIAI0150 ON $cAlfa.fpar0131.cliidxxx = $cAlfa.SIAI0150.CLIIDXXX ";
+          $qLoad .= "LEFT JOIN $cAlfa.SIAI0150 ON $cAlfa.fpar0131.cliidxxx = $cAlfa.SIAI0150.CLIIDXXX ";
         }
-      } else{
+      } else {
         if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
-          $qTarifas .= "LEFT JOIN $cAlfa.fpar0111 ON $cAlfa.fpar0131.cliidxxx = $cAlfa.fpar0111.gtaidxxx ";
+          $qLoad .= "LEFT JOIN $cAlfa.fpar0111 ON $cAlfa.fpar0131.cliidxxx = $cAlfa.fpar0111.gtaidxxx ";
         }
       }
-      $qTarifas .= "WHERE ";
+      $qLoad .= "WHERE ";
       // Estado Tarifas
       if ($pArrayParametros['ESTTARIX'] == "TODOS") {
-        $qTarifas .= "$cAlfa.fpar0131.regestxx IN(\"ACTIVO\",\"INACTIVO\") AND ";
+        $qLoad .= "$cAlfa.fpar0131.regestxx IN(\"ACTIVO\",\"INACTIVO\") AND ";
       } else if ($pArrayParametros['ESTTARIX'] != "") {
-        $qTarifas .= "$cAlfa.fpar0131.regestxx = \"{$pArrayParametros['ESTTARIX']}\" AND ";
+        $qLoad .= "$cAlfa.fpar0131.regestxx = \"{$pArrayParametros['ESTTARIX']}\" AND ";
       }
       // Tipo Operacion
       if ($pArrayParametros['TIPOPEXX'] == "TODOS") {
-        $qTarifas .= "$cAlfa.fpar0131.fcotopxx IN(\"IMPORTACION\",\"EXPORTACION\",\"TRANSITO\",\"OTROS\") AND ";
+        $qLoad .= "$cAlfa.fpar0131.fcotopxx IN(\"IMPORTACION\",\"EXPORTACION\",\"TRANSITO\",\"OTROS\") AND ";
       } else if ($pArrayParametros['TIPOPEXX'] != "") {
-        $qTarifas .= "$cAlfa.fpar0131.fcotopxx = \"{$pArrayParametros['TIPOPEXX']}\" AND ";
+        $qLoad .= "$cAlfa.fpar0131.fcotopxx = \"{$pArrayParametros['TIPOPEXX']}\" AND ";
+      }
+      // Tipo Operacion
+      if ($pArrayParametros['TIPOPEXX'] == "TODOS") {
+        $qLoad .= "$cAlfa.fpar0131.fcotopxx IN(\"IMPORTACION\",\"EXPORTACION\",\"TRANSITO\",\"OTROS\") AND ";
+      } else if ($pArrayParametros['TIPOPEXX'] != "") {
+        $qLoad .= "$cAlfa.fpar0131.fcotopxx = \"{$pArrayParametros['TIPOPEXX']}\" AND ";
       }
       // Cliente o Grupo
       if ($pArrayParametros['CLIIDXXX'] != "") {
-        $qTarifas .= "$cAlfa.fpar0131.cliidxxx = \"{$pArrayParametros['CLIIDXXX']}\" AND ";
+        $qLoad .= "$cAlfa.fpar0131.cliidxxx = \"{$pArrayParametros['CLIIDXXX']}\" AND ";
       }
       //Estado Cliente o Grupo
       if ($pArrayParametros['APLITARX'] == "CLIENTE") {
         if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
-          $qTarifas .= "$cAlfa.SIAI0150.regestxx = \"{$pArrayParametros['ESTCLIXX']}\" AND ";
+          $qLoad .= "$cAlfa.SIAI0150.regestxx = \"{$pArrayParametros['ESTCLIXX']}\" AND ";
         }
       } else{
         if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
-          $qTarifas .= "$cAlfa.fpar0111.regestxx = \"{$pArrayParametros['ESTCLIXX']}\" AND ";
+          $qLoad .= "$cAlfa.fpar0111.regestxx = \"{$pArrayParametros['ESTCLIXX']}\" AND ";
         }
       }
       if ($pArrayParametros['SERIDXXX'] != "") {
-        $qTarifas .= "$cAlfa.fpar0131.seridxxx = \"{$pArrayParametros['SERIDXXX']}\" AND ";
+        $qLoad .= "$cAlfa.fpar0131.seridxxx = \"{$pArrayParametros['SERIDXXX']}\" AND ";
       }
       if ($pArrayParametros['FCOIDXXX'] != "") {
-        $qTarifas .= "$cAlfa.fpar0131.fcoidxxx = \"{$pArrayParametros['FCOIDXXX']}\" AND ";
+        $qLoad .= "$cAlfa.fpar0131.fcoidxxx = \"{$pArrayParametros['FCOIDXXX']}\" AND ";
       }
       if ($pArrayParametros['FECHASTA'] != "" && $pArrayParametros['FECDESDE'] != "") {
         // Rango de Fechas
@@ -6991,267 +7001,350 @@
           case "CREACION":
           case "ACTUALIZACION":
             $cCamFec = ($pArrayParametros['TIPOFECX'] == "CREACION") ? "regfcrex" : "regfmodx";
-            $qTarifas .= "$cAlfa.fpar0131.$cCamFec BETWEEN \"{$pArrayParametros['FECDESDE']}\" AND \"{$pArrayParametros['FECHASTA']}\" AND ";
+            $qLoad .= "$cAlfa.fpar0131.$cCamFec BETWEEN \"{$pArrayParametros['FECDESDE']}\" AND \"{$pArrayParametros['FECHASTA']}\" AND ";
           break;
           default:
             // Vigencia
-            $qTarifas .= "$cAlfa.fpar0131.tarfevde >= \"{$pArrayParametros['FECDESDE']}\" AND ";
-            $qTarifas .= "$cAlfa.fpar0131.tarfevha <= \"{$pArrayParametros['FECHASTA']}\" AND ";
+            $qLoad .= "$cAlfa.fpar0131.tarfevde >= \"{$pArrayParametros['FECDESDE']}\" AND ";
+            $qLoad .= "$cAlfa.fpar0131.tarfevha <= \"{$pArrayParametros['FECHASTA']}\" AND ";
           break;
         }
       }
-      $qTarifas  = substr($qTarifas, 0, -4);
-      $qTarifas .= "ORDER BY $cAlfa.fpar0131.cliidxxx,$cAlfa.fpar0131.seridxxx,$cAlfa.fpar0131.fcoidxxx";
-      $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
-      // echo $qTarifas . "~" . mysql_num_rows($xTarifas)."<br><br>";
-      if (mysql_num_rows($xTarifas) == 0) {
-        $nSwitch = 1;
-        $vError['TIPOERRX'] = "ERROR";
-        $vError['DESERROR'] = "No Se Encontraron Registros.";
-        $objEstructuraTarifasFacturacion->fnGuardarErrorTarfiasFacturacion($vError);
-      }
+      $qLoad  = substr($qLoad, 0, -4);
+      $qLoad .= "ORDER BY $cAlfa.fpar0131.cliidxxx,$cAlfa.fpar0131.seridxxx,$cAlfa.fpar0131.fcoidxxx";
+      $xLoad  = f_MySql("SELECT","",$qLoad,$xConexion01,"");
 
-      if ($nSwitch == 0) {
-        $nCanReg = 0;
-        while ($xRT = mysql_fetch_assoc($xTarifas)) {
+      mysql_free_result($xLoad);
 
-          $nCanReg++;
-          if (($nCanReg % _NUMREG_) == 0) { $xConexion01 = $objEstructuraTarifasFacturacion->fnReiniciarConexionDBRTarifasFacturacion($xConexion01); }
+      $xNumRows = mysql_query("SELECT FOUND_ROWS();");
+      $xRNR = mysql_fetch_array($xNumRows);
+      $nRegistros = $xRNR['FOUND_ROWS()'];
+      mysql_free_result($xNumRows);
+      echo "\nCantidad de Registros: ".$nRegistros;
 
-          // Trayendo nombre de cliente o grupo
-          $cNomCliGru = "";
-          $cEstCliGru = "";
-          if ($xRT['tartipxx'] == "CLIENTE") {
-            if (in_array($xRT['cliidxxx'],$vClientes) == false) {
-              $qDatCli  = "SELECT ";
-              $qDatCli .= "SIAI0150.CLIIDXXX, ";
-              $qDatCli .= "IF(SIAI0150.CLINOMXX != \"\",SIAI0150.CLINOMXX,CONCAT(SIAI0150.CLINOM1X,\" \",SIAI0150.CLINOM2X,\" \",SIAI0150.CLIAPE1X,\" \",SIAI0150.CLIAPE2X)) AS CLINOMXX, ";
-              $qDatCli .= "SIAI0150.REGESTXX ";
-              $qDatCli .= "FROM $cAlfa.SIAI0150 ";
-              $qDatCli .= "WHERE ";
-              $qDatCli .= "SIAI0150.CLIIDXXX = \"{$xRT['cliidxxx']}\" LIMIT 0,1";
-              $xDatCli  = f_MySql("SELECT","",$qDatCli,$xConexion01,"");
-              $vDatCli  = mysql_fetch_array($xDatCli);
-              $cNomCliGru = $vDatCli['CLINOMXX'];
-              $cEstCliGru = $vDatCli['REGESTXX'];
-              $vClientes[] = "{$xRT['cliidxxx']}";
-              $mClientes["{$xRT['cliidxxx']}"] = $vDatCli;
+      // FOR
+      for ($i=0;$i<=$nRegistros;$i+=$nNumReg) {
+
+        /*** Reinicio de conexion. ***/
+        $xConexion01 = $objEstructuraTarifasFacturacion->fnReiniciarConexionDBRTarifasFacturacion($xConexion01);
+        
+        // Consulta las tarifas
+        $qTarifas  = "SELECT ";
+        $qTarifas .= "$cAlfa.fpar0131.* ";
+        $qTarifas .= "FROM $cAlfa.fpar0131 ";
+        if ($pArrayParametros['APLITARX'] == "CLIENTE") {
+          if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
+            $qTarifas .= "LEFT JOIN $cAlfa.SIAI0150 ON $cAlfa.fpar0131.cliidxxx = $cAlfa.SIAI0150.CLIIDXXX ";
+          }
+        } else{
+          if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
+            $qTarifas .= "LEFT JOIN $cAlfa.fpar0111 ON $cAlfa.fpar0131.cliidxxx = $cAlfa.fpar0111.gtaidxxx ";
+          }
+        }
+        $qTarifas .= "WHERE ";
+        // Estado Tarifas
+        if ($pArrayParametros['ESTTARIX'] == "TODOS") {
+          $qTarifas .= "$cAlfa.fpar0131.regestxx IN(\"ACTIVO\",\"INACTIVO\") AND ";
+        } else if ($pArrayParametros['ESTTARIX'] != "") {
+          $qTarifas .= "$cAlfa.fpar0131.regestxx = \"{$pArrayParametros['ESTTARIX']}\" AND ";
+        }
+        // Tipo Operacion
+        if ($pArrayParametros['TIPOPEXX'] == "TODOS") {
+          $qTarifas .= "$cAlfa.fpar0131.fcotopxx IN(\"IMPORTACION\",\"EXPORTACION\",\"TRANSITO\",\"OTROS\") AND ";
+        } else if ($pArrayParametros['TIPOPEXX'] != "") {
+          $qTarifas .= "$cAlfa.fpar0131.fcotopxx = \"{$pArrayParametros['TIPOPEXX']}\" AND ";
+        }
+        // Cliente o Grupo
+        if ($pArrayParametros['CLIIDXXX'] != "") {
+          $qTarifas .= "$cAlfa.fpar0131.cliidxxx = \"{$pArrayParametros['CLIIDXXX']}\" AND ";
+        }
+        //Estado Cliente o Grupo
+        if ($pArrayParametros['APLITARX'] == "CLIENTE") {
+          if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
+            $qTarifas .= "$cAlfa.SIAI0150.regestxx = \"{$pArrayParametros['ESTCLIXX']}\" AND ";
+          }
+        } else{
+          if ($pArrayParametros['ESTCLIXX'] != "TODOS") {
+            $qTarifas .= "$cAlfa.fpar0111.regestxx = \"{$pArrayParametros['ESTCLIXX']}\" AND ";
+          }
+        }
+        if ($pArrayParametros['SERIDXXX'] != "") {
+          $qTarifas .= "$cAlfa.fpar0131.seridxxx = \"{$pArrayParametros['SERIDXXX']}\" AND ";
+        }
+        if ($pArrayParametros['FCOIDXXX'] != "") {
+          $qTarifas .= "$cAlfa.fpar0131.fcoidxxx = \"{$pArrayParametros['FCOIDXXX']}\" AND ";
+        }
+        if ($pArrayParametros['FECHASTA'] != "" && $pArrayParametros['FECDESDE'] != "") {
+          // Rango de Fechas
+          switch ($pArrayParametros['TIPOFECX']) {
+            case "CREACION":
+            case "ACTUALIZACION":
+              $cCamFec = ($pArrayParametros['TIPOFECX'] == "CREACION") ? "regfcrex" : "regfmodx";
+              $qTarifas .= "$cAlfa.fpar0131.$cCamFec BETWEEN \"{$pArrayParametros['FECDESDE']}\" AND \"{$pArrayParametros['FECHASTA']}\" AND ";
+            break;
+            default:
+              // Vigencia
+              $qTarifas .= "$cAlfa.fpar0131.tarfevde >= \"{$pArrayParametros['FECDESDE']}\" AND ";
+              $qTarifas .= "$cAlfa.fpar0131.tarfevha <= \"{$pArrayParametros['FECHASTA']}\" AND ";
+            break;
+          }
+        }
+        $qTarifas  = substr($qTarifas, 0, -4);
+        $qTarifas .= "ORDER BY $cAlfa.fpar0131.cliidxxx,$cAlfa.fpar0131.seridxxx,$cAlfa.fpar0131.fcoidxxx ";
+        $qTarifas .= "LIMIT $i,$nNumReg; ";
+        $xTarifas  = f_MySql("SELECT","",$qTarifas,$xConexion01,"");
+        // echo $qTarifas . "~" . mysql_num_rows($xTarifas)."<br><br>";
+        if (mysql_num_rows($xTarifas) == 0) {
+          $nSwitch = 1;
+          $vError['TIPOERRX'] = "ERROR";
+          $vError['DESERROR'] = "No Se Encontraron Registros.";
+          $objEstructuraTarifasFacturacion->fnGuardarErrorTarfiasFacturacion($vError);
+        }
+  
+        if ($nSwitch == 0) {
+          $nCanReg = 0;
+          while ($xRT = mysql_fetch_assoc($xTarifas)) {
+  
+            $nCanReg++;
+            if (($nCanReg % _NUMREG_) == 0) { $xConexion01 = $objEstructuraTarifasFacturacion->fnReiniciarConexionDBRTarifasFacturacion($xConexion01); }
+  
+            // Trayendo nombre de cliente o grupo
+            $cNomCliGru = "";
+            $cEstCliGru = "";
+            if ($xRT['tartipxx'] == "CLIENTE") {
+              if (in_array($xRT['cliidxxx'],$vClientes) == false) {
+                $qDatCli  = "SELECT ";
+                $qDatCli .= "SIAI0150.CLIIDXXX, ";
+                $qDatCli .= "IF(SIAI0150.CLINOMXX != \"\",SIAI0150.CLINOMXX,CONCAT(SIAI0150.CLINOM1X,\" \",SIAI0150.CLINOM2X,\" \",SIAI0150.CLIAPE1X,\" \",SIAI0150.CLIAPE2X)) AS CLINOMXX, ";
+                $qDatCli .= "SIAI0150.REGESTXX ";
+                $qDatCli .= "FROM $cAlfa.SIAI0150 ";
+                $qDatCli .= "WHERE ";
+                $qDatCli .= "SIAI0150.CLIIDXXX = \"{$xRT['cliidxxx']}\" LIMIT 0,1";
+                $xDatCli  = f_MySql("SELECT","",$qDatCli,$xConexion01,"");
+                $vDatCli  = mysql_fetch_array($xDatCli);
+                $cNomCliGru = $vDatCli['CLINOMXX'];
+                $cEstCliGru = $vDatCli['REGESTXX'];
+                $vClientes[] = "{$xRT['cliidxxx']}";
+                $mClientes["{$xRT['cliidxxx']}"] = $vDatCli;
+              } else {
+                $cNomCliGru = $mClientes["{$xRT['cliidxxx']}"]['CLINOMXX'];
+                $cEstCliGru = $mClientes["{$xRT['cliidxxx']}"]['REGESTXX'];
+              }
             } else {
-              $cNomCliGru = $mClientes["{$xRT['cliidxxx']}"]['CLINOMXX'];
-              $cEstCliGru = $mClientes["{$xRT['cliidxxx']}"]['REGESTXX'];
+              if (in_array($xRT['cliidxxx'],$vGrupos) == false) {
+                $qDatGru  = "SELECT gtaidxxx, ";
+                $qDatGru .= "IF(gtadesxx != \"\",gtadesxx,\"GRUPO TARIFA SIN DESCRIPCION\") AS gtadesxx, ";
+                $qDatGru .= "regestxx ";
+                $qDatGru .= "FROM $cAlfa.fpar0111 ";
+                $qDatGru .= "WHERE ";
+                $qDatGru .= "gtaidxxx = \"{$xRT['cliidxxx']}\" LIMIT 0,1";
+                $xDatGru  = f_MySql("SELECT","",$qDatGru,$xConexion01,"");
+                $vDatGru  = mysql_fetch_array($xDatGru);
+                $cNomCliGru = $vDatGru['gtadesxx'];
+                $cEstCliGru = $vDatGru['regestxx'];
+                $vGrupos[] = "{$xRT['cliidxxx']}";
+                $mGrupos["{$xRT['cliidxxx']}"] = $vGrupos;
+              } else {
+                $cNomCliGru = $mGrupos["{$xRT['cliidxxx']}"]['gtadesxx'];
+                $cEstCliGru = $mGrupos["{$xRT['cliidxxx']}"]['regestxx'];
+              }
             }
-          } else {
-            if (in_array($xRT['cliidxxx'],$vGrupos) == false) {
-              $qDatGru  = "SELECT gtaidxxx, ";
-              $qDatGru .= "IF(gtadesxx != \"\",gtadesxx,\"GRUPO TARIFA SIN DESCRIPCION\") AS gtadesxx, ";
-              $qDatGru .= "regestxx ";
-              $qDatGru .= "FROM $cAlfa.fpar0111 ";
-              $qDatGru .= "WHERE ";
-              $qDatGru .= "gtaidxxx = \"{$xRT['cliidxxx']}\" LIMIT 0,1";
-              $xDatGru  = f_MySql("SELECT","",$qDatGru,$xConexion01,"");
-              $vDatGru  = mysql_fetch_array($xDatGru);
-              $cNomCliGru = $vDatGru['gtadesxx'];
-              $cEstCliGru = $vDatGru['regestxx'];
-              $vGrupos[] = "{$xRT['cliidxxx']}";
-              $mGrupos["{$xRT['cliidxxx']}"] = $vGrupos;
-            } else {
-              $cNomCliGru = $mGrupos["{$xRT['cliidxxx']}"]['gtadesxx'];
-              $cEstCliGru = $mGrupos["{$xRT['cliidxxx']}"]['regestxx'];
+  
+            // Buscando Informacion Servicios
+            if (in_array($xRT['seridxxx'],$vServicios) == false) {
+              $qDatSer  = "SELECT seridxxx, ";
+              $qDatSer .= "IF(serdesxx != \"\",serdesxx,\"CONCEPTO SIN DESCRIPCION\") AS serdesxx, ";
+              $qDatSer .= "IF(serdespx != \"\",serdespx,serdesxx) AS serdespx, ";
+              $qDatSer .= "sercones ";
+              $qDatSer .= "FROM $cAlfa.fpar0129 ";
+              $qDatSer .= "WHERE ";
+              $qDatSer .= "seridxxx = \"{$xRT['seridxxx']}\" LIMIT 0,1";
+              $xDatSer  = f_MySql("SELECT","",$qDatSer,$xConexion01,"");
+              $vDatSer  = mysql_fetch_array($xDatSer);
+              $vServicios[] = "{$xRT['seridxxx']}";
+              $mServicios["{$xRT['seridxxx']}"] = $vDatSer;
             }
-          }
-
-          // Buscando Informacion Servicios
-          if (in_array($xRT['seridxxx'],$vServicios) == false) {
-            $qDatSer  = "SELECT seridxxx, ";
-            $qDatSer .= "IF(serdesxx != \"\",serdesxx,\"CONCEPTO SIN DESCRIPCION\") AS serdesxx, ";
-            $qDatSer .= "IF(serdespx != \"\",serdespx,serdesxx) AS serdespx, ";
-            $qDatSer .= "sercones ";
-            $qDatSer .= "FROM $cAlfa.fpar0129 ";
-            $qDatSer .= "WHERE ";
-            $qDatSer .= "seridxxx = \"{$xRT['seridxxx']}\" LIMIT 0,1";
-            $xDatSer  = f_MySql("SELECT","",$qDatSer,$xConexion01,"");
-            $vDatSer  = mysql_fetch_array($xDatSer);
-            $vServicios[] = "{$xRT['seridxxx']}";
-            $mServicios["{$xRT['seridxxx']}"] = $vDatSer;
-          }
-
-          // Buscando Informacion Formas de Cobro
-          if (in_array($xRT['fcoidxxx'],$vForCob) == false) {
-            $qDatFor  = "SELECT fcoidxxx, ";
-            $qDatFor .= "IF(fcodesxx != \"\",fcodesxx,\"FORMA SIN DESCRIPCION\") AS fcodesxx ";
-            $qDatFor .= "FROM $cAlfa.fpar0130 ";
-            $qDatFor .= "WHERE ";
-            $qDatFor .= "fcoidxxx = \"{$xRT['fcoidxxx']}\" LIMIT 0,1";
-            $xDatFor  = f_MySql("SELECT","",$qDatFor,$xConexion01,"");
-            $vDatFor  = mysql_fetch_array($xDatFor);
-            $vForCob[] = "{$xRT['fcoidxxx']}";
-            $mForCob["{$xRT['fcoidxxx']}"] = $vDatFor;
-          }
-
-          // Buscando condiciones personalizadas
-          $mData      = explode('|', $mServicios["{$xRT['seridxxx']}"]['sercones']);
-          $mCamConEsp = array();
-          for ($nC=1; $nC < count($mData); $nC++) {
-            if ($mData[$nC] != '') {
-              $vCondicion = explode('~', $mData[$nC]);
-              if ($vCondicion[0] == $xRT['fcoidxxx']) {
-                for ($nA=1; $nA < count($vCondicion) ; $nA++) {
-                  if (in_array("{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}",$vConEsp) == false) {
-                    $vConEsp[] = "{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}";
-
-                    $qCampos  = "SELECT dcedesxx ";
-                    $qCampos .= "FROM $cAlfa.fpar0145 ";
-                    $qCampos .= "WHERE ";
-                    $qCampos .= "seridxxx = \"{$xRT['seridxxx']}\" AND ";
-                    $qCampos .= "fcoidxxx = \"{$xRT['fcoidxxx']}\" AND ";
-                    $qCampos .= "dcecampo = \"{$vCondicion[$nA]}\" LIMIT 0,1 ";
-                    $xCampos  = f_MySql("SELECT","",$qCampos,$xConexion01,"");
-                    $vCampos = mysql_fetch_array($xCampos);
-                    $mConEsp["{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}"] = $vCampos;
+  
+            // Buscando Informacion Formas de Cobro
+            if (in_array($xRT['fcoidxxx'],$vForCob) == false) {
+              $qDatFor  = "SELECT fcoidxxx, ";
+              $qDatFor .= "IF(fcodesxx != \"\",fcodesxx,\"FORMA SIN DESCRIPCION\") AS fcodesxx ";
+              $qDatFor .= "FROM $cAlfa.fpar0130 ";
+              $qDatFor .= "WHERE ";
+              $qDatFor .= "fcoidxxx = \"{$xRT['fcoidxxx']}\" LIMIT 0,1";
+              $xDatFor  = f_MySql("SELECT","",$qDatFor,$xConexion01,"");
+              $vDatFor  = mysql_fetch_array($xDatFor);
+              $vForCob[] = "{$xRT['fcoidxxx']}";
+              $mForCob["{$xRT['fcoidxxx']}"] = $vDatFor;
+            }
+  
+            // Buscando condiciones personalizadas
+            $mData      = explode('|', $mServicios["{$xRT['seridxxx']}"]['sercones']);
+            $mCamConEsp = array();
+            for ($nC=1; $nC < count($mData); $nC++) {
+              if ($mData[$nC] != '') {
+                $vCondicion = explode('~', $mData[$nC]);
+                if ($vCondicion[0] == $xRT['fcoidxxx']) {
+                  for ($nA=1; $nA < count($vCondicion) ; $nA++) {
+                    if (in_array("{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}",$vConEsp) == false) {
+                      $vConEsp[] = "{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}";
+  
+                      $qCampos  = "SELECT dcedesxx ";
+                      $qCampos .= "FROM $cAlfa.fpar0145 ";
+                      $qCampos .= "WHERE ";
+                      $qCampos .= "seridxxx = \"{$xRT['seridxxx']}\" AND ";
+                      $qCampos .= "fcoidxxx = \"{$xRT['fcoidxxx']}\" AND ";
+                      $qCampos .= "dcecampo = \"{$vCondicion[$nA]}\" LIMIT 0,1 ";
+                      $xCampos  = f_MySql("SELECT","",$qCampos,$xConexion01,"");
+                      $vCampos = mysql_fetch_array($xCampos);
+                      $mConEsp["{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}"] = $vCampos;
+                    }
+                    $mCamConEsp["{$vCondicion[$nA]}"]['dcedesxx'] = $mConEsp["{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}"]['dcedesxx']; // Descripcion Estandar
+                    $mCamConEsp["{$vCondicion[$nA]}"]['dcedespx'] = ""; // Descripcion Personalizada
                   }
-                  $mCamConEsp["{$vCondicion[$nA]}"]['dcedesxx'] = $mConEsp["{$xRT['seridxxx']}~{$xRT['fcoidxxx']}~{$vCondicion[$nA]}"]['dcedesxx']; // Descripcion Estandar
-                  $mCamConEsp["{$vCondicion[$nA]}"]['dcedespx'] = ""; // Descripcion Personalizada
                 }
               }
             }
-          }
-
-          if (count($mCamConEsp) > 0) {
-            $mConEspPer = explode('|', $xRT['fcopcexx']);
-            for ($nC=1; $nC < count($mConEspPer); $nC++) {
-              if ($mConEspPer[$nC] != '') {
-                $vCondicion = explode('~', $mConEspPer[$nC]);
-                $mCamConEsp["{$vCondicion[0]}"]['dcedespx'] = $vCondicion[1]; // Descripcion Personalizada
+  
+            if (count($mCamConEsp) > 0) {
+              $mConEspPer = explode('|', $xRT['fcopcexx']);
+              for ($nC=1; $nC < count($mConEspPer); $nC++) {
+                if ($mConEspPer[$nC] != '') {
+                  $vCondicion = explode('~', $mConEspPer[$nC]);
+                  $mCamConEsp["{$vCondicion[0]}"]['dcedespx'] = $vCondicion[1]; // Descripcion Personalizada
+                }
               }
             }
-          }
-
-          $cCampEst = "";
-          $cCampPer = "";
-          foreach ($mCamConEsp as $cKey => $cValue) {
-            $cCampEst .= str_replace(","," ",$mCamConEsp[$cKey]['dcedesxx']).",";
-            $cCampPer .= str_replace(","," ",$mCamConEsp[$cKey]['dcedespx']).",";
-          }
-          $cCampEst = substr($cCampEst, 0, -1);
-          $cCampPer = substr($cCampPer, 0, -1);
-
-          // Busco la Descripcion de la Tarifa Por y Dependiendo de la Base de Datos
-          if ($xRT['fcotptxx'] == "GENERAL") {
-            $vIdPro['prydesxx'] = "";
-          } else {
-            if (substr_count($vSysStr['alpopular_db_aplica'],$cAlfa) > 0){
-              if($xRT['fcotptxx'] == "PROYECTO"){
-                $qIdPro  = "SELECT $cAlfa.siai1101.* ";
-                $qIdPro .= "FROM $cAlfa.siai1101 ";
-                $qIdPro .= "WHERE ";
-                $qIdPro .= "$cAlfa.siai1101.pryidxxx = \"{$xRT['fcotpixx']}\" AND ";
-                $qIdPro .= "$cAlfa.siai1101.regestxx = \"ACTIVO\" LIMIT 0,1";
-                $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
-              }elseif($xRT['fcotptxx'] == "PRODUCTO"){
-                $qIdPro  = "SELECT $cAlfa.zalpo003.*, ";
-                $qIdPro  = "SELECT $cAlfa.zalpo003.lprdesxx as prydesxx ";
-                $qIdPro .= "FROM $cAlfa.zalpo003 ";
-                $qIdPro .= "WHERE ";
-                $qIdPro .= "$cAlfa.zalpo003.lpridxxx = \"{$xRT['fcotpixx']}\" AND ";
-                $qIdPro .= "$cAlfa.zalpo003.regestxx = \"ACTIVO\" LIMIT 0,1";
-                $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
-              }
-            }else{
-              if($xRT['fcotptxx'] == "PROYECTO"){
-                $qIdPro  = "SELECT $cAlfa.fpar0142.prydesxx ";
-                $qIdPro .= "FROM $cAlfa.fpar0142 ";
-                $qIdPro .= "WHERE ";
-                $qIdPro .= "$cAlfa.fpar0142.pryidxxx = \"{$xRT['fcotpixx']}\" AND ";
-                $qIdPro .= "$cAlfa.fpar0142.cliidxxx = \"{$xRT['cliidxxx']}\" AND ";
-                $qIdPro .= "$cAlfa.fpar0142.regestxx = \"ACTIVO\" LIMIT 0,1";
-                $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
-              }elseif($xRT['fcotptxx'] == "PRODUCTO"){
-                $qIdPro  = "SELECT $cAlfa.fpar0143.prodesxx as prydesxx ";
-                $qIdPro .= "FROM $cAlfa.fpar0143 ";
-                $qIdPro .= "WHERE ";
-                $qIdPro .= "$cAlfa.fpar0143.proidxxx = \"{$xRT['fcotpixx']}\" AND ";
-                $qIdPro .= "$cAlfa.fpar0143.regestxx = \"ACTIVO\" LIMIT 0,1";
-                $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
-              }
+  
+            $cCampEst = "";
+            $cCampPer = "";
+            foreach ($mCamConEsp as $cKey => $cValue) {
+              $cCampEst .= str_replace(","," ",$mCamConEsp[$cKey]['dcedesxx']).",";
+              $cCampPer .= str_replace(","," ",$mCamConEsp[$cKey]['dcedespx']).",";
             }
-            if (mysql_num_rows($xIdPro) > 0){$vIdPro = mysql_fetch_array($xIdPro);}else{$vIdPro['prydesxx'] = "SIN DESCRIPCION";}
-          }
-
-          // Trayendo Informacion de Usuarios Creacion
-          if ($xRT['regusrcr'] != "" && in_array($xRT['regusrcr'],$vUsuarios) == false) {
-            $qDatUsr  = "SELECT USRIDXXX, USRNOMXX ";
-            $qDatUsr .= "FROM $cAlfa.SIAI0003 ";
-            $qDatUsr .= "WHERE ";
-            $qDatUsr .= "USRIDXXX = \"{$xRT['regusrcr']}\" LIMIT 0,1";
-            $xDatUsr  = f_MySql("SELECT","",$qDatUsr,$xConexion01,"");
-            $vDatUsr  = mysql_fetch_array($xDatUsr);
-            $vUsuarios[] = "{$xRT['regusrcr']}";
-            $mUsuarios["{$xRT['regusrcr']}"] = $vDatUsr;
-          }
-
-          // Trayendo Informacion de Usuarios Modificacion
-          if (in_array($xRT['regusrxx'],$vUsuarios) == false) {
-            $qDatUsr  = "SELECT USRIDXXX, USRNOMXX ";
-            $qDatUsr .= "FROM $cAlfa.SIAI0003 ";
-            $qDatUsr .= "WHERE ";
-            $qDatUsr .= "USRIDXXX = \"{$xRT['regusrxx']}\" LIMIT 0,1";
-            $xDatUsr  = f_MySql("SELECT","",$qDatUsr,$xConexion01,"");
-            $vDatUsr  = mysql_fetch_array($xDatUsr);
-            $vUsuarios[] = "{$xRT['regusrxx']}";
-            $mUsuarios["{$xRT['regusrxx']}"] = $vDatUsr;
-          }
-
-          // Logica para determintar los campos dinamicos de las tarifas
-          // se debe tener en cuenta que los indices de los campos no pueden contener caracteres especiales, solo el guion bajo es permitido
-          $cCamResal = "";
-          $cCamResal = $this->fnCamposFormaCobro($xRT['fcoidxxx'], $xRT['fcotarxx'], $vCamDin, $vCamDinNC20, $vCamDinNC40, $vCamDinVeh, $vCamDinN);
-          
-          $qInsert  = $qInsCab;
-          $qInsert .= "(\"{$xRT['cliidxxx']}\",";                             // Id de Cliente o Id Grupo
-          $qInsert .= "\"$cNomCliGru\",";                                     // Nombre del Cliente o Descripcion Grupo',";
-          $qInsert .= "\"{$xRT['tartipxx']}\",";                              // Aplica tarifa para (CLIENTE/GRUPO)',";
-          $qInsert .= "\"$cEstCliGru\",";                                     // Estado Cliente o Grupo',";
-          $qInsert .= "\"{$xRT['regestxx']}\",";                              // Estado Tarifa',";
-          if ($vSysStr['system_control_vigencia_tarifas'] == "SI") {
-            $qInsert .= "\"{$xRT['tarfevde']}\",";                            // Fecha de Vigencia Desde',";
-            $qInsert .= "\"{$xRT['tarfevha']}\",";                            // Fecha de Vigencia Hasta',";
-            $qInsert .= "\"\",";                                              // Nueva Fecha de Vigencia Desde',";
-            $qInsert .= "\"\",";                                              // Nueva Fecha de Vigencia Hasta',";
-            $qInsert .= "\"{$xRT['tarfcvig']}\",";                            // Fecha Cambio de Vigencia',";
-            $qInsert .= "\"\",";                                              // Modificar',";
-          }
-          $qInsert .= "\"{$xRT['seridxxx']}\",";                              // Id del Concepto de Cobro',";
-          $qInsert .= "\"{$mServicios["{$xRT['seridxxx']}"]['serdespx']}\","; // Descripcion del Concepto de Cobro',";
-          $qInsert .= "\"{$xRT['serdespc']}\",";                              // Descripcion Personalizada del Concepto de Cobro',";
-          $qInsert .= "\"{$mForCob["{$xRT['fcoidxxx']}"]['fcoidxxx']}\",";    // Id Forma de Cobro',";
-          $qInsert .= "\"{$mForCob["{$xRT['fcoidxxx']}"]['fcodesxx']}\",";    // Descripcion Forma de Cobro',";
-          $qInsert .= "\"{$xRT['monidxxx']}\",";                              // Moneda',";
-          $qInsert .= "\"$cCampEst\",";                                       // Condicion Especial',";
-          $qInsert .= "\"$cCampPer\",";                                       // Condicion Especial Personalizada',";
-          $qInsert .= "\"{$xRT['fcotptxx']}\",";                              // Aplica Tarifa Por',";
-          $qInsert .= "\"{$xRT['fcotpixx']}\",";                              // Id Aplica Tarifa Por',";
-          $qInsert .= "\"{$vIdPro['prydesxx']}\",";                           // Descripcion Aplica Tarifa Por',";
-          $qInsert .= "\"{$xRT['fcotopxx']}\",";                              // Tipo Operación',";
-          $qInsert .= "\"".str_replace("~",",",$xRT['sucidxxx'])."\",";       // Sucursales',";
-          $qInsert .= "\"".str_replace("~",",",$xRT['fcomtrxx'])."\",";       // Tipo de Transporte',";
-          //Entre estos campos el reporte genera los campos dinamicos de las tarifas
-          $qInsert .= "\"{$xRT['regusrcr']}\",";                              // Id Usuario Creacion',";
-          $qInsert .= "\"{$mUsuarios["{$xRT['regusrcr']}"]['USRNOMXX']}\",";  // Nombre Usuario Creacion',";
-          $qInsert .= "\"{$xRT['regusrxx']}\",";                              // Id Usuario Modificado',";
-          $qInsert .= "\"{$mUsuarios["{$xRT['regusrxx']}"]['USRNOMXX']}\",";  // Nombre Usuario Modificado',";
-          $qInsert .= "\"{$xRT['regfcrex']}\",";                              // Fecha creacion',";
-          $qInsert .= "\"{$xRT['regfmodx']}\",";                              // Fecha Modificado',";
-          $qInsert .= "\"".substr($cCamResal,0,-1)."\")";                     // Columnas Resaltadas',";
-          // echo $qInsert."<br>";
-          $xInsert = mysql_query($qInsert,$xConexion01);
-          if (!$xInsert) {
-            $nSwitch = 1;
-            $vError['TIPOERRX'] = "ERROR";
-            $vError['DESERROR'] = "Error al Insertar en la tabla temporal.";
-            $objEstructuraTarifasFacturacion->fnGuardarErrorTarfiasFacturacion($vError);
+            $cCampEst = substr($cCampEst, 0, -1);
+            $cCampPer = substr($cCampPer, 0, -1);
+  
+            // Busco la Descripcion de la Tarifa Por y Dependiendo de la Base de Datos
+            if ($xRT['fcotptxx'] == "GENERAL") {
+              $vIdPro['prydesxx'] = "";
+            } else {
+              if (substr_count($vSysStr['alpopular_db_aplica'],$cAlfa) > 0){
+                if($xRT['fcotptxx'] == "PROYECTO"){
+                  $qIdPro  = "SELECT $cAlfa.siai1101.* ";
+                  $qIdPro .= "FROM $cAlfa.siai1101 ";
+                  $qIdPro .= "WHERE ";
+                  $qIdPro .= "$cAlfa.siai1101.pryidxxx = \"{$xRT['fcotpixx']}\" AND ";
+                  $qIdPro .= "$cAlfa.siai1101.regestxx = \"ACTIVO\" LIMIT 0,1";
+                  $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
+                }elseif($xRT['fcotptxx'] == "PRODUCTO"){
+                  $qIdPro  = "SELECT $cAlfa.zalpo003.*, ";
+                  $qIdPro  = "SELECT $cAlfa.zalpo003.lprdesxx as prydesxx ";
+                  $qIdPro .= "FROM $cAlfa.zalpo003 ";
+                  $qIdPro .= "WHERE ";
+                  $qIdPro .= "$cAlfa.zalpo003.lpridxxx = \"{$xRT['fcotpixx']}\" AND ";
+                  $qIdPro .= "$cAlfa.zalpo003.regestxx = \"ACTIVO\" LIMIT 0,1";
+                  $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
+                }
+              }else{
+                if($xRT['fcotptxx'] == "PROYECTO"){
+                  $qIdPro  = "SELECT $cAlfa.fpar0142.prydesxx ";
+                  $qIdPro .= "FROM $cAlfa.fpar0142 ";
+                  $qIdPro .= "WHERE ";
+                  $qIdPro .= "$cAlfa.fpar0142.pryidxxx = \"{$xRT['fcotpixx']}\" AND ";
+                  $qIdPro .= "$cAlfa.fpar0142.cliidxxx = \"{$xRT['cliidxxx']}\" AND ";
+                  $qIdPro .= "$cAlfa.fpar0142.regestxx = \"ACTIVO\" LIMIT 0,1";
+                  $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
+                }elseif($xRT['fcotptxx'] == "PRODUCTO"){
+                  $qIdPro  = "SELECT $cAlfa.fpar0143.prodesxx as prydesxx ";
+                  $qIdPro .= "FROM $cAlfa.fpar0143 ";
+                  $qIdPro .= "WHERE ";
+                  $qIdPro .= "$cAlfa.fpar0143.proidxxx = \"{$xRT['fcotpixx']}\" AND ";
+                  $qIdPro .= "$cAlfa.fpar0143.regestxx = \"ACTIVO\" LIMIT 0,1";
+                  $xIdPro  = f_MySql("SELECT","",$qIdPro,$xConexion01,"");
+                }
+              }
+              if (mysql_num_rows($xIdPro) > 0){$vIdPro = mysql_fetch_array($xIdPro);}else{$vIdPro['prydesxx'] = "SIN DESCRIPCION";}
+            }
+  
+            // Trayendo Informacion de Usuarios Creacion
+            if ($xRT['regusrcr'] != "" && in_array($xRT['regusrcr'],$vUsuarios) == false) {
+              $qDatUsr  = "SELECT USRIDXXX, USRNOMXX ";
+              $qDatUsr .= "FROM $cAlfa.SIAI0003 ";
+              $qDatUsr .= "WHERE ";
+              $qDatUsr .= "USRIDXXX = \"{$xRT['regusrcr']}\" LIMIT 0,1";
+              $xDatUsr  = f_MySql("SELECT","",$qDatUsr,$xConexion01,"");
+              $vDatUsr  = mysql_fetch_array($xDatUsr);
+              $vUsuarios[] = "{$xRT['regusrcr']}";
+              $mUsuarios["{$xRT['regusrcr']}"] = $vDatUsr;
+            }
+  
+            // Trayendo Informacion de Usuarios Modificacion
+            if (in_array($xRT['regusrxx'],$vUsuarios) == false) {
+              $qDatUsr  = "SELECT USRIDXXX, USRNOMXX ";
+              $qDatUsr .= "FROM $cAlfa.SIAI0003 ";
+              $qDatUsr .= "WHERE ";
+              $qDatUsr .= "USRIDXXX = \"{$xRT['regusrxx']}\" LIMIT 0,1";
+              $xDatUsr  = f_MySql("SELECT","",$qDatUsr,$xConexion01,"");
+              $vDatUsr  = mysql_fetch_array($xDatUsr);
+              $vUsuarios[] = "{$xRT['regusrxx']}";
+              $mUsuarios["{$xRT['regusrxx']}"] = $vDatUsr;
+            }
+  
+            // Logica para determintar los campos dinamicos de las tarifas
+            // se debe tener en cuenta que los indices de los campos no pueden contener caracteres especiales, solo el guion bajo es permitido
+            $cCamResal = "";
+            $cCamResal = $this->fnCamposFormaCobro($xRT['fcoidxxx'], $xRT['fcotarxx'], $vCamDin, $vCamDinNC20, $vCamDinNC40, $vCamDinVeh, $vCamDinN);
+            
+            $qInsert  = $qInsCab;
+            $qInsert .= "(\"{$xRT['cliidxxx']}\",";                             // Id de Cliente o Id Grupo
+            $qInsert .= "\"$cNomCliGru\",";                                     // Nombre del Cliente o Descripcion Grupo',";
+            $qInsert .= "\"{$xRT['tartipxx']}\",";                              // Aplica tarifa para (CLIENTE/GRUPO)',";
+            $qInsert .= "\"$cEstCliGru\",";                                     // Estado Cliente o Grupo',";
+            $qInsert .= "\"{$xRT['regestxx']}\",";                              // Estado Tarifa',";
+            if ($vSysStr['system_control_vigencia_tarifas'] == "SI") {
+              $qInsert .= "\"{$xRT['tarfevde']}\",";                            // Fecha de Vigencia Desde',";
+              $qInsert .= "\"{$xRT['tarfevha']}\",";                            // Fecha de Vigencia Hasta',";
+              $qInsert .= "\"\",";                                              // Nueva Fecha de Vigencia Desde',";
+              $qInsert .= "\"\",";                                              // Nueva Fecha de Vigencia Hasta',";
+              $qInsert .= "\"{$xRT['tarfcvig']}\",";                            // Fecha Cambio de Vigencia',";
+              $qInsert .= "\"\",";                                              // Modificar',";
+            }
+            $qInsert .= "\"{$xRT['seridxxx']}\",";                              // Id del Concepto de Cobro',";
+            $qInsert .= "\"{$mServicios["{$xRT['seridxxx']}"]['serdespx']}\","; // Descripcion del Concepto de Cobro',";
+            $qInsert .= "\"{$xRT['serdespc']}\",";                              // Descripcion Personalizada del Concepto de Cobro',";
+            $qInsert .= "\"{$mForCob["{$xRT['fcoidxxx']}"]['fcoidxxx']}\",";    // Id Forma de Cobro',";
+            $qInsert .= "\"{$mForCob["{$xRT['fcoidxxx']}"]['fcodesxx']}\",";    // Descripcion Forma de Cobro',";
+            $qInsert .= "\"{$xRT['monidxxx']}\",";                              // Moneda',";
+            $qInsert .= "\"$cCampEst\",";                                       // Condicion Especial',";
+            $qInsert .= "\"$cCampPer\",";                                       // Condicion Especial Personalizada',";
+            $qInsert .= "\"{$xRT['fcotptxx']}\",";                              // Aplica Tarifa Por',";
+            $qInsert .= "\"{$xRT['fcotpixx']}\",";                              // Id Aplica Tarifa Por',";
+            $qInsert .= "\"{$vIdPro['prydesxx']}\",";                           // Descripcion Aplica Tarifa Por',";
+            $qInsert .= "\"{$xRT['fcotopxx']}\",";                              // Tipo Operación',";
+            $qInsert .= "\"".str_replace("~",",",$xRT['sucidxxx'])."\",";       // Sucursales',";
+            $qInsert .= "\"".str_replace("~",",",$xRT['fcomtrxx'])."\",";       // Tipo de Transporte',";
+            //Entre estos campos el reporte genera los campos dinamicos de las tarifas
+            $qInsert .= "\"{$xRT['regusrcr']}\",";                              // Id Usuario Creacion',";
+            $qInsert .= "\"{$mUsuarios["{$xRT['regusrcr']}"]['USRNOMXX']}\",";  // Nombre Usuario Creacion',";
+            $qInsert .= "\"{$xRT['regusrxx']}\",";                              // Id Usuario Modificado',";
+            $qInsert .= "\"{$mUsuarios["{$xRT['regusrxx']}"]['USRNOMXX']}\",";  // Nombre Usuario Modificado',";
+            $qInsert .= "\"{$xRT['regfcrex']}\",";                              // Fecha creacion',";
+            $qInsert .= "\"{$xRT['regfmodx']}\",";                              // Fecha Modificado',";
+            $qInsert .= "\"".substr($cCamResal,0,-1)."\")";                     // Columnas Resaltadas',";
+            // echo $qInsert."<br>";
+            $xInsert = mysql_query($qInsert,$xConexion01);
+            if (!$xInsert) {
+              $nSwitch = 1;
+              $vError['TIPOERRX'] = "ERROR";
+              $vError['DESERROR'] = "Error al Insertar en la tabla temporal.";
+              $objEstructuraTarifasFacturacion->fnGuardarErrorTarfiasFacturacion($vError);
+            }
           }
         }
+      }
 
+      if ($nSwitch == 0) {
         // Ordenando campos para crearlos en la tabla temporal
         $vCamNew = array();
         $vCamNew =  $this->fnOrdenarCampos($vCamDin, $vCamDinNC20, $vCamDinNC40, $vCamDinVeh, $vCamDinN);
@@ -7293,7 +7386,7 @@
 
             // Las tarifas con valor variable no tienen parametrizacion
             if ($cCamUpd != "") {
-              $qUpdate = "UPDATE $cAlfa.{$pArrayParametros['TABLAXXX']} SET $cCamUpd WHERE LINEAIDX = {$xRT['LINEAIDX']}";
+              $qUpdate = "UPDATE $cAlfa.{$pArrayParametros['TABLAXXX']} SET $cCamUpd WHERE LINEAIDX = {$xRT['LINEAIDX']}; ";
               $xUpdate = mysql_query($qUpdate,$xConexion01);
               if (!$xUpdate) {
                 $nSwitch = 1;
@@ -7324,7 +7417,7 @@
           }
         }
       }
-
+      
       if ($nSwitch == 0) {
         $mReturn[0] = "true";
       } else {

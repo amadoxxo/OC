@@ -36,9 +36,9 @@
   /**
    * Nombre(s) de los archivos en excel generados.
    * 
-   * @var string
+   * @var array
    */
-  $cNomArc = "";
+  $vNomArc = array();
 
   /**
    * Cantidad de Registros para reiniciar conexion.
@@ -303,7 +303,7 @@
       $mReturnReporte = $objReporteTarifasConsolidado->fnReporteTarifasConsolidado($vDatos);
 
       if($mReturnReporte[0] == "true"){
-        $cNomArc = $mReturnReporte[1];
+        $vNomArc = $mReturnReporte[1];
       }
     }
   }
@@ -325,7 +325,7 @@
      * Actualizo el campo de resultado y nombre del archivo
      */
     $vParBg['pbarespr'] = ($nSwitch == 0) ? "EXITOSO" : "FALLIDO";  //Resultado Proceso
-    $vParBg['pbaexcxx'] = $cNomArc;                                 //Nombre Archivos Excel
+    $vParBg['pbaexcxx'] = implode("~", $vNomArc);                   //Nombre Archivos Excel
     $vParBg['pbaerrxx'] = $cMsj;                                    //Errores al ejecutar el Proceso
     $vParBg['regdfinx'] = date('Y-m-d H:i:s');                      //Fecha y Hora Fin Ejecucion Proceso
     $vParBg['pbaidxxx'] = $vArg[0];                                 //id Proceso

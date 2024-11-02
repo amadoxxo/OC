@@ -9745,7 +9745,7 @@
           //Se crea en Downloads
           $vFile = array();
           $cDirectorio = "{$OPENINIT['pathdr']}/opencomex/".$vSysStr['system_download_directory'];
-          $cFile = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis').".xls";
+          $cFile = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "REPORTE_TARIFAS_CONSOLIDADO_" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis').".xls";
           $vFile[] = $cFile;
           $cFileDownload = $cDirectorio."/".$cFile;
 
@@ -9855,12 +9855,12 @@
               }
 
               $nTotRegistros = $nCountReg + $nCantCli;
-              if ($nTotRegistros > 500) {
+              if ($nTotRegistros > 1300) {
                 $pintarNuevoExcel = 1;
               }
             }
 
-            if ($nCountReg > 500 || $pintarNuevoExcel == 1) {
+            if ($nCountReg > 1300 || $pintarNuevoExcel == 1) {
               $writer->close();
 
               $nExcel++;
@@ -9868,7 +9868,7 @@
 
               //Se crea en Downloads
               $cDirectorio = "{$OPENINIT['pathdr']}/opencomex/".$vSysStr['system_download_directory'];
-              $cFile = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis')."_".$nExcel.".xls";
+              $cFile = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "REPORTE_TARIFAS_CONSOLIDADO_" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis')."_".$nExcel.".xls";
               $vFile[] = $cFile;
               $cFileDownload = $cDirectorio."/".$cFile;
 

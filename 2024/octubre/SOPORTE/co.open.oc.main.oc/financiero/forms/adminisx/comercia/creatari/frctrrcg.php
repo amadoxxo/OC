@@ -122,6 +122,13 @@
   $kLicencia  = $kDf[5];
   $swidth     = $kDf[6];
 
+  $cTarCli = "";
+  $cCliIds = explode(",", $gCliId);
+  for ($i=0;$i<count($cCliIds);$i++) { 
+    $cTarCli .= "\"$cCliIds[$i]\",";
+  }
+  $cTarCli = substr($cTarCli,0,-1);
+
   if ($_SERVER["SERVER_PORT"] != "") {
     /*** Ejecutar proceso en Background ***/
     $cEjProBg = ($cEjProBg != "SI") ? "NO" : $cEjProBg;
@@ -133,12 +140,12 @@
       $qCliNom .= "IF(TRIM(CONCAT(CLINOM1X,\" \",CLINOM2X,\" \",CLIAPE1X,\" \",CLIAPE2X)) != \"\",TRIM(CONCAT(CLINOM1X,\" \",CLINOM2X,\" \",CLIAPE1X,\" \",CLIAPE2X)), CLINOMXX) AS CLINOMXX ";
       $qCliNom .= "FROM $cAlfa.SIAI0150 ";
       $qCliNom .= "WHERE ";
-      $qCliNom .= "CLIIDXXX = \"$gCliId\" LIMIT 0,1";
+      $qCliNom .= "CLIIDXXX IN ($cTarCli) LIMIT 0,1";
       $xCliNom = f_MySql("SELECT","",$qCliNom,$xConexion01,"");
       if (mysql_num_rows($xCliNom) == 0) {
         $nSwitch = 1;
         $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "El Cliente [$gCliId] No Existe.\n";
+        $cMsj .= "El Cliente [$cTarCli] No Existe.\n";
       } else {
         $vCliNom = mysql_fetch_array($xCliNom);
         $cNomCliGru = $vCliNom['CLINOMXX'];
@@ -222,7 +229,7 @@
 
     $vParBg['pbadbxxx'] = $cAlfa;                       // Base de Datos
     $vParBg['pbamodxx'] = "FACTURACION";                // Modulo
-    $vParBg['pbatinxx'] = "REPTARIFASCON";         // Tipo Interface
+    $vParBg['pbatinxx'] = "REPTARIFASCON";              // Tipo Interface
     $vParBg['pbatinde'] = "REPORTE TARIFAS CONSOLIDADO";// Descripcion Tipo de Interfaz
     $vParBg['admidxxx'] = "";                           // Sucursal
     $vParBg['doiidxxx'] = "";                           // Dex

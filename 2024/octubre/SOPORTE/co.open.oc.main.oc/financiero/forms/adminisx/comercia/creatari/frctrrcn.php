@@ -85,24 +85,18 @@
 
         switch (xLink) {
           case "cCliId":
-            if(document.forms['frgrm']['cTarTip'].value == "CLIENTE") {
-              var cRuta = "frctr350.php";
-            } else {
-              var cRuta = "frctr111.php";
-            }
-            
             if (xSwitch == "VALID") {
-              var zRuta  = cRuta+"?gWhat=VALID"+
-                                 "&gFunction=cCliId"+
-                                 "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase()+
-                                 "&gOrigen=REPORTE";
+              var zRuta  = "frctr111.php?gWhat=VALID"+
+                                  "&gFunction=cCliId"+
+                                  "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase()+
+                                  "&gOrigen=REPORTE";
 
               parent.fmpro.location = zRuta;
             } else {
               var zNx     = (zX-600)/2;
               var zNy     = (zY-250)/2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = cRuta+"?gWhat=WINDOW"+
+              var zRuta   = "frctr111.php?gWhat=WINDOW"+
                                   "&gFunction=cCliId"+
                                   "&gCliId="+document.forms['frgrm']['cCliId'].value.toUpperCase()+
                                   "&gOrigen=REPORTE";
@@ -112,27 +106,21 @@
             }
           break;
           case "cCliNom":
-            if(document.forms['frgrm']['cTarTip'].value == "CLIENTE") {
-              var cRuta = "frctr35n.php";
-            } else {
-              var cRuta = "frctr111.php";
-            }
-                  
             if (xSwitch == "VALID") {
-              var zRuta  = cRuta+"?gWhat=VALID"+
-                                 "&gFunction=cCliNom"+
-                                 "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase()+
-                                 "&gOrigen=REPORTE";
+              var zRuta  = "frctr111.php?gWhat=VALID"+
+                                        "&gFunction=cCliNom"+
+                                        "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase()+
+                                        "&gOrigen=REPORTE";
 
               parent.fmpro.location = zRuta;
             } else {
               var zNx     = (zX-600)/2;
               var zNy     = (zY-250)/2;
               var zWinPro = 'width=600,scrollbars=1,height=250,left='+zNx+',top='+zNy;
-              var zRuta   = cRuta+"?gWhat=WINDOW"+
-                                   "&gFunction=cCliNom"+
-                                   "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase()+
-                                   "&gOrigen=REPORTE";
+              var zRuta   = "frctr111.php?gWhat=WINDOW"+
+                                  "&gFunction=cCliNom"+
+                                  "&gCliNom="+document.forms['frgrm']['cCliNom'].value.toUpperCase()+
+                                  "&gOrigen=REPORTE";
 
               zWindow = window.open(zRuta,"zWindow",zWinPro);
               zWindow.focus();
@@ -212,7 +200,31 @@
               zWindow.focus();
             }
           break;
+          case "cCliente":
+            var zNx = (zX-520)/2;
+            var zNy = (zY-500)/2;
+            var zWinPro = 'width=520,scrollbars=1,height=500,left='+zNx+'top='+zNy;
+            var cRuta   = 'frctrint.php?gTarCli='+document.forms['frgrm']['cTarCli'].value;
+            var zWindow = window.open(cRuta,"zWindow",zWinPro);
+          break;
         }
+      }
+
+      function fnCargarGrilla() {
+        var cRuta = "frctrgri.php?gTarCli="+document.forms['frgrm']['cTarCli'].value;
+        parent.fmpro.location = cRuta;
+      }
+
+      function uDelCom(valor)	{
+				if (confirm('ELIMINAR EL CLIENTE '+valor+'?'))	{
+					var ruta = "frctrsav.php?tipsave=4&cIntId="+valor+"&cTarCli="+document.forms['frgrm']['cTarCli'].value;
+					parent.fmpro.location = ruta;
+				}
+			}
+
+      function fnInicializarSelect() {
+        var select = document.getElementById('cTarTip').value;
+        fnCambiarTitulos(select);
       }
 
       /**
@@ -224,29 +236,40 @@
         document.forms['frgrm']['cCliNom'].value = "";
             
         if (xOpcion == "CLIENTE") {
-          document.getElementById('lblCliId').innerHTML  = "Nit";
-          document.getElementById('lblCliDv').innerHTML  = "Dv";
-          document.getElementById('lblCliNom').innerHTML = "Cliente";
-          document.getElementById('lblEstado').innerHTML = "Estado Cliente:";
+          fnCargarGrilla();
+          document.getElementById('overDivCli').style.display = "block";
+          
+          document.getElementById('cCliId').style.display = "none";
+          document.getElementById('cCliDV').style.display = "none";
+          document.getElementById('cCliNom').style.display = "none";
+
+          document.getElementById('lblCliId').innerHTML = "";
+          document.getElementById('lblCliNom').innerHTML = "";
         } else {
-          document.getElementById('lblCliId').innerHTML  = "Id";
-          document.getElementById('lblCliDv').innerHTML  = "";
+          document.getElementById('overDivCli').style.display = "none";
+          
+          document.getElementById('cCliId').style.display = "block";
+          document.getElementById('cCliDV').style.display = "block";
+          document.getElementById('cCliNom').style.display = "block";
+
+          document.getElementById('lblCliId').innerHTML = "Id";
           document.getElementById('lblCliNom').innerHTML = "Grupo de Tarifas";
+
           document.getElementById('lblEstado').innerHTML = "Estado Grupo:";
-        }            
+        }
       }
       
       /**
        * Genera la descarga del reporte mediante un agendamiento en Background.
        */
       function fnGenerar() {
-        if (document.forms['frgrm']['cCliId'].value != "" || 
+        if (document.forms['frgrm']['cTarCli'].value != "" || 
             (document.forms['frgrm']['dDesde'].value != "" && document.forms['frgrm']['dDesde'].value != "0000-00-00" && 
             document.forms['frgrm']['dHasta'].value != "" && document.forms['frgrm']['dHasta'].value != "0000-00-00")) {
           var cRuta = "frctrrcg.php?gEstTari="  +document.forms['frgrm']['cEstTari'].value+
                                   "&gTipoOpe="  +document.forms['frgrm']['cTipoOpe'].value+
                                   "&gApliTar="  +document.forms['frgrm']['cTarTip'].value+
-                                  "&gCliId="    +document.forms['frgrm']['cCliId'].value+
+                                  "&gCliId="    +document.forms['frgrm']['cTarCli'].value+
                                   "&gEstCli="   +document.forms['frgrm']['cEstCli'].value+
                                   "&gSerId="    +document.forms['frgrm']['cSerId'].value+
                                   "&gFcoId="    +document.forms['frgrm']['cFcoId'].value+
@@ -371,7 +394,7 @@
 
     </script>
   </head>
-  <body>
+  <body onload="fnInicializarSelect()">
     <form name='frgrm' action='frctrrcg.php' method="POST" target="fmpro">
       <center>
         <table width="500" cellspacing="0" cellpadding="0" border="0"><tr><td>
@@ -405,7 +428,7 @@
               <tr>
                 <td Class = "name" colspan = "5"><br><br>Tarifa por:</td>
                 <td Class = "name" colspan = "5"><br><br>
-                  <select Class = "letrase" name = "cTarTip" style = "width:100" onchange="javascript:fnCambiarTitulos(this.value)">
+                  <select Class = "letrase" name = "cTarTip" id="cTarTip" style = "width:100" onchange="javascript:fnCambiarTitulos(this.value)">
                     <option value = "CLIENTE" selected>CLIENTE</option>
                     <option value = "GRUPO">GRUPO</option>
                   </select>
@@ -414,8 +437,8 @@
                   <a href = "javascript:document.forms['frgrm']['cCliId'].value = '';
                                         document.forms['frgrm']['cCliNom'].value = '';
                                         document.forms['frgrm']['cCliDV'].value  = '';
-                                        f_Links('cCliId','VALID')" id = "lCliId"><br><label id="lblCliId">Nit</label></a><br>
-                  <input type = "text" Class = "letra" style = "width:080;text-align:center" name = "cCliId"
+                                        f_Links('cCliId','VALID')" id = "lCliId"><br><label id="lblCliId">Id</label></a><br>
+                  <input type = "text" Class = "letra" style = "width:080;text-align:center" name = "cCliId" id="cCliId"
                         onBlur = "javascript:this.value=this.value.toUpperCase();
                                               f_Links('cCliId','VALID');
                                               this.style.background='<?php echo $vSysStr['system_imput_onblur_color'] ?>'"
@@ -424,10 +447,10 @@
                                             document.forms['frgrm']['cCliDV'].value  = '';
                                             this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
                 </td>
-                <td Class = "name" colspan = "1"><br><label id="lblCliDv">Dv</label><br>
-                  <input type = "text" Class = "letra" style = "width:020;text-align:center" name = "cCliDV" readonly>
+                <td Class = "name" colspan = "1"><br><label id="lblCliDv"></label><br>
+                  <input type = "text" Class = "letra" style = "width:020;text-align:center" name = "cCliDV" id="cCliDV" readonly>
                 </td>
-                <td Class = "name" colspan = "10"><br><label id="lblCliNom">Cliente</label><br>
+                <td Class = "name" colspan = "10"><br><label id="lblCliNom">Grupo de Tarifas</label><br>
                   <input type = "text" Class = "letra" style = "width:200" name = "cCliNom" id="cCliNom"
                         onBlur = "javascript:this.value=this.value.toUpperCase();
                                               f_Links('cCliNom','VALID');
@@ -436,6 +459,12 @@
                                             document.forms['frgrm']['cCliNom'].value = '';
                                             document.forms['frgrm']['cCliDV'].value  = '';
                                             this.style.background='<?php echo $vSysStr['system_imput_onfocus_color'] ?>'">
+                </td>
+              </tr>
+              <tr>
+                <td colspan="25">
+                  <input type="hidden" name="cTarCli">
+                  <div id="overDivCli"></div>
                 </td>
               </tr>
               <tr>
@@ -594,7 +623,7 @@
                         <td>
                           <?php if ($mArcProBg[$i]['pbaexcxx'] != "") { ?>
                             <a href = "javascript:fnDescargar('<?php echo $mArcProBg[$i]['pbaexcxx']; ?>')">
-                              Descargar
+                              Descargar_<?php echo $i ?>
                             </a>
                           <?php } ?>
                           <?php if ($mArcProBg[$i]['pbaerrxx'] != "") { ?>

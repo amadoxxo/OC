@@ -1,4 +1,10 @@
 <?php
+/**
+  * Grilla Clientes.
+  * --- Descripcion: Permite Guardar o Eliminar uno o varios clientes.
+  * @author Elian Amado <elian.amado@openits.co>
+  * @version 001
+  */
   include('../../../../libs/php/utility.php');
 
   switch ($tipsave) {

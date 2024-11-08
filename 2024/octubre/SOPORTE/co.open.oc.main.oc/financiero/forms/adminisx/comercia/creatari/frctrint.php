@@ -1,4 +1,10 @@
 <?php
+/**
+  * Grilla Clientes.
+  * --- Descripcion: Valid/Window donde se visualizan todos los clientes.
+  * @author Elian Amado <elian.amado@openits.co>
+  * @version 001
+  */
   include('../../../../libs/php/utility.php');
 ?>
 <html>

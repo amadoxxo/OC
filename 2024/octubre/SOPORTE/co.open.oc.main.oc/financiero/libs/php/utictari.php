@@ -1,5 +1,4 @@
 <?php
-
   /**
    * utirebav.php : Utility para gestionar las tarifas, creacion y/o actualizacion de tarifas, generacion de reportes de tarifas.
    *
@@ -6034,7 +6033,7 @@
                                 array('NAME'=>'fcotpixx','VALUE'=>trim(strtoupper($pArrayParametros['cFcoTpi']))    ,'CHECK'=>'SI'),
                                 array('NAME'=>'fcotopxx','VALUE'=>trim(strtoupper($pArrayParametros['cSerTop']))    ,'CHECK'=>'SI'),
                                 array('NAME'=>'fcomtrxx','VALUE'=>trim(strtoupper($pArrayParametros['cFcoMtr']))    ,'CHECK'=>'NO'), //Para los DO de registro es vacio
-                                array('NAME'=>'fcotarxx','VALUE'=>trim(strtoupper($cFcoTar))                        ,'CHECK'=>'SI'),
+                                array('NAME'=>'fcotarxx','VALUE'=>trim(strtoupper($cFcoTar))                        ,'CHECK'=>'NO'),
                                 array('NAME'=>'fcopcexx','VALUE'=>$cCadEsp  						                            ,'CHECK'=>'NO'),
                                 array('NAME'=>'tartipxx','VALUE'=>trim(strtoupper($pArrayParametros['cTarTip']))    ,'CHECK'=>'SI'),
                                 array('NAME'=>'monidxxx','VALUE'=>trim(strtoupper($pArrayParametros['cMonId']))     ,'CHECK'=>'SI'),
@@ -6148,7 +6147,7 @@
                                   array('NAME'=>'fcotpixx','VALUE'=>trim(strtoupper($pArrayParametros['cFcoTpi']))    ,'CHECK'=>'SI'),
                                   array('NAME'=>'fcotopxx','VALUE'=>trim(strtoupper($pArrayParametros['cSerTop']))    ,'CHECK'=>'SI'),
                                   array('NAME'=>'fcomtrxx','VALUE'=>trim(strtoupper($pArrayParametros['cFcoMtr']))    ,'CHECK'=>'NO'), //Para los DO de registro es vacio
-                                  array('NAME'=>'fcotarxx','VALUE'=>trim(strtoupper($cFcoTar))                        ,'CHECK'=>'SI'),
+                                  array('NAME'=>'fcotarxx','VALUE'=>trim(strtoupper($cFcoTar))                        ,'CHECK'=>'NO'),
                                   array('NAME'=>'fcopcexx','VALUE'=>$cCadEsp                                          ,'CHECK'=>'NO'),
                                   array('NAME'=>'tartipxx','VALUE'=>trim(strtoupper($pArrayParametros['cTarTip']))    ,'CHECK'=>'SI'),
                                   array('NAME'=>'monidxxx','VALUE'=>trim(strtoupper($pArrayParametros['cMonId']))     ,'CHECK'=>'SI'),
@@ -6820,14 +6819,14 @@
           
           if(mysql_num_rows($xTabAnt) == 0){
             $nSwitch = 1;
-            $vReturn[count($vReturn)] = "Error al Crear Tabla [flta$nAnio], No Existe la Tabla [flta$nAnioAnterior], Comuniquese con openTecnologia.".$qCreate."~".str_replace("'", " ", mysql_error($xConexion01));
+            $vReturn[count($vReturn)] = "Error al Crear Tabla, No Existe la Tabla del año anterior, Comuniquese con openTecnologia.";
           }else{
             $qCreate = "CREATE TABLE IF NOT EXISTS $cAlfa.flta$nAnio LIKE $cAlfa.flta$nAnioAnterior ";
             $xCreate = mysql_query($qCreate,$xConexion01);
             
             if (!$xCreate) {
               $nSwitch = 1;
-              $vReturn[count($vReturn)] = "Error al crear Tabla [flta$nAnio] para Log, Comuniquese con openTecnologia.".$qCreate."~".str_replace("'", " ", mysql_error($xConexion01));
+              $vReturn[count($vReturn)] = "Error al crear Tabla para Log, Comuniquese con openTecnologia.";
             }
           }
         }
@@ -6862,6 +6861,13 @@
        */
       $mReturn    = array();
       $mReturn[0] = "";
+
+      /**
+       * Indica la cantidad de registros que se debe consultar por bloques en la base de datos.
+       *
+       * @var int
+       */
+      $nNumReg = 1000;
 
       /**
        * Variable para alamacenar errores.
@@ -6942,14 +6948,11 @@
       $qInsCab .= "COLUMNAS_RESALTADAS) VALUES ";
 
       $cTarCli = "";
-      $cCliIds = explode(",", $pArrayParametros['CLIIDXXX']);
-      for ($i=0;$i<count($cCliIds);$i++) { 
-        $cTarCli .= "\"$cCliIds[$i]\",";
+      $vCliIds = explode(",", $pArrayParametros['CLIIDXXX']);
+      for ($i=0;$i<count($vCliIds);$i++) { 
+        $cTarCli .= "\"$vCliIds[$i]\",";
       }
       $cTarCli = substr($cTarCli,0,-1);
-
-      // SQL_CALC
-      $nNumReg = 100;
 
       $qLoad  = "SELECT SQL_CALC_FOUND_ROWS ";
       $qLoad .= "$cAlfa.fpar0131.* ";
@@ -6984,7 +6987,11 @@
       }
       // Cliente o Grupo
       if ($pArrayParametros['CLIIDXXX'] != "") {
-        $qLoad .= "$cAlfa.fpar0131.cliidxxx IN ($cTarCli) AND ";
+        if (count($vCliIds) > 1) {
+          $qLoad .= "$cAlfa.fpar0131.cliidxxx IN ($cTarCli) AND ";
+        } else {
+          $qLoad .= "$cAlfa.fpar0131.cliidxxx = $cTarCli AND ";
+        }
       }
       //Estado Cliente o Grupo
       if ($pArrayParametros['APLITARX'] == "CLIENTE") {
@@ -7069,7 +7076,11 @@
           }
           // Cliente o Grupo
           if ($pArrayParametros['CLIIDXXX'] != "") {
-            $qTarifas .= "$cAlfa.fpar0131.cliidxxx IN ($cTarCli) AND ";
+            if (count($vCliIds) > 1) {
+              $qTarifas .= "$cAlfa.fpar0131.cliidxxx IN ($cTarCli) AND ";
+            } else {
+              $qTarifas .= "$cAlfa.fpar0131.cliidxxx = $cTarCli AND ";
+            }
           }
           //Estado Cliente o Grupo
           if ($pArrayParametros['APLITARX'] == "CLIENTE") {
@@ -9631,7 +9642,7 @@
         $nSwitch = 1;
         $vError['LINEAERR'] = __LINE__;
         $vError['TIPOERRX'] = "ERROR";
-        $vError['DESERROR'] = "La Tabla Temporal del Reporte Tarifas Consolidado No puede ser Vacia.".mysql_error($xConexion01);
+        $vError['DESERROR'] = "La Tabla Temporal del Reporte Tarifas Consolidado No puede ser Vacia.";
         $objEstructuraTarifasFacturacion->fnGuardarErrorTarfiasFacturacion($vError);
       }
 
@@ -9753,7 +9764,7 @@
           //Se crea en Downloads
           $vFile = array();
           $cDirectorio = "{$OPENINIT['pathdr']}/opencomex/".$vSysStr['system_download_directory'];
-          $cFile = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis').".xls";
+          $cFile   = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis').".xls";
           $vFile[] = $cFile;
           $cFileDownload = $cDirectorio."/".$cFile;
 
@@ -9840,13 +9851,11 @@
           $nExcel    = 0;
           $nCountReg = 0;
           $cCliId    = "";
-          $prueba = 0;
           while($xRTT = mysql_fetch_array($xTabTem)){
             $nCanReg++;
             $nCountReg++;
-            $prueba++;
 
-            $pintarNuevoExcel = 0;
+            $nPintarNuevoExcel = 0;
             // Indentificar el cambio de cliente
             if ($xRTT['cliidxxx'] != $cCliId) {
               $cCliId = $xRTT['cliidxxx'];
@@ -9863,12 +9872,12 @@
               }
 
               $nTotRegistros = $nCountReg + $nCantCli;
-              if ($nTotRegistros > 500) {
-                $pintarNuevoExcel = 1;
+              if ($nTotRegistros >= 5000) {
+                $nPintarNuevoExcel = 1;
               }
             }
 
-            if ($nCountReg > 500 || $pintarNuevoExcel == 1) {
+            if ($nCountReg >= 5000 || $nPintarNuevoExcel == 1) {
               $writer->close();
 
               $nExcel++;
@@ -9876,7 +9885,7 @@
 
               //Se crea en Downloads
               $cDirectorio = "{$OPENINIT['pathdr']}/opencomex/".$vSysStr['system_download_directory'];
-              $cFile = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis')."_".$nExcel.".xls";
+              $cFile   = (($pArrayParametros['ORIGENXX'] == "REPORTE") ? "" : "FORMATO_TARIFAS_CONSOLIDADO_").$kUser."_".date('YmdHis')."_".$nExcel.".xls";
               $vFile[] = $cFile;
               $cFileDownload = $cDirectorio."/".$cFile;
 
@@ -10021,7 +10030,7 @@
           $nSwitch = 1;
           $vError['LINEAERR'] = __LINE__;
           $vError['TIPOERRX'] = "ERROR";
-          $vError['DESERROR'] = "No se encontraron resgitros.<br>".mysql_error($xConexion01);
+          $vError['DESERROR'] = "No se encontraron resgitros.";
           $objEstructuraTarifasFacturacion->fnGuardarErrorTarfiasFacturacion($vError);
         }
 
@@ -10052,7 +10061,7 @@
         // readfile($cFileDownload);
 
         $mReturn[0] = "true";
-        $mReturn[1] = $vFile;
+        $mReturn[1] = ($pArrayParametros['ORIGENXX'] == "REPORTE") ? $vFile : $cFile;
         $mReturn[2] = $cFileDownload;
       }else{
         $mReturn[0] = "false";
@@ -11578,7 +11587,7 @@
 
           if(!$xNewTab) {
             $nSwitch = 1;
-            $mReturn[count($mReturn)] = "(".__LINE__.") Error al Crear Tabla Temporal .".mysql_error($xConexionTM);
+            $mReturn[count($mReturn)] = "(".__LINE__.") Error al Crear Tabla Temporal .";
           }
 
         break;
@@ -11617,7 +11626,7 @@
 
           if(!$xNewTab) {
             $nSwitch = 1;
-            $mReturn[count($mReturn)] = "(".__LINE__.") Error al Crear Tabla Temporal .".mysql_error($xConexionTM);
+            $mReturn[count($mReturn)] = "(".__LINE__.") Error al Crear Tabla Temporal .";
           }
 
         break;
@@ -11636,7 +11645,7 @@
 
           if(!$xNewTab) {
             $nSwitch = 1;
-            $mReturn[count($mReturn)] = "Error al Crear Tabla Temporal de Errores.".mysql_error($xConexionTM);
+            $mReturn[count($mReturn)] = "Error al Crear Tabla Temporal de Errores.";
           }
         break;
         default:
@@ -11697,11 +11706,11 @@
         //f_Mensaje(__FILE__,__LINE__,$qAltTab);
         if(!$xAltTab) {
           $nSwitch = 1;
-          $mReturn[count($mReturn)] = "Error al Crear el campo [{$pArrayParametros['camponew']}] en la tabla temporal.".mysql_error($xConexionTM);
+          $mReturn[count($mReturn)] = "Error al Crear el campo en la tabla temporal.";
         }
       } catch (\Exception $e) {
         $nSwitch = 1;
-        $mReturn[count($mReturn)] = "Error al Crear el campo [{$pArrayParametros['camponew']}] en la tabla temporal.";
+        $mReturn[count($mReturn)] = "Error al Crear el campo en la tabla temporal.";
       }
       
       if ($nSwitch == 0) {
@@ -11737,12 +11746,12 @@
        */
       $mReturn[0] = "";
 
-      $xConexion99 = mysql_connect(OC_SERVER,OC_USERROBOT,OC_PASSROBOT) or die("El Sistema no Logro Conexion con ".OC_SERVER);
+      $xConexion99 = mysql_connect(OC_SERVER,OC_USERROBOT,OC_PASSROBOT) or die("El Sistema no Logro Conexion.");
       if($xConexion99){
         $nSwitch = 0;
       }else{
         $nSwitch = 1;
-        $mReturn[count($mReturn)] = "El Sistema no Logro Conexion con ".OC_SERVER;
+        $mReturn[count($mReturn)] = "El Sistema no Logro Conexion.";
       }
 
       if($nSwitch == 0){

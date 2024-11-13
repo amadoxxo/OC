@@ -122,33 +122,29 @@
   $kLicencia  = $kDf[5];
   $swidth     = $kDf[6];
 
-  $cTarCli = "";
-  $cCliIds = explode(",", $gCliId);
-  for ($i=0;$i<count($cCliIds);$i++) { 
-    $cTarCli .= "\"$cCliIds[$i]\",";
-  }
-  $cTarCli = substr($cTarCli,0,-1);
-
   if ($_SERVER["SERVER_PORT"] != "") {
     /*** Ejecutar proceso en Background ***/
     $cEjProBg = ($cEjProBg != "SI") ? "NO" : $cEjProBg;
     
     $cNomCliGru = "";
     if($gApliTar == "CLIENTE" && $gCliId != ""){
-      // Busco el nombre del cliente
-      $qCliNom  = "SELECT ";
-      $qCliNom .= "IF(TRIM(CONCAT(CLINOM1X,\" \",CLINOM2X,\" \",CLIAPE1X,\" \",CLIAPE2X)) != \"\",TRIM(CONCAT(CLINOM1X,\" \",CLINOM2X,\" \",CLIAPE1X,\" \",CLIAPE2X)), CLINOMXX) AS CLINOMXX ";
-      $qCliNom .= "FROM $cAlfa.SIAI0150 ";
-      $qCliNom .= "WHERE ";
-      $qCliNom .= "CLIIDXXX IN ($cTarCli) LIMIT 0,1";
-      $xCliNom = f_MySql("SELECT","",$qCliNom,$xConexion01,"");
-      if (mysql_num_rows($xCliNom) == 0) {
-        $nSwitch = 1;
-        $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
-        $cMsj .= "El Cliente [$cTarCli] No Existe.\n";
-      } else {
-        $vCliNom = mysql_fetch_array($xCliNom);
-        $cNomCliGru = $vCliNom['CLINOMXX'];
+      $vCliIds = explode(',', $gCliId);
+      for ($i=0;$i<count($vCliIds);$i++) {
+        // Busco el nombre del cliente
+        $qCliNom  = "SELECT ";
+        $qCliNom .= "IF(TRIM(CONCAT(CLINOM1X,\" \",CLINOM2X,\" \",CLIAPE1X,\" \",CLIAPE2X)) != \"\",TRIM(CONCAT(CLINOM1X,\" \",CLINOM2X,\" \",CLIAPE1X,\" \",CLIAPE2X)), CLINOMXX) AS CLINOMXX ";
+        $qCliNom .= "FROM $cAlfa.SIAI0150 ";
+        $qCliNom .= "WHERE ";
+        $qCliNom .= "CLIIDXXX = \"{$vCliIds[$i]}\" LIMIT 0,1;";
+        $xCliNom = f_MySql("SELECT","",$qCliNom,$xConexion01,"");
+        if (mysql_num_rows($xCliNom) == 0) {
+          $nSwitch = 1;
+          $cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+          $cMsj .= "El Cliente [\"{$vCliIds[$i]}\"] No Existe.\n";
+        } else {
+          $vCliNom = mysql_fetch_array($xCliNom);
+          $cNomCliGru = $vCliNom['CLINOMXX'];
+        }
       }
     }
 
@@ -213,6 +209,8 @@
   }
 
   if ($_SERVER["SERVER_PORT"] != "" && $cEjProBg == "SI" && $nSwitch == 0) {
+
+
     $cEjePro = 1;
     $cTablas = $mReturnTablaT[1]."~".$mReturnTablaE[1];
     $strPost = "gEstTari~" . $gEstTari.
@@ -234,7 +232,11 @@
     $vParBg['admidxxx'] = "";                           // Sucursal
     $vParBg['doiidxxx'] = "";                           // Dex
     $vParBg['doisfidx'] = "";                           // Sufijo
-    $vParBg['cliidxxx'] = $gCliId;                      // Nit
+    if (count($vCliIds) > 1) {
+      $vParBg['cliidxxx'] = "VARIOS";
+    } else {
+      $vParBg['cliidxxx'] = $gCliId;                    // Nit
+    }
     $vParBg['clinomxx'] = $cNomCliGru;                  // Nombre Importador
     $vParBg['pbapostx'] = $strPost;                     // Parametros para reconstruir Post
     $vParBg['pbatabxx'] = $cTablas;                     // Tablas Temporales

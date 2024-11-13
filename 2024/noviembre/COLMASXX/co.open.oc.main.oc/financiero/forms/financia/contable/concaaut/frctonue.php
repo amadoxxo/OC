@@ -287,7 +287,20 @@
 							}
 						}
 					break;
-		    }
+					case "cCodLineaNeg":
+						if (xSwitch == "WINDOW") {
+							var zNx = (zX-800)/2;
+							var zNy = (zY-500)/2;
+
+							var zWinPro = 'width=800,scrollbars=1,height=500,left='+zNx+',top='+zNy;
+							var zRuta   = "frctolng.php?gWhat=WINDOW&gFunction="+xLink+
+																				"&gCodLineaNeg="+document.forms['frgrm']['cCodLineaNeg'+xIteration].value.toUpperCase()+
+																				"&gSecuencia="+xIteration;
+							zWindow = window.open(zRuta,"zWindow",zWinPro);
+							zWindow.focus();
+						}
+					break;
+				}
 			}
 
       function f_Cargar_Comprobantes(xTipo) {
@@ -360,7 +373,7 @@
 				}
 			}
 
-			function f_Enter(e, xGrid){
+			function f_Enter(e, xGrid, xIteracion){
 				var code;
 
 				if (!e) var e = window.event;
@@ -368,7 +381,9 @@
 				else if (e.which) code = e.which;{
 					if(code==13) {
 						if (xGrid == 'Grid_LineaNegocio') {
-							fnAddNewRowLineaNegocio('Grid_LineaNegocio')
+							fnAddNewRowLineaNegocio('Grid_LineaNegocio');
+						} else if (xGrid == 'cCodLineaNeg') {
+							f_Links('cCodLineaNeg', 'WINDOW', xIteracion);
 						}
 					}
 				}
@@ -390,15 +405,15 @@
 
 				TD_xAll = cTableRow.insertCell(0);
 				TD_xAll.style.width  = "160px";
-				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cCodLineaNeg+"' id = '"+cCodLineaNeg+"''>";
+				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cCodLineaNeg+"' id = '"+cCodLineaNeg+"' onkeyup='javascript:f_Enter(event, \"cCodLineaNeg\", \""+nSecuencia+"\")'>";
 																		
 				TD_xAll = cTableRow.insertCell(1);
 				TD_xAll.style.width  = "160px";
-				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cDesLineaNeg+"' id = '"+cDesLineaNeg+"''>";
+				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cDesLineaNeg+"' id = '"+cDesLineaNeg+"' readonly>";
 							
 				TD_xAll = cTableRow.insertCell(2);
 				TD_xAll.style.width  = "160px";
-				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cCtaIngreso+"' id = '"+cCtaIngreso+"''>";
+				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cCtaIngreso+"' id = '"+cCtaIngreso+"'>";
 
 				TD_xAll = cTableRow.insertCell(3);
 				TD_xAll.style.width  = "180px";

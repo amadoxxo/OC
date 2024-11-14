@@ -437,8 +437,21 @@
 								}
 							}
 						}
-					break;					
-		    }
+					break;
+					case "cCodLineaNeg":
+						if (xSwitch == "WINDOW") {
+							var zNx = (zX-800)/2;
+							var zNy = (zY-500)/2;
+
+							var zWinPro = 'width=800,scrollbars=1,height=500,left='+zNx+',top='+zNy;
+							var zRuta   = "frctolng.php?gWhat=WINDOW&gFunction="+xLink+
+																				"&gCodLineaNeg="+document.forms['frgrm']['cCodLineaNeg'+xIteration].value.toUpperCase()+
+																				"&gSecuencia="+xIteration;
+							zWindow = window.open(zRuta,"zWindow",zWinPro);
+							zWindow.focus();
+						}
+					break;
+				}
 			}
 
       function f_Activar_Sucursal_Ica(xAccion) {
@@ -459,7 +472,7 @@
 				}
 			}
 
-  	  function f_Enter(e, xGrid){
+  	  function f_Enter(e, xGrid, xIteration){
 				var code;
 
 				if (!e) var e = window.event;
@@ -468,6 +481,8 @@
 					if(code==13) {
 						if (xGrid == 'Grid_LineaNegocio') {
 							fnAddNewRowLineaNegocio('Grid_LineaNegocio')
+						} else if(xGrid == 'cCodLineaNeg') {
+							f_Links('cCodLineaNeg', 'WINDOW', xIteration);
 						} else {
 							f_AddRowNew();
 						}
@@ -573,7 +588,7 @@
 
 				TD_xAll = cTableRow.insertCell(0);
 				TD_xAll.style.width  = "160px";
-				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cCodLineaNeg+"' id = '"+cCodLineaNeg+"''>";
+				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:160;text-align:left' name = '"+cCodLineaNeg+"' id = '"+cCodLineaNeg+"'' onkeyup='javascript:f_Enter(event, \"cCodLineaNeg\", \""+nSecuencia+"\")'>";
 																		
 				TD_xAll = cTableRow.insertCell(1);
 				TD_xAll.style.width  = "160px";
@@ -2136,7 +2151,7 @@
 						if ($nCanCueCs == 0) { ?>
 							fnAddNewRowLineaNegocio('Grid_LineaNegocio');
 						<?php }
-					} ?>
+						} ?>
 
 					//// Campos Nuevos ////
 					document.forms['frgrm']['cCtoClapr'].value		= "<?php echo $zRCab['ctoclapr'] ?>";

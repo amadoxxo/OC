@@ -533,6 +533,10 @@
 					if ($_POST['cCodLineaNeg' . ($i+1)] != "") {
 						$cLineaNeg .= $_POST['cCodLineaNeg' . ($i+1)]."~".$_POST['cCtaIngreso' . ($i+1)]."~".$_POST['cCtaCosto' . ($i+1)]."|";
 
+						// Convierte la cuenta a un texto con formato numerico valido
+						$cCtaIngreso = str_replace(',', '.', $_POST['cCtaIngreso' . ($i+1)]);
+						$cCtaCosto   = str_replace(',', '.', $_POST['cCtaCosto' . ($i+1)]);
+
 						// Validando la linea de negocio
 						$qLineaNeg  = "SELECT ";
 						$qLineaNeg .= "regestxx ";
@@ -557,6 +561,18 @@
 							$nSwitch  = 1;
 							$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
 							$cMsj .= " Debe Ingresar la Cuenta de Ingreso o la Cuenta de Costo, Secuencia [".($i+1)."]. \n";
+						}
+
+						if ((!is_numeric($cCtaIngreso) && $cCtaIngreso != "") || ($cCtaIngreso != "" && trim($cCtaIngreso) == "")) {
+							$nSwitch  = 1;
+							$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+							$cMsj .= " Debe Ingresar un Tipo de Dato Numerico en la Cuenta de Ingreso, Secuencia [".($i+1)."]. \n";
+						}
+
+						if ((!is_numeric($cCtaCosto) && $cCtaCosto != "") || ($cCtaCosto != "" && trim($cCtaCosto) == "")) {
+							$nSwitch  = 1;
+							$cMsj .= "Linea ".str_pad(__LINE__,4,"0",STR_PAD_LEFT).": ";
+							$cMsj .= " Debe Ingresar un Tipo de Dato Numerico en la Cuenta de Costo, Secuencia [".($i+1)."]. \n";
 						}
 					}
 				}

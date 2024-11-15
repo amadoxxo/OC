@@ -322,7 +322,10 @@
             }
 					break;
 					case "cCodLineaNeg":
-						if (xSwitch == "WINDOW") {
+						if (xSwitch == "VALID") {
+							var zRuta  = "frserz03.php?gWhat=VALID&gFunction="+xLink+"&gCodLineaNeg="+document.forms['frgrm']['cCodLineaNeg'+nSecuencia].value.toUpperCase()+"&gSecuencia="+nSecuencia;
+							parent.fmpro.location = zRuta;
+						} else {
 							var zNx = (nX-800)/2;
 							var zNy = (nY-500)/2;
 
@@ -363,7 +366,7 @@
 							if (xGrid == 'Grid_LineaNegocio') {
 								fnAddNewRowLineaNegocio('Grid_LineaNegocio')
 							} else if (xGrid == 'cCodLineaNeg') {
-								uLinks('cCodLineaNeg', 'WINDOW', nSecuencia);
+								uLinks('cCodLineaNeg', 'VALID', nSecuencia);
 							} else {
 								f_Add_New_Row_Comprobante();
 							}
@@ -447,7 +450,7 @@
 																		
 				TD_xAll = cTableRow.insertCell(1);
 				TD_xAll.style.width  = "120px";
-				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:120;text-align:left' name = '"+cDesLineaNeg+"' id = '"+cDesLineaNeg+"''>";
+				TD_xAll.innerHTML    = "<input type = 'text' class = 'clase08' style = 'width:120;text-align:left' name = '"+cDesLineaNeg+"' id = '"+cDesLineaNeg+"'' readonly>";
 							
 				TD_xAll = cTableRow.insertCell(2);
 				TD_xAll.style.width  = "100px";
@@ -1760,10 +1763,20 @@
 						$nCanCueCs = 0;
 						for ($i=0;$i<count($mLineasNegocio);$i++) {
               if ($mLineasNegocio[$i][0] != "") { 
-								$nCanCueCs++; ?>
+								$nCanCueCs++;
+								$qDesLinNeg  = "SELECT lnedesxx ";
+								$qDesLinNeg .= "FROM $cAlfa.zcol0003 ";
+								$qDesLinNeg .= "WHERE lnecodxx = \"{$mLineasNegocio[$i][0]}\" AND ";
+								$qDesLinNeg .= "regestxx = \"ACTIVO\";";
+								$xDesLinNeg = f_MySql("SELECT","",$qDesLinNeg,$xConexion01,"");
+								if (mysql_num_rows($xDesLinNeg) > 0) {
+									$vDesLinNeg = mysql_fetch_array($xDesLinNeg);
+									$vDesLinNeg = $vDesLinNeg['lnedesxx'];
+								}
+							?>
 								fnAddNewRowLineaNegocio('Grid_LineaNegocio');
 								document.forms['frgrm']['cCodLineaNeg' + document.forms['frgrm']['nSecuencia_Grid_LineaNegocio'].value].value = "<?php echo $mLineasNegocio[$i][0] ?>"
-								document.forms['frgrm']['cDesLineaNeg' + document.forms['frgrm']['nSecuencia_Grid_LineaNegocio'].value].value = "";
+								document.forms['frgrm']['cDesLineaNeg' + document.forms['frgrm']['nSecuencia_Grid_LineaNegocio'].value].value = "<?php echo $vDesLinNeg ?>";
 								document.forms['frgrm']['cCtaIngreso'  + document.forms['frgrm']['nSecuencia_Grid_LineaNegocio'].value].value = "<?php echo $mLineasNegocio[$i][1] ?>";
 								document.forms['frgrm']['cCtaCosto'    + document.forms['frgrm']['nSecuencia_Grid_LineaNegocio'].value].value = "<?php echo $mLineasNegocio[$i][2] ?>";
 								if ("<?php echo $_COOKIE['kModo'] ?>" == "VER") {

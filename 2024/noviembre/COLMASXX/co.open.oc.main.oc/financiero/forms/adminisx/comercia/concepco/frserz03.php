@@ -29,18 +29,18 @@ if ($gWhat != "" && $gFunction != "") { ?>
                 <?php
                   switch ($gWhat) {
                     case "WINDOW":
-                      $qUniMed  = "SELECT ";
-                      $qUniMed .= "lnecodxx, ";
-                      $qUniMed .= "lnedesxx ";
-                      $qUniMed .= "FROM $cAlfa.zcol0003 ";
-                      $qUniMed .= "WHERE ";
-                      $qUniMed .= "lnecodxx LIKE \"%$gCodLineaNeg%\" AND ";
-                      $qUniMed .= "regestxx = \"ACTIVO\" ";
-                      $qUniMed .= "ORDER BY abs(lnecodxx) ASC";
-                      $xUniMed  = f_MySql("SELECT","",$qUniMed,$xConexion01,"");
-                      // f_Mensaje(__FILE__,__LINE__,$qUniMed."~".mysql_num_rows($xUniMed));
+                      $qLinNeg  = "SELECT ";
+                      $qLinNeg .= "lnecodxx, ";
+                      $qLinNeg .= "lnedesxx ";
+                      $qLinNeg .= "FROM $cAlfa.zcol0003 ";
+                      $qLinNeg .= "WHERE ";
+                      $qLinNeg .= "lnecodxx LIKE \"%$gCodLineaNeg%\" AND ";
+                      $qLinNeg .= "regestxx = \"ACTIVO\" ";
+                      $qLinNeg .= "ORDER BY abs(lnecodxx) ASC";
+                      $xLinNeg  = f_MySql("SELECT","",$qLinNeg,$xConexion01,"");
+                      // f_Mensaje(__FILE__,__LINE__,$qLinNeg."~".mysql_num_rows($xLinNeg));
 
-                      if (mysql_num_rows($xUniMed) > 0) { ?>
+                      if (mysql_num_rows($xLinNeg) > 0) { ?>
                         <center>
                           <table cellspacing = "0" cellpadding = "1" border = "1" width = "500">
                             <tr bgcolor = '#D6DFF7'>
@@ -48,7 +48,8 @@ if ($gWhat != "" && $gFunction != "") { ?>
                               <td widht = "420" Class = "name"><center>Descripci&oacute;n</center></td>
                             </tr>
                             <?php 
-                            while ($xRMP = mysql_fetch_array($xUniMed)){?>
+                            while ($xRMP = mysql_fetch_array($xLinNeg)){
+                              if (mysql_num_rows($xLinNeg) > 1) { ?>
                               <tr>
                                 <?php
                                 switch($gFunction){
@@ -56,8 +57,8 @@ if ($gWhat != "" && $gFunction != "") { ?>
                                     <td width = "050" class= "name" style = "text-align:center">
                                       <a href = "javascript:window.opener.document.forms['frgrm']['cCodLineaNeg'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRMP['lnecodxx']?>';
                                                             window.opener.document.forms['frgrm']['cDesLineaNeg'+'<?php echo $gSecuencia ?>'].value = '<?php echo $xRMP['lnedesxx']?>';
-                                        window.opener.uLinks('cCodLineaNeg','EXACT');
-                                        window.close();"><?php echo $xRMP['lnecodxx'] ?></a>
+                                                            window.opener.uLinks('cCodLineaNeg','EXACT', '<?php echo $gSecuencia ?>');
+                                                            window.close();"><?php echo $xRMP['lnecodxx'] ?></a>
                                     </td>
                                     <?php
                                   break;
@@ -65,34 +66,48 @@ if ($gWhat != "" && $gFunction != "") { ?>
                                 <td width = "400" class= "name"><?php echo $xRMP['lnedesxx'] ?></td>
                               </tr>
                               <?php 
+                              } else { ?>
+                              <script language = "javascript">
+                                window.opener.document.forms['frgrm']['cCodLineaNeg'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRMP['lnecodxx'] ?>";
+                                window.opener.document.forms['frgrm']['cDesLineaNeg'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRMP['lnedesxx'] ?>";
+                                window.opener.uLinks('<?php echo $gFunction ?>','EXACT', '<?php echo $gSecuencia ?>');
+                                window.close();
+                              </script>
+                              <?php
+                              }
                             }?>
                           </table>
                         </center>
                         <?php
                       }else{
-                        f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros");
+                        f_Mensaje(__FILE__,__LINE__,"No se Encontraron Registros"); ?>
+                        <script language="javascript">
+                          window.close();
+                        </script>
+                        <?php
                       }
                     break;
                     case "VALID":
-                      $qUniMed  = "SELECT ";
-                      $qUniMed .= "lnecodxx, ";
-                      $qUniMed .= "lnedesxx ";
-                      $qUniMed .= "FROM $cAlfa.zcol0003 ";
-                      $qUniMed .= "WHERE ";
-                      $qUniMed .= "lnecodxx LIKE \"%$gCodLineaNeg%\" AND ";
-                      $qUniMed .= "regestxx = \"ACTIVO\" ";
-                      $qUniMed .= "ORDER BY abs(lnecodxx) ASC";
-                      $xUniMed  = f_MySql("SELECT","",$qUniMed,$xConexion01,"");
-                      // f_Mensaje(__FILE__,__LINE__,$qUniMed."~".mysql_num_rows($xUniMed));
+                      $qLinNeg  = "SELECT ";
+                      $qLinNeg .= "lnecodxx, ";
+                      $qLinNeg .= "lnedesxx ";
+                      $qLinNeg .= "FROM $cAlfa.zcol0003 ";
+                      $qLinNeg .= "WHERE ";
+                      $qLinNeg .= "lnecodxx LIKE \"%$gCodLineaNeg%\" AND ";
+                      $qLinNeg .= "regestxx = \"ACTIVO\" ";
+                      $qLinNeg .= "ORDER BY abs(lnecodxx) ASC";
+                      $xLinNeg  = f_MySql("SELECT","",$qLinNeg,$xConexion01,"");
+                      // f_Mensaje(__FILE__,__LINE__,$qLinNeg."~".mysql_num_rows($xLinNeg));
 
-                      if (mysql_num_rows($xUniMed) > 0){
-                        if (mysql_num_rows($xUniMed) == 1){
-                          while ($xRMP = mysql_fetch_array($xUniMed)) {
+                      if (mysql_num_rows($xLinNeg) > 0){
+                        if (mysql_num_rows($xLinNeg) == 1){
+                          while ($xRMP = mysql_fetch_array($xLinNeg)) {
                             switch ($gFunction){
                               case "cCodLineaNeg": ?>
                                 <script language = "javascript">
                                   parent.fmwork.document.forms['frgrm']['cCodLineaNeg'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRMP['lnecodxx'] ?>";
-                                  parent.fmwork.uLinks('<?php echo $gFunction ?>','EXACT');
+                                  parent.fmwork.document.forms['frgrm']['cDesLineaNeg'+'<?php echo $gSecuencia ?>'].value = "<?php echo $xRMP['lnedesxx'] ?>";
+                                  parent.fmwork.uLinks('<?php echo $gFunction ?>','EXACT', '<?php echo $gSecuencia ?>');
                                 </script>
                                 <?php
                               break;
@@ -100,7 +115,8 @@ if ($gWhat != "" && $gFunction != "") { ?>
                           }
                         } else{ ?>
                           <script language = "javascript">
-                            parent.fmwork.uLinks('<?php echo $gFunction ?>','WINDOW');
+                            parent.fmwork.uLinks('<?php echo $gFunction ?>','WINDOW', '<?php echo $gSecuencia ?>');
+                            window.close();
                           </script>
                         <?php }
                       }else{
@@ -109,32 +125,11 @@ if ($gWhat != "" && $gFunction != "") { ?>
                             <script language = "javascript">
                               alert('No hay registros coincidentes');
                               parent.fmwork.document.forms['frgrm']['cCodLineaNeg'+'<?php echo $gSecuencia ?>'].value = "";
+                              parent.fmwork.document.forms['frgrm']['cDesLineaNeg'+'<?php echo $gSecuencia ?>'].value = "";
                             </script>
                             <?php
                           break;
                         }
-                      }
-                    break;
-                    case "EXACT":
-                      $qUniMed  = "SELECT ";
-                      $qUniMed .= "lnecodxx, ";
-                      $qUniMed .= "lnedesxx ";
-                      $qUniMed .= "FROM $cAlfa.zcol0003 ";
-                      $qUniMed .= "WHERE ";
-                      $qUniMed .= "lnecodxx = \"$gCodLineaNeg\" AND ";
-                      $qUniMed .= "regestxx = \"ACTIVO\" LIMIT 0,1 ";
-                      $xUniMed  = f_MySql("SELECT","",$qUniMed,$xConexion01,"");
-                      // f_Mensaje(__FILE__,__LINE__,$qUniMed."~ ".mysql_num_rows($xUniMed));
-
-                      $vUniMed = mysql_fetch_array($xUniMed);
-                      switch ($gFunction){
-                        case "cCodLineaNeg": ?>
-                          <script language = "javascript">
-                            parent.fmwork.document.forms['frgrm']['cCodLineaNeg'+'<?php echo $gSecuencia ?>'].value = "<?php echo $vUniMed['lnecodxx'] ?>";
-                            parent.fmwork.document.forms['frgrm']['cDesLineaNeg'+'<?php echo $gSecuencia ?>'].value = "<?php echo str_replace('"','\"',$vUniMed['lnedesxx']) ?>";
-                          </script>
-                          <?php
-                        break;
                       }
                     break;
                   } ?>

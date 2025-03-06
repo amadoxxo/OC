@@ -17,8 +17,6 @@
   $qSysProbg .= "pbamodxx = \"FACTURACION\" AND ";
   $qSysProbg .= "pbatinxx IN (\"FORTARIFASCON\",\"CARGARTARIFAS\") ";
   $qSysProbg .= "ORDER BY regdcrex DESC";
-
-  echo $qSysProbg;
   $xSysProbg = f_MySql("SELECT", "", $qSysProbg, $xConexion01, "");
   $mArcProBg = array();
   while ($xRB = mysql_fetch_array($xSysProbg)) {

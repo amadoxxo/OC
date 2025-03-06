@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
   /**
    * Descargar Formato para cargue masivo de tarifas
    * --- Descripcion: Permite Descargar Formato para cargue masivo de tarifas

@@ -354,7 +354,7 @@
           case "CONLOGIC":   //CONLOGIC
           case "DECONLOGIC": //CONLOGIC
           case "TECONLOGIC": //CONLOGIC
-            $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',$posx,$posy+4,18,14);
+            $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',$posx,$posy+4,24,24);
           break;
 				}
 

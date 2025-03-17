@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Comprobante.
 	 * --- Descripcion: Permite Imprimir Comprobante.
@@ -466,7 +469,7 @@
 								case "DECONNECTA":
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,8,25,15);
-								break;
+                break;
                 case "CONLOGIC":
                 case "DECONLOGIC":
                 case "TECONLOGIC":
@@ -966,16 +969,16 @@
 								case "DECONNECTA":
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,$py+3,25,15);
-								break;
+                break;
                 case "CONLOGIC":
                 case "DECONLOGIC":
                 case "TECONLOGIC":
                   $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',20,$py+4,18,14);
                 break;
-  							default://Logo open
-  								$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',11,$py+4,35,15);
-  							break;
-  						}
+                default://Logo open
+                  $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',11,$py+4,35,15);
+                break;
+              }
   						##Impresion de Logos Agencias de Aduanas Financiero Contable ##
   						if ( $cNombreAduana != '' ) {
 								$pdf->SetFont('verdanab','',8);

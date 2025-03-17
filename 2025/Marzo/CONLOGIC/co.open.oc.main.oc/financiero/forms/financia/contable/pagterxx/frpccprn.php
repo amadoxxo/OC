@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
   /**
 	 * Imprime Concepto de Pagos a Terceros.
 	 * --- Descripcion: Permite Imprimir Concepto de Pagos a Terceros.
@@ -660,8 +661,8 @@
                           <?php
                           $nColRes = 1;
                         break;
-												case "CONLOGIC":   //CONLOGIC
-												case "DECONLOGIC": //CONLOGIC
+                        case "CONLOGIC":   //CONLOGIC
+                        case "DECONLOGIC": //CONLOGIC
                         case "TECONLOGIC": //CONLOGIC
                           ?>
                             <td class="name" width="150"><center>
@@ -844,17 +845,23 @@
 
           if (file_exists($cFile)) {	
             if ($_SERVER["SERVER_PORT"] != "") {
-              header('Content-Type: application/octet-stream');
-              header("Content-Disposition: attachment; filename=\"".basename($cNomFile)."\";");
-              header('Expires: 0');
-              header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-              header("Cache-Control: private",false); // required for certain browsers
-              header('Pragma: public');
+              // Obtener la ruta absoluta del archivo
+						  $cAbsolutePath = realpath($cFile);
+						  $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-              ob_clean();
-              flush();
-              readfile($cFile);
-              exit;
+						  if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+                header('Content-Type: application/octet-stream');
+                header("Content-Disposition: attachment; filename=\"".basename($cNomFile)."\";");
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header("Cache-Control: private",false); // required for certain browsers
+                header('Pragma: public');
+
+                ob_clean();
+                flush();
+                readfile($cFile);
+                exit;
+              }
             }
           } else {
             $nSwitch = 1;

@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Comprobante.
 	 * --- Descripcion: Permite Imprimir Comprobante.

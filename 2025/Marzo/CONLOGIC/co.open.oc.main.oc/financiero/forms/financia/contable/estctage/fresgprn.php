@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
    * Imprime Reporte Estado Cuenta General.
    * --- Descripcion: Permite Imprimir Reporte Estado Cuenta General.
@@ -1565,19 +1568,24 @@
             $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
     
             if ($_SERVER["SERVER_PORT"] != "") {
-    
-              header('Content-Description: File Transfer');
-              header('Content-Type: application/octet-stream');
-              header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-              header('Content-Transfer-Encoding: binary');
-              header('Expires: 0');
-              header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-              header('Pragma: public');
-              header('Content-Length: ' . filesize($cFile));
-              
-              ob_clean();
-              flush();
-              readfile($cFile);
+               // Obtener la ruta absoluta del archivo
+						  $cAbsolutePath = realpath($cFile);
+						  $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
+
+              if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+                header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($cFile));
+                
+                ob_clean();
+                flush();
+                readfile($cFile);
+              }
             }else{
               $cNomArc = $cNomFile;
               echo "\n".$cNomArc;
@@ -1874,12 +1882,12 @@
             break;
             case "HAYDEARX":    //HAYDEARX
             case "DEHAYDEARX":  //HAYDEARX
-            case "TEHAYDEARX":  //HAYDEARX
+            case "TEHAYDEARX":  //HAYDEARX  
               $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logohaydear.jpeg', 10, 11, 40, 13);
             break;
             case "CONNECTA":    //CONNECTA
             case "DECONNECTA":  //CONNECTA
-            case "TECONNECTA":  //CONNECTA
+            case "TECONNECTA":  //CONNECTA  
               $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconnecta.jpg', 10, 11, 20, 13);
             break;
             case "CONLOGIC":    //CONLOGIC
@@ -2481,7 +2489,7 @@
 
       if (!$xNewTab) {
         $nSwitch = 1;
-        $mReturn[count($mReturn)] = "(" . __LINE__ . ") Error al Crear Tabla Temporal para Reporte Estado Cuenta General." . mysql_error($xConexionTM);
+        $mReturn[count($mReturn)] = "(" . __LINE__ . ") Error al Crear Tabla Temporal para Reporte Estado Cuenta General.";
       }
 
       if($nSwitch == 0){
@@ -2516,13 +2524,13 @@
        */
       $mReturn[0] = "";
 
-      $xConexion99 = mysql_connect(OC_SERVER, OC_USERROBOT, OC_PASSROBOT) or die("El Sistema no Logro Conexion con " . OC_SERVER);
+      $xConexion99 = mysql_connect(OC_SERVER, OC_USERROBOT, OC_PASSROBOT) or die("El Sistema no Logro Conexion.");
       
       if ($xConexion99) {
         $nSwitch = 0;
       } else {
         $nSwitch = 1;
-        $mReturn[count($mReturn)] = "El Sistema no Logro Conexion con " . OC_SERVER;
+        $mReturn[count($mReturn)] = "El Sistema no Logro Conexion.";
       }
 
       if ($nSwitch == 0) {

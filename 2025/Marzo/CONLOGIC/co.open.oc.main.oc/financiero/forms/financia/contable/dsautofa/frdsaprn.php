@@ -1,4 +1,8 @@
 <?php
+  namespace openComex;
+  use FPDF;
+  use QRcode;
+  
   /**
    * Documento Soporte Autofactura.
    * --- Descripcion: Permite Imprimir el Formato Estandar de Documento Soporte Autofactura.
@@ -347,11 +351,11 @@
 					case "TECONNECTA": //CONNECTA
 						$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',$posx,$posy+3,35,20);
 					break;
-					case "CONLOGIC":   //CONLOGIC
-					case "DECONLOGIC": //CONLOGIC
-					case "TECONLOGIC": //CONLOGIC
-						$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',$posx,$posy+4,35,15);
-					break;
+          case "CONLOGIC":   //CONLOGIC
+          case "DECONLOGIC": //CONLOGIC
+          case "TECONLOGIC": //CONLOGIC
+            $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',$posx,$posy+4,18,14);
+          break;
 				}
 
         // Datos del documento soporte

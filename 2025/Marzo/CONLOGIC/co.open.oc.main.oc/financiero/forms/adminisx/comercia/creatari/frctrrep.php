@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   include("../../../../libs/php/utility.php");
 
   ##Switch para incluir fuente y clase pdf segun base de datos ##
@@ -137,11 +140,6 @@
           case "DECONNECTA":
           case "TECONNECTA":
             $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg', 90, 8, 30);
-            break;
-          case "CONLOGIC":
-          case "DECONLOGIC":
-          case "TECONLOGIC":
-            $this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg', 90, 4, 30, 23);
             break;
           default:
             // no hace nada
@@ -314,7 +312,7 @@
     $cCamProId  = "proidxxx";
     $cCamProDes = "prodesxx";
     if ($kMysqlDb == "ALPOPULX" || $kMysqlDb == "TEALPOPULP" || $kMysqlDb == "TEALPOPULX" || $kMysqlDb == "DEALPOPULX") {
-      $cTabPry     = "siai1101";
+      $cTabPry    = "siai1101";
       $cTabProLpr = "zalpo003";
       $cCamProId  = "lpridxxx";
       $cCamProDes = "lprdesxx";

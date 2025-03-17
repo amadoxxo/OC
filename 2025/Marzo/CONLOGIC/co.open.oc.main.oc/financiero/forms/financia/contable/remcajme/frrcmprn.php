@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Comprobante.
 	 * --- Descripcion: Permite Imprimir Comprobante.
@@ -402,7 +405,7 @@
 								case "DECONNECTA":
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,$py+3,25,15);
-								break;
+                break;
                 case "CONLOGIC":
                 case "DECONLOGIC":
                 case "TECONLOGIC":

@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
    * Imprime Analisis de Cuentas.
    * --- Descripcion: Permite Imprimir Reporte Estado de Cartera.
@@ -605,7 +608,7 @@
 			              case "TEGRUMALCO"://GRUMALCO
 			              case "DEGRUMALCO"://GRUMALCO?>
                       <td class="name" style="font-size:14px;width:100px">
-                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg" style="height: 55px;width:120">
+                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/logomalco.jpg" style="height: 41px;width:156">
                       </td>
                     <?php break;
                     case "ALADUANA"://ALADUANA
@@ -619,7 +622,7 @@
                     case "TEANDINOSX"://ANDINOSX
                     case "DEANDINOSX"://ANDINOSX ?>
                       <td class="name" style="font-size:14px;width:100px">
-                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/logoAndinos2.jpeg" style="height: 50px;width:40">
+                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/logoandinos.jpg" style="height: 50px;width:120">
                       </td>
                     <?php break;
                     case "GRUPOALC"://GRUPOALC
@@ -1510,7 +1513,7 @@
           case "ANDINOSX"://ANDINOSX
           case "TEANDINOSX"://ANDINOSX
           case "DEANDINOSX"://ANDINOSX
-            $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoAndinos2.jpeg', 6, 11, 17, 13);
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoandinos.jpg', 6, 11, 32, 13);
           break;
           case "GRUPOALC"://GRUPOALC
           case "TEGRUPOALC"://GRUPOALC
@@ -2036,4 +2039,4 @@
     }
     return $cResult;
   }
-  ?>
+?>

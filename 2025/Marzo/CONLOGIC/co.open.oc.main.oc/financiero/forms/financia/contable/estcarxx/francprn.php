@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+  
   /**
 	 * Imprime Analisis de Cuentas.
 	 * --- Descripcion: Permite Imprimir Estado de cuentas(por Cobrar / por Pagar).
@@ -730,11 +733,11 @@
 																	case "TECONNECTA": //CONNECTA ?>
 																			<img width="120" style="margin-left: 10px;" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/logoconnecta.jpg' ?>">
 																		<?php break;
-																	case "CONLOGIC":   //CONLOGIC
-																	case "DECONLOGIC": //CONLOGIC
-																	case "TECONLOGIC": //CONLOGIC ?>
-																			<img width="120" style="margin-left: 10px;" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/logoconlogic.jpg' ?>">
-																		<?php break;
+                                  case "CONLOGIC":   //CONLOGIC
+                                  case "DECONLOGIC": //CONLOGIC
+                                  case "TECONLOGIC": //CONLOGIC ?>
+                                      <img width="120" style="margin-left: 10px;" src="<?php echo $cRoot . $cPlesk_Skin_Directory . '/logoconlogic.jpg' ?>">
+                                    <?php break;
 																	case "OPENEBCO":   //OPENEBCO
 																	case "DEOPENEBCO": //OPENEBCO
 																	case "TEOPENEBCO": //OPENEBCO ?>
@@ -2043,17 +2046,23 @@
 
 						if (file_exists($cFile)) {	
 							if ($_SERVER["SERVER_PORT"] != "") {
-								header('Content-Type: application/octet-stream');
-								header("Content-Disposition: attachment; filename=\"".basename($cNomFile)."\";");
-								header('Expires: 0');
-								header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-								header("Cache-Control: private",false); // required for certain browsers
-								header('Pragma: public');
+								// Obtener la ruta absoluta del archivo
+						    $cAbsolutePath = realpath($cFile);
+						    $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-								ob_clean();
-								flush();
-								readfile($cFile);
-								exit;
+						    if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+								  header('Content-Type: application/octet-stream');
+								  header("Content-Disposition: attachment; filename=\"".basename($cNomFile)."\";");
+								  header('Expires: 0');
+								  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+								  header("Cache-Control: private",false); // required for certain browsers
+								  header('Pragma: public');
+
+								  ob_clean();
+								  flush();
+								  readfile($cFile);
+								  exit;
+							  }
 							}
 						} else {
 							$nSwitch = 1;
@@ -2260,11 +2269,11 @@
 										case "TECONNECTA": //CONNECTA
 											$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconnecta.jpg', 16, 8.5, 20, 12);
 										break;
-										case "CONLOGIC":   //CONLOGIC
-										case "DECONLOGIC": //CONLOGIC
-										case "TECONLOGIC": //CONLOGIC
-											$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconlogic.jpg', 16, 8.5, 16, 12);
-										break;
+                    case "CONLOGIC":   //CONLOGIC
+                    case "DECONLOGIC": //CONLOGIC
+                    case "TECONLOGIC": //CONLOGIC
+                      $this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconlogic.jpg', 16, 8.5, 16, 12);
+                    break;
 										case "OPENEBCO":   //OPENEBCO
 										case "DEOPENEBCO": //OPENEBCO
 										case "TEOPENEBCO": //OPENEBCO

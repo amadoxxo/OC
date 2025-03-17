@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
   * Imprimir Chequera
   * Este programa permite Imprimir el Comprobante el cheque de Aduanera

@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Comprobante.
 	 * --- Descripcion: Permite Imprimir Comprobante.
@@ -416,11 +419,11 @@
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',18,9,24,14);
 								break;
-								case "CONLOGIC":
-								case "DECONLOGIC":
-								case "TECONLOGIC":
-									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',20,9,18,14);
-								break;
+                case "CONLOGIC":
+                case "DECONLOGIC":
+                case "TECONLOGIC":
+                  $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',20,9,18,14);
+                break;
   							default://Logo open
   							 $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/opentecnologia.JPG',11,9,35,15);
                 break;
@@ -918,7 +921,7 @@
 								case "DECONNECTA":
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',18,$py+4,24,14);
-								break;
+                break;
 								case "CONLOGIC":
 								case "DECONLOGIC":
 								case "TECONLOGIC":

@@ -1,4 +1,6 @@
 <?php
+  namespace openComex;
+  use FPDF;
 
 	/**
 	 * Imprime Consecutivos de Comprobantes.
@@ -1240,33 +1242,33 @@
 													</td>
 												</tr>
 											<?php break;
-											case "CONLOGIC":   //CONLOGIC
-											case "DECONLOGIC": //CONLOGIC
-											case "TECONLOGIC": //CONLOGIC
-												?>
-												<tr>
-													<td class="name">
-														<center><img width="60" height="40" style="left: 13px;margin-top: 8px;margin-left: 10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg"><br>REPORTE DE CONSECUTIVOS DE COMPROBANTES
-													</td>
-												</tr>
-												<?php if ($cNomCom != "") { ?>
-													<tr>
-														<td class="name">
-															<center>COMPROBANTE: <?php echo $cNomCom ?>
-														</td>
-													</tr>
-												<?php } ?>
-												<tr>
-													<td style="border-bottom: hidden" class="name">
-														<center><?php echo "DE: " . " " . $dDesde . " " . "A: " . " " . $dHasta ?></center>
-													</td>
-												</tr>
-												<tr>
-													<td style="border-bottom: hidden" class="name">
-														<center>CANTIDAD DE MOVIMIENTOS ENCONTRADOS EN LA CONSULTA: <?php echo $nNumReg ?></center>
-													</td>
-												</tr>
-											<?php break;
+                      case "CONLOGIC":   //CONLOGIC
+                      case "DECONLOGIC": //CONLOGIC
+                      case "TECONLOGIC": //CONLOGIC
+                        ?>
+                        <tr>
+                          <td class="name">
+                            <center><img width="60" height="40" style="left: 13px;margin-top: 8px;margin-left: 10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg"><br>REPORTE DE CONSECUTIVOS DE COMPROBANTES
+                          </td>
+                        </tr>
+                        <?php if ($cNomCom != "") { ?>
+                          <tr>
+                            <td class="name">
+                              <center>COMPROBANTE: <?php echo $cNomCom ?>
+                            </td>
+                          </tr>
+                        <?php } ?>
+                        <tr>
+                          <td style="border-bottom: hidden" class="name">
+                            <center><?php echo "DE: " . " " . $dDesde . " " . "A: " . " " . $dHasta ?></center>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="border-bottom: hidden" class="name">
+                            <center>CANTIDAD DE MOVIMIENTOS ENCONTRADOS EN LA CONSULTA: <?php echo $nNumReg ?></center>
+                          </td>
+                        </tr>
+                      <?php break;
 											case "OPENEBCO":   //OPENEBCO
 											case "DEOPENEBCO": //OPENEBCO
 											case "TEOPENEBCO": //OPENEBCO
@@ -1545,25 +1547,32 @@
 						fclose($fOp);
 
 						if (file_exists($cFile)) {
-							chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
-							$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+							// Obtener la ruta absoluta del archivo
+							$cAbsolutePath = realpath($cFile);
+							$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-							if ($_SERVER["SERVER_PORT"] != "") {
-								header('Content-Description: File Transfer');
-								header('Content-Type: application/octet-stream');
-								header('Content-Disposition: attachment; filename='.$cDownLoadFilename);
-								header('Content-Transfer-Encoding: binary');
-								header('Expires: 0');
-								header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-								header('Pragma: public');
-								header('Content-Length: '.filesize($cFile));
-
-								ob_clean();
-								flush();
-								readfile($cFile);
-								exit;
-							} else {
-								$cNomArc = $cNomFile;
+							if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+								chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
+								$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+	
+								if ($_SERVER["SERVER_PORT"] != "") {
+									header('Content-Description: File Transfer');
+									header('Content-Type: application/octet-stream');
+									header('Content-Disposition: attachment; filename='.$cDownLoadFilename);
+									header('Content-Transfer-Encoding: binary');
+									header('Expires: 0');
+									header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+									header('Pragma: public');
+									header('Content-Length: '.filesize($cFile));
+	
+									ob_clean();
+									flush();
+									readfile($cFile);
+									exit;
+	
+								} else {
+									$cNomArc = $cNomFile;
+								}
 							}
 						} else {
 							$nSwitch = 1;
@@ -2431,7 +2440,7 @@
 										$this->Cell(204.5, 24, '', 1, 0, 'C');
 	
 										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoconnecta.jpg', 8, 11, 28, 17);
-	
+                    
 										$this->SetFont('verdana', '', 12);
 										$this->SetXY(6, 8);
 										$this->Cell(204.5, 8, "REPORTE DE CONSECUTIVOS DE COMPROBANTES", 0, 0, 'C');

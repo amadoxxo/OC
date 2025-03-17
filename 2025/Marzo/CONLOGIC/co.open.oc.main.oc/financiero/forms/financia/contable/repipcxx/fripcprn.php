@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 
   set_time_limit(0);
   ini_set("memory_limit", "512M");
@@ -1184,20 +1185,25 @@
             fclose($fOp);
             
             if (file_exists($cFile)) {	
-              if ($_SERVER["SERVER_PORT"] != "") {
-                header('Content-Type: application/octet-stream');
-                header("Content-Disposition: attachment; filename=\"".basename($cNomFile)."\";");
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                header("Cache-Control: private",false); // required for certain browsers
-                header('Pragma: public');
+              // Obtener la ruta absoluta del archivo
+              $cAbsolutePath = realpath($cFile);
+              $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
+              if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+                if ($_SERVER["SERVER_PORT"] != "") {
+                  header('Content-Type: application/octet-stream');
+                  header("Content-Disposition: attachment; filename=\"".basename($cNomFile)."\";");
+                  header('Expires: 0');
+                  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                  header("Cache-Control: private",false); // required for certain browsers
+                  header('Pragma: public');
 
-                ob_clean();
-                flush();
-                readfile($cFile);
-                exit;
-              } else {
-                $cNomArc = $cNomFile;
+                  ob_clean();
+                  flush();
+                  readfile($cFile);
+                  exit;
+                } else {
+                  $cNomArc = $cNomFile;
+                }
               }
             } else {
               $nSwitch = 1;

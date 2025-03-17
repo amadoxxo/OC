@@ -1,4 +1,5 @@
 <?php
+  namespace openComex;
 
   /**
    * Genera archivo excel de Ingresos Propios Detallado por Concepto
@@ -1234,19 +1235,25 @@
           $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
 
           if ($_SERVER["SERVER_PORT"] != "") {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($cFile));
+            // Obtener la ruta absoluta del archivo
+						$cAbsolutePath = realpath($cFile);
+						$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-            ob_clean();
-            flush();
-            readfile($cFile);
-            exit;
+						if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+              header('Content-Description: File Transfer');
+              header('Content-Type: application/octet-stream');
+              header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+              header('Content-Transfer-Encoding: binary');
+              header('Expires: 0');
+              header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+              header('Pragma: public');
+              header('Content-Length: ' . filesize($cFile));
+
+              ob_clean();
+              flush();
+              readfile($cFile);
+              exit;
+            }
           } else {
             $cNomArc = $cNomFile;
           }

@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+  
   // ini_set('display_errors', 1);
   // ini_set('display_startup_errors', 1);
   // error_reporting(E_ERROR);
@@ -599,16 +602,16 @@
 													</center>
 													<?php
 												break;
-												case "CONLOGIC":   //CONLOGIC
-												case "DECONLOGIC": //CONLOGIC
-												case "TECONLOGIC": //CONLOGIC
-													?>
-													<center>
-														<img width="120" style="left: 10px;margin-top:5px;margin-bottom:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg">
-														<br />
-													</center>
-													<?php
-												break;
+                        case "CONLOGIC":   //CONLOGIC
+                        case "DECONLOGIC": //CONLOGIC
+                        case "TECONLOGIC": //CONLOGIC
+                          ?>
+                          <center>
+                            <img width="120" style="left: 10px;margin-top:5px;margin-bottom:5px;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg">
+                            <br />
+                          </center>
+                          <?php
+                        break;
 												case "OPENEBCO":   //OPENEBCO
 												case "DEOPENEBCO": //OPENEBCO
 												case "TEOPENEBCO": //OPENEBCO
@@ -2071,7 +2074,7 @@
 										$this->Ln(5);
 										$n -= 5;
 										}
-
+                    
 										$this->Ln($n);
 										$this->SetX($nPosXAnt);
 									break;
@@ -3595,25 +3598,35 @@
 							$data = "\n(0) REGISTROS!\n";
 						}
 
-						chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
-						$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+						// Obtener la ruta absoluta del archivo
+						$cAbsolutePath = realpath($cFile);
+						$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-						if ($_SERVER["SERVER_PORT"] != "") {
+						if ($data == "") {
+							$data = "\n(0) REGISTROS!\n";
+						}
 
-							header('Content-Description: File Transfer');
-							header('Content-Type: application/octet-stream');
-							header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-							header('Content-Transfer-Encoding: binary');
-							header('Expires: 0');
-							header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-							header('Pragma: public');
-							header('Content-Length: ' . filesize($cFile));
-							
-							ob_clean();
-							flush();
-							readfile($cFile);
-						}else{
-							$cNomArc = $cNomFile;
+						if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+							chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
+							$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+	
+							if ($_SERVER["SERVER_PORT"] != "") {
+	
+								header('Content-Description: File Transfer');
+								header('Content-Type: application/octet-stream');
+								header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+								header('Content-Transfer-Encoding: binary');
+								header('Expires: 0');
+								header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+								header('Pragma: public');
+								header('Content-Length: ' . filesize($cFile));
+								
+								ob_clean();
+								flush();
+								readfile($cFile);
+							}else{
+								$cNomArc = $cNomFile;
+							}
 						}
 
 					}else {

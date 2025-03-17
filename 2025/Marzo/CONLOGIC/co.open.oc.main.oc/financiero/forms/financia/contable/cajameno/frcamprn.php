@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
   * Caja Menor.
   * Este programa permite Visualizar la Informacion de Caja Menor para un periodos especifico.
@@ -385,7 +388,7 @@
 								case "DECONNECTA":
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,8,25,15);
-								break;
+                break;
                 case "CONLOGIC":
                 case "DECONLOGIC":
                 case "TECONLOGIC":
@@ -871,7 +874,7 @@
 								case "DECONNECTA":
 								case "TECONNECTA":
 									$pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',17,$py+3,25,15);
-								break;
+                break;
                 case "CONLOGIC":
                 case "DECONLOGIC":
                 case "TECONLOGIC":

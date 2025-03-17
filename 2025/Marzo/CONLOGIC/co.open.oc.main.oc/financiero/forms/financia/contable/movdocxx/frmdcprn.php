@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+  
   /**
 	 * Imprime Movimiento Por Documento.
 	 * --- Descripcion: Permite Imprimir Movimiento Por Documento.
@@ -486,11 +489,11 @@
 														case "TECONNECTA":  //CONNECTA ?>
 															<td class="name"><center><img width="85" height="45" style="left: 15px;margin-top: 4px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconnecta.jpg"></td><?php	
 														break;
-														case "CONLOGIC":    //CONLOGIC
-														case "DECONLOGIC":  //CONLOGIC
-														case "TECONLOGIC":  //CONLOGIC ?>
-															<td class="name"><center><img width="65" height="45" style="left: 15px;margin-top: 4px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg"></td><?php	
-														break;
+                            case "CONLOGIC":    //CONLOGIC
+                            case "DECONLOGIC":  //CONLOGIC
+                            case "TECONLOGIC":  //CONLOGIC ?>
+                              <td class="name"><center><img width="65" height="45" style="left: 15px;margin-top: 4px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg"></td><?php	
+                            break;
 														case "OPENEBCO":    //OPENEBCO
 														case "DEOPENEBCO":  //OPENEBCO
 														case "TEOPENEBCO":  //OPENEBCO ?>
@@ -770,20 +773,26 @@
 							$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
 			
 							if ($_SERVER["SERVER_PORT"] != "") {
+								// Obtener la ruta absoluta del archivo
+						    $cAbsolutePath = realpath($cFile);
+						    $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
+
+						    if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
 			
-								header('Content-Description: File Transfer');
-								header('Content-Type: application/octet-stream');
-								header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-								header('Content-Transfer-Encoding: binary');
-								header('Expires: 0');
-								header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-								header('Pragma: public');
-								header('Content-Length: ' . filesize($cFile));
-								
-								ob_clean();
-								flush();
-								readfile($cFile);
-								exit;
+									header('Content-Description: File Transfer');
+									header('Content-Type: application/octet-stream');
+									header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+									header('Content-Transfer-Encoding: binary');
+									header('Expires: 0');
+									header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+									header('Pragma: public');
+									header('Content-Length: ' . filesize($cFile));
+									
+									ob_clean();
+									flush();
+									readfile($cFile);
+									exit;
+								}
 							}else{
 								$cNomArc = $cNomFile;
 							}
@@ -1353,7 +1362,7 @@
 										$this->Cell(221, 28, '', 1, 0, 'C');
 										// Dibujo //
 										$this->Image($cRoot . $cPlesk_Skin_Directory . '/logoconnecta.jpg', 9, 11, 35, 20);
-										$this->SetFont('verdana', '', 16);
+                    $this->SetFont('verdana', '', 16);
 										$this->SetXY(55, 13);
 										$this->Cell(221, 8, "REPORTE DE MOVIMIENTO DE DOCUMENTOS", 0, 0, 'C');
 										$this->Ln(8);

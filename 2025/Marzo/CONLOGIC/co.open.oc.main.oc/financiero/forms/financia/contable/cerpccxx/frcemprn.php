@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Certificado Mensual de Retenciones x Pagos a Terceros.
 	 * --- Descripcion: Permite Imprimir Certificado Mensual de Retenciones x Pagos a Terceros.
@@ -471,11 +474,11 @@
 								case "TECONNECTA": //CONNECTA
 									$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconnecta.jpg', 6, 7, 25, 15);
 								break;
-								case "CONLOGIC":   //CONLOGIC
-								case "DECONLOGIC": //CONLOGIC
-								case "TECONLOGIC": //CONLOGIC
-									$this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconlogic.jpg', 6, 7, 25, 18);
-								break;
+                case "CONLOGIC":   //CONLOGIC
+                case "DECONLOGIC": //CONLOGIC
+                case "TECONLOGIC": //CONLOGIC
+                  $this->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconlogic.jpg', 6, 7, 25, 18);
+                break;
 								case "OPENEBCO":   //OPENEBCO
 								case "DEOPENEBCO": //OPENEBCO
 								case "TEOPENEBCO": //OPENEBCO
@@ -759,11 +762,11 @@
 					case "TECONNECTA": //CONNECTA
 						$pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconnecta.jpg', 6, 7, 25, 15);
 					break;
-					case "CONLOGIC":   //CONLOGIC
-					case "DECONLOGIC": //CONLOGIC
-					case "TECONLOGIC": //CONLOGIC
-						$pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconlogic.jpg', 6, 7, 25, 18);
-					break;
+          case "CONLOGIC":   //CONLOGIC
+          case "DECONLOGIC": //CONLOGIC
+          case "TECONLOGIC": //CONLOGIC
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'] . $cPlesk_Skin_Directory . '/logoconlogic.jpg', 6, 7, 25, 18);
+          break;
 					case "OPENEBCO":   //OPENEBCO
 					case "DEOPENEBCO": //OPENEBCO
 					case "TEOPENEBCO": //OPENEBCO
@@ -1728,25 +1731,31 @@
 				}
 
 				if (file_exists($cFile)){
-					if ($_SERVER["SERVER_PORT"] != "" && $cEjProBg == "NO") {
-						chmod($cFile,intval($vSysStr['system_permisos_archivos'],8));
-						$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
-						header('Content-Description: File Transfer');
-						header('Content-Type: application/octet-stream');
-						header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-						header('Content-Transfer-Encoding: binary');
-						header('Expires: 0');
-						header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-						header('Pragma: public');
-						header('Content-Length: ' . filesize($cFile));
+					// Obtener la ruta absoluta del archivo
+					$cAbsolutePath = realpath($cFile);
+					$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-						ob_clean();
-						flush();
-						readfile($cFile);
-						
-						exit;
-					} else {
-						$cNomArc = $cNomFile;
+					if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+						if ($_SERVER["SERVER_PORT"] != "" && $cEjProBg == "NO") {
+							chmod($cFile,intval($vSysStr['system_permisos_archivos'],8));
+							$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+							header('Content-Description: File Transfer');
+							header('Content-Type: application/octet-stream');
+							header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+							header('Content-Transfer-Encoding: binary');
+							header('Expires: 0');
+							header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+							header('Pragma: public');
+							header('Content-Length: ' . filesize($cFile));
+	
+							ob_clean();
+							flush();
+							readfile($cFile);
+							
+							exit;
+						} else {
+							$cNomArc = $cNomFile;
+						}
 					}
 				} else {
 					if ($_SERVER["SERVER_PORT"] != "") {

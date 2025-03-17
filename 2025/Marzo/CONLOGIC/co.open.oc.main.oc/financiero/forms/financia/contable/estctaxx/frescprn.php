@@ -1,4 +1,7 @@
 <?php
+  namespace openComex;
+  use FPDF;
+
   /**
 	 * Imprime Estado de cuentas.
 	 * --- Descripcion: Permite Imprimir Estado de cuentas(por Cobrar / por Pagar).
@@ -156,12 +159,13 @@
 			$qRegistros .= "$cAlfa.$cTabla.teridxxx = \"$cTerId\" AND ";
 		}
 		$qRegistros .= "$cAlfa.$cTabla.regestxx = \"ACTIVO\" ";
-		$xRegistros  = f_MySql("SELECT","",$qRegistros,$xConexion01,"");
+    $cIdCountRow = mt_rand(1000000000, 9999999999);
+		$xRegistros = mysql_query($qRegistros, $xConexion01, true, $cIdCountRow);
 		mysql_free_result($xRegistros);
 
-		$xNumRows = mysql_query("SELECT FOUND_ROWS();");
-		$xRNR = mysql_fetch_array($xNumRows);
-		$nRegistros = $xRNR['FOUND_ROWS()'];
+    $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+    $xRNR       = mysql_fetch_array($xNumRows);
+    $nRegistros = $xRNR['CANTIDAD'];
 		mysql_free_result($xNumRows);
 	
 		$vParBg['pbadbxxx'] = $cAlfa;                                         	//Base de Datos
@@ -730,17 +734,17 @@
 																</center><br>
 															</td>
 														<?php break;
-														case "CONLOGIC":   //CONLOGIC
-														case "DECONLOGIC": //CONLOGIC
-														case "TECONLOGIC": //CONLOGIC ?>
-															<td rowspan="2" class="name" width="100%">
-																<center>
-																	<img width="70" height="50" style="left: 18px;margin-top: 4px;margin-left:10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg">
-																	<br><span style="font-size:14px;font-weight:bold">DE CUENTA POR <?php echo $cTipoCta ?></span><br>
-																	<?php echo $cMes . " " . substr($fec, 8, 2) . " DE " . substr($fec, 0, 4) ?>
-																</center><br>
-															</td>
-														<?php break;
+                            case "CONLOGIC":   //CONLOGIC
+                            case "DECONLOGIC": //CONLOGIC
+                            case "TECONLOGIC": //CONLOGIC ?>
+                              <td rowspan="2" class="name" width="100%">
+                                <center>
+                                  <img width="70" height="50" style="left: 18px;margin-top: 4px;margin-left:10px;position: absolute;" src="<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg">
+                                  <br><span style="font-size:14px;font-weight:bold">DE CUENTA POR <?php echo $cTipoCta ?></span><br>
+                                  <?php echo $cMes . " " . substr($fec, 8, 2) . " DE " . substr($fec, 0, 4) ?>
+                                </center><br>
+                              </td>
+                            <?php break;
 														case "OPENEBCO":   //OPENEBCO
 														case "DEOPENEBCO": //OPENEBCO
 														case "TEOPENEBCO": //OPENEBCO ?>
@@ -1266,20 +1270,25 @@
 
 							chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
 							$cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
-		
 							if ($_SERVER["SERVER_PORT"] != "") {
-								header('Content-Description: File Transfer');
-								header('Content-Type: application/octet-stream');
-								header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-								header('Content-Transfer-Encoding: binary');
-								header('Expires: 0');
-								header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-								header('Pragma: public');
-								header('Content-Length: ' . filesize($cFile));
-		
-								ob_clean();
-								flush();
-								readfile($cFile);
+								// Obtener la ruta absoluta del archivo
+								$cAbsolutePath = realpath($cFile);
+								$cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
+
+								if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+									header('Content-Description: File Transfer');
+									header('Content-Type: application/octet-stream');
+									header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+									header('Content-Transfer-Encoding: binary');
+									header('Expires: 0');
+									header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+									header('Pragma: public');
+									header('Content-Length: ' . filesize($cFile));
+			
+									ob_clean();
+									flush();
+									readfile($cFile);
+								}
 							} else {
 								$cNomArc = $cNomFile;
 							}
@@ -1506,7 +1515,7 @@
 									case "DECONNECTA": // CONNECTA
 									case "TECONNECTA": // CONNECTA
 										$this->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',20,8,22,12);
-									break;
+                  break;
                   case "CONLOGIC";
                   case "DECONLOGIC";
                   case "TECONLOGIC";

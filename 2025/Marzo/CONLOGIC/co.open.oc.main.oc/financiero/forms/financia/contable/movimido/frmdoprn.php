@@ -1,4 +1,6 @@
 <?php
+  namespace openComex;
+  use FPDF;
 
   include("../../../../libs/php/utility.php");
   include("../../../../libs/php/utiliqdo.php");
@@ -18,14 +20,14 @@
 
   ##Switch para incluir fuente y clase pdf segun base de datos ##
   switch($cAlfa){
-    case "COLMASXX":
-      define('FPDF_FONTPATH',"../../../../../fonts/");
-      require("../../../../../forms/fpdf.php");
-    break;
-    default:
-      define('FPDF_FONTPATH',$_SERVER['DOCUMENT_ROOT'].$cSystem_Fonts_Directory.'/');
-      require($_SERVER['DOCUMENT_ROOT'].$cSystem_Class_Directory.'/fpdf/fpdf.php');
-    break;
+  	case "COLMASXX":
+  		define('FPDF_FONTPATH',"../../../../../fonts/");
+  		require("../../../../../forms/fpdf.php");
+  	break;
+  	default:
+  		define('FPDF_FONTPATH',$_SERVER['DOCUMENT_ROOT'].$cSystem_Fonts_Directory.'/');
+  		require($_SERVER['DOCUMENT_ROOT'].$cSystem_Class_Directory.'/fpdf/fpdf.php');
+  	break;
   }
   ##Fin Switch para incluir fuente y clase pdf segun base de datos ##
 

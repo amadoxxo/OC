@@ -1,4 +1,6 @@
 <?php
+  namespace openComex;
+  use FPDF;
 
   ##Estableciendo que el tiempo de ejecucion no se limite
 
@@ -163,13 +165,14 @@ $qLoad .= "$cAlfa.fcod$cPerAno.comfecxx BETWEEN \"$gDesde\" AND \"$gHasta\" AND 
 $qLoad .= "$cAlfa.fcod$cPerAno.pucidxxx BETWEEN \"$gPucIdIni\" AND \"$gPucIdFin\" AND ";
 $qLoad .= "$cAlfa.fcod$cPerAno.regestxx = \"ACTIVO\" ";
 $qLoad .= "LIMIT 0,1";
-$xLoad = f_Mysql("SELECT", "", $qLoad, $xConexion01, "");
+$cIdCountRow = mt_rand(1000000000, 9999999999);
+$xLoad = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
 
 mysql_free_result($xLoad);
 
-$xNumRows = mysql_query("SELECT FOUND_ROWS();");
-$xRNR = mysql_fetch_array($xNumRows);
-$nRegistros = $xRNR['FOUND_ROWS()'];
+$xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+$xRNR       = mysql_fetch_array($xNumRows);
+$nRegistros = $xRNR['CANTIDAD'];
 mysql_free_result($xNumRows);
 
 if ($_SERVER["SERVER_PORT"] != "" && $cEjProBg == "SI" && $nSwitch == 0) {
@@ -884,6 +887,7 @@ if ($cEjePro == 0) {
                       <td style="background-color:#0B610B" class="letra8" align="center" width="150px"><b><font color=white>Comprobante</font></b></td>
                       <td style="background-color:#0B610B" class="letra8" align="center" width="100px"><b><font color=white>Fecha Comprobante</font></b></td>
                       <td style="background-color:#0B610B" class="letra8" align="center" width="150px"><b><font color=white>Fecha Vencimiento Comprobante</font></b></td>
+                      <td style="background-color:#0B610B" class="letra8" align="center" width="80px"><b><font color=white>Concepto</font></b></td>
                       <td style="background-color:#0B610B" class="letra8" align="center"><b><font color=white>Descripci&oacute;n</font></b></td>
                       <td style="background-color:#0B610B" class="letra8" align="center" width="140px"><b><font color=white>Detalle</font></b></td>
                       <td style="background-color:#0B610B" class="letra8" align="center" width="80px"><b><font color=white>Nit</font></b></td>
@@ -940,12 +944,14 @@ if ($cEjePro == 0) {
                       } else {
                         if ($xRDM['ctoidxxx'] == $xRDM['pucidxxx']) {
                           $vCtoCon = $mPUC["{$xRDM['pucidxxx']}"];
+                          $vCtoCon['ctoidxxx'] = $xRDM['pucidxxx'];
                         }
                       }
                     }
 
                     $xRDM['ctodesxx'] = ($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? (($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] : $vCtoCon['ctodesxx']) : (($vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] : $vCtoCon['ctodesxx']);
                     $xRDM['ctodesxx'] = ($xRDM['ctodesxx'] != "") ? $xRDM['ctodesxx'] : "CONCEPTO SIN DESCRIPCION";
+                    $xRDM['ctoidxxx'] = $vCtoCon['ctoidxxx'];
 
                     $zColorPro = "#000000";
                     if ($xRDM['pucterxx'] == "R") {
@@ -996,7 +1002,7 @@ if ($cEjePro == 0) {
                       $nSalAnt = $mSalAnt[1];
                         //nuevo calculo de saldo anterior por cuenta ?>
                         <tr height="20" style="padding-left:4px;padding-right:4px">
-                        <td style="background-color:#084B8A" class="letra7" align="right" colspan="17"><b><font color=white>Saldo Anterior</font></b></td>
+                        <td style="background-color:#084B8A" class="letra7" align="right" colspan="18"><b><font color=white>Saldo Anterior</font></b></td>
                         <td style="background-color:#084B8A" class="letra7" align="right"><b><font color=white><?php echo ($mSalAnt[1] != "") ? ((strpos($mSalAnt[1] + 0, '.') > 0) ? number_format($mSalAnt[1], 2, ',', '.') : number_format($mSalAnt[1], 0, ',', '.')) : "0" ?></font></b></td>
                       </tr>
                       <?php
@@ -1009,6 +1015,7 @@ if ($cEjePro == 0) {
                         <td class="letra7" align="left"   style = "color:<?php echo $zColorPro ?>"><?php echo $xRDM['consecux'] ?></td>
                         <td class="letra7" align="center" style = "color:<?php echo $zColorPro ?>"><?php echo $xRDM['comfecxx'] ?></td>
                         <td class="letra7" align="center" style = "color:<?php echo $zColorPro ?>"><?php echo ($xRDM['comfecve'] != "") ? $xRDM['comfecve'] : $xRDM['comfecxx'] ?></td>
+                        <td class="letra7" align="center" style = "color:<?php echo $zColorPro ?>"><?php echo $xRDM['ctoidxxx'] ?></td>
                         <td class="letra7" align="left"   style = "color:<?php echo $zColorPro ?>"><?php echo ($xRDM['ctodesxx'] != "") ? $xRDM['ctodesxx'] : "&nbsp;" ?></td>
                         <td class="letra7" align="left"   style = "color:<?php echo $zColorPro ?>"><?php echo ($xRDM['comobsxx'] != "") ? $xRDM['comobsxx'] : "&nbsp;" ?></td>
                         <td class="letra7" align="left"   style = "color:<?php echo $zColorPro ?>"><?php echo $xRDM['teridxxx'] ?></td>
@@ -1082,6 +1089,7 @@ if ($cEjePro == 0) {
         $data .= '<td style="background-color:#0B610B" class="letra8" align="center" width="150px"><b><font color=white>Comprobante</font></b></td>';
         $data .= '<td style="background-color:#0B610B" class="letra8" align="center" width="100px"><b><font color=white>Fecha Comprobante</font></b></td>';
         $data .= '<td style="background-color:#0B610B" class="letra8" align="center" width="100px"><b><font color=white>Fecha Vencimiento Comprobante</font></b></td>';
+        $data .= '<td style="background-color:#0B610B" class="letra8" align="center" width="80px"><b><font color=white>Concepto</font></b></td>';
         $data .= '<td style="background-color:#0B610B" class="letra8" align="center"><b><font color=white>Descripci&oacute;n</font></b></td>';
         $data .= '<td style="background-color:#0B610B" class="letra8" align="center" width="100px"><b><font color=white>Detalle</font></b></td>';				
         $data .= '<td style="background-color:#0B610B" class="letra8" align="center" width="80px"><b><font color=white>Nit</font></b></td>';
@@ -1139,12 +1147,14 @@ if ($cEjePro == 0) {
             } else {
               if ($xRDM['ctoidxxx'] == $xRDM['pucidxxx']) {
                 $vCtoCon = $mPUC["{$xRDM['pucidxxx']}"];
+                $vCtoCon['ctoidxxx'] = $xRDM['pucidxxx'];
               }
             }
           }
 
           $xRDM['ctodesxx'] = ($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? (($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] : $vCtoCon['ctodesxx']) : (($vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] : $vCtoCon['ctodesxx']);
           $xRDM['ctodesxx'] = ($xRDM['ctodesxx'] != "") ? $xRDM['ctodesxx'] : "CONCEPTO SIN DESCRIPCION";
+          $xRDM['ctoidxxx'] = $vCtoCon['ctoidxxx'];
 
           $zColorPro = "#000000";
           if ($xRDM['pucterxx'] == "R") {
@@ -1195,7 +1205,7 @@ if ($cEjePro == 0) {
             $nSalAnt = $mSalAnt[1];
             //nuevo calculo de saldo anterior por cuenta
             $data = '<tr height="20" style="padding-left:4px;padding-right:4px">';
-            $data .= '<td style="background-color:#084B8A" class="letra7" align="right" colspan="17"><b><font color=white>Saldo Anterior</font></b></td>';
+            $data .= '<td style="background-color:#084B8A" class="letra7" align="right" colspan="18"><b><font color=white>Saldo Anterior</font></b></td>';
             $data .= '<td style="background-color:#084B8A" class="letra7" align="right"><b><font color=white>' . (($mSalAnt[1] != "") ? ((strpos($mSalAnt[1] + 0, '.') > 0) ? number_format($mSalAnt[1], 2, ',', '') : number_format($mSalAnt[1], 0, ',', '')) : "0") . '</font></b></td>';
             $data .= '</tr>';
             fwrite($fOp, $data);
@@ -1217,6 +1227,7 @@ if ($cEjePro == 0) {
           $data .= '<td class="letra7" align="left"   style = "color:' . $zColorPro . '">' . $xRDM['consecux'] . '</td>';
           $data .= '<td class="letra7" align="center" style = "color:' . $zColorPro . ';mso-number-format:yyyy-mm-dd">' . $xRDM['comfecxx'] . '</td>';
           $data .= '<td class="letra7" align="center" style = "color:' . $zColorPro . ';mso-number-format:yyyy-mm-dd">' . (($xRDM['comfecve'] != "") ? $xRDM['comfecve'] : $xRDM['comfecxx']) . '</td>';
+          $data .= '<td class="letra7" align="center" style = "color:' . $zColorPro . '">' . $xRDM['ctoidxxx'] . '</td>';
           $data .= '<td class="letra7" align="left"   style = "color:' . $zColorPro . '">' . $nValor01 . '</td>';
           $data .= '<td class="letra7" align="left"   style = "color:' . $zColorPro . '">' . $nValor08 . '</td>';
           $data .= '<td class="letra7" align="left"   style = "mso-number-format:\'\@\'; color:' . $zColorPro . '">' . $xRDM['teridxxx'] . '</td>';
@@ -1252,25 +1263,31 @@ if ($cEjePro == 0) {
         fclose($fOp);
 
         if (file_exists($cFile)) {
-          chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
-          $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+          // Obtener la ruta absoluta del archivo
+          $cAbsolutePath = realpath($cFile);
+          $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-          if ($_SERVER["SERVER_PORT"] != "") {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($cFile));
-
-            ob_clean();
-            flush();
-            readfile($cFile);
-            exit;
-          } else {
-            $cNomArc = $cNomFile;
+          if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+            chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
+            $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+  
+            if ($_SERVER["SERVER_PORT"] != "") {
+              header('Content-Description: File Transfer');
+              header('Content-Type: application/octet-stream');
+              header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+              header('Content-Transfer-Encoding: binary');
+              header('Expires: 0');
+              header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+              header('Pragma: public');
+              header('Content-Length: ' . filesize($cFile));
+  
+              ob_clean();
+              flush();
+              readfile($cFile);
+              exit;
+            } else {
+              $cNomArc = $cNomFile;
+            }
           }
         } else {
           $nSwitch = 1;
@@ -1305,6 +1322,7 @@ if ($cEjePro == 0) {
         $data .= 'Comprobante' . chr(9);
         $data .= 'Fecha Comprobante' . chr(9);
         $data .= 'Fecha Vencimiento Comprobante' . chr(9);
+        $data .= 'Concepto' . chr(9);
         $data .= 'Descripcion' . chr(9);
         $data .= 'Detalle' . chr(9);
         $data .= 'Nit' . chr(9);
@@ -1362,12 +1380,14 @@ if ($cEjePro == 0) {
             } else {
               if ($xRDM['ctoidxxx'] == $xRDM['pucidxxx']) {
                 $vCtoCon = $mPUC["{$xRDM['pucidxxx']}"];
+                $vCtoCon['ctoidxxx'] = $xRDM['pucidxxx'];
               }
             }
           }
 
           $xRDM['ctodesxx'] = ($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? (($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] : $vCtoCon['ctodesxx']) : (($vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] : $vCtoCon['ctodesxx']);
           $xRDM['ctodesxx'] = ($xRDM['ctodesxx'] != "") ? $xRDM['ctodesxx'] : "CONCEPTO SIN DESCRIPCION";
+          $xRDM['ctoidxxx'] = $vCtoCon['ctoidxxx'];
 
           $zColorPro = "#000000";
           if ($xRDM['pucterxx'] == "R") {
@@ -1451,6 +1471,7 @@ if ($cEjePro == 0) {
           $data .= $xRDM['consecux'] . chr(9);
           $data .= $xRDM['comfecxx'] . chr(9);
           $data .= (($xRDM['comfecve'] != "") ? $xRDM['comfecve'] : $xRDM['comfecxx']) . chr(9);
+          $data .= $xRDM['ctoidxxx'] . chr(9);
           $data .= $nValor01 . chr(9);
           $data .= $nValor08 . chr(9);
           $data .= $xRDM['teridxxx'] . chr(9);
@@ -1495,25 +1516,31 @@ if ($cEjePro == 0) {
         fclose($fOp);
 
         if (file_exists($cFile)) {
-          chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
-          $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+          // Obtener la ruta absoluta del archivo
+          $cAbsolutePath = realpath($cFile);
+          $cAbsolutePath = substr($cAbsolutePath,0,strrpos($cAbsolutePath, '/'));
 
-          if ($_SERVER["SERVER_PORT"] != "") {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($cFile));
-
-            ob_clean();
-            flush();
-            readfile($cFile);
-            exit;
-          } else {
-            $cNomArc = $cNomFile;
+          if (in_array(realpath($cAbsolutePath), $vSystem_Path_Authorized)) {
+            chmod($cFile, intval($vSysStr['system_permisos_archivos'], 8));
+            $cDownLoadFilename = $cDownLoadFilename !== null ? $cDownLoadFilename : basename($cFile);
+  
+            if ($_SERVER["SERVER_PORT"] != "") {
+              header('Content-Description: File Transfer');
+              header('Content-Type: application/octet-stream');
+              header('Content-Disposition: attachment; filename=' . $cDownLoadFilename);
+              header('Content-Transfer-Encoding: binary');
+              header('Expires: 0');
+              header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+              header('Pragma: public');
+              header('Content-Length: ' . filesize($cFile));
+  
+              ob_clean();
+              flush();
+              readfile($cFile);
+              exit;
+            } else {
+              $cNomArc = $cNomFile;
+            }
           }
         } else {
           $nSwitch = 1;
@@ -1729,7 +1756,7 @@ if ($cEjePro == 0) {
                 $this->Cell(16, 5, "Cuenta", 1, 0, 'C', 1);
                 $this->Cell(25, 5, "Comprobante", 1, 0, 'C', 1);
                 $this->Cell(15, 5, "Fecha", 1, 0, 'C', 1);
-                $this->Cell(20, 5, "Descripcion", 1, 0, 'C', 1);
+                $this->Cell(20, 5, "Concepto", 1, 0, 'C', 1);
                 $this->Cell(15, 5, "Detalle", 1, 0, 'C', 1);								
                 $this->Cell(15, 5, "Nit", 1, 0, 'C', 1);
                 $this->Cell(20, 5, "Tercero", 1, 0, 'C', 1);
@@ -1865,7 +1892,7 @@ if ($cEjePro == 0) {
           $pdf->Cell(16, 5, "Cuenta", 1, 0, 'C', 1);
           $pdf->Cell(25, 5, "Comprobante", 1, 0, 'C', 1);
           $pdf->Cell(15, 5, "Fecha", 1, 0, 'C', 1);
-          $pdf->Cell(20, 5, "Descripcion", 1, 0, 'C', 1);
+          $pdf->Cell(20, 5, "Concepto", 1, 0, 'C', 1);
           $pdf->Cell(15, 5, "Detalle", 1, 0, 'C', 1);
           $pdf->Cell(15, 5, "Nit", 1, 0, 'C', 1);
           $pdf->Cell(20, 5, "Tercero", 1, 0, 'C', 1);
@@ -1930,12 +1957,14 @@ if ($cEjePro == 0) {
               } else {
                 if ($xRDM['ctoidxxx'] == $xRDM['pucidxxx']) {
                   $vCtoCon = $mPUC["{$xRDM['pucidxxx']}"];
+                  $vCtoCon['ctoidxxx'] = $xRDM['pucidxxx'];
                 }
               }
             }
 
             $xRDM['ctodesxx'] = ($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? (($vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comctoc2'])] : $vCtoCon['ctodesxx']) : (($vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] != "") ? $vCtoCon['ctodesx' . strtolower($xRDM['comidxxx'])] : $vCtoCon['ctodesxx']);
             $xRDM['ctodesxx'] = ($xRDM['ctodesxx'] != "") ? $xRDM['ctodesxx'] : "CONCEPTO SIN DESCRIPCION";
+            $xRDM['ctoidxxx'] = $vCtoCon['ctoidxxx'];
 
             $zColorPro = "#000000";
             if ($xRDM['pucterxx'] == "R") {
@@ -1981,7 +2010,7 @@ if ($cEjePro == 0) {
               $xRDM['pucidxxx'],
               $xRDM['consecux'],
               $xRDM['comfecxx'],
-              $nValor01,
+              $xRDM['ctoidxxx'] . ' - '. $nValor01,
               $nValor08,
               $xRDM['teridxxx'],
               ((trim($xRDM['clinomxx']) != "") ? trim($xRDM['clinomxx']) : "CLIENTE SIN NOMBRE"),
@@ -2123,7 +2152,7 @@ class cEstructurasAuxiliarPorCuenta {
 
     if (!$xNewTab) {
       $nSwitch = 1;
-      $mReturn[count($mReturn)] = "(" . __LINE__ . ") Error al Crear Tabla Temporal para Reporte Auxiliar por Cuenta." . mysql_error($xConexionTM);
+      $mReturn[count($mReturn)] = "(" . __LINE__ . ") Error al Crear Tabla Temporal para Reporte Auxiliar por Cuenta.";
     }
 
     if($nSwitch == 0){
@@ -2158,13 +2187,13 @@ class cEstructurasAuxiliarPorCuenta {
      */
     $mReturn[0] = "";
 
-    $xConexion99 = mysql_connect(OC_SERVER, OC_USERROBOT, OC_PASSROBOT) or die("El Sistema no Logro Conexion con " . OC_SERVER);
+    $xConexion99 = mysql_connect(OC_SERVER, OC_USERROBOT, OC_PASSROBOT) or die("El Sistema no Logro Conexion.");
     
     if ($xConexion99) {
       $nSwitch = 0;
     } else {
       $nSwitch = 1;
-      $mReturn[count($mReturn)] = "El Sistema no Logro Conexion con " . OC_SERVER;
+      $mReturn[count($mReturn)] = "El Sistema no Logro Conexion.";
     }
 
     if ($nSwitch == 0) {

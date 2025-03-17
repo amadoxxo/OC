@@ -734,6 +734,13 @@
                         <img src = "<?php echo $cPlesk_Skin_Directory ?>/logoconnecta.jpg" style="height: 80px;width:120">
                       </td>
                     <?php break;
+                    case "CONLOGIC":   //CONLOGIC
+                    case "DECONLOGIC": //CONLOGIC
+                    case "TECONLOGIC": //CONLOGIC ?>
+                      <td class="name" style="font-size:14px;width:100px">
+                        <img src = "<?php echo $cPlesk_Skin_Directory ?>/logoconlogic.jpg" style="height: 80px;width:120">
+                      </td>
+                    <?php break;
                     case "OPENEBCO":   //OPENEBCO
                     case "DEOPENEBCO": //OPENEBCO
                     case "TEOPENEBCO": //OPENEBCO ?>
@@ -1584,6 +1591,11 @@
           case "DECONNECTA":
           case "TECONNECTA":
             $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconnecta.jpg',8,11,25,13);
+          break;
+          case "CONLOGIC":
+          case "DECONLOGIC":
+          case "TECONLOGIC":
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'].$cPlesk_Skin_Directory.'/logoconlogic.jpg',8,11,18,13);
           break;
           case "OPENEBCO":
           case "DEOPENEBCO":

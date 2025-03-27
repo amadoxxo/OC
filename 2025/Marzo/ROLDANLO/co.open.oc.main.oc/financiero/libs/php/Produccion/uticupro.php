@@ -1,5 +1,4 @@
 <?php
-  namespace openComex;
 
 /**
  * uticupro.php : Utility de Clases del Modulo de Financiacion Cliente (cupos Roldan)
@@ -1713,14 +1712,12 @@ class cFinanciacionCliente {
             $qLoad .= "$cAlfa.fcod$iAno.pucidxxx IN ($cPucIdCxC) AND ";
             $qLoad .= "$cAlfa.fcod$iAno.regestxx = \"ACTIVO\" ";
             $qLoad .= "GROUP BY teridxxx, pucidxxx, comidcxx, comcodcx, comcsccx, comseqcx ";
-            $cIdCountRow = mt_rand(1000000000, 9999999999);
-            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
+            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad,$xConexion01);
             $nQueryTime = (microtime(true) - $nQueryTimeStart); $objTablasTemporales->fnMysqlQueryInfo($xConexion01,$nQueryTime);
-            mysql_free_result($xLoad);
 
-            $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+            $xNumRows   = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
             $xRNR       = mysql_fetch_array($xNumRows);
-            $nRegistros = $xRNR['CANTIDAD'];
+            $nRegistros = $xRNR['FOUND_ROWS()'];
             mysql_free_result($xNumRows);
 
             // Se consultan los registros por bloques
@@ -1958,14 +1955,12 @@ class cFinanciacionCliente {
             $qLoad .= "$cAlfa.fcod$iAno.pucidxxx IN ($cPucIdSC) AND ";
             $qLoad .= "$cAlfa.fcod$iAno.regestxx = \"ACTIVO\" ";
             $qLoad .= "GROUP BY teridxxx, pucidxxx, comidcxx, comcodcx, comcsccx, comseqcx ";
-            $cIdCountRow = mt_rand(1000000000, 9999999999);
-            $nQueryTimeStart = microtime(true); $xLoad = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
+            $nQueryTimeStart = microtime(true); $xLoad = mysql_query($qLoad,$xConexion01);
             $nQueryTime = (microtime(true) - $nQueryTimeStart); $objTablasTemporales->fnMysqlQueryInfo($xConexion01,$nQueryTime);
-            mysql_free_result($xLoad);
 
-            $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+            $xNumRows   = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
             $xRNR       = mysql_fetch_array($xNumRows);
-            $nRegistros = $xRNR['CANTIDAD'];
+            $nRegistros = $xRNR['FOUND_ROWS()'];
             mysql_free_result($xNumRows);
 
             // Se consultan los registros por bloques
@@ -2128,14 +2123,12 @@ class cFinanciacionCliente {
               }
               $qLoad .= "$cAlfa.fcod$iAno.regestxx = \"ACTIVO\" ";
               $qLoad .= "GROUP BY teridxxx, sucidxxx, docidxxx, docsufxx, terid3xx; ";
-              $cIdCountRow = mt_rand(1000000000, 9999999999);
-              $nQueryTimeStart = microtime(true); $xLoad = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
+              $nQueryTimeStart = microtime(true); $xLoad = mysql_query($qLoad,$xConexion01);
               $nQueryTime = (microtime(true) - $nQueryTimeStart); $objTablasTemporales->fnMysqlQueryInfo($xConexion01,$nQueryTime);
-              mysql_free_result($xLoad);
 
-              $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
+              $xNumRows   = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
               $xRNR       = mysql_fetch_array($xNumRows);
-              $nRegistros = $xRNR['CANTIDAD'];
+              $nRegistros = $xRNR['FOUND_ROWS()'];
               mysql_free_result($xNumRows);
 
               // Se consultan los registros por bloques
@@ -2322,14 +2315,12 @@ class cFinanciacionCliente {
             $qLoad .= "$cAlfa.fcod$iAno.pucidxxx IN ($cPucIdPcc) AND ";
             $qLoad .= "(($cAlfa.fcod$iAno.comidxxx != \"F\" && $cAlfa.fcod$iAno.regestxx IN (\"ACTIVO\",\"PROVISIONAL\")) OR ($cAlfa.fcod$iAno.comidxxx = \"F\" && $cAlfa.fcod$iAno.regestxx = \"ACTIVO\")) ";
             $qLoad .= "GROUP BY teridxxx, sucidxxx, docidxxx, docsufxx, ctoidxxx, comfacxx ";
-            $cIdCountRow = mt_rand(1000000000, 9999999999);
-            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
+            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad,$xConexion01);
             $nQueryTime = (microtime(true) - $nQueryTimeStart); $objTablasTemporales->fnMysqlQueryInfo($xConexion01,$nQueryTime);
-            mysql_free_result($xLoad);
 
-            $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
-            $xRNR       = mysql_fetch_array($xNumRows);
-            $nRegistros = $xRNR['CANTIDAD'];
+            $xNumRows = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
+            $xRNR = mysql_fetch_array($xNumRows);
+            $nRegistros = $xRNR['FOUND_ROWS()'];
             mysql_free_result($xNumRows);
 
             // Se consultan los registros por bloques
@@ -2382,14 +2373,12 @@ class cFinanciacionCliente {
             }
             $qLoad .= "$cAlfa.fcod$iAno.pucidxxx IN ($cPucIdAnt) AND ";
             $qLoad .= "(($cAlfa.fcod$iAno.comidxxx != \"F\" && $cAlfa.fcod$iAno.regestxx IN (\"ACTIVO\",\"PROVISIONAL\")) OR ($cAlfa.fcod$iAno.comidxxx = \"F\" && $cAlfa.fcod$iAno.regestxx = \"ACTIVO\")) ";
-            $cIdCountRow = mt_rand(1000000000, 9999999999);
-            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
+            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad,$xConexion01);
             $nQueryTime = (microtime(true) - $nQueryTimeStart); $objTablasTemporales->fnMysqlQueryInfo($xConexion01,$nQueryTime);
-            mysql_free_result($xLoad);
 
-            $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
-            $xRNR       = mysql_fetch_array($xNumRows);
-            $nRegistros = $xRNR['CANTIDAD'];
+            $xNumRows = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
+            $xRNR = mysql_fetch_array($xNumRows);
+            $nRegistros = $xRNR['FOUND_ROWS()'];
             mysql_free_result($xNumRows);
 
             // Se consultan los registros por bloques
@@ -2444,14 +2433,12 @@ class cFinanciacionCliente {
             $qLoad .= "pucidxxx IN ($cPucIdFon) AND ";
             $qLoad .= "regestxx IN (\"ACTIVO\",\"PROVISIONAL\") ";
             $qLoad .= "GROUP BY teridxxx, pucidxxx, ctoidxxx, sucidxxx, docidxxx, docsufxx, comfacxx ";
-            $cIdCountRow = mt_rand(1000000000, 9999999999);
-            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad, $xConexion01, true, $cIdCountRow);
+            $nQueryTimeStart = microtime(true); $xLoad  = mysql_query($qLoad,$xConexion01);
             $nQueryTime = (microtime(true) - $nQueryTimeStart); $objTablasTemporales->fnMysqlQueryInfo($xConexion01,$nQueryTime);
-            mysql_free_result($xLoad);
 
-            $xNumRows   = mysql_query("SELECT @foundRows".$cIdCountRow." AS CANTIDAD", $xConexion01, false);
-            $xRNR       = mysql_fetch_array($xNumRows);
-            $nRegistros = $xRNR['CANTIDAD'];
+            $xNumRows = mysql_query("SELECT FOUND_ROWS();",$xConexion01);
+            $xRNR = mysql_fetch_array($xNumRows);
+            $nRegistros = $xRNR['FOUND_ROWS()'];
             mysql_free_result($xNumRows);
 
             // Se consultan los registros por bloques
@@ -2712,9 +2699,6 @@ class cFinanciacionCliente {
               if(!$xInsDet) {
                 $nError = 1;
               }
-
-              echo "\n\n".$qInsert."\n\n";
-
               $vError['LINEAERR'] = __LINE__;
               $vError['TIPOERRX'] = "ADVERTENCIA";
               $vError['DESERROR'] = mysql_error($xConexion01)."~".mysql_affected_rows($xConexion01)."~".str_replace('\"','"',$qInsert);
@@ -2735,7 +2719,7 @@ class cFinanciacionCliente {
 
           $vError['LINEAERR'] = __LINE__;
           $vError['TIPOERRX'] = "ADVERTENCIA";
-          $vError['DESERROR'] = mysql_error($xConexion01)."~".mysql_affected_rows($xConexion01)."~".$qInsert;
+          $vError['DESERROR'] = mysql_error($xConexion01)."~".mysql_affected_rows($xConexion01)."~".str_replace('\"','"',$qInsert);
           $objTablasTemporales->fnGuardarErrorFinanciacionCliente($vError);
 
           if(!$xInsDet) {
@@ -2754,9 +2738,9 @@ class cFinanciacionCliente {
       $mReturn[count($mReturn)] = $e->getMessage() . "\n\nTrace:\n" . $e->getTraceAsString();
     }
 
-    echo "<pre>";
-    print_r($mReturn);
-    echo "</pre>";
+    // echo "<pre>";
+    // print_r($mReturn);
+    // echo "</pre>";
 
     if( $nSwitch == 0 ){
       $mReturn[0] = "true";
